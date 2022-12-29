@@ -1,6 +1,6 @@
 package com.epam.redkin.web.controller;
 
-import com.epam.redkin.model.dto.CarDto;
+import com.epam.redkin.model.dto.CarriageDTO;
 import com.epam.redkin.model.entity.Carriage;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.entity.Train;
@@ -39,32 +39,32 @@ public class AdministratorEditInfoCarController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         CarValidator carValidator = new CarValidator();
-        CarDto carDto = new CarDto();
+        CarriageDTO carriageDTO = new CarriageDTO();
         String carId = request.getParameter("car_id");
-        carDto.setCarId(Integer.parseInt(carId));
+        carriageDTO.setCarId(Integer.parseInt(carId));
         String carNumber = request.getParameter("car_number");
         String trainId = request.getParameter("train_id");
         String trainNotSelected = trainId.equals("TRAIN_NOT_SELECTED") ? null : trainId;
-        carDto.setTrainId(Integer.parseInt(trainNotSelected));
+        carriageDTO.setTrainId(Integer.parseInt(trainNotSelected));
         Train train = trainService.getTrainById(Integer.parseInt(trainId));
         List<Carriage> carByTrainId = carService.getCarByTrainId(train.getId());
         if (train != null || containsCarWithCarId(carByTrainId, Integer.parseInt(carId))
                 && containsCarWithCarNumber(carByTrainId, carNumber) && trainId.equals(train.getId())) {
-            carDto.setCarNumber(carNumber);
+            carriageDTO.setCarNumber(carNumber);
         } else {
            // LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered");
         }
         try {
-            carDto.setCarType(CarriageType.valueOf(request.getParameter("car_type")));
-            carDto.setSeats(Integer.valueOf(request.getParameter("seats")));
+            carriageDTO.setCarType(CarriageType.valueOf(request.getParameter("car_type")));
+            carriageDTO.setSeats(Integer.valueOf(request.getParameter("seats")));
 
         } catch (IllegalArgumentException e) {
            // LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered", e);
         }
-        carValidator.isValidCar(carDto);
-        carService.updateCar(carDto);
+        carValidator.isValidCar(carriageDTO);
+        carService.updateCar(carriageDTO);
         response.sendRedirect("administrator_account");
     }
 

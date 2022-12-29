@@ -4,7 +4,7 @@ import com.epam.redkin.model.entity.CarriageType;
 
 import java.util.Objects;
 
-public class CarDto {
+public class CarriageDTO {
     private int carId;
     private CarriageType carType;
     private String carNumber;
@@ -17,14 +17,14 @@ public class CarDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CarDto carDto = (CarDto) o;
-        return Objects.equals(carId, carDto.carId) &&
-                carType == carDto.carType &&
-                Objects.equals(carNumber, carDto.carNumber) &&
-                Objects.equals(trainId, carDto.trainId) &&
-                Objects.equals(seats, carDto.seats) &&
-                Objects.equals(price, carDto.price) &&
-                Objects.equals(trainNumber, carDto.trainNumber);
+        CarriageDTO carriageDTO = (CarriageDTO) o;
+        return Objects.equals(carId, carriageDTO.carId) &&
+                carType == carriageDTO.carType &&
+                Objects.equals(carNumber, carriageDTO.carNumber) &&
+                Objects.equals(trainId, carriageDTO.trainId) &&
+                Objects.equals(seats, carriageDTO.seats) &&
+                Objects.equals(price, carriageDTO.price) &&
+                Objects.equals(trainNumber, carriageDTO.trainNumber);
     }
 
     @Override

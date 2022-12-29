@@ -1,11 +1,9 @@
 package com.epam.redkin.model.repository.impl;
 
 import com.epam.redkin.model.connectionpool.ConnectionPools;
-import com.epam.redkin.model.dto.CarDto;
+import com.epam.redkin.model.dto.CarriageDTO;
 import com.epam.redkin.model.exception.DataBaseException;
-import com.epam.redkin.model.exception.IncorrectDataException;
-import com.epam.redkin.model.repository.CarriageRepo;
-import com.epam.redkin.model.connectionpool.DBManager;
+import com.epam.redkin.model.repository.CarriageRepository;
 import com.epam.redkin.model.entity.Carriage;
 import com.epam.redkin.model.entity.CarriageType;
 import org.slf4j.Logger;
@@ -18,15 +16,15 @@ import java.util.List;
 
 import static com.epam.redkin.model.repository.impl.Constants.*;
 
-public class CarriageRepoImpl implements CarriageRepo {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CarriageRepoImpl.class);
+public class CarriageRepositoryImpl implements CarriageRepository {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CarriageRepositoryImpl.class);
     private final DataSource dataSource;
 
-    public CarriageRepoImpl(DataSource dataSource) {
+    public CarriageRepositoryImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public CarriageRepoImpl() {
+    public CarriageRepositoryImpl() {
         dataSource = ConnectionPools.getProcessing();
     }
 
@@ -63,8 +61,8 @@ public class CarriageRepoImpl implements CarriageRepo {
                 carriage = getCarriage(rs);
             }
         } catch (SQLException | NullPointerException e) {
-            LOGGER.error(String.valueOf(e));
-            throw new RuntimeException("Can`t read carriage. ID = " + id, e);
+            LOGGER.error(e.getMessage());
+            throw new DataBaseException("Cannot read carriage from database with carriage_id = " + id);
         }
         return carriage;
     }
@@ -79,7 +77,8 @@ public class CarriageRepoImpl implements CarriageRepo {
             statement.setInt(4, carriage.getCarriageId());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(e.getMessage());
+            throw new DataBaseException("Cannot update carriage  = " + (carriage == null ? null : carriage.toString()));
         }
     }
 
@@ -90,7 +89,8 @@ public class CarriageRepoImpl implements CarriageRepo {
             statement.setInt(1, id);
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(e.getMessage());
+            throw new DataBaseException("Cannot delete carriage from database with carriage_id = " + id);
         }
     }
 
@@ -105,7 +105,8 @@ public class CarriageRepoImpl implements CarriageRepo {
                 carriages.add(getCarriage(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(e.getMessage());
+            throw new DataBaseException("Cannot read list of carriages from database with train_id = " + trainId);
         }
         return carriages;
     }
@@ -122,25 +123,27 @@ public class CarriageRepoImpl implements CarriageRepo {
                 carriages.add(getCarriage(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            LOGGER.error(e.getMessage());
+            throw new DataBaseException("Cannot read list of carriages from database with train_id = " + trainId
+                    + " and type = " + type);
         }
         return carriages;
     }
 
     @Override
-    public List<CarDto> getAllCarList() {
-        List<CarDto> carDtoList = new ArrayList<>();
+    public List<CarriageDTO> getAllCarriageDTOList() {
+        List<CarriageDTO> carriageDTOList = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_CARRIAGE)) {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                carDtoList.add(extractCarDto(rs));
+                carriageDTOList.add(extractCarriageDTO(rs));
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DataBaseException("Can't get cars list.", e);
+            throw new DataBaseException("Cannot extract carriage transfer object list.", e);
         }
-        return carDtoList;
+        return carriageDTOList;
     }
 
     private Carriage getCarriage(ResultSet rs) throws SQLException {
@@ -150,18 +153,16 @@ public class CarriageRepoImpl implements CarriageRepo {
                 rs.getInt("train_id"));
     }
 
-    private CarDto extractCarDto(ResultSet resultSet) {
-        CarDto dto = new CarDto();
-        try {
-            dto.setCarId(resultSet.getInt("c.id"));
-            dto.setCarType(CarriageType.valueOf(resultSet.getString("type")));
-            dto.setCarNumber(resultSet.getString("c.number"));
-            dto.setTrainId(resultSet.getInt("train_id"));
-            dto.setTrainNumber(resultSet.getString("t.number"));
-        } catch (IllegalArgumentException | SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Can`t extract CarDto", e);
-        }
+
+    private CarriageDTO extractCarriageDTO(ResultSet rs) throws SQLException {
+        CarriageDTO dto = new CarriageDTO();
+
+        dto.setCarId(rs.getInt("c.id"));
+        dto.setCarType(CarriageType.valueOf(rs.getString("type")));
+        dto.setCarNumber(rs.getString("c.number"));
+        dto.setTrainId(rs.getInt("train_id"));
+        dto.setTrainNumber(rs.getString("t.number"));
+
         return dto;
     }
 }

@@ -28,4 +28,9 @@ public interface TestConstants {
     String INSERT_TRAIN1 = "INSERT INTO `train` (`number`) VALUES ('17(Skovoroda Ekspress)');";
     String INSERT_TRAIN2 = "INSERT INTO `train` (`number`) VALUES ('NEW');";
     String INSERT_TRAIN3 = "INSERT INTO `train` (`number`) VALUES ('FAST');";
+
+    String INSERT_CARRIAGE1 ="INSERT INTO `carriage` (`id`, `type`, `number`, `train_id`) VALUES ('1', 'FIRST_CLASS', '101', '3');";
+    String INSERT_CARRIAGE2 ="INSERT INTO `carriage` (`id`, `type`, `number`, `train_id`) VALUES ('2', 'FIRST_CLASS', '102', '3');";
+    String INSERT_CARRIAGE3 ="INSERT INTO `carriage` (`id`, `type`, `number`, `train_id`) VALUES ('3', 'FIRST_CLASS', '103', '3');";
+
 }

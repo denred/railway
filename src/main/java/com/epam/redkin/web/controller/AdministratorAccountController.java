@@ -1,7 +1,7 @@
 package com.epam.redkin.web.controller;
 
 
-import com.epam.redkin.model.dto.CarDto;
+import com.epam.redkin.model.dto.CarriageDTO;
 import com.epam.redkin.model.dto.RoutInfoDto;
 import com.epam.redkin.model.entity.*;
 import com.epam.redkin.service.*;
@@ -78,7 +78,7 @@ public class AdministratorAccountController extends HttpServlet {
         LOGGER.debug("trainList: " + trainList);
 
         request.setAttribute("train_list", trainList);
-        List<CarDto> carList = carService.getAllCarList();
+        List<CarriageDTO> carList = carService.getAllCarList();
 
         LOGGER.debug("carList: " + carList);
 

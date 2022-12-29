@@ -1,6 +1,6 @@
 package com.epam.redkin.validator;
 
-import com.epam.redkin.model.dto.CarDto;
+import com.epam.redkin.model.dto.CarriageDTO;
 import com.epam.redkin.model.exception.IncorrectDataException;
 import org.apache.commons.lang3.StringUtils;
 
@@ -14,14 +14,14 @@ public class CarValidator {
     private static final String CAR_NUMBER = "^(?<![-\\d])(?<!\\d[.,])\\d*[1-9](?![.,]?\\d){1,2}$";
     private static final String COUNT_OF_SEATS = "^(?<![-\\d])(?<!\\d[.,])\\d*[1-9](?![.,]?\\d){1,2}$";
 
-    public void isValidCar(CarDto carDto) {
+    public void isValidCar(CarriageDTO carriageDTO) {
         Map<String, String> errors = new HashMap<>();
-        if (StringUtils.isBlank(carDto.getCarNumber()) || !ValidatorUtils.isMatch(CAR_NUMBER, carDto.getCarNumber())) {
-            errors.put("Incorrect format, type something like \"123\"", carDto.getCarNumber());
+        if (StringUtils.isBlank(carriageDTO.getCarNumber()) || !ValidatorUtils.isMatch(CAR_NUMBER, carriageDTO.getCarNumber())) {
+            errors.put("Incorrect format, type something like \"123\"", carriageDTO.getCarNumber());
         }
 
-        if (StringUtils.isBlank(String.valueOf(carDto.getSeats())) || !ValidatorUtils.isMatch(COUNT_OF_SEATS, String.valueOf(carDto.getSeats()))) {
-            errors.put("Incorrect format, type something like \"123\"", String.valueOf(carDto.getSeats()));
+        if (StringUtils.isBlank(String.valueOf(carriageDTO.getSeats())) || !ValidatorUtils.isMatch(COUNT_OF_SEATS, String.valueOf(carriageDTO.getSeats()))) {
+            errors.put("Incorrect format, type something like \"123\"", String.valueOf(carriageDTO.getSeats()));
         }
         if (!errors.isEmpty()) {
             StringBuilder builder = new StringBuilder();

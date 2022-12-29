@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import static com.epam.redkin.model.repository.impl.Constants.*;
 
 public class SeatRepoImpl implements SeatRepo {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CarriageRepoImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CarriageRepositoryImpl.class);
 
     @Override
     public int create(Seat seat) {
