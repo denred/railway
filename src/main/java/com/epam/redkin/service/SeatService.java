@@ -22,5 +22,5 @@ public interface SeatService {
     List<Seat> getSeatsByIdBatch(List<String> seatsNumber);
 
 
-    ArrayList<String> getSeatsId(String seatNumber);
+    List<String> getSeatsId(String seatNumber);
 }

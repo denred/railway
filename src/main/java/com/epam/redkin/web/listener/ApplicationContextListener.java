@@ -1,26 +1,16 @@
 package com.epam.redkin.web.listener;
 
 
-import com.epam.redkin.model.exception.DataBaseException;
 import com.epam.redkin.model.repository.*;
 import com.epam.redkin.model.repository.impl.*;
 import com.epam.redkin.service.*;
 import com.epam.redkin.service.impl.*;
 import com.epam.redkin.util.constants.AppContextConstant;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-import java.io.File;
 
 @WebListener
 public class ApplicationContextListener implements ServletContextListener {
@@ -35,7 +25,7 @@ public class ApplicationContextListener implements ServletContextListener {
         OrderRepo orderRepository = new OrderRepoImpl();
         StationRepo stationRepository = new StationRepoImpl();
         RouteRepo routsRepository = new RouteRepoImpl();
-        TrainRepo trainRepository = new TrainRepoImpl();
+        TrainRepository trainRepository = new TrainRepositoryImpl();
         CarriageRepo carRepository = new CarriageRepoImpl();
         RoutePointRepo routMappingRepository = new RoutePointImpl();
         SeatRepo seatRepository = new SeatRepoImpl();

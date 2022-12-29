@@ -33,22 +33,55 @@ public class AdministratorAccountController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         List<Order> orderList = orderService.getAllOrderList();
+
+
+        /* RoutInfoDto routInfoDto = routService.getRoutById(orderList.get(i).getRoutsId());
+
+            orderList.get(i).setRoutsId(routInfoDto.getRoutName());*/
+
         orderList.forEach(order -> {
-            order.setRouteId(routService.getRoutById(order.getRouteId()).getRoutsId());
+
+            order.setRouteId(
+                    routService.getRoutById(
+                                    order.getRouteId())
+                            .getRoutsId());
         });
+
+        LOGGER.debug("order_list: " + orderList);
 
         request.setAttribute("order_list", orderList);
         List<User> userInfoList = userService.getUserInfo(Role.USER.name());
+
+        LOGGER.debug("userInfoList: " + userInfoList);
+
         request.setAttribute("user_list", userInfoList);
+
         List<Station> stationList = stationService.getAllStationList();
+
+        LOGGER.debug("stationList: " + stationList);
+
         request.setAttribute("station_list", stationList);
+
+
         List<RoutInfoDto> routList = routService.getAllRoutList();
+
+        LOGGER.debug("routList: " + routList);
+
         request.setAttribute("rout_list", routList);
         List<RoutePoint> routToStationMappingList = routMappingService.getAllRoutToStationMappingList();
+
+        LOGGER.debug("routToStationMappingList: " + routToStationMappingList);
+
         request.setAttribute("rout_m_list", routToStationMappingList);
         List<Train> trainList = trainService.getAllTrainList();
+
+        LOGGER.debug("trainList: " + trainList);
+
         request.setAttribute("train_list", trainList);
         List<CarDto> carList = carService.getAllCarList();
+
+        LOGGER.debug("carList: " + carList);
+
         request.setAttribute("car_list", carList);
 
         request.getRequestDispatcher("WEB-INF/jsp/administratorAccount.jsp").forward(request, response);

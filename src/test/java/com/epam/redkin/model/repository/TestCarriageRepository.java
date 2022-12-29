@@ -6,6 +6,7 @@ import com.epam.redkin.model.entity.CarriageType;
 
 import com.epam.redkin.model.exception.DataBaseException;
 import com.epam.redkin.model.repository.impl.CarriageRepoImpl;
+
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,38 +22,10 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestCarriageRepository {
+public class TestCarriageRepository implements TestConstants {
     private static Connection connection;
     private CarriageRepo carriageRepo;
     private static List<Carriage> carriages;
-
-    private static final String REMOVE_TRAIN_TABLE = "DROP TABLE IF EXISTS `train`";
-    private static final String REMOVE_CARRIAGE_TABLE = "DROP TABLE IF EXISTS `carriage`";
-
-    private static final String CREATE_TRAIN_TABLE =
-            "CREATE TABLE IF NOT EXISTS `train` (\n" +
-                    "                                                 `id` INT NOT NULL AUTO_INCREMENT,\n" +
-                    "                                                 `number` VARCHAR(64) NOT NULL,\n" +
-                    "                                                 PRIMARY KEY (`id`));\n";
-    private static final String CREATE_CARRIAGE_TABLE =
-            "CREATE TABLE IF NOT EXISTS `carriage` (\n" +
-                    "                                                 `id` INT NOT NULL AUTO_INCREMENT,\n" +
-                    "                                                 `type` VARCHAR(45) NOT NULL,\n" +
-                    "                                                 `number` VARCHAR(45) NOT NULL,\n" +
-                    "                                                 `train_id` INT NOT NULL,\n" +
-                    "                                                 PRIMARY KEY (`id`,`number`,`train_id`),\n" +
-                    "                                                 INDEX `fk_carriage_train_idx` (`train_id` ASC) VISIBLE,\n" +
-                    "                                                 CONSTRAINT `carriage_number_train_id_uq` UNIQUE(`number`,`train_id`),\n" +
-                    "                                                 CONSTRAINT `fk_carriage_train`\n" +
-                    "                                                     FOREIGN KEY (`train_id`)\n" +
-                    "                                                         REFERENCES `train` (`id`)\n" +
-                    "                                                         ON DELETE NO ACTION\n" +
-                    "                                                         ON UPDATE NO ACTION);";
-
-
-    private static final String INSERT_TRAIN1 = "INSERT INTO `train` (`number`) VALUES ('17(Skovoroda Ekspress)');";
-    private static final String INSERT_TRAIN2 = "INSERT INTO `train` (`number`) VALUES ('NEW');";
-    private static final String INSERT_TRAIN3 = "INSERT INTO `train` (`number`) VALUES ('FAST');";
 
     @BeforeEach
     public void init() throws SQLException {
@@ -202,7 +175,7 @@ public class TestCarriageRepository {
     @Test
     public void testGetAllCarriageList(){
         carriages.forEach(carr -> carriageRepo.create(carr));
-        System.out.println(carriageRepo.getAllCarList().toArray());
+        System.out.println(carriageRepo.getAllCarList());
     }
 
 }

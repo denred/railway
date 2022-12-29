@@ -24,7 +24,6 @@ import java.time.DateTimeException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,25 +41,73 @@ public class ConfirmOrderController extends HttpServlet {
     private RoutService routService;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        /*form action="confirm_order" method="POST">
+                <input type="hidden" name="routs_id" value="${routs_id}">OK
+                <input type="hidden" name="train_id" value="${train_id}">OK
+                <input type="hidden" name="arrival_station_id" value="${arrival_station_id}">
+                <input type="hidden" name="departure_station_id" value="${departure_station_id}">
+                <input type="hidden" name="car_id" value="${car_id}">
+                <input type="hidden" name="car_type" value="${car_type}">
+                <input type="hidden" name="count_of_seats" value="${count_of_seats}">
+                <input type="hidden" name="seat_id"  value="${seat_id}">
+                <input type="submit" class="btn btn-success" name="add_order"
+                       value="<fmt:message key="order.make.order"/>">
+            </form>*/
+
+
         OrderValidator orderValidator = new OrderValidator();
         Order order = new Order();
         User user = (User) request.getSession().getAttribute(AppContextConstant.SESSION_USER);
+        LOGGER.debug("User: " + user);
+
         String routsId = request.getParameter("routs_id");
+
         String trainId = request.getParameter("train_id");
+
         String stationIdA = request.getParameter("arrival_station_id");
         String stationIdD = request.getParameter("departure_station_id");
+
         String carId = request.getParameter("car_id");
+
+        LOGGER.debug("PARAMS: " + routsId + " | " + trainId + " | " + stationIdA + " | " + stationIdD + " | " + carId);
+
         Carriage car = carService.getCarById(Integer.parseInt(carId));
+
+        LOGGER.debug("car: " + car);
+
         Train train = trainService.getTrainById(Integer.parseInt(trainId));
+
+        LOGGER.debug("train: " + train);
+
         Station dispatchStation = stationService.getStationById(Integer.parseInt(stationIdA));
+
+        LOGGER.debug("dispatchStation: " + dispatchStation);
+
         Station arrivalStation = stationService.getStationById(Integer.parseInt(stationIdD));
+
+        LOGGER.debug("arrivalStation: " + arrivalStation);
+
+
         MappingInfoDto arrivalMapping = routMappingService.getMappingInfo(Integer.parseInt(routsId), arrivalStation.getId());
+
+        LOGGER.debug("arrivalMapping: " + arrivalMapping);
+
+
         MappingInfoDto dispatchMapping = routMappingService.getMappingInfo(Integer.parseInt(routsId), dispatchStation.getId());
+
+        LOGGER.debug("dispatchMapping: " + dispatchMapping);
+
+
         HttpSession session = request.getSession();
         Object locale = session.getAttribute(AppContextConstant.LOCALE);
         try {
             order.setCarrType(CarriageType.valueOf(request.getParameter("car_type")));
             order.setCountOfSeats(Integer.parseInt(request.getParameter("count_of_seats")));
+
+            LOGGER.debug("order: " + order);
+
+
             if (locale == AppContextConstant.LOCALE_EN) {
                 Duration duration = Duration.between(arrivalMapping.getStationDispatchData(), dispatchMapping.getStationArrivalDate());
                 order.setTravelTime(String.format("Days: %s Hours: %s Minutes: %s", duration.toDays(),
@@ -71,10 +118,13 @@ public class ConfirmOrderController extends HttpServlet {
                 order.setTravelTime(String.format("Дней: %s Часов: %s Минут: %s", duration.toDays(),
                         duration.toHours() % 24, duration.toMinutes() % 60));
             }
+
         } catch (IllegalArgumentException | ArithmeticException | DateTimeException e) {
             LOGGER.error(e.getMessage());
             throw new IncorrectDataException("Incorrect data entered", e);
         }
+
+
         order.setRouteId(Integer.parseInt(routsId));
         order.setArrivalDate(arrivalMapping.getStationDispatchData());
         order.setDispatchDate(dispatchMapping.getStationArrivalDate());
@@ -85,24 +135,41 @@ public class ConfirmOrderController extends HttpServlet {
         order.setOrderStatus(OrderStatus.PROCESSING);
         order.setArrivalStation(dispatchStation.getStation());
         order.setDispatchStation(arrivalStation.getStation());
+
         String seatId = Arrays.toString(request.getParameterValues("seat_id"));
-        ArrayList<String> seatIdList = seatService.getSeatsId(seatId);
+
+        LOGGER.debug("seatId: " + seatId);
+
+        List<String> seatIdList = seatService.getSeatsId(seatId);
+
+        LOGGER.debug("seatIdList: " + seatIdList);
+
         List<Seat> seats = seatService.getSeatsByIdBatch(seatIdList);
+
+        LOGGER.debug("seats: " + seats);
+
         StringBuilder sb = new StringBuilder();
         String number = "";
         for (int i = 0; i <= seats.size() - 1; i++) {
             number = sb.append(seats.get(i).getSeatNumber()).append(" ").toString();
         }
+
+        LOGGER.debug("number: " + number);
+
+
         order.setSeatNumber(number);
         sb = new StringBuilder();
         String id = "";
         for (int i = 0; i <= seats.size() - 1; i++) {
             id = sb.append(seats.get(i).getId()).append(" ").toString();
         }
-        order.setSeatId(Integer.parseInt(id));
+        LOGGER.debug("id: " + id);
+        order.setSeatsId(id);
         orderValidator.isValidOrder(order);
+
         orderService.addOrder(order, Integer.parseInt(routsId), seats);
         int userId = user.getUserId();
+        LOGGER.debug("userId: " + userId);
         response.sendRedirect("user_account?user_id=" + userId);
     }
 
@@ -129,12 +196,11 @@ public class ConfirmOrderController extends HttpServlet {
         try {
             departureDate = LocalDateTime.parse(request.getParameter("departure_date"));
         } catch (DateTimeParseException e) {
-           LOGGER.error("Incorrect data entered");
+            LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         String[] numbers = request.getParameterValues("seats_number");
         List<String> seatsNumber = Arrays.asList(request.getParameterValues("seats_number"));
-
 
 
         String routsId = request.getParameter("routs_id");
@@ -188,7 +254,7 @@ public class ConfirmOrderController extends HttpServlet {
 
         LOGGER.debug("================================2!!!!");
         LOGGER.debug("user: " + user);
-        LOGGER.debug("firstName: "+ firstName);
+        LOGGER.debug("firstName: " + firstName);
         LOGGER.debug("lastName: " + lastName);
         LOGGER.debug("train: " + train);
         LOGGER.debug("trainNumber: " + trainNumber);

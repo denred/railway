@@ -8,13 +8,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Objects;
 
 @WebServlet("/change_language")
 public class ChangeLanguageController extends HttpServlet {
-    //private static final Logger LOGGER = Logger.getLogger(ChangeLanguageController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChangeLanguageController.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();

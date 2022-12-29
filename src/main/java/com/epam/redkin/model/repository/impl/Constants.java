@@ -121,5 +121,5 @@ public interface Constants {
     String UPDATE_ORDER_STATUS = "UPDATE booking SET status = ? WHERE id = ?";
     String GET_ALL_ORDER = "SELECT * FROM booking JOIN user ON user_id = user.id";
     String GET_ORDER_BY_USER_ID = "SELECT * FROM booking JOIN user ON user_id = user.id WHERE user_id = ?";
-    String GET_THE_PRICE_OF_SUCCESSFUL_ORDERS = "SELECT SUM(price) FROM booking WHERE user_id = ? AND order_status = 'ACCEPTED'";
+    String GET_THE_PRICE_OF_SUCCESSFUL_ORDERS = "SELECT SUM(price) as sum FROM booking WHERE user_id = ? AND status = 'ACCEPTED'";
 }

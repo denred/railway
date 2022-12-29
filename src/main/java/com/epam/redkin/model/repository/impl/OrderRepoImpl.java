@@ -33,7 +33,7 @@ public class OrderRepoImpl implements OrderRepo, Constants {
             statement.setString(10, entity.getCarrType().name());
             statement.setInt(11, entity.getCountOfSeats());
             statement.setString(12, entity.getSeatNumber());
-            statement.setInt(13, entity.getSeatId());
+            statement.setString(13, entity.getSeatsId());
             statement.setDouble(14, entity.getPrice());
             statement.setString(15, entity.getOrderStatus().name());
             statement.setInt(16, entity.getUser().getUserId());
@@ -83,7 +83,7 @@ public class OrderRepoImpl implements OrderRepo, Constants {
             order.setCarrType(CarriageType.valueOf(rs.getString("carriage_type")));
             order.setCountOfSeats(rs.getInt("seat_count"));
             order.setSeatNumber(rs.getString("seat_number"));
-            order.setSeatId(rs.getInt("seat_id"));
+            order.setSeatsId(rs.getString("seat_id"));
             order.setPrice(rs.getDouble("price"));
             order.setOrderStatus(OrderStatus.valueOf(rs.getString("status")));
             order.setUser(extractUser(rs));
@@ -174,7 +174,6 @@ public class OrderRepoImpl implements OrderRepo, Constants {
             if (rs.next()) {
                 price = rs.getDouble("sum");
             }
-            connection.commit();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             throw new DataBaseException("Can`t get price. user ID = " + userId, e);

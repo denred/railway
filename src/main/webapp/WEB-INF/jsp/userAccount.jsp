@@ -82,9 +82,9 @@
     <c:forEach items="${order_list}" var="order">
         <tr>
             <td>${order.trainNumber}</td>
-            <td>${order.routsId}</td>
-            <td><fmt:message key="${order.carType}"/></td>
-            <td>${order.carNumber}</td>
+            <td>${order.routeId}</td>
+            <td><fmt:message key="${order.carrType}"/></td>
+            <td>${order.carriageNumber}</td>
             <td>${order.countOfSeats}</td>
             <td>${order.seatNumber}</td>
             <td>${order.price}</td>
@@ -97,7 +97,7 @@
             <td><fmt:message key="${order.orderStatus}"/></td>
             <td>
                 <form action="cancel_order" method="POST">
-                    <input type="hidden" name="order_id" value="${order.orderId}">
+                    <input type="hidden" name="order_id" value="${order.id}">
                     <input type="hidden" name="user_id" value="${user_id}">
                     <input type="submit" class="btn btn-info" name="edit_info_order"
                            value="<fmt:message key="decline"/>">

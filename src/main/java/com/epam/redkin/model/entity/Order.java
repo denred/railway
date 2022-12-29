@@ -19,7 +19,7 @@ public class Order {
     private int routeId;
     private String carriageNumber;
     private String seatNumber;
-    private int seatId;
+    private String seatsId;
 
     public int getId() {
         return id;
@@ -149,11 +149,11 @@ public class Order {
         this.seatNumber = seatNumber;
     }
 
-    public int getSeatId() {
-        return seatId;
+    public String getSeatsId() {
+        return seatsId;
     }
 
-    public void setSeatId(int seatId) {
-        this.seatId = seatId;
+    public void setSeatsId(String seatsId) {
+        this.seatsId = seatsId;
     }
 }

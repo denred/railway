@@ -67,6 +67,7 @@ CREATE TABLE IF NOT EXISTS `railway`.`booking` (
 CREATE TABLE IF NOT EXISTS `railway`.`train` (
                                                  `id` INT NOT NULL AUTO_INCREMENT,
                                                  `number` VARCHAR(64) NOT NULL,
+                                                 UNIQUE INDEX `number_UNIQUE` (`number` ASC) VISIBLE,
                                                  PRIMARY KEY (`id`));
 
 

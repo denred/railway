@@ -1,5 +1,7 @@
 package com.epam.redkin.model.entity;
 
+import java.util.Objects;
+
 public class Train {
     private int id;
     private String number;
@@ -8,6 +10,11 @@ public class Train {
     }
 
     public Train(String number) {
+        this.number = number;
+    }
+
+    public Train(int id, String number) {
+        this.id = id;
         this.number = number;
     }
 
@@ -33,5 +40,18 @@ public class Train {
                 "id=" + id +
                 ", number='" + number + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Train)) return false;
+        Train train = (Train) o;
+        return getNumber().equals(train.getNumber());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNumber());
     }
 }

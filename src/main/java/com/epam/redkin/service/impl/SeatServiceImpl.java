@@ -9,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class SeatServiceImpl implements SeatService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SeatServiceImpl.class);
@@ -43,12 +45,13 @@ public class SeatServiceImpl implements SeatService {
     }
 
     @Override
-    public ArrayList<String> getSeatsId(String seatId) {
-        ArrayList<String> seatIdList = new ArrayList<>();
-        Matcher m = Pattern.compile(UUID).matcher(seatId);
-        while (m.find()) {
-            seatIdList.add(m.group(1));
-        }
+    public List<String> getSeatsId(String seatId) {
+        List<String> seatIdList = new ArrayList<>();
+        seatIdList = Arrays.stream(seatId.replaceAll("\\[\\[", "")
+                        .replaceAll("\\]\\]", "")
+                        .split(","))
+                .collect(Collectors.toList());
+
         return seatIdList;
     }
 }

@@ -22,15 +22,13 @@ public class DBManager {
 
 
     public static Connection getConnection() {
-        Connection connection = null;
-
-        try {
-            connection = dataSource.getConnection();
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException();
-        }
-        return connection;
+        Connection conn;
+     try{
+         conn = ConnectionPools.getProcessing().getConnection();
+     } catch (SQLException e) {
+         throw new RuntimeException(e);
+     }
+        return conn;
     }
 
 }

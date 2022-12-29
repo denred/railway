@@ -2,16 +2,16 @@ package com.epam.redkin.service.impl;
 
 
 import com.epam.redkin.model.entity.Train;
-import com.epam.redkin.model.repository.TrainRepo;
+import com.epam.redkin.model.repository.TrainRepository;
 import com.epam.redkin.service.TrainService;
 
 import java.util.List;
 
 public class TrainServiceImpl implements TrainService {
 
-    private TrainRepo trainRepository;
+    private TrainRepository trainRepository;
 
-    public TrainServiceImpl(TrainRepo trainRepository) {
+    public TrainServiceImpl(TrainRepository trainRepository) {
         this.trainRepository = trainRepository;
     }
 

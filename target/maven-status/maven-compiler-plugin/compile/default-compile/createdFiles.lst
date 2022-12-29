@@ -68,7 +68,6 @@ com/epam/redkin/model/entity/CarriageType.class
 com/epam/redkin/validator/RegistrationValidator.class
 com/epam/redkin/web/controller/SearchRoutForOrderController.class
 com/epam/redkin/web/tag/TimePeriodTag.class
-com/epam/redkin/model/repository/impl/TrainRepoImpl.class
 com/epam/redkin/model/exception/UserAlreadyExistException.class
 com/epam/redkin/web/controller/TrainDeleteController.class
 com/epam/redkin/web/controller/AdministratorEditInfoDetailsSetRoutController.class
@@ -100,7 +99,6 @@ com/epam/redkin/model/entity/Train.class
 com/epam/redkin/web/controller/ConfirmOrderController.class
 com/epam/redkin/model/entity/User.class
 com/epam/redkin/model/repository/impl/TestDBAddNewUser.class
-com/epam/redkin/model/repository/TrainRepo.class
 com/epam/redkin/service/OrderService.class
 com/epam/redkin/model/dto/CarDto.class
 com/epam/redkin/validator/SearchValidator.class

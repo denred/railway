@@ -31,7 +31,9 @@ public class LoginController extends HttpServlet {
             loginValidator.isValid(login, password);
             User user = userService.isValidUser(login, password);
             HttpSession session = request.getSession();
+
             if (user != null) {
+                session.setAttribute(AppContextConstant.LOCALE, AppContextConstant.LOCALE_RU);
                 session.setAttribute(AppContextConstant.SESSION_USER, user);
                 response.sendRedirect("home");
             }
