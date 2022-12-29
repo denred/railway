@@ -1,0 +1,101 @@
+package com.epam.redkin.service.impl;
+
+import com.epam.redkin.model.entity.CarriageType;
+import com.epam.redkin.model.entity.Order;
+import com.epam.redkin.model.entity.OrderStatus;
+import com.epam.redkin.model.entity.Seat;
+import com.epam.redkin.model.exception.IncorrectDataException;
+import com.epam.redkin.model.repository.OrderRepo;
+import com.epam.redkin.model.repository.SeatRepo;
+import com.epam.redkin.service.OrderService;
+import com.epam.redkin.service.SeatService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class OrderServiceImpl implements OrderService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
+
+    private OrderRepo orderRepository;
+    private SeatRepo seatRepository;
+    private SeatService seatService;
+
+    public OrderServiceImpl(OrderRepo orderRepository, SeatService seatService, SeatRepo seatRepository) {
+        this.orderRepository = orderRepository;
+        this.seatRepository = seatRepository;
+        this.seatService = seatService;
+    }
+
+    @Override
+    public void addOrder(Order order, int routsId, List<Seat> seats) {
+        order.setPrice(order.getCarrType().getPrice() * order.getCountOfSeats());
+        seats.forEach(seat -> seatRepository.takeSeat(seat.getId()));
+        orderRepository.create(order);
+    }
+
+    @Override
+    public void cancelOrder(int orderId) {
+        Order order = getOrderById(orderId);
+        LocalDateTime now = LocalDateTime.now();
+        order.setOrderStatus(OrderStatus.CANCELED);
+        validateDate(order, now);
+        String seatNumber = String.valueOf(order.getSeatNumber());
+
+        List<String> seatsNumber = seatService.getSeatsId(seatNumber);
+        List<Seat> seatsByIdBatch = seatRepository.getListSeatsByIdBatch(seatsNumber);
+        seatsByIdBatch.forEach(seat -> seatRepository.takeOffSeat(seat.getId()));
+        orderRepository.updateOrderStatus(order.getId(), order.getOrderStatus());
+    }
+
+    private void validateDate(Order order, LocalDateTime now) {
+        if (now.isAfter(order.getArrivalDate()) || now.isEqual(order.getArrivalDate())) {
+            IncorrectDataException e = new IncorrectDataException("Can`t cancel the order because the cancellation " +
+                    "period has been reached");
+            LOGGER.error(e.getMessage());
+            throw e;
+        }
+    }
+
+
+    @Override
+    public List<Order> getOrderByUserId(int userId) {
+        return orderRepository.getOrderByUserId(userId);
+    }
+
+    @Override
+    public boolean updateOrderStatus(int orderId, OrderStatus status) {
+        if (status == OrderStatus.DECLINED || status == OrderStatus.CANCELED) {
+            Order order = orderRepository.read(orderId);
+            String seatNumber = String.valueOf(order.getSeatNumber());
+            ArrayList<String> seatsId = seatService.getSeatsId(seatNumber);
+            List<Seat> seatsByIdBatch = seatRepository.getListSeatsByIdBatch(seatsId);
+            seatsByIdBatch.forEach(seat-> seatRepository.takeOffSeat(seat.getId()));
+        }
+        return orderRepository.updateOrderStatus(orderId, status);
+    }
+
+    @Override
+    public Order getOrderById(int orderId) {
+        return orderRepository.read(orderId);
+    }
+
+    @Override
+    public List<Order> getAllOrderList() {
+        return orderRepository.getAllOrders();
+    }
+
+    @Override
+    public Double getPrice(String carType, int countOfSeats) {
+        return CarriageType.valueOf(carType).getPrice() * countOfSeats;
+    }
+
+    @Override
+    public Double getPriceOfSuccessfulOrders(int userId) {
+        return orderRepository.getPriceOfSuccessfulOrders(userId);
+    }
+}
