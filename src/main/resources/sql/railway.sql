@@ -130,6 +130,7 @@ CREATE TABLE IF NOT EXISTS `railway`.`seat` (
 CREATE TABLE IF NOT EXISTS `railway`.`station` (
                                                    `id` INT NOT NULL AUTO_INCREMENT,
                                                    `station` VARCHAR(100) NOT NULL,
+                                                   UNIQUE INDEX `station_UNIQUE` (`station` ASC) VISIBLE,
                                                    PRIMARY KEY (`id`));
 
 

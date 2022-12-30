@@ -2,17 +2,17 @@ package com.epam.redkin.service.impl;
 
 
 import com.epam.redkin.model.entity.Station;
-import com.epam.redkin.model.repository.StationRepo;
+import com.epam.redkin.model.repository.StationRepository;
 import com.epam.redkin.service.StationService;
 
 import java.util.List;
 
 public class StationServiceImpl implements StationService {
 
-    private StationRepo stationRepository;
+    private StationRepository stationRepository;
 
 
-    public StationServiceImpl(StationRepo stationRepository) {
+    public StationServiceImpl(StationRepository stationRepository) {
         this.stationRepository = stationRepository;
     }
 

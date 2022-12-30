@@ -3,14 +3,14 @@ package com.epam.redkin.model.repository;
 import com.epam.redkin.model.connectionpool.ConnectionPools;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.entity.Seat;
-import com.epam.redkin.model.entity.Train;
+
 import com.epam.redkin.model.exception.DataBaseException;
 import com.epam.redkin.model.repository.impl.SeatRepositoryImpl;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
+
 
 import java.sql.Connection;
 import java.sql.SQLException;

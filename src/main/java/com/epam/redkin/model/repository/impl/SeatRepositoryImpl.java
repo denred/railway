@@ -1,7 +1,6 @@
 package com.epam.redkin.model.repository.impl;
 
 import com.epam.redkin.model.connectionpool.ConnectionPools;
-import com.epam.redkin.model.connectionpool.DBManager;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.entity.Seat;
 import com.epam.redkin.model.exception.DataBaseException;
@@ -13,7 +12,6 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.epam.redkin.model.repository.impl.Constants.*;
 

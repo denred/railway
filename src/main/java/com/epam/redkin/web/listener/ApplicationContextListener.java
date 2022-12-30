@@ -23,7 +23,7 @@ public class ApplicationContextListener implements ServletContextListener {
 
         UserRepo userRepository = new UserRepoImpl();
         OrderRepo orderRepository = new OrderRepoImpl();
-        StationRepo stationRepository = new StationRepoImpl();
+        StationRepository stationRepository = new StationRepositoryImpl();
         RouteRepo routsRepository = new RouteRepoImpl();
         TrainRepository trainRepository = new TrainRepositoryImpl();
         CarriageRepository carRepository = new CarriageRepositoryImpl();
