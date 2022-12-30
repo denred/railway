@@ -1,5 +1,7 @@
 package com.epam.redkin.model.entity;
 
+import java.util.Objects;
+
 public class Seat {
     private int id;
     private int carriageId;
@@ -46,5 +48,28 @@ public class Seat {
 
     public void setBusy(boolean busy) {
         this.busy = busy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Seat)) return false;
+        Seat seat = (Seat) o;
+        return getCarriageId() == seat.getCarriageId() && getSeatNumber().equals(seat.getSeatNumber());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCarriageId(), getSeatNumber());
+    }
+
+    @Override
+    public String toString() {
+        return "Seat{" +
+                "id=" + id +
+                ", carriageId=" + carriageId +
+                ", seatNumber='" + seatNumber + '\'' +
+                ", busy=" + busy +
+                '}';
     }
 }

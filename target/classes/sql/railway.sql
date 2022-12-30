@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `railway`.`carriage` (
                                                  CONSTRAINT `fk_carriage_train`
                                                      FOREIGN KEY (`train_id`)
                                                          REFERENCES `railway`.`train` (`id`)
-                                                         ON DELETE NO ACTION
+                                                         ON DELETE CASCADE
                                                          ON UPDATE NO ACTION);
 
 
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `railway`.`route` (
                                                  CONSTRAINT `fk_route_train`
                                                      FOREIGN KEY (`train_id`)
                                                          REFERENCES `railway`.`train` (`id`)
-                                                         ON DELETE NO ACTION
+                                                         ON DELETE CASCADE
                                                          ON UPDATE NO ACTION);
 
 
@@ -116,10 +116,11 @@ CREATE TABLE IF NOT EXISTS `railway`.`seat` (
                                                 `carriage_id` INT NOT NULL,
                                                 PRIMARY KEY (`id`),
                                                 INDEX `fk_seat_carriage_idx` (`carriage_id` ASC) VISIBLE,
+                                                CONSTRAINT `seat_number_carriage_id_uq` UNIQUE(`seat_number`,`carriage_id`),
                                                 CONSTRAINT `fk_seat_carriage`
                                                     FOREIGN KEY (`carriage_id`)
                                                         REFERENCES `railway`.`carriage` (`id`)
-                                                        ON DELETE NO ACTION
+                                                        ON DELETE CASCADE
                                                         ON UPDATE NO ACTION);
 
 

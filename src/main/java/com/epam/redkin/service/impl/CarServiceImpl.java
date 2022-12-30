@@ -6,7 +6,7 @@ import com.epam.redkin.model.entity.Carriage;
 import com.epam.redkin.model.entity.Seat;
 import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.model.repository.CarriageRepository;
-import com.epam.redkin.model.repository.SeatRepo;
+import com.epam.redkin.model.repository.SeatRepository;
 import com.epam.redkin.service.CarService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +19,9 @@ public class CarServiceImpl implements CarService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CarServiceImpl.class);
 
     private CarriageRepository carRepository;
-    private SeatRepo seatRepository;
+    private SeatRepository seatRepository;
 
-    public CarServiceImpl(CarriageRepository carRepository, SeatRepo seatRepository) {
+    public CarServiceImpl(CarriageRepository carRepository, SeatRepository seatRepository) {
         this.carRepository = carRepository;
         this.seatRepository = seatRepository;
     }
@@ -30,11 +30,11 @@ public class CarServiceImpl implements CarService {
     public void updateCar(CarriageDTO carriageDTO) {
         Carriage car = getCarFromCarDto(carriageDTO);
         carRepository.update(car);
-        int countSeatBusy = seatRepository.getSeatsCarriageBusy(carriageDTO.getCarId());
-        int countSeat = seatRepository.getSeatsCarriage(carriageDTO.getCarId());
+        int countSeatBusy = seatRepository.getBusySeatsCountByCarriageId(carriageDTO.getCarId());
+        int countSeat = seatRepository.getSeatsCountByCarriageId(carriageDTO.getCarId());
         if (countSeatBusy == 0) {
             if (countSeat > carriageDTO.getSeats()) {
-                seatRepository.deleteAllSeatsByCarId(carriageDTO.getCarId());
+                seatRepository.deleteAllSeatsByCarriageId(carriageDTO.getCarId());
                 for (int i = 1; i <= carriageDTO.getSeats(); i++) {
                     Seat seat = getSeatFromCarDto(carriageDTO, String.valueOf(i));
                     seatRepository.create(seat);
@@ -81,7 +81,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void removeCar(int carId) {
-        seatRepository.deleteAllSeatsByCarId(carId);
+        seatRepository.deleteAllSeatsByCarriageId(carId);
         carRepository.delete(carId);
     }
 
@@ -89,7 +89,7 @@ public class CarServiceImpl implements CarService {
     public List<CarriageDTO> getAllCarList() {
         List<CarriageDTO> result = carRepository.getAllCarriageDTOList();
         for (CarriageDTO car : result) {
-            int seat = seatRepository.getSeatsCarriage(car.getCarId());
+            int seat = seatRepository.getSeatsCountByCarriageId(car.getCarId());
             car.setSeats(seat);
             calculatePrice(car);
         }

@@ -28,7 +28,7 @@ public class ApplicationContextListener implements ServletContextListener {
         TrainRepository trainRepository = new TrainRepositoryImpl();
         CarriageRepository carRepository = new CarriageRepositoryImpl();
         RoutePointRepo routMappingRepository = new RoutePointImpl();
-        SeatRepo seatRepository = new SeatRepoImpl();
+        SeatRepository seatRepository = new SeatRepositoryImpl();
 
 
         SeatService seatService = new SeatServiceImpl(seatRepository);

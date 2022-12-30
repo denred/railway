@@ -6,14 +6,13 @@ import com.epam.redkin.model.entity.OrderStatus;
 import com.epam.redkin.model.entity.Seat;
 import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.model.repository.OrderRepo;
-import com.epam.redkin.model.repository.SeatRepo;
+import com.epam.redkin.model.repository.SeatRepository;
 import com.epam.redkin.service.OrderService;
 import com.epam.redkin.service.SeatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,10 +21,10 @@ public class OrderServiceImpl implements OrderService {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     private OrderRepo orderRepository;
-    private SeatRepo seatRepository;
+    private SeatRepository seatRepository;
     private SeatService seatService;
 
-    public OrderServiceImpl(OrderRepo orderRepository, SeatService seatService, SeatRepo seatRepository) {
+    public OrderServiceImpl(OrderRepo orderRepository, SeatService seatService, SeatRepository seatRepository) {
         this.orderRepository = orderRepository;
         this.seatRepository = seatRepository;
         this.seatService = seatService;
@@ -34,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void addOrder(Order order, int routsId, List<Seat> seats) {
         order.setPrice(order.getCarrType().getPrice() * order.getCountOfSeats());
-        seats.forEach(seat -> seatRepository.takeSeat(seat.getId()));
+        seats.forEach(seat -> seatRepository.reservedSeat(seat.getId()));
         orderRepository.create(order);
     }
 
@@ -48,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
 
         List<String> seatsNumber = seatService.getSeatsId(seatNumber);
         List<Seat> seatsByIdBatch = seatRepository.getListSeatsByIdBatch(seatsNumber);
-        seatsByIdBatch.forEach(seat -> seatRepository.takeOffSeat(seat.getId()));
+        seatsByIdBatch.forEach(seat -> seatRepository.clearSeat(seat.getId()));
         orderRepository.updateOrderStatus(order.getId(), order.getOrderStatus());
     }
 
@@ -74,7 +73,7 @@ public class OrderServiceImpl implements OrderService {
             String seatNumber = String.valueOf(order.getSeatNumber());
             List<String> seatsId = seatService.getSeatsId(seatNumber);
             List<Seat> seatsByIdBatch = seatRepository.getListSeatsByIdBatch(seatsId);
-            seatsByIdBatch.forEach(seat-> seatRepository.takeOffSeat(seat.getId()));
+            seatsByIdBatch.forEach(seat-> seatRepository.clearSeat(seat.getId()));
         }
         return orderRepository.updateOrderStatus(orderId, status);
     }
