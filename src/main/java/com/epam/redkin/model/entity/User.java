@@ -1,6 +1,7 @@
 package com.epam.redkin.model.entity;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * User entity class
@@ -127,5 +128,18 @@ public class User {
                 ", role=" + role +
                 ", blocked=" + blocked +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getRoleId() == user.getRoleId() && isBlocked() == user.isBlocked() && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getFirstName(), user.getFirstName()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getPhone(), user.getPhone()) && Objects.equals(getBirthDate(), user.getBirthDate()) && getRole() == user.getRole();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getEmail(), getPassword(), getFirstName(), getLastName(), getPhone(), getBirthDate(), getRole(), getRoleId(), isBlocked());
     }
 }

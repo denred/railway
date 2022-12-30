@@ -21,7 +21,7 @@ public class ApplicationContextListener implements ServletContextListener {
        // initLog4j(sce.getServletContext());
 
 
-        UserRepo userRepository = new UserRepoImpl();
+        UserRepository userRepository = new UserRepositoryImpl();
         OrderRepo orderRepository = new OrderRepoImpl();
         StationRepository stationRepository = new StationRepositoryImpl();
         RouteRepo routsRepository = new RouteRepoImpl();

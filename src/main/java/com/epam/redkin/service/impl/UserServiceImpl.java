@@ -3,7 +3,7 @@ package com.epam.redkin.service.impl;
 import com.epam.redkin.model.entity.User;
 import com.epam.redkin.model.exception.UnauthorizedException;
 import com.epam.redkin.model.exception.UserAlreadyExistException;
-import com.epam.redkin.model.repository.UserRepo;
+import com.epam.redkin.model.repository.UserRepository;
 import com.epam.redkin.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +14,11 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class.getName());
 
-    private final UserRepo userRepository;
+    private final UserRepository userRepository;
     // private TransactionManager transactionManager;
 
 
-    public UserServiceImpl(UserRepo userRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
         // this.transactionManager = transactionManager;
     }
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User isValidUser(String email, String password) {
-        User user = userRepository.getByEmail(email);
+        User user = userRepository.getUserByEmail(email);
         if (user.getEmail() != null && !user.isBlocked()) {
             if (user.getPassword().equals(password)) {
                 return user;
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int registr(User user) {
-        boolean exist = userRepository.checkUser(user.getEmail());
+        boolean exist = userRepository.checkUserByEmail(user.getEmail());
         if (!exist) {
             return userRepository.create(user);
         } else {
