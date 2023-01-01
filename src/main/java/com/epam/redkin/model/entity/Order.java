@@ -1,25 +1,50 @@
 package com.epam.redkin.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Order {
     private int id;
-    private String trainNumber;
-    private CarriageType carrType;
-    private double price;
-    private LocalDateTime arrivalDate;
-    private LocalDateTime dispatchDate;
-    private User user;
     private LocalDateTime orderDate;
-    private OrderStatus orderStatus;
-    private int countOfSeats;
-    private String arrivalStation;
-    private String dispatchStation;
-    private String travelTime;
     private int routeId;
+    private String dispatchStation;
+    private LocalDateTime dispatchDate;
+    private String arrivalStation;
+    private LocalDateTime arrivalDate;
+    private String travelTime;
+    private String trainNumber;
     private String carriageNumber;
+    private CarriageType carrType;
+    private int countOfSeats;
     private String seatNumber;
     private String seatsId;
+    private User user;
+    private double price;
+    private OrderStatus orderStatus;
+
+    public Order() {
+
+    }
+
+    public Order(int id, String trainNumber, CarriageType carrType, double price, LocalDateTime arrivalDate, LocalDateTime dispatchDate, User user, LocalDateTime orderDate, OrderStatus orderStatus, int countOfSeats, String arrivalStation, String dispatchStation, String travelTime, int routeId, String carriageNumber, String seatNumber, String seatsId) {
+        this.id = id;
+        this.trainNumber = trainNumber;
+        this.carrType = carrType;
+        this.price = price;
+        this.arrivalDate = arrivalDate;
+        this.dispatchDate = dispatchDate;
+        this.user = user;
+        this.orderDate = orderDate;
+        this.orderStatus = orderStatus;
+        this.countOfSeats = countOfSeats;
+        this.arrivalStation = arrivalStation;
+        this.dispatchStation = dispatchStation;
+        this.travelTime = travelTime;
+        this.routeId = routeId;
+        this.carriageNumber = carriageNumber;
+        this.seatNumber = seatNumber;
+        this.seatsId = seatsId;
+    }
 
     public int getId() {
         return id;
@@ -155,5 +180,41 @@ public class Order {
 
     public void setSeatsId(String seatsId) {
         this.seatsId = seatsId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Order)) return false;
+        Order order = (Order) o;
+        return Double.compare(order.getPrice(), getPrice()) == 0 && getCountOfSeats() == order.getCountOfSeats() && getRouteId() == order.getRouteId() && getTrainNumber().equals(order.getTrainNumber()) && getCarrType() == order.getCarrType() && getArrivalDate().equals(order.getArrivalDate()) && getDispatchDate().equals(order.getDispatchDate()) && getUser().equals(order.getUser()) && getOrderDate().equals(order.getOrderDate()) && getOrderStatus() == order.getOrderStatus() && getArrivalStation().equals(order.getArrivalStation()) && getDispatchStation().equals(order.getDispatchStation()) && getTravelTime().equals(order.getTravelTime()) && getCarriageNumber().equals(order.getCarriageNumber()) && getSeatNumber().equals(order.getSeatNumber()) && getSeatsId().equals(order.getSeatsId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTrainNumber(), getCarrType(), getPrice(), getArrivalDate(), getDispatchDate(), getUser(), getOrderDate(), getOrderStatus(), getCountOfSeats(), getArrivalStation(), getDispatchStation(), getTravelTime(), getRouteId(), getCarriageNumber(), getSeatNumber(), getSeatsId());
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", trainNumber='" + trainNumber + '\'' +
+                ", carrType=" + carrType +
+                ", price=" + price +
+                ", arrivalDate=" + arrivalDate +
+                ", dispatchDate=" + dispatchDate +
+                ", user=" + user +
+                ", orderDate=" + orderDate +
+                ", orderStatus=" + orderStatus +
+                ", countOfSeats=" + countOfSeats +
+                ", arrivalStation='" + arrivalStation + '\'' +
+                ", dispatchStation='" + dispatchStation + '\'' +
+                ", travelTime='" + travelTime + '\'' +
+                ", routeId=" + routeId +
+                ", carriageNumber='" + carriageNumber + '\'' +
+                ", seatNumber='" + seatNumber + '\'' +
+                ", seatsId='" + seatsId + '\'' +
+                '}';
     }
 }

@@ -1,6 +1,6 @@
 package com.epam.redkin.service;
 
-import com.epam.redkin.model.dto.MappingInfoDto;
+import com.epam.redkin.model.dto.MappingInfoDTO;
 import com.epam.redkin.model.entity.RoutePoint;
 
 import java.util.List;
@@ -17,9 +17,9 @@ public interface RoutMappingService {
     List<RoutePoint> getAllRoutToStationMappingList();
 
 
-    List<MappingInfoDto> getAllRoutToStationMappingListById(int routsId);
+    List<MappingInfoDTO> getAllRoutToStationMappingListById(int routsId);
 
 
-    MappingInfoDto getMappingInfo(int routsId, int stationId);
+    MappingInfoDTO getMappingInfo(int routsId, int stationId);
 
 }

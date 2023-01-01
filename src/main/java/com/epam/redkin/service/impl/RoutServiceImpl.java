@@ -1,12 +1,12 @@
 package com.epam.redkin.service.impl;
 
 
-import com.epam.redkin.model.dto.RoutInfoDto;
+import com.epam.redkin.model.dto.RouteInfoDTO;
 import com.epam.redkin.model.dto.RoutsOrderDto;
-import com.epam.redkin.model.dto.StationDto;
+import com.epam.redkin.model.dto.StationDTO;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.entity.Route;
-import com.epam.redkin.model.repository.RouteRepo;
+import com.epam.redkin.model.repository.RouteRepository;
 import com.epam.redkin.service.CarService;
 import com.epam.redkin.service.RoutService;
 import com.epam.redkin.service.SeatService;
@@ -20,12 +20,12 @@ import java.util.*;
 public class RoutServiceImpl implements RoutService {
     private static final Logger LOGGER = LoggerFactory.getLogger(RoutServiceImpl.class);
     private final CarService carService;
-    private final RouteRepo routeRepo;
+    private final RouteRepository routeRepository;
     private final SeatService seatService;
 
 
-    public RoutServiceImpl(RouteRepo routsRepository, SeatService seatService, CarService carService) {
-        this.routeRepo = routsRepository;
+    public RoutServiceImpl(RouteRepository routsRepository, SeatService seatService, CarService carService) {
+        this.routeRepository = routsRepository;
         this.carService = carService;
         this.seatService = seatService;
     }
@@ -33,27 +33,27 @@ public class RoutServiceImpl implements RoutService {
 
     @Override
     public void addRout(Route route) {
-        routeRepo.create(route);
+        routeRepository.create(route);
     }
 
     @Override
     public List<RoutsOrderDto> getRouteListWithParameters(String departureStation, String arrivalStation,
                                                           LocalDateTime departureDate) {
-        List<StationDto> stations = routeRepo.getRouteListWithParameters(departureStation, arrivalStation);
-        Map<Integer, List<StationDto>> routToStationMap = new HashMap<>();
+        List<StationDTO> stations = routeRepository.getStationDTOListWithParameters(departureStation, arrivalStation);
+        Map<Integer, List<StationDTO>> routToStationMap = new HashMap<>();
 
-        for (StationDto stationDto : stations) {
-            List<StationDto> routStations = routToStationMap.computeIfAbsent(stationDto.getRoutsId(), k -> new ArrayList<>());
+        for (StationDTO stationDto : stations) {
+            List<StationDTO> routStations = routToStationMap.computeIfAbsent(stationDto.getRoutsId(), k -> new ArrayList<>());
             routStations.add(stationDto);
         }
 
         List<RoutsOrderDto> result = new ArrayList<>();
 
-        for (List<StationDto> stationDtos : routToStationMap.values()) {
-            StationDto departure = null;
-            StationDto arrival = null;
+        for (List<StationDTO> stationDTOS : routToStationMap.values()) {
+            StationDTO departure = null;
+            StationDTO arrival = null;
 
-            for (StationDto station : stationDtos) {
+            for (StationDTO station : stationDTOS) {
                 if (station.getStation().equalsIgnoreCase(departureStation)) {
                     departure = station;
                 }
@@ -75,7 +75,7 @@ public class RoutServiceImpl implements RoutService {
 
             if (departure.getStationDispatchData().isAfter(departureDate) || departure.getStationDispatchData()
                     .isEqual(departureDate)) {
-                result.add(toRoutsOrderDto(stationDtos));
+                result.add(toRoutsOrderDto(stationDTOS));
             }
         }
 
@@ -87,29 +87,29 @@ public class RoutServiceImpl implements RoutService {
 
 
     @Override
-    public RoutInfoDto getRoutById(int routsId) {
-        return routeRepo.getRoutById(routsId);
+    public RouteInfoDTO getRoutById(int routsId) {
+        return routeRepository.getRouteInfoDTOByRouteId(routsId);
     }
 
     @Override
     public void updateRout(Route route) {
-        routeRepo.update(route);
+        routeRepository.update(route);
     }
 
     @Override
     public void removeRout(int routsId) {
-        routeRepo.delete(routsId);
+        routeRepository.delete(routsId);
     }
 
     @Override
-    public List<RoutInfoDto> getAllRoutList() {
-        return routeRepo.getAllRoutList();
+    public List<RouteInfoDTO> getAllRoutList() {
+        return routeRepository.getAllRouteInfoDTOList();
     }
 
-    private RoutsOrderDto toRoutsOrderDto(List<StationDto> stationDtos) {
+    private RoutsOrderDto toRoutsOrderDto(List<StationDTO> stationDTOS) {
         RoutsOrderDto routsOrderDto = new RoutsOrderDto();
-        routsOrderDto.setStations(stationDtos);
-        StationDto stationDto = stationDtos.get(0);
+        routsOrderDto.setStations(stationDTOS);
+        StationDTO stationDto = stationDTOS.get(0);
         routsOrderDto.setRoutName(stationDto.getRoutName());
         routsOrderDto.setRoutNumber(stationDto.getRoutNumber());
         routsOrderDto.setRoutsId(stationDto.getRoutsId());

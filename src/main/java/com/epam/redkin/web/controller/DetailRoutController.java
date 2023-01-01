@@ -1,7 +1,7 @@
 package com.epam.redkin.web.controller;
 
 
-import com.epam.redkin.model.dto.MappingInfoDto;
+import com.epam.redkin.model.dto.MappingInfoDTO;
 import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.service.RoutMappingService;
 import com.epam.redkin.util.constants.AppContextConstant;
@@ -43,7 +43,7 @@ public class DetailRoutController extends HttpServlet {
         request.setAttribute("departure_date", departureDate);
         request.setAttribute("user_id", userId);
         request.setAttribute("routs_id", routsId);
-        List<MappingInfoDto> allRouteToStationMappingListById = routMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routsId));
+        List<MappingInfoDTO> allRouteToStationMappingListById = routMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routsId));
 
 
         LOGGER.debug("===========ROUTE====DETAIL======");

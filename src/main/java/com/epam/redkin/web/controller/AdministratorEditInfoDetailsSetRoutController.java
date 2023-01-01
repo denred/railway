@@ -1,7 +1,7 @@
 package com.epam.redkin.web.controller;
 
 
-import com.epam.redkin.model.dto.MappingInfoDto;
+import com.epam.redkin.model.dto.MappingInfoDTO;
 import com.epam.redkin.model.entity.RoutePoint;
 import com.epam.redkin.model.entity.Station;
 import com.epam.redkin.model.exception.IncorrectDataException;
@@ -53,7 +53,7 @@ public class AdministratorEditInfoDetailsSetRoutController extends HttpServlet {
         String routsId = request.getParameter("routs_id");
         String stationId = request.getParameter("station_id");
         List<Station> stationList = stationService.getAllStationList();
-        MappingInfoDto MappingInfo = routMappingService.getMappingInfo(Integer.parseInt(routsId), Integer.parseInt(stationId));
+        MappingInfoDTO MappingInfo = routMappingService.getMappingInfo(Integer.parseInt(routsId), Integer.parseInt(stationId));
         request.setAttribute("routs_id", routsId);
         request.setAttribute("station_id", stationId);
         request.setAttribute("current_rout", MappingInfo);

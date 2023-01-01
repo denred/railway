@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `railway`.`user` (
                                                 `birth_date` DATE NOT NULL,
                                                 `role` VARCHAR(45) NOT NULL,
                                                 `blocked` BOOLEAN NOT NULL DEFAULT FALSE,
+                                                UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
                                                 PRIMARY KEY (`id`));
 
 
@@ -36,12 +37,12 @@ CREATE TABLE IF NOT EXISTS `railway`.`user` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `railway`.`booking` (
                                                 `id` INT NOT NULL AUTO_INCREMENT,
-                                               `booking_date` TIMESTAMP(4) NOT NULL,
+                                               `booking_date` TIMESTAMP NOT NULL,
                                                `route_id` INT NOT NULL,
                                                `dispatch_station` VARCHAR(64) NOT NULL,
-                                               `dispatch_date` TIMESTAMP(4) NOT NULL,
+                                               `dispatch_date` TIMESTAMP NOT NULL,
                                                `arrival_station` VARCHAR(64) NOT NULL,
-                                               `arrival_date` TIMESTAMP(4) NOT NULL,
+                                               `arrival_date` TIMESTAMP NOT NULL,
                                                `travel_time` VARCHAR(128) NOT NULL,
                                                `train_number` VARCHAR(64) NOT NULL,
                                                `carriage_number` INT NOT NULL,
@@ -93,12 +94,13 @@ CREATE TABLE IF NOT EXISTS `railway`.`carriage` (
 -- Table `railway`.`route`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `railway`.`route` (
-                                                 `id` INT NOT NULL,
+                                                 `id` INT NOT NULL AUTO_INCREMENT,
                                                  `name` VARCHAR(64) NOT NULL,
                                                  `number` INT NOT NULL,
                                                  `train_id` INT NOT NULL,
                                                  PRIMARY KEY (`id`),
                                                  INDEX `fk_route_train_idx` (`train_id` ASC) VISIBLE,
+                                                 CONSTRAINT `name_number_train_id_uq` UNIQUE(`name`,`number`,`train_id`),
                                                  CONSTRAINT `fk_route_train`
                                                      FOREIGN KEY (`train_id`)
                                                          REFERENCES `railway`.`train` (`id`)
@@ -130,6 +132,7 @@ CREATE TABLE IF NOT EXISTS `railway`.`seat` (
 CREATE TABLE IF NOT EXISTS `railway`.`station` (
                                                    `id` INT NOT NULL AUTO_INCREMENT,
                                                    `station` VARCHAR(100) NOT NULL,
+                                                   UNIQUE INDEX `station_UNIQUE` (`station` ASC) VISIBLE,
                                                    PRIMARY KEY (`id`));
 
 
@@ -141,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `railway`.`station_has_route` (
                                                              `route_id` INT NOT NULL,
                                                              `station_arrival` TIMESTAMP(4) NOT NULL,
                                                              `station_dispatch` TIMESTAMP(4) NOT NULL,
-                                                             `pnr` INT NOT NULL,
+                                                             station_order INT NOT NULL,
                                                              PRIMARY KEY (`station_id`, `route_id`),
                                                              INDEX `fk_station_has_route_route1_idx` (`route_id` ASC) VISIBLE,
                                                              INDEX `fk_station_has_route_station1_idx` (`station_id` ASC) VISIBLE,

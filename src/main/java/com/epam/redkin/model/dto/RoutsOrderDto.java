@@ -8,7 +8,7 @@ public class RoutsOrderDto {
     private int routsId;
     private int trainId;
     private String trainNumber;
-    private List<StationDto> stations;
+    private List<StationDTO> stations;
     private String routName;
     private int routNumber;
     private int firstClassFreeSeatsCount;
@@ -90,11 +90,11 @@ public class RoutsOrderDto {
         this.routNumber = routNumber;
     }
 
-    public List<StationDto> getStations() {
+    public List<StationDTO> getStations() {
         return stations;
     }
 
-    public void setStations(List<StationDto> stations) {
+    public void setStations(List<StationDTO> stations) {
         this.stations = stations;
     }
 

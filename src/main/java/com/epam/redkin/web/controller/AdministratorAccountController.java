@@ -2,7 +2,7 @@ package com.epam.redkin.web.controller;
 
 
 import com.epam.redkin.model.dto.CarriageDTO;
-import com.epam.redkin.model.dto.RoutInfoDto;
+import com.epam.redkin.model.dto.RouteInfoDTO;
 import com.epam.redkin.model.entity.*;
 import com.epam.redkin.service.*;
 import com.epam.redkin.util.constants.AppContextConstant;
@@ -63,7 +63,7 @@ public class AdministratorAccountController extends HttpServlet {
         request.setAttribute("station_list", stationList);
 
 
-        List<RoutInfoDto> routList = routService.getAllRoutList();
+        List<RouteInfoDTO> routList = routService.getAllRoutList();
 
         LOGGER.debug("routList: " + routList);
 

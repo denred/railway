@@ -1,8 +1,8 @@
 package com.epam.redkin.web.controller;
 
 
-import com.epam.redkin.model.dto.MappingInfoDto;
-import com.epam.redkin.model.dto.RoutInfoDto;
+import com.epam.redkin.model.dto.MappingInfoDTO;
+import com.epam.redkin.model.dto.RouteInfoDTO;
 import com.epam.redkin.model.entity.*;
 import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.service.*;
@@ -89,12 +89,12 @@ public class ConfirmOrderController extends HttpServlet {
         LOGGER.debug("arrivalStation: " + arrivalStation);
 
 
-        MappingInfoDto arrivalMapping = routMappingService.getMappingInfo(Integer.parseInt(routsId), arrivalStation.getId());
+        MappingInfoDTO arrivalMapping = routMappingService.getMappingInfo(Integer.parseInt(routsId), arrivalStation.getId());
 
         LOGGER.debug("arrivalMapping: " + arrivalMapping);
 
 
-        MappingInfoDto dispatchMapping = routMappingService.getMappingInfo(Integer.parseInt(routsId), dispatchStation.getId());
+        MappingInfoDTO dispatchMapping = routMappingService.getMappingInfo(Integer.parseInt(routsId), dispatchStation.getId());
 
         LOGGER.debug("dispatchMapping: " + dispatchMapping);
 
@@ -204,7 +204,7 @@ public class ConfirmOrderController extends HttpServlet {
 
 
         String routsId = request.getParameter("routs_id");
-        RoutInfoDto routById = routService.getRoutById(Integer.parseInt(routsId));
+        RouteInfoDTO routById = routService.getRoutById(Integer.parseInt(routsId));
 
         LOGGER.debug("================================!!!!");
         LOGGER.debug("numbers: " + Arrays.toString(numbers));

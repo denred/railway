@@ -1,7 +1,7 @@
 package com.epam.redkin.web.controller;
 
 
-import com.epam.redkin.model.dto.MappingInfoDto;
+import com.epam.redkin.model.dto.MappingInfoDTO;
 import com.epam.redkin.model.entity.Carriage;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.exception.IncorrectDataException;
@@ -47,7 +47,7 @@ public class SelectStationAndCarTypeForOrderController extends HttpServlet {
         request.setAttribute("departure_date", departureDate);
         request.setAttribute("user_id", userId);
         String routsId = request.getParameter("routs_id");
-        List<MappingInfoDto> allRoutToStationMappingListById = routMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routsId));
+        List<MappingInfoDTO> allRoutToStationMappingListById = routMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routsId));
         request.setAttribute("station_list", allRoutToStationMappingListById);
         List<Carriage> allCarList = carService.getCarByTrainId(Integer.parseInt(trainId));
         Set<CarriageType> carSet = new HashSet<>();

@@ -1,7 +1,7 @@
 package com.epam.redkin.web.controller;
 
 
-import com.epam.redkin.model.dto.MappingInfoDto;
+import com.epam.redkin.model.dto.MappingInfoDTO;
 import com.epam.redkin.service.RoutMappingService;
 import com.epam.redkin.util.constants.AppContextConstant;
 import jakarta.servlet.ServletConfig;
@@ -26,7 +26,7 @@ public class AdministratorDetailsSetRoutController extends HttpServlet {
         String stationId = request.getParameter("station_id");
         request.setAttribute("station_id", stationId);
         request.setAttribute("routs_id", routsId);
-        List<MappingInfoDto> AllRoutToStationMappingListById = routMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routsId));
+        List<MappingInfoDTO> AllRoutToStationMappingListById = routMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routsId));
         LOGGER.debug(AllRoutToStationMappingListById.toString());
         request.setAttribute("rout_m_list", AllRoutToStationMappingListById);
         request.getRequestDispatcher("WEB-INF/jsp/administratorDetailsSetRout.jsp").forward(request, response);

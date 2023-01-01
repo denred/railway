@@ -1,6 +1,7 @@
 package com.epam.redkin.model.entity;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Route {
     private int routeId;
@@ -10,6 +11,16 @@ public class Route {
     private List<Station> stationList;
     private int firstClassFreeSeatsCount;
     private int secondClassFreeSeatsCount;
+
+    public Route() {
+    }
+
+    public Route(int routeId, int trainId, int routeNumber, String routeName) {
+        this.routeId = routeId;
+        this.trainId = trainId;
+        this.routeNumber = routeNumber;
+        this.routeName = routeName;
+    }
 
     public int getRouteId() {
         return routeId;
@@ -65,5 +76,31 @@ public class Route {
 
     public void setSecondClassFreeSeatsCount(int secondClassFreeSeatsCount) {
         this.secondClassFreeSeatsCount = secondClassFreeSeatsCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Route)) return false;
+        Route route = (Route) o;
+        return getTrainId() == route.getTrainId() && getRouteNumber() == route.getRouteNumber() && getRouteName().equals(route.getRouteName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTrainId(), getRouteNumber(), getRouteName());
+    }
+
+    @Override
+    public String toString() {
+        return "Route{" +
+                "routeId=" + routeId +
+                ", trainId=" + trainId +
+                ", routeNumber=" + routeNumber +
+                ", routeName='" + routeName + '\'' +
+                ", stationList=" + stationList +
+                ", firstClassFreeSeatsCount=" + firstClassFreeSeatsCount +
+                ", secondClassFreeSeatsCount=" + secondClassFreeSeatsCount +
+                '}';
     }
 }

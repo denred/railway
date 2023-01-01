@@ -1,7 +1,7 @@
 package com.epam.redkin.web.controller;
 
 
-import com.epam.redkin.model.dto.MappingInfoDto;
+import com.epam.redkin.model.dto.MappingInfoDTO;
 import com.epam.redkin.model.entity.RoutePoint;
 import com.epam.redkin.model.entity.Station;
 import com.epam.redkin.model.exception.IncorrectDataException;
@@ -28,11 +28,11 @@ public class AdministratorSetRoutController extends HttpServlet {
     private StationService stationService;
     private RoutMappingService routMappingService;
 
-    public static boolean contains(final List<MappingInfoDto> array, final int order) {
+    public static boolean contains(final List<MappingInfoDTO> array, final int order) {
 
         boolean result = false;
 
-        for (MappingInfoDto mappingInfoDto : array) {
+        for (MappingInfoDTO mappingInfoDto : array) {
             if (mappingInfoDto.getOrder() == order) {
                 result = true;
                 break;
@@ -47,7 +47,7 @@ public class AdministratorSetRoutController extends HttpServlet {
         String routsId = request.getParameter("routs_id");
         routToStationMapping.setRouteId(Integer.parseInt(routsId));
         routToStationMapping.setStationId(Integer.parseInt(request.getParameter("station_station")));
-        List<MappingInfoDto> mappingList = routMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routsId));
+        List<MappingInfoDTO> mappingList = routMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routsId));
         try {
             int stationOrder = Integer.parseInt(request.getParameter("station_order"));
             routToStationMapping.setArrival(LocalDateTime.parse(request.getParameter("station_arrival_date")));

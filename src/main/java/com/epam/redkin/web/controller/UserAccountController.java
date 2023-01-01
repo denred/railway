@@ -1,7 +1,7 @@
 package com.epam.redkin.web.controller;
 
 
-import com.epam.redkin.model.dto.RoutInfoDto;
+import com.epam.redkin.model.dto.RouteInfoDTO;
 import com.epam.redkin.model.entity.Order;
 import com.epam.redkin.service.OrderService;
 import com.epam.redkin.service.RoutService;
@@ -32,8 +32,8 @@ public class UserAccountController extends HttpServlet {
         List<Order> orderList = orderService.getOrderByUserId(Integer.parseInt(userId));
 
         for (int i = 0; i <= orderList.size() - 1; i++) {
-            RoutInfoDto routInfoDto = routService.getRoutById(orderList.get(i).getRouteId());
-            orderList.get(i).setRouteId(routInfoDto.getRoutsId());
+            RouteInfoDTO routeInfoDto = routService.getRoutById(orderList.get(i).getRouteId());
+            orderList.get(i).setRouteId(routeInfoDto.getRoutsId());
         }
         request.setAttribute("order_list", orderList);
         Double priceOfSuccessfulOrders = orderService.getPriceOfSuccessfulOrders(Integer.parseInt(userId));

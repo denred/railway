@@ -2,7 +2,7 @@ package com.epam.redkin.service;
 
 
 
-import com.epam.redkin.model.dto.RoutInfoDto;
+import com.epam.redkin.model.dto.RouteInfoDTO;
 import com.epam.redkin.model.dto.RoutsOrderDto;
 import com.epam.redkin.model.entity.Route;
 
@@ -19,10 +19,10 @@ public interface RoutService {
 
     void updateRout(Route rout);
 
-    List<RoutInfoDto> getAllRoutList();
+    List<RouteInfoDTO> getAllRoutList();
 
 
-    RoutInfoDto getRoutById(int routsId);
+    RouteInfoDTO getRoutById(int routsId);
 
     List<RoutsOrderDto> getRouteListWithParameters(String departureStation, String arrivalStation, LocalDateTime departureDate);
 }

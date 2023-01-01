@@ -1,7 +1,7 @@
 package com.epam.redkin.web.controller;
 
 
-import com.epam.redkin.model.dto.RoutInfoDto;
+import com.epam.redkin.model.dto.RouteInfoDTO;
 import com.epam.redkin.model.entity.Route;
 import com.epam.redkin.model.entity.Train;
 import com.epam.redkin.service.RoutService;
@@ -39,7 +39,7 @@ public class AdministratorEditInfoRoutController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String routsId = request.getParameter("routs_id");
-        RoutInfoDto rout = routService.getRoutById(Integer.parseInt(routsId));
+        RouteInfoDTO rout = routService.getRoutById(Integer.parseInt(routsId));
         request.setAttribute("current_rout", rout);
         List<Train> trainList = trainService.getAllTrainList();
         request.setAttribute("trainList", trainList);

@@ -5,7 +5,7 @@ import com.epam.redkin.model.entity.Order;
 import com.epam.redkin.model.entity.OrderStatus;
 import com.epam.redkin.model.entity.Seat;
 import com.epam.redkin.model.exception.IncorrectDataException;
-import com.epam.redkin.model.repository.OrderRepo;
+import com.epam.redkin.model.repository.OrderRepository;
 import com.epam.redkin.model.repository.SeatRepository;
 import com.epam.redkin.service.OrderService;
 import com.epam.redkin.service.SeatService;
@@ -20,11 +20,11 @@ public class OrderServiceImpl implements OrderService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
 
-    private OrderRepo orderRepository;
+    private OrderRepository orderRepository;
     private SeatRepository seatRepository;
     private SeatService seatService;
 
-    public OrderServiceImpl(OrderRepo orderRepository, SeatService seatService, SeatRepository seatRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, SeatService seatService, SeatRepository seatRepository) {
         this.orderRepository = orderRepository;
         this.seatRepository = seatRepository;
         this.seatService = seatService;

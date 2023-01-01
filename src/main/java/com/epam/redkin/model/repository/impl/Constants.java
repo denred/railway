@@ -57,7 +57,7 @@ public interface Constants {
 
     /* ROUTES */
     String GET_ROUTE_LIST_WITH_PARAMETERS = "SELECT r.name, r.number, r.id, station, " +
-            "s.id, t.number, r.train_id, station_arrival, station_dispatch, pnr " +
+            "s.id, t.number, r.train_id, station_arrival, station_dispatch, order_station " +
             "FROM route as r " +
             "JOIN train as t on r.train_id = t.id " +
             "JOIN station_has_route as shr on shr.route_id = r.id " +
@@ -81,42 +81,30 @@ public interface Constants {
     /* ROUTE MAPPING */
     String GET_ALL_ROUTE_MAPPING = "SELECT * FROM station_has_route";
     String ADD_ROUTE_MAPPINGS = "INSERT INTO station_has_route as rm " +
-            "(station_id, route_id, station_arrival, station_dispatch, pnr) VALUES (?, ?, ?, ?, ?)";
+            "(station_id, route_id, station_arrival, station_dispatch, station_order) VALUES (?, ?, ?, ?, ?)";
     String GET_ROUT_MAPPING_BY_ID = "SELECT * FROM station_has_route WHERE route_id = ?";
     String UPDATE_ROUTE_MAPPING = "UPDATE station_has_route " +
             "SET station_id = ?, " +
             "station_arrival = ?, " +
             "station_dispatch = ?, " +
-            "pnr = ?  " +
+            "station_order = ?  " +
             "WHERE route_id = ? AND station_id= ?";
 
     String DELETE_ROUTE_MAPPING = "DELETE FROM station_has_route WHERE route_id = ? AND station_id = ?";
     String GET_ROUTE_MAPPING_BY_ROUTE_ID = "SELECT * FROM station_has_route as rm " +
             "JOIN station as s ON rm.station_id = s.id " +
-            "WHERE route_id = ? ORDER BY pnr";
+            "WHERE route_id = ? ORDER BY station_order";
     String GET_ROUTE_MAPPING_BY_STATION_AND_ROUTE_ID = "SELECT * FROM station_has_route as rm " +
             "JOIN station as s ON rm.station_id = s.id " +
             "WHERE rm.route_id = ? AND rm.station_id = ? ORDER BY pnr";
 
     /* ORDER */
-    String ADD_ORDER = "INSERT INTO booking " +
-            "(booking_date, " +
-            "route_id, " +
-            "dispatch_station, " +
-            "dispatch_date, " +
-            "arrival_station, " +
-            "arrival_date, " +
-            "travel_time, " +
-            "train_number, " +
-            "carriage_number, " +
-            "carriage_type, " +
-            "seat_count, " +
-            "seat_number, " +
-            "seat_id, " +
-            "price," +
-            "status, " +
-            "user_id) " +
-            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    String ADD_ORDER = "INSERT INTO `booking` (`booking_date`, `route_id`, `dispatch_station`, `dispatch_date`,\n" +
+            "                                 `arrival_station`, `arrival_date`, `travel_time`, `train_number`, `carriage_number`,\n" +
+            "                                 `carriage_type`, `seat_count`, `seat_number`, `seats_id`, `user_id`, `price`, `status`)\n" +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
+    String READ_ORDER_BY_ORDER_ID = "SELECT * FROM booking JOIN user on user_id = user.id WHERE booking.id = ?";
 
     String UPDATE_ORDER_STATUS = "UPDATE booking SET status = ? WHERE id = ?";
     String GET_ALL_ORDER = "SELECT * FROM booking JOIN user ON user_id = user.id";

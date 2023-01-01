@@ -1,25 +1,25 @@
 package com.epam.redkin.service.impl;
 
 
-import com.epam.redkin.model.dto.MappingInfoDto;
+import com.epam.redkin.model.dto.MappingInfoDTO;
 import com.epam.redkin.model.entity.RoutePoint;
-import com.epam.redkin.model.repository.RoutePointRepo;
+import com.epam.redkin.model.repository.RoutePointRepository;
 import com.epam.redkin.service.RoutMappingService;
 
 import java.util.List;
 
 public class RoutMappingServiceImpl implements RoutMappingService {
-    private RoutePointRepo routMappingRepository;
+    private RoutePointRepository routMappingRepository;
 
 
-    public RoutMappingServiceImpl(RoutePointRepo routMappingRepository) {
+    public RoutMappingServiceImpl(RoutePointRepository routMappingRepository) {
         this.routMappingRepository = routMappingRepository;
     }
 
 
     @Override
     public void updateRoutToStationMapping(RoutePoint routToStationMapping, int stationId) {
-        routMappingRepository.update(routToStationMapping, stationId);
+        routMappingRepository.updateRoutePointByStationId(routToStationMapping, stationId);
     }
 
     @Override
@@ -29,22 +29,22 @@ public class RoutMappingServiceImpl implements RoutMappingService {
 
     @Override
     public void removeRoutToStationMapping(int routsId, int stationId) {
-            routMappingRepository.delete(routsId, stationId);
+            routMappingRepository.deleteRoutePointByStationId(routsId, stationId);
 
     }
 
     @Override
-    public MappingInfoDto getMappingInfo(int routsId, int stationId) {
+    public MappingInfoDTO getMappingInfo(int routsId, int stationId) {
         return routMappingRepository.getMappingInfo(routsId, stationId);
     }
 
     @Override
-    public List<MappingInfoDto> getAllRoutToStationMappingListById(int routsId) {
-        return routMappingRepository.getAllRoutToStationMappingListById(routsId);
+    public List<MappingInfoDTO> getAllRoutToStationMappingListById(int routsId) {
+        return routMappingRepository.getMappingInfoListByRouteId(routsId);
     }
 
     @Override
     public List<RoutePoint> getAllRoutToStationMappingList() {
-        return routMappingRepository.getAllRoutToStationMappingList();
+        return routMappingRepository.getRoutePointList();
     }
 }

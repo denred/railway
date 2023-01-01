@@ -1,7 +1,7 @@
 package com.epam.redkin.validator;
 
 
-import com.epam.redkin.model.dto.MappingInfoDto;
+import com.epam.redkin.model.dto.MappingInfoDTO;
 import com.epam.redkin.model.entity.RoutePoint;
 import com.epam.redkin.model.exception.IncorrectDataException;
 
@@ -17,11 +17,11 @@ public class RoutMappingValidator {
     private static final String STATION_DISPATCH_DATA = "^(19|20)\\d\\d-(0[1-9]|1[012])-([012]\\d|3[01])T([01]\\d|2[0-3]):([0-5]\\d)$";
     private static final String STATION_ORDER = "(?<![-\\d])(?<!\\d[.,])\\d*[0-9](?![.,]?\\d){1,2}";
 
-    public static boolean contains(final List<MappingInfoDto> array, final LocalDateTime localDateTime) {
+    public static boolean contains(final List<MappingInfoDTO> array, final LocalDateTime localDateTime) {
 
         boolean result = false;
 
-        for (MappingInfoDto mappingInfoDto : array) {
+        for (MappingInfoDTO mappingInfoDto : array) {
             if (mappingInfoDto.getStationArrivalDate().isAfter(localDateTime)) {
                 result = true;
                 break;
@@ -30,7 +30,7 @@ public class RoutMappingValidator {
         return result;
     }
 
-    public void isValidRoutToStationMapping(RoutePoint routToStationMapping, List<MappingInfoDto> mappingList) {
+    public void isValidRoutToStationMapping(RoutePoint routToStationMapping, List<MappingInfoDTO> mappingList) {
 
         Map<String, String> errors = new HashMap<>();
 

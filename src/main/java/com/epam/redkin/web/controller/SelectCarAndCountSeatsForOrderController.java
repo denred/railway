@@ -1,7 +1,7 @@
 package com.epam.redkin.web.controller;
 
 
-import com.epam.redkin.model.dto.RoutInfoDto;
+import com.epam.redkin.model.dto.RouteInfoDTO;
 import com.epam.redkin.model.entity.Carriage;
 import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.service.CarService;
@@ -60,8 +60,8 @@ public class SelectCarAndCountSeatsForOrderController extends HttpServlet {
         request.setAttribute("car_type", carType);
         request.setAttribute("user_id", userId);
         request.setAttribute("train_id", trainId);
-        RoutInfoDto routInfoDto = routService.getRoutById(Integer.parseInt(routsId));
-        List<Carriage> carList = carService.getCarByTrainIdAndCarType(routInfoDto.getTrainId(), carType);
+        RouteInfoDTO routeInfoDto = routService.getRoutById(Integer.parseInt(routsId));
+        List<Carriage> carList = carService.getCarByTrainIdAndCarType(routeInfoDto.getTrainId(), carType);
         request.setAttribute("car_list", carList);
 
         request.getRequestDispatcher("WEB-INF/jsp/selectCarAndCountSeatsForOrder.jsp").forward(request, response);

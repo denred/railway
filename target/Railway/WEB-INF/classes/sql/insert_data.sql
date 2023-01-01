@@ -64,16 +64,53 @@ INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('4', 'Oleksandriia');
 INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('5', 'Znamianka');
 INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('6', 'Im.tarasa Shevchenka');
 INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('7', 'Kyiv');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('8', 'Zaporizhzhia');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('9', 'Odesa');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('10', 'Verkhivtseve');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('11', 'Kropyvnyts\'kyi');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('12', 'Novoukrainka');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('13', 'Pomichna');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('14', 'Pervomaisk');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('15', 'Liubashivka');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('16', 'Balta');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('17', 'Podilsk');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('18', 'Rozdilna I');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('19', 'Zhytomyr');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('20', 'Korosten');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('21', 'Bilokorovychi');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('22', 'Olevs\'k');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('23', 'Ostky');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('24', 'Rokytne-Volynske');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('25', 'Tomashhorod');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('26', 'Klesiv');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('27', 'Sarny');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('28', 'Antonivka');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('29', 'Rafalivka');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('30', 'Varash');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('31', 'Chortoryisk');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('32', 'Manevychi');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('33', 'Kovel');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('34', 'Turiis\'k');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('35', 'Volodymyr-Volynskyi');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('36', 'Ivanychi');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('37', 'Sokal');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('38', 'Chervonohrad');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('39', 'Sosnivka');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('40', 'Pidzamche');
+INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('41', 'Lviv');
+
+
+
 
 
 /* ROUTE HAS STATION */
-INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, `pnr`) VALUES ('1', '7', '2022-12-06 15:00:00', '2022-12-06 15:20:00', '1');
-INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, `pnr`) VALUES ('2', '7', '2022-12-06 15:00:00', '2022-12-06 15:48:00', '2');
-INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, `pnr`) VALUES ('3', '7', '2022-12-06 16:41:00', '2022-12-06 16:42:00', '3');
-INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, `pnr`) VALUES ('4', '7', '2022-12-06 17:25:00', '2022-12-06 17:26:00', '4');
-INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, `pnr`) VALUES ('5', '7', '2022-12-06 17:59:00', '2022-12-06 18:00:00', '5');
-INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, `pnr`) VALUES ('6', '7', '2022-12-06 19:01:00', '2022-12-06 19:02:00', '6');
-INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, `pnr`) VALUES ('7', '7', '2022-12-06 21:23:00', '2022-12-06 21:38:00', '7');
+INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('1', '7', '2022-12-06 15:00:00', '2022-12-06 15:20:00', '1');
+INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('2', '7', '2022-12-06 15:00:00', '2022-12-06 15:48:00', '2');
+INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('3', '7', '2022-12-06 16:41:00', '2022-12-06 16:42:00', '3');
+INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('4', '7', '2022-12-06 17:25:00', '2022-12-06 17:26:00', '4');
+INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('5', '7', '2022-12-06 17:59:00', '2022-12-06 18:00:00', '5');
+INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('6', '7', '2022-12-06 19:01:00', '2022-12-06 19:02:00', '6');
+INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('7', '7', '2022-12-06 21:23:00', '2022-12-06 21:38:00', '7');
 
 
 /* CARRIAGE */
