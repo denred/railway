@@ -57,7 +57,7 @@ public interface Constants {
 
     /* ROUTES */
     String GET_ROUTE_LIST_WITH_PARAMETERS = "SELECT r.name, r.number, r.id, station, " +
-            "s.id, t.number, r.train_id, station_arrival, station_dispatch, order_station " +
+            "s.id, t.number, r.train_id, station_arrival, station_dispatch, station_order " +
             "FROM route as r " +
             "JOIN train as t on r.train_id = t.id " +
             "JOIN station_has_route as shr on shr.route_id = r.id " +
@@ -96,7 +96,7 @@ public interface Constants {
             "WHERE route_id = ? ORDER BY station_order";
     String GET_ROUTE_MAPPING_BY_STATION_AND_ROUTE_ID = "SELECT * FROM station_has_route as rm " +
             "JOIN station as s ON rm.station_id = s.id " +
-            "WHERE rm.route_id = ? AND rm.station_id = ? ORDER BY pnr";
+            "WHERE rm.route_id = ? AND rm.station_id = ? ORDER BY station_order";
 
     /* ORDER */
     String ADD_ORDER = "INSERT INTO `booking` (`booking_date`, `route_id`, `dispatch_station`, `dispatch_date`,\n" +

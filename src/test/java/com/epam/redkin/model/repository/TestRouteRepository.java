@@ -37,20 +37,34 @@ public class TestRouteRepository implements TestConstants {
     @BeforeEach
     public void init() throws SQLException {
         routeRepository = new RouteRepositoryImpl(ConnectionPools.getTransactional());
-        connection.createStatement().executeUpdate(CREATE_TRAIN_TABLE);
+        connection.createStatement().executeUpdate(CREATE_STATION_TABLE);
         connection.createStatement().executeUpdate(CREATE_ROUTE_TABLE);
-        connection.createStatement().executeUpdate(INSERT_TRAIN1);
-        connection.createStatement().executeUpdate(INSERT_TRAIN2);
-        connection.createStatement().executeUpdate(INSERT_TRAIN3);
+        connection.createStatement().executeUpdate(CREATE_ROUTE_POINT_TABLE);
+        connection.createStatement().executeUpdate(CREATE_TRAIN_TABLE);
+
+        connection.createStatement().executeUpdate(INSERT_STATION1);
+        connection.createStatement().executeUpdate(INSERT_STATION2);
+        connection.createStatement().executeUpdate(INSERT_STATION3);
         connection.createStatement().executeUpdate(INSERT_ROUTE1);
         connection.createStatement().executeUpdate(INSERT_ROUTE2);
         connection.createStatement().executeUpdate(INSERT_ROUTE3);
+        connection.createStatement().executeUpdate(INSERT_ROUTE_POINT1);
+        connection.createStatement().executeUpdate(INSERT_ROUTE_POINT2);
+        connection.createStatement().executeUpdate(INSERT_ROUTE_POINT3);
+        connection.createStatement().executeUpdate(INSERT_ROUTE_POINT4);
+        connection.createStatement().executeUpdate(INSERT_ROUTE_POINT5);
+        connection.createStatement().executeUpdate(INSERT_TRAIN1);
+        connection.createStatement().executeUpdate(INSERT_TRAIN2);
+        connection.createStatement().executeUpdate(INSERT_TRAIN3);
+
     }
 
     @AfterEach
     public void remove() throws SQLException {
         connection.createStatement().executeUpdate(REMOVE_TRAIN_TABLE);
+        connection.createStatement().executeUpdate(REMOVE_ROUTE_POINT_TABLE);
         connection.createStatement().executeUpdate(REMOVE_ROUTE_TABLE);
+        connection.createStatement().executeUpdate(REMOVE_STATION_TABLE);
     }
 
     @RepeatedTest(100)
@@ -59,7 +73,7 @@ public class TestRouteRepository implements TestConstants {
         int id = 1;
         int trainId = random.ints(1, 3)
                 .findFirst()
-                .getAsInt();
+                .orElse(1);
         int routeNumber = random.nextInt();
         String routeName = RandomStringUtils.random(64, true, true);
 
@@ -153,46 +167,10 @@ public class TestRouteRepository implements TestConstants {
         assertNull(routeRepository.getRouteInfoDTOByRouteId(1088));
     }
 
-    /*
-    * result.setStationId(resultSet.getInt("s.id"));
-            result.setStation(resultSet.getString("station"));
-            result.setOrder(resultSet.getInt("station_order"));
-            result.setStationArrivalDate(resultSet.getObject("station_arrival", LocalDateTime.class));
-            result.setStationDispatchData(resultSet.getObject("station_dispatch", LocalDateTime.class));
-            result.setRoutName(resultSet.getString("r.name"));
-            result.setRoutNumber(resultSet.getInt("r.number"));
-            result.setRoutsId(resultSet.getInt("r.id"));
-            result.setTrainId(resultSet.getInt("train_id"));
-            result.setTrainNumber(resultSet.getString("t.number"));
-            *
-            *
-            * StationDTO(int stationId,
-            *           String station,
-            *           int order,
-            *           LocalDateTime stationArrivalDate,
-            *           LocalDateTime stationDispatchData,
-            *           String routName,
-            *           int routNumber,
-            *           int routsId,
-            *           int trainId,
-            *           String trainNumber)
-            *
-            *
-            * String GET_ROUTE_LIST_WITH_PARAMETERS =
-            * "SELECT r.name, r.number, r.id, station, " +
-            "s.id, t.number, r.train_id, station_arrival, station_dispatch, pnr " +
-            "FROM route as r " +
-            "JOIN train as t on r.train_id = t.id " +
-            "JOIN station_has_route as shr on shr.route_id = r.id " +
-            "JOIN station as s on shr.station_id = s.id " +
-            "WHERE station IN (?, ?) " +
-            "ORDER BY station_dispatch, r.name , r.number";
-
-            *
-            *
-    * */
-
+    @Test
     void testGetStationDTOListWithParameters() {
-        //StationDTO stationDTO = routeRepository.getStationDTOListWithParameters();
+        List<StationDTO> stationDTO = routeRepository.getStationDTOListWithParameters("Zaporizhzhia", "Kyiv");
+
+        assertEquals(stationDTO.size(), 4);
     }
 }

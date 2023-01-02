@@ -148,9 +148,9 @@ public interface TestConstants {
     String INSERT_USER2 = "INSERT INTO `user` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `birth_date`, `role`, `blocked`) VALUES ('2', 'user@mail.com', 'user', 'Петро', 'Алексеев', '+380627872234', '1984-09-01', 'user', '0');";
     String INSERT_USER3 = "INSERT INTO `user` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `birth_date`, `role`, `blocked`) VALUES ('3', 'test@mail.com', 'test', 'Test', 'Test', '+380607872234', '1998-01-01', 'user', '1');";
     String INSERT_ROUTE_POINT1 = "INSERT INTO `station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('1', '1', '2022-12-06 15:00:00', '2022-12-06 15:20:00', '1');";
-    String INSERT_ROUTE_POINT2 = "INSERT INTO `station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('2', '1', '2022-12-06 15:40:00', '2022-12-06 16:20:00', '2');";
-    String INSERT_ROUTE_POINT3 = "INSERT INTO `station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('3', '1', '2022-12-06 16:30:00', '2022-13-06 15:20:00', '3');";
-    String INSERT_ROUTE_POINT4 = "INSERT INTO `station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('4', '2', '2022-12-06 06:01:00', '2022-12-06 06:20:00', '1');";
-    String INSERT_ROUTE_POINT5 = "INSERT INTO `station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('5', '2', '2022-12-06 11:00:00', '2022-12-06 12:00:00', '2');";
+    String INSERT_ROUTE_POINT2 = "INSERT INTO `station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('2', '1', '2022-12-06 15:40:00', '2022-12-07 16:20:00', '2');";
+    String INSERT_ROUTE_POINT3 = "INSERT INTO `station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('3', '1', '2022-12-07 16:30:00', '2022-12-08 15:20:00', '3');";
+    String INSERT_ROUTE_POINT4 = "INSERT INTO `station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('1', '2', '2022-12-09 06:01:00', '2022-12-16 06:20:00', '1');";
+    String INSERT_ROUTE_POINT5 = "INSERT INTO `station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('2', '2', '2022-12-17 11:00:00', '2022-12-18 12:00:00', '2');";
 
 }

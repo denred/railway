@@ -26,6 +26,7 @@ public class TestRoutePointRepository implements TestConstants {
         routePointRepository = new RoutePointRepositoryImpl(ConnectionPools.getTransactional());
         connection.createStatement().executeUpdate(CREATE_STATION_TABLE);
         connection.createStatement().executeUpdate(CREATE_ROUTE_TABLE);
+        connection.createStatement().executeUpdate(CREATE_ROUTE_POINT_TABLE);
         connection.createStatement().executeUpdate(INSERT_STATION1);
         connection.createStatement().executeUpdate(INSERT_STATION2);
         connection.createStatement().executeUpdate(INSERT_STATION3);
@@ -41,6 +42,7 @@ public class TestRoutePointRepository implements TestConstants {
 
     @AfterEach
     public void remove() throws SQLException {
+        connection.createStatement().executeUpdate(REMOVE_ROUTE_POINT_TABLE);
         connection.createStatement().executeUpdate(REMOVE_STATION_TABLE);
         connection.createStatement().executeUpdate(REMOVE_ROUTE_TABLE);
     }
