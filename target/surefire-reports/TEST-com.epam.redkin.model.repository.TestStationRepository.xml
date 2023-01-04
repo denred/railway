@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.epam.redkin.model.repository.TestStationRepository" time="3.369" tests="507" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="19"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/test-classes:/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/classes:/Users/denis/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.1/junit-jupiter-engine-5.9.1.jar:/Users/denis/.m2/repository/org/junit/platform/junit-platform-engine/1.9.1/junit-platform-engine-1.9.1.jar:/Users/denis/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/denis/.m2/repository/org/junit/platform/junit-platform-commons/1.9.1/junit-platform-commons-1.9.1.jar:/Users/denis/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.1/junit-jupiter-api-5.9.1.jar:/Users/denis/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/denis/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.9.1/junit-jupiter-params-5.9.1.jar:/Users/denis/.m2/repository/com/zaxxer/HikariCP/5.0.1/HikariCP-5.0.1.jar:/Users/denis/.m2/repository/jakarta/servlet/jakarta.servlet-api/6.0.0/jakarta.servlet-api-6.0.0.jar:/Users/denis/.m2/repository/com/mysql/mysql-connector-j/8.0.31/mysql-connector-j-8.0.31.jar:/Users/denis/.m2/repository/com/google/protobuf/protobuf-java/3.19.4/protobuf-java-3.19.4.jar:/Users/denis/.m2/repository/jakarta/servlet/jsp/jakarta.servlet.jsp-api/3.1.0/jakarta.servlet.jsp-api-3.1.0.jar:/Users/denis/.m2/repository/jakarta/servlet/jsp/jstl/jakarta.servlet.jsp.jstl-api/3.0.0/jakarta.servlet.jsp.jstl-api-3.0.0.jar:/Users/denis/.m2/repository/jakarta/el/jakarta.el-api/5.0.0/jakarta.el-api-5.0.0.jar:/Users/denis/.m2/repository/org/glassfish/web/jakarta.servlet.jsp.jstl/3.0.1/jakarta.servlet.jsp.jstl-3.0.1.jar:/Users/denis/.m2/repository/org/eclipse/jetty/apache-jstl/11.0.0/apache-jstl-11.0.0.jar:/Users/denis/.m2/repository/org/mortbay/jasper/taglibs-standard/10.0.0-M10/taglibs-standard-10.0.0-M10.jar:/Users/denis/.m2/repository/org/slf4j/slf4j-api/2.0.5/slf4j-api-2.0.5.jar:/Users/denis/.m2/repository/org/slf4j/slf4j-reload4j/2.0.5/slf4j-reload4j-2.0.5.jar:/Users/denis/.m2/repository/ch/qos/reload4j/reload4j/1.2.22/reload4j-1.2.22.jar:/Users/denis/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="java.vm.specification.version" value="19"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="UA"/>
+    <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk-19.jdk/Contents/Home/lib"/>
+    <property name="sun.java.command" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/surefire/surefirebooter586078402789486895.jar /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/surefire 2023-01-02T13-48-06_386-jvmRun1 surefire12579367407366137730tmp surefire_012270272306122144994tmp"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/test-classes:/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/classes:/Users/denis/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.1/junit-jupiter-engine-5.9.1.jar:/Users/denis/.m2/repository/org/junit/platform/junit-platform-engine/1.9.1/junit-platform-engine-1.9.1.jar:/Users/denis/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/denis/.m2/repository/org/junit/platform/junit-platform-commons/1.9.1/junit-platform-commons-1.9.1.jar:/Users/denis/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.1/junit-jupiter-api-5.9.1.jar:/Users/denis/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/denis/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.9.1/junit-jupiter-params-5.9.1.jar:/Users/denis/.m2/repository/com/zaxxer/HikariCP/5.0.1/HikariCP-5.0.1.jar:/Users/denis/.m2/repository/jakarta/servlet/jakarta.servlet-api/6.0.0/jakarta.servlet-api-6.0.0.jar:/Users/denis/.m2/repository/com/mysql/mysql-connector-j/8.0.31/mysql-connector-j-8.0.31.jar:/Users/denis/.m2/repository/com/google/protobuf/protobuf-java/3.19.4/protobuf-java-3.19.4.jar:/Users/denis/.m2/repository/jakarta/servlet/jsp/jakarta.servlet.jsp-api/3.1.0/jakarta.servlet.jsp-api-3.1.0.jar:/Users/denis/.m2/repository/jakarta/servlet/jsp/jstl/jakarta.servlet.jsp.jstl-api/3.0.0/jakarta.servlet.jsp.jstl-api-3.0.0.jar:/Users/denis/.m2/repository/jakarta/el/jakarta.el-api/5.0.0/jakarta.el-api-5.0.0.jar:/Users/denis/.m2/repository/org/glassfish/web/jakarta.servlet.jsp.jstl/3.0.1/jakarta.servlet.jsp.jstl-3.0.1.jar:/Users/denis/.m2/repository/org/eclipse/jetty/apache-jstl/11.0.0/apache-jstl-11.0.0.jar:/Users/denis/.m2/repository/org/mortbay/jasper/taglibs-standard/10.0.0-M10/taglibs-standard-10.0.0-M10.jar:/Users/denis/.m2/repository/org/slf4j/slf4j-api/2.0.5/slf4j-api-2.0.5.jar:/Users/denis/.m2/repository/org/slf4j/slf4j-reload4j/2.0.5/slf4j-reload4j-2.0.5.jar:/Users/denis/.m2/repository/ch/qos/reload4j/reload4j/1.2.22/reload4j-1.2.22.jar:/Users/denis/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/Users/denis"/>
+    <property name="user.language" value="ru"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2022-09-20"/>
+    <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk-19.jdk/Contents/Home"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="apple.awt.application.name" value="ForkedBooter"/>
+    <property name="surefire.real.class.path" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/surefire/surefirebooter586078402789486895.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.runtime.version" value="19+36-2238"/>
+    <property name="user.name" value="denis"/>
+    <property name="stdout.encoding" value="US-ASCII"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="13.1"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="/Users/denis/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="/var/folders/bz/7mv7z2g138v96mchvysfthhh0000gn/T/"/>
+    <property name="idea.version" value="2022.1.2"/>
+    <property name="java.version" value="19"/>
+    <property name="user.dir" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway"/>
+    <property name="os.arch" value="aarch64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="native.encoding" value="US-ASCII"/>
+    <property name="java.library.path" value="/Users/denis/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="US-ASCII"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="19+36-2238"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.class.version" value="63.0"/>
+  </properties>
+  <testcase name="testCreateNullStation" classname="com.epam.redkin.model.repository.TestStationRepository" time="0"/>
+  <testcase name="testUpdateStation" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateDuplicateStation" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testDeleteNonExistStation" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testDeleteStation" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testUpdateExistStation" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[1]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[2]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[3]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[4]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[5]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[6]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[7]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[8]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[9]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[10]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.012"/>
+  <testcase name="testCreateAndReadStation[11]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.013"/>
+  <testcase name="testCreateAndReadStation[12]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.013"/>
+  <testcase name="testCreateAndReadStation[13]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.014"/>
+  <testcase name="testCreateAndReadStation[14]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.016"/>
+  <testcase name="testCreateAndReadStation[15]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.012"/>
+  <testcase name="testCreateAndReadStation[16]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[17]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[18]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.009"/>
+  <testcase name="testCreateAndReadStation[19]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[20]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[21]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[22]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.009"/>
+  <testcase name="testCreateAndReadStation[23]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[24]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[25]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[26]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[27]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[28]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[29]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[30]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[31]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[32]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[33]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[34]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[35]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[36]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[37]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[38]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[39]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[40]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[41]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[42]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[43]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[44]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.009"/>
+  <testcase name="testCreateAndReadStation[45]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[46]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[47]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[48]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[49]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[50]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[51]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[52]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[53]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[54]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[55]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[56]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[57]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[58]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[59]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[60]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[61]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[62]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[63]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[64]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[65]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[66]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[67]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[68]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[69]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[70]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[71]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[72]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[73]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[74]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[75]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[76]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[77]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[78]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[79]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[80]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[81]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[82]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[83]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[84]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[85]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[86]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[87]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[88]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.009"/>
+  <testcase name="testCreateAndReadStation[89]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[90]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[91]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[92]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[93]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.009"/>
+  <testcase name="testCreateAndReadStation[94]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[95]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[96]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[97]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[98]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[99]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[100]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[101]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[102]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[103]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[104]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[105]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[106]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[107]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[108]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[109]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[110]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[111]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.009"/>
+  <testcase name="testCreateAndReadStation[112]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[113]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.009"/>
+  <testcase name="testCreateAndReadStation[114]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[115]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.009"/>
+  <testcase name="testCreateAndReadStation[116]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[117]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[118]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[119]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[120]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[121]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[122]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.009"/>
+  <testcase name="testCreateAndReadStation[123]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[124]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[125]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[126]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[127]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[128]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[129]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[130]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[131]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[132]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[133]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[134]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[135]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[136]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[137]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[138]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.01"/>
+  <testcase name="testCreateAndReadStation[139]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[140]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.009"/>
+  <testcase name="testCreateAndReadStation[141]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[142]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[143]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[144]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[145]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[146]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[147]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[148]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[149]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[150]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.012"/>
+  <testcase name="testCreateAndReadStation[151]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.014"/>
+  <testcase name="testCreateAndReadStation[152]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.013"/>
+  <testcase name="testCreateAndReadStation[153]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.013"/>
+  <testcase name="testCreateAndReadStation[154]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[155]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[156]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[157]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.015"/>
+  <testcase name="testCreateAndReadStation[158]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[159]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[160]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.01"/>
+  <testcase name="testCreateAndReadStation[161]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[162]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[163]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[164]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[165]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[166]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[167]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[168]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[169]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[170]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.014"/>
+  <testcase name="testCreateAndReadStation[171]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[172]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.011"/>
+  <testcase name="testCreateAndReadStation[173]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[174]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[175]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[176]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[177]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[178]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[179]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.009"/>
+  <testcase name="testCreateAndReadStation[180]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[181]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[182]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[183]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[184]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[185]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[186]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[187]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[188]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[189]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[190]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[191]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[192]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[193]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[194]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[195]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[196]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[197]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[198]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[199]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[200]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[201]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[202]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[203]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[204]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[205]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[206]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[207]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[208]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[209]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[210]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[211]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[212]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[213]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[214]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[215]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[216]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[217]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[218]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[219]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[220]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[221]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[222]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[223]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[224]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[225]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[226]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[227]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[228]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[229]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[230]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[231]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[232]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[233]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[234]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[235]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[236]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[237]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[238]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[239]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[240]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[241]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.009"/>
+  <testcase name="testCreateAndReadStation[242]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[243]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[244]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[245]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[246]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[247]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[248]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[249]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[250]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[251]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[252]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[253]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[254]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[255]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[256]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[257]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[258]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[259]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[260]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[261]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[262]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[263]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[264]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[265]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[266]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[267]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[268]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[269]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[270]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[271]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[272]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[273]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[274]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[275]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[276]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[277]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[278]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[279]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[280]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[281]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[282]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[283]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[284]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[285]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[286]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[287]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[288]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[289]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[290]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[291]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[292]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[293]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[294]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[295]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[296]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[297]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[298]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[299]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[300]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[301]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[302]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[303]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[304]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[305]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.009"/>
+  <testcase name="testCreateAndReadStation[306]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.014"/>
+  <testcase name="testCreateAndReadStation[307]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.013"/>
+  <testcase name="testCreateAndReadStation[308]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.014"/>
+  <testcase name="testCreateAndReadStation[309]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.009"/>
+  <testcase name="testCreateAndReadStation[310]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[311]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[312]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[313]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[314]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[315]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[316]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[317]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[318]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[319]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[320]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[321]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[322]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[323]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[324]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[325]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[326]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[327]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[328]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[329]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[330]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[331]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[332]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[333]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[334]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[335]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[336]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[337]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[338]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[339]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[340]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[341]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[342]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[343]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[344]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[345]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[346]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[347]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[348]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[349]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[350]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[351]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[352]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[353]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[354]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[355]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[356]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[357]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[358]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[359]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[360]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[361]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[362]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[363]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[364]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[365]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[366]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[367]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[368]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[369]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[370]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[371]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[372]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[373]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[374]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[375]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[376]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[377]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[378]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[379]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[380]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[381]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[382]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[383]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[384]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[385]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[386]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[387]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[388]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[389]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[390]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[391]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[392]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[393]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[394]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[395]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[396]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[397]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.011"/>
+  <testcase name="testCreateAndReadStation[398]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[399]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[400]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[401]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[402]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[403]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[404]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[405]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[406]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[407]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[408]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[409]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[410]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[411]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[412]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[413]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[414]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[415]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[416]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[417]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[418]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[419]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[420]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[421]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[422]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[423]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[424]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[425]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[426]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[427]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[428]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[429]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[430]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[431]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[432]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[433]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[434]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[435]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[436]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[437]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[438]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[439]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[440]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[441]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[442]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[443]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[444]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[445]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[446]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[447]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[448]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[449]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[450]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[451]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[452]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[453]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[454]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[455]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[456]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[457]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[458]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[459]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[460]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[461]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[462]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[463]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[464]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[465]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[466]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.013"/>
+  <testcase name="testCreateAndReadStation[467]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.01"/>
+  <testcase name="testCreateAndReadStation[468]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.013"/>
+  <testcase name="testCreateAndReadStation[469]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.014"/>
+  <testcase name="testCreateAndReadStation[470]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.013"/>
+  <testcase name="testCreateAndReadStation[471]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[472]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[473]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[474]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[475]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[476]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[477]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[478]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[479]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[480]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[481]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[482]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[483]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[484]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[485]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[486]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[487]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[488]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[489]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[490]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[491]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[492]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+  <testcase name="testCreateAndReadStation[493]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[494]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[495]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[496]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testCreateAndReadStation[497]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.007"/>
+  <testcase name="testCreateAndReadStation[498]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[499]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.005"/>
+  <testcase name="testCreateAndReadStation[500]" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.006"/>
+  <testcase name="testGetListAllStations" classname="com.epam.redkin.model.repository.TestStationRepository" time="0.008"/>
+</testsuite>
