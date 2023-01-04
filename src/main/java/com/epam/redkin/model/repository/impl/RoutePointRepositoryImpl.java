@@ -33,11 +33,11 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
     @Override
     public List<RoutePoint> getRoutePointList() {
         List<RoutePoint> routePoints = new ArrayList<>();
-        try (Connection connection = DBManager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_ROUTE_MAPPING)) {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                routePoints.add(extract(rs));
+                routePoints.add(extractRoutePoint(rs));
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -49,7 +49,7 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
 
     @Override
     public void create(RoutePoint entity) {
-        try (Connection connection = DBManager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD_ROUTE_MAPPINGS)) {
             statement.setInt(1, entity.getStationId());
             statement.setInt(2, entity.getRouteId());
@@ -64,25 +64,25 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
     }
 
     @Override
-    @Deprecated
-    public RoutePoint getRoutePointById(int id) {
-        RoutePoint routePoint;
+    public List<RoutePoint> getRoutePointListByRouteId(int id) {
+        List<RoutePoint> routePoints = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_ROUT_MAPPING_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-
-            routePoint = extract(rs);
+            while (rs.next()) {
+                routePoints.add(extractRoutePoint(rs));
+            }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             throw new DataBaseException("Can't read route in route to station mapping. ID = " + id, e);
         }
-        return routePoint;
+        return routePoints;
     }
 
     @Override
     public boolean updateRoutePointByStationId(RoutePoint entity, int stationId) {
-        try (Connection connection = DBManager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_ROUTE_MAPPING)) {
             statement.setInt(1, entity.getStationId());
             statement.setObject(2, entity.getArrival());
@@ -99,7 +99,7 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
 
     @Override
     public boolean deleteRoutePointByStationId(int routeId, int stationId) {
-        try (Connection connection = DBManager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_ROUTE_MAPPING)) {
             statement.setInt(1, routeId);
             statement.setInt(2, stationId);
@@ -113,7 +113,7 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
     @Override
     public List<MappingInfoDTO> getMappingInfoListByRouteId(int routeId) {
         List<MappingInfoDTO> mappingInfoDTOS = new ArrayList<>();
-        try (Connection connection = DBManager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ROUTE_MAPPING_BY_ROUTE_ID)) {
             statement.setInt(1, routeId);
             ResultSet rs = statement.executeQuery();
@@ -145,34 +145,25 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
         return mapping;
     }
 
-    private RoutePoint extract(ResultSet resultSet) {
-        RoutePoint routePoint = new RoutePoint();
-        try {
-            routePoint.setStationId(resultSet.getInt("station_id"));
-            routePoint.setRouteId(resultSet.getInt("route_id"));
-            routePoint.setArrival(resultSet.getObject("station_arrival", LocalDateTime.class));
-            routePoint.setDispatch(resultSet.getObject("station_dispatch", LocalDateTime.class));
-            routePoint.setOrderId(resultSet.getInt("station_order"));
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Can`t extract stop station in the route.", e);
-        }
-        return routePoint;
+    private RoutePoint extractRoutePoint(ResultSet resultSet) throws SQLException {
+        return new RoutePoint(resultSet.getInt("station_id"),
+                resultSet.getInt("route_id"),
+                resultSet.getObject("station_arrival", LocalDateTime.class),
+                resultSet.getObject("station_dispatch", LocalDateTime.class),
+                resultSet.getInt("station_order")
+        );
     }
 
-    private MappingInfoDTO extractStationInfo(ResultSet resultSet) {
+    private MappingInfoDTO extractStationInfo(ResultSet resultSet) throws SQLException {
         MappingInfoDTO result = new MappingInfoDTO();
-        try {
-            result.setStationId(String.valueOf(resultSet.getInt("station_id")));
-            result.setRoutsId(String.valueOf(resultSet.getInt("route_id")));
-            result.setStationArrivalDate(resultSet.getObject("station_arrival", LocalDateTime.class));
-            result.setStationDispatchData(resultSet.getObject("station_dispatch", LocalDateTime.class));
-            result.setStation(resultSet.getString("station"));
-            result.setOrder(resultSet.getInt("station_order"));
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Can`t extract MappingInfoDto.", e);
-        }
+
+        result.setStationId(String.valueOf(resultSet.getInt("station_id")));
+        result.setRoutsId(String.valueOf(resultSet.getInt("route_id")));
+        result.setStationArrivalDate(resultSet.getObject("station_arrival", LocalDateTime.class));
+        result.setStationDispatchData(resultSet.getObject("station_dispatch", LocalDateTime.class));
+        result.setStation(resultSet.getString("station"));
+        result.setOrder(resultSet.getInt("station_order"));
+
         return result;
     }
 }

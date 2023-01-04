@@ -43,22 +43,10 @@ public class SearchRoutForOrderController extends HttpServlet {
             throw new IncorrectDataException("Incorrect data entered", e);
         }
 
-        LOGGER.debug("========== INPUT PARAMETER ==========");
-        LOGGER.debug("FROM: " + departureStation + " TO: " + arrivalStation + " USER_ID: " + userId + " DATE: " + departureDate);
-        LOGGER.debug("======================================");
-
         List<CarriageType> carTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
         searchValidator.isValidSearch(departureStation, arrivalStation);
         request.setAttribute("carTypeList", carTypeList);
         List<RoutsOrderDto> routList = routService.getRouteListWithParameters(departureStation, arrivalStation, departureDate);
-
-        LOGGER.debug("======================================");
-        LOGGER.debug("ROUTE_LIST: " + routList);
-        LOGGER.debug("USER_ID: " + userId);
-        LOGGER.debug("DEPARTURE_STATION: " + departureStation);
-        LOGGER.debug("ARRIVAL_STATION: " + arrivalStation);
-        LOGGER.debug("DEPATTURE_DATE: " + departureDate);
-        LOGGER.debug("======================================");
 
         request.setAttribute("rout_list", routList);
         request.setAttribute("user_id", userId);

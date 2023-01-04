@@ -6,7 +6,7 @@ import com.epam.redkin.model.entity.RoutePoint;
 import java.util.List;
 
 public interface RoutePointRepository {
-    RoutePoint getRoutePointById(int id);
+    List<RoutePoint> getRoutePointListByRouteId(int id);
 
     void create(RoutePoint entity);
 

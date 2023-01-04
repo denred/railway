@@ -33,7 +33,7 @@ public class LoginController extends HttpServlet {
             HttpSession session = request.getSession();
 
             if (user != null) {
-                session.setAttribute(AppContextConstant.LOCALE, AppContextConstant.LOCALE_RU);
+                session.setAttribute(AppContextConstant.LOCALE, AppContextConstant.LOCALE_UA);
                 session.setAttribute(AppContextConstant.SESSION_USER, user);
                 response.sendRedirect("home");
             }
@@ -51,6 +51,5 @@ public class LoginController extends HttpServlet {
     @Override
     public void init(ServletConfig config) {
         userService = (UserService) config.getServletContext().getAttribute(AppContextConstant.USER_SERVICE);
-        LOGGER.debug("login Servlet init");
     }
 }

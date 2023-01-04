@@ -17,7 +17,7 @@ class TestConnection {
 
     @BeforeEach
     public void init() throws SQLException {
-        connection = DBManager.getConnection();
+        connection = ConnectionPools.getTransactional().getConnection();
     }
 
     @AfterEach
@@ -27,7 +27,7 @@ class TestConnection {
 
     @Test
     public void shouldGetJDBCConnection() throws SQLException {
-        try (Connection connection = DBManager.getConnection()) {
+        try (Connection connection = ConnectionPools.getTransactional().getConnection()) {
             assertTrue(connection.isValid(1));
             assertFalse(connection.isClosed());
         }

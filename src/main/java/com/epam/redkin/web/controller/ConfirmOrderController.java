@@ -113,7 +113,7 @@ public class ConfirmOrderController extends HttpServlet {
                 order.setTravelTime(String.format("Days: %s Hours: %s Minutes: %s", duration.toDays(),
                         duration.toHours() % 24, duration.toMinutes() % 60));
             }
-            if (locale == AppContextConstant.LOCALE_RU) {
+            if (locale == AppContextConstant.LOCALE_UA) {
                 Duration duration = Duration.between(arrivalMapping.getStationDispatchData(), dispatchMapping.getStationArrivalDate());
                 order.setTravelTime(String.format("Дней: %s Часов: %s Минут: %s", duration.toDays(),
                         duration.toHours() % 24, duration.toMinutes() % 60));

@@ -23,8 +23,8 @@ public class ChangeLanguageController extends HttpServlet {
         if (!Objects.isNull(request.getParameter("lang"))) {
             if (AppContextConstant.LOCALE_EN.equals(request.getParameter("lang"))) {
                 session.setAttribute("locale", AppContextConstant.LOCALE_EN);
-            } else if (AppContextConstant.LOCALE_RU.equals(request.getParameter("lang"))) {
-                session.setAttribute("locale", AppContextConstant.LOCALE_RU);
+            } else if (AppContextConstant.LOCALE_UA.equals(request.getParameter("lang"))) {
+                session.setAttribute("locale", AppContextConstant.LOCALE_UA);
             }
         }
         if (session.isNew()) {

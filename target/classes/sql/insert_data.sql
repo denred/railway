@@ -104,13 +104,13 @@ INSERT INTO `railway`.`station` (`id`, `station`) VALUES ('41', 'Lviv');
 
 
 /* ROUTE HAS STATION */
-INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('1', '7', '2022-12-06 15:00:00', '2022-12-06 15:20:00', '1');
-INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('2', '7', '2022-12-06 15:00:00', '2022-12-06 15:48:00', '2');
-INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('3', '7', '2022-12-06 16:41:00', '2022-12-06 16:42:00', '3');
-INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('4', '7', '2022-12-06 17:25:00', '2022-12-06 17:26:00', '4');
-INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('5', '7', '2022-12-06 17:59:00', '2022-12-06 18:00:00', '5');
-INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('6', '7', '2022-12-06 19:01:00', '2022-12-06 19:02:00', '6');
-INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('7', '7', '2022-12-06 21:23:00', '2022-12-06 21:38:00', '7');
+INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('1', '7', '2023-02-06 15:00:00', '2023-02-06 15:20:00', '1');
+INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('2', '7', '2023-02-06 15:00:00', '2023-02-06 15:48:00', '2');
+INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('3', '7', '2023-02-06 16:41:00', '2023-02-06 16:42:00', '3');
+INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('4', '7', '2023-02-06 17:25:00', '2023-02-06 17:26:00', '4');
+INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('5', '7', '2023-02-06 17:59:00', '2023-02-06 18:00:00', '5');
+INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('6', '7', '2023-02-06 19:01:00', '2023-02-06 19:02:00', '6');
+INSERT INTO `railway`.`station_has_route` (`station_id`, `route_id`, `station_arrival`, `station_dispatch`, station_order) VALUES ('7', '7', '2023-02-06 21:23:00', '2023-02-06 21:38:00', '7');
 
 
 /* CARRIAGE */

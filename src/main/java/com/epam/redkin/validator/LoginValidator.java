@@ -6,10 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 
 public class LoginValidator {
@@ -19,23 +17,13 @@ public class LoginValidator {
 
 
     public void isValid(String email, String password) {
-
-
-        LOGGER.debug("isValid method. email:" + email + " pass: " + password);
-
-
         Map<String, String> errors = new HashMap<>();
         if (!ValidatorUtils.isMatch(EMAIL, email)) {
-            LOGGER.debug("error email");
             errors.put("Incorrect format email entered", email);
         }
         if (!ValidatorUtils.isMatch(PASSWORD, password)) {
             errors.put("Incorrect format password entered", password);
-            LOGGER.debug("error pass");
         }
-
-        LOGGER.debug("Err" + errors.toString());
-
 
         if (!errors.isEmpty()) {
             StringBuilder builder = new StringBuilder();
@@ -46,10 +34,8 @@ public class LoginValidator {
                         .append(";<br/>\n");
             }
             IncorrectDataException e = new IncorrectDataException(builder.toString());
-            LOGGER.error(String.valueOf(e));
+            LOGGER.error(e.getMessage());
             throw e;
         }
-
-        LOGGER.debug("END_METHOD");
     }
 }
