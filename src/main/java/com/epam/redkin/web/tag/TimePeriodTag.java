@@ -18,15 +18,11 @@ public class TimePeriodTag extends SimpleTagSupport {
         Duration between;
         if (locale.equals("en")) {
             between = Duration.between(LocalDateTime.parse(dateFrom), LocalDateTime.parse(dateTo));
-
-            getJspContext().getOut().print(String.format("Days: %s Hours: %s Minutes: %s", between.toDays(),
-                    between.toHours() % 24, between.toMinutes() % 60));
+            getJspContext().getOut().print(String.format("%s:%02d", between.toHours() % 24, between.toMinutes() % 60));
         }
-        if (locale.equals("ru") || locale == null) {
+        if (locale.equals("ua") || locale == null) {
             between = Duration.between(LocalDateTime.parse(dateFrom), LocalDateTime.parse(dateTo));
-
-            getJspContext().getOut().print(String.format("Дней: %s Часов: %s Минут: %s", between.toDays(),
-                    between.toHours() % 24, between.toMinutes() % 60));
+            getJspContext().getOut().print(String.format("%s:%02d", between.toHours() % 24, between.toMinutes() % 60));
         }
     }
 

@@ -23,7 +23,6 @@ import java.util.List;
 @WebServlet("/detail_rout")
 public class DetailRoutController extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(DetailRoutController.class);
-
     private RoutMappingService routMappingService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,12 +44,6 @@ public class DetailRoutController extends HttpServlet {
         request.setAttribute("routs_id", routsId);
         List<MappingInfoDTO> allRouteToStationMappingListById = routMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routsId));
 
-
-        LOGGER.debug("===========ROUTE====DETAIL======");
-        LOGGER.debug("AllRoutToStationMappingListById: " + allRouteToStationMappingListById);
-        LOGGER.debug("================================");
-
-
         request.setAttribute("rout_m_list", allRouteToStationMappingListById);
         HttpSession session = request.getSession();
         request.setAttribute("language", session.getAttribute(AppContextConstant.LOCALE));
@@ -61,6 +54,5 @@ public class DetailRoutController extends HttpServlet {
     public void init(ServletConfig config) {
         routMappingService = (RoutMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
         LOGGER.trace("detail_rout Servlet init");
-
     }
 }

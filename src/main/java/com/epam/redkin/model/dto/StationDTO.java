@@ -1,6 +1,8 @@
 package com.epam.redkin.model.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 
 public class StationDTO {
@@ -8,8 +10,12 @@ public class StationDTO {
     private int stationId;
     private String station;
     private int order;
-    private LocalDateTime stationArrivalDate;
-    private LocalDateTime stationDispatchData;
+    private LocalDateTime stationArrivalDateTime;
+    private LocalDate stationArrivalDate;
+    private LocalTime stationArrivalTime;
+    private LocalDateTime stationDispatchDateTime;
+    private LocalDate stationDispatchDate;
+    private LocalTime stationDispatchTime;
     private String routName;
     private int routNumber;
     private int routsId;
@@ -19,12 +25,12 @@ public class StationDTO {
     public StationDTO() {
     }
 
-    public StationDTO(int stationId, String station, int order, LocalDateTime stationArrivalDate, LocalDateTime stationDispatchData, String routName, int routNumber, int routsId, int trainId, String trainNumber) {
+    public StationDTO(int stationId, String station, int order, LocalDateTime stationArrivalDateTime, LocalDateTime stationDispatchDateTime, String routName, int routNumber, int routsId, int trainId, String trainNumber) {
         this.stationId = stationId;
         this.station = station;
         this.order = order;
-        this.stationArrivalDate = stationArrivalDate;
-        this.stationDispatchData = stationDispatchData;
+        this.stationArrivalDateTime = stationArrivalDateTime;
+        this.stationDispatchDateTime = stationDispatchDateTime;
         this.routName = routName;
         this.routNumber = routNumber;
         this.routsId = routsId;
@@ -40,8 +46,8 @@ public class StationDTO {
         return order == that.order &&
                 Objects.equals(stationId, that.stationId) &&
                 Objects.equals(station, that.station) &&
-                Objects.equals(stationArrivalDate, that.stationArrivalDate) &&
-                Objects.equals(stationDispatchData, that.stationDispatchData) &&
+                Objects.equals(stationArrivalDateTime, that.stationArrivalDateTime) &&
+                Objects.equals(stationDispatchDateTime, that.stationDispatchDateTime) &&
                 Objects.equals(routName, that.routName) &&
                 Objects.equals(routNumber, that.routNumber) &&
                 Objects.equals(routsId, that.routsId) &&
@@ -51,7 +57,7 @@ public class StationDTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(stationId, station, order, stationArrivalDate, stationDispatchData, routName, routNumber, routsId, trainId, trainNumber);
+        return Objects.hash(stationId, station, order, stationArrivalDateTime, stationDispatchDateTime, routName, routNumber, routsId, trainId, trainNumber);
     }
 
     public int getTrainId() {
@@ -94,20 +100,56 @@ public class StationDTO {
         this.order = order;
     }
 
-    public LocalDateTime getStationArrivalDate() {
+    public LocalDateTime getStationArrivalDateTime() {
+        return stationArrivalDateTime;
+    }
+
+    public void setStationArrivalDateTime(LocalDateTime stationArrivalDateTime) {
+        this.stationArrivalDateTime = stationArrivalDateTime;
+        stationArrivalDate = stationArrivalDateTime.toLocalDate();
+        stationArrivalTime = stationArrivalDateTime.toLocalTime();
+    }
+
+    public LocalDateTime getStationDispatchDateTime() {
+        return stationDispatchDateTime;
+    }
+
+    public void setStationDispatchDateTime(LocalDateTime stationDispatchDateTime) {
+        this.stationDispatchDateTime = stationDispatchDateTime;
+        stationDispatchDate = stationDispatchDateTime.toLocalDate();
+        stationDispatchTime = stationDispatchDateTime.toLocalTime();
+    }
+
+    public LocalDate getStationArrivalDate() {
         return stationArrivalDate;
     }
 
-    public void setStationArrivalDate(LocalDateTime stationArrivalDate) {
+    public void setStationArrivalDate(LocalDate stationArrivalDate) {
         this.stationArrivalDate = stationArrivalDate;
     }
 
-    public LocalDateTime getStationDispatchData() {
-        return stationDispatchData;
+    public LocalTime getStationArrivalTime() {
+        return stationArrivalTime;
     }
 
-    public void setStationDispatchData(LocalDateTime stationDispatchData) {
-        this.stationDispatchData = stationDispatchData;
+    public void setStationArrivalTime(LocalTime stationArrivalTime) {
+        this.stationArrivalTime = stationArrivalTime;
+    }
+
+    public LocalDate getStationDispatchDate() {
+        return stationDispatchDate;
+    }
+
+    public void setStationDispatchDate(LocalDate stationDispatchDate) {
+        this.stationDispatchDate = stationDispatchDate;
+    }
+
+    public LocalTime getStationDispatchTime() {
+        return stationDispatchTime;
+    }
+
+    public void setStationDispatchTime(LocalTime stationDispatchTime) {
+        this.stationDispatchTime = stationDispatchTime;
     }
 
     public String getRoutName() {
@@ -141,8 +183,8 @@ public class StationDTO {
                 "stationId=" + stationId +
                 ", station='" + station + '\'' +
                 ", order=" + order +
-                ", stationArrivalDate=" + stationArrivalDate +
-                ", stationDispatchData=" + stationDispatchData +
+                ", stationArrivalDate=" + stationArrivalDateTime +
+                ", stationDispatchData=" + stationDispatchDateTime +
                 ", routName='" + routName + '\'' +
                 ", routNumber=" + routNumber +
                 ", routsId=" + routsId +

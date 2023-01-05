@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.epam.redkin.model.repository.TestRouteRepository" time="3.214" tests="110" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.epam.redkin.model.repository.TestRouteRepository" time="2.987" tests="110" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="19"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="UA"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk-19.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/surefire/surefirebooter586078402789486895.jar /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/surefire 2023-01-02T13-48-06_386-jvmRun1 surefire12579367407366137730tmp surefire_012270272306122144994tmp"/>
+    <property name="sun.java.command" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/surefire/surefirebooter4468581486430394651.jar /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/surefire 2023-01-04T16-11-26_516-jvmRun1 surefire13429925363649420930tmp surefire_015968986455780075934tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/test-classes:/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/classes:/Users/denis/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.1/junit-jupiter-engine-5.9.1.jar:/Users/denis/.m2/repository/org/junit/platform/junit-platform-engine/1.9.1/junit-platform-engine-1.9.1.jar:/Users/denis/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/denis/.m2/repository/org/junit/platform/junit-platform-commons/1.9.1/junit-platform-commons-1.9.1.jar:/Users/denis/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.1/junit-jupiter-api-5.9.1.jar:/Users/denis/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/denis/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.9.1/junit-jupiter-params-5.9.1.jar:/Users/denis/.m2/repository/com/zaxxer/HikariCP/5.0.1/HikariCP-5.0.1.jar:/Users/denis/.m2/repository/jakarta/servlet/jakarta.servlet-api/6.0.0/jakarta.servlet-api-6.0.0.jar:/Users/denis/.m2/repository/com/mysql/mysql-connector-j/8.0.31/mysql-connector-j-8.0.31.jar:/Users/denis/.m2/repository/com/google/protobuf/protobuf-java/3.19.4/protobuf-java-3.19.4.jar:/Users/denis/.m2/repository/jakarta/servlet/jsp/jakarta.servlet.jsp-api/3.1.0/jakarta.servlet.jsp-api-3.1.0.jar:/Users/denis/.m2/repository/jakarta/servlet/jsp/jstl/jakarta.servlet.jsp.jstl-api/3.0.0/jakarta.servlet.jsp.jstl-api-3.0.0.jar:/Users/denis/.m2/repository/jakarta/el/jakarta.el-api/5.0.0/jakarta.el-api-5.0.0.jar:/Users/denis/.m2/repository/org/glassfish/web/jakarta.servlet.jsp.jstl/3.0.1/jakarta.servlet.jsp.jstl-3.0.1.jar:/Users/denis/.m2/repository/org/eclipse/jetty/apache-jstl/11.0.0/apache-jstl-11.0.0.jar:/Users/denis/.m2/repository/org/mortbay/jasper/taglibs-standard/10.0.0-M10/taglibs-standard-10.0.0-M10.jar:/Users/denis/.m2/repository/org/slf4j/slf4j-api/2.0.5/slf4j-api-2.0.5.jar:/Users/denis/.m2/repository/org/slf4j/slf4j-reload4j/2.0.5/slf4j-reload4j-2.0.5.jar:/Users/denis/.m2/repository/ch/qos/reload4j/reload4j/1.2.22/reload4j-1.2.22.jar:/Users/denis/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:"/>
@@ -29,7 +29,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="apple.awt.application.name" value="ForkedBooter"/>
-    <property name="surefire.real.class.path" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/surefire/surefirebooter586078402789486895.jar"/>
+    <property name="surefire.real.class.path" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/surefire/surefirebooter4468581486430394651.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="19+36-2238"/>
@@ -58,114 +58,114 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="63.0"/>
   </properties>
-  <testcase name="testDeleteRoute" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.031"/>
+  <testcase name="testDeleteRoute" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
   <testcase name="testCreateAndReadRoute[1]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[2]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[3]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
-  <testcase name="testCreateAndReadRoute[4]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.034"/>
+  <testcase name="testCreateAndReadRoute[2]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[3]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.03"/>
+  <testcase name="testCreateAndReadRoute[4]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.032"/>
   <testcase name="testCreateAndReadRoute[5]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
-  <testcase name="testCreateAndReadRoute[6]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
-  <testcase name="testCreateAndReadRoute[7]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
-  <testcase name="testCreateAndReadRoute[8]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
+  <testcase name="testCreateAndReadRoute[6]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[7]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.03"/>
+  <testcase name="testCreateAndReadRoute[8]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
   <testcase name="testCreateAndReadRoute[9]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
-  <testcase name="testCreateAndReadRoute[10]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
-  <testcase name="testCreateAndReadRoute[11]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[10]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[11]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
   <testcase name="testCreateAndReadRoute[12]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[13]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
-  <testcase name="testCreateAndReadRoute[14]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
-  <testcase name="testCreateAndReadRoute[15]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[16]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
+  <testcase name="testCreateAndReadRoute[13]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
+  <testcase name="testCreateAndReadRoute[14]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[15]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[16]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
   <testcase name="testCreateAndReadRoute[17]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[18]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
-  <testcase name="testCreateAndReadRoute[19]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[20]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[18]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[19]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[20]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
   <testcase name="testCreateAndReadRoute[21]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[22]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.039"/>
-  <testcase name="testCreateAndReadRoute[23]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.052"/>
-  <testcase name="testCreateAndReadRoute[24]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
-  <testcase name="testCreateAndReadRoute[25]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[26]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[27]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.032"/>
-  <testcase name="testCreateAndReadRoute[28]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
-  <testcase name="testCreateAndReadRoute[29]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[30]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.03"/>
+  <testcase name="testCreateAndReadRoute[22]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
+  <testcase name="testCreateAndReadRoute[23]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
+  <testcase name="testCreateAndReadRoute[24]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[25]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[26]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
+  <testcase name="testCreateAndReadRoute[27]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
+  <testcase name="testCreateAndReadRoute[28]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[29]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[30]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.031"/>
   <testcase name="testCreateAndReadRoute[31]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
-  <testcase name="testCreateAndReadRoute[32]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
-  <testcase name="testCreateAndReadRoute[33]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[34]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
-  <testcase name="testCreateAndReadRoute[35]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.031"/>
-  <testcase name="testCreateAndReadRoute[36]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
+  <testcase name="testCreateAndReadRoute[32]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
+  <testcase name="testCreateAndReadRoute[33]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[34]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
+  <testcase name="testCreateAndReadRoute[35]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[36]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
   <testcase name="testCreateAndReadRoute[37]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
-  <testcase name="testCreateAndReadRoute[38]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
-  <testcase name="testCreateAndReadRoute[39]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[40]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
+  <testcase name="testCreateAndReadRoute[38]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[39]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
+  <testcase name="testCreateAndReadRoute[40]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
   <testcase name="testCreateAndReadRoute[41]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.03"/>
-  <testcase name="testCreateAndReadRoute[42]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.03"/>
+  <testcase name="testCreateAndReadRoute[42]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
   <testcase name="testCreateAndReadRoute[43]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
   <testcase name="testCreateAndReadRoute[44]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
-  <testcase name="testCreateAndReadRoute[45]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[46]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.03"/>
+  <testcase name="testCreateAndReadRoute[45]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
+  <testcase name="testCreateAndReadRoute[46]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
   <testcase name="testCreateAndReadRoute[47]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[48]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[49]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[50]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.034"/>
-  <testcase name="testCreateAndReadRoute[51]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.03"/>
-  <testcase name="testCreateAndReadRoute[52]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[53]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[54]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
-  <testcase name="testCreateAndReadRoute[55]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.03"/>
-  <testcase name="testCreateAndReadRoute[56]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.043"/>
-  <testcase name="testCreateAndReadRoute[57]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.067"/>
+  <testcase name="testCreateAndReadRoute[48]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[49]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[50]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
+  <testcase name="testCreateAndReadRoute[51]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[52]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[53]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
+  <testcase name="testCreateAndReadRoute[54]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[55]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[56]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[57]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
   <testcase name="testCreateAndReadRoute[58]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[59]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[60]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[59]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
+  <testcase name="testCreateAndReadRoute[60]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
   <testcase name="testCreateAndReadRoute[61]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[62]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[62]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
   <testcase name="testCreateAndReadRoute[63]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[64]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[65]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[66]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
-  <testcase name="testCreateAndReadRoute[67]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
-  <testcase name="testCreateAndReadRoute[68]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
-  <testcase name="testCreateAndReadRoute[69]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
-  <testcase name="testCreateAndReadRoute[70]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.031"/>
+  <testcase name="testCreateAndReadRoute[64]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[65]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[66]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
+  <testcase name="testCreateAndReadRoute[67]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[68]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
+  <testcase name="testCreateAndReadRoute[69]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
+  <testcase name="testCreateAndReadRoute[70]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
   <testcase name="testCreateAndReadRoute[71]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
   <testcase name="testCreateAndReadRoute[72]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[73]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[74]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.032"/>
-  <testcase name="testCreateAndReadRoute[75]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
-  <testcase name="testCreateAndReadRoute[76]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
-  <testcase name="testCreateAndReadRoute[77]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[78]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
-  <testcase name="testCreateAndReadRoute[79]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.03"/>
-  <testcase name="testCreateAndReadRoute[80]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
+  <testcase name="testCreateAndReadRoute[73]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[74]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[75]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[76]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[77]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[78]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[79]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[80]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
   <testcase name="testCreateAndReadRoute[81]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[82]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[83]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[82]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
+  <testcase name="testCreateAndReadRoute[83]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
   <testcase name="testCreateAndReadRoute[84]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[85]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
-  <testcase name="testCreateAndReadRoute[86]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[87]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[88]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[89]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[90]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.033"/>
-  <testcase name="testCreateAndReadRoute[91]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.067"/>
-  <testcase name="testCreateAndReadRoute[92]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
-  <testcase name="testCreateAndReadRoute[93]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.03"/>
-  <testcase name="testCreateAndReadRoute[94]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateAndReadRoute[95]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
-  <testcase name="testCreateAndReadRoute[96]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
-  <testcase name="testCreateAndReadRoute[97]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[85]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[86]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[87]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[88]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[89]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[90]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[91]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[92]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[93]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[94]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[95]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testCreateAndReadRoute[96]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[97]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
   <testcase name="testCreateAndReadRoute[98]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
-  <testcase name="testCreateAndReadRoute[99]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
-  <testcase name="testCreateAndReadRoute[100]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testGetRouteInfoDTOByRouteId" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.032"/>
+  <testcase name="testCreateAndReadRoute[99]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateAndReadRoute[100]" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testGetRouteInfoDTOByRouteId" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
   <testcase name="testReadNotExistRoute" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.025"/>
-  <testcase name="testUpdateRoute" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
-  <testcase name="testGetAllRouteInfoDTOList" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
-  <testcase name="testGetStationDTOListWithParameters" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
+  <testcase name="testUpdateRoute" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.027"/>
+  <testcase name="testGetAllRouteInfoDTOList" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
+  <testcase name="testGetStationDTOListWithParameters" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.028"/>
   <testcase name="testGetNotExistRouteInfoDTOByRouteId" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
-  <testcase name="testCreateExistUser" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.032"/>
-  <testcase name="testDeleteNotExistRoute" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
+  <testcase name="testCreateExistUser" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.034"/>
+  <testcase name="testDeleteNotExistRoute" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.029"/>
   <testcase name="testCreateRouteWithNullParameter" classname="com.epam.redkin.model.repository.TestRouteRepository" time="0.026"/>
 </testsuite>

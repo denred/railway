@@ -68,20 +68,14 @@ public class RoutServiceImpl implements RoutService {
             }
 
             if (departure.getOrder() > arrival.getOrder() || departure.getOrder() == arrival.getOrder()) {
-                LOGGER.error("/////////////////--=====...BUG...=====--/////////////");
-                LOGGER.debug("departure: " + departure.getOrder() + " arrival: " + arrival.getOrder());
                 continue;
             }
 
-            if (departure.getStationDispatchData().isAfter(departureDate) || departure.getStationDispatchData()
+            if (departure.getStationDispatchDateTime().isAfter(departureDate) || departure.getStationDispatchDateTime()
                     .isEqual(departureDate)) {
                 result.add(toRoutsOrderDto(stationDTOS));
             }
         }
-
-        LOGGER.debug("======================================");
-        LOGGER.debug("RESULT: " + result);
-
         return result;
     }
 

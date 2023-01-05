@@ -18,8 +18,6 @@ public class ApplicationContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-       // initLog4j(sce.getServletContext());
-
 
         UserRepository userRepository = new UserRepositoryImpl();
         OrderRepository orderRepository = new OrderRepositoryImpl();

@@ -14,6 +14,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -24,8 +26,7 @@ import java.util.Set;
 
 @WebServlet("/select_station_and_car_type_for_order")
 public class SelectStationAndCarTypeForOrderController extends HttpServlet {
-
-    //private static final Logger LOGGER = Logger.getLogger(SelectStationAndCarTypeForOrderController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SelectStationAndCarTypeForOrderController.class);
     private RoutMappingService routMappingService;
     private CarService carService;
 
@@ -39,7 +40,7 @@ public class SelectStationAndCarTypeForOrderController extends HttpServlet {
         try {
             departureDate = LocalDateTime.parse(request.getParameter("departure_date"));
         } catch (DateTimeParseException e) {
-            //LOGGER.error("Incorrect data entered");
+            LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         request.setAttribute("departure_station", departureStation);

@@ -1,7 +1,6 @@
 package com.epam.redkin.model.repository.impl;
 
 import com.epam.redkin.model.connectionpool.ConnectionPools;
-import com.epam.redkin.model.connectionpool.DBManager;
 import com.epam.redkin.model.dto.RouteInfoDTO;
 import com.epam.redkin.model.dto.StationDTO;
 import com.epam.redkin.model.entity.Route;
@@ -155,8 +154,8 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
             result.setStationId(resultSet.getInt("s.id"));
             result.setStation(resultSet.getString("station"));
             result.setOrder(resultSet.getInt("station_order"));
-            result.setStationArrivalDate(resultSet.getObject("station_arrival", LocalDateTime.class));
-            result.setStationDispatchData(resultSet.getObject("station_dispatch", LocalDateTime.class));
+            result.setStationArrivalDateTime(resultSet.getObject("station_arrival", LocalDateTime.class));
+            result.setStationDispatchDateTime(resultSet.getObject("station_dispatch", LocalDateTime.class));
             result.setRoutName(resultSet.getString("r.name"));
             result.setRoutNumber(resultSet.getInt("r.number"));
             result.setRoutsId(resultSet.getInt("r.id"));

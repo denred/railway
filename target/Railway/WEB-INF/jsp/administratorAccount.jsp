@@ -8,34 +8,11 @@
 <html>
 <head>
     <title><fmt:message key="admin.account"/></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <style>
-        body {
-            width: 100%;
-            background-color: #f5f5f5;
-        }
-
-        table {
-            table-layout: fixed;
-            width: auto;
-            height: auto;
-            text-align: center;
-        }
-
-        tr {
-            width: auto;
-            height: auto;
-            text-align: center;
-
-        }
-
-        td {
-            width: auto;
-            text-align: center;
-
-        }
-    </style>
+    <link rel="icon" type="image/x-icon" href="img/icons8-high-speed-train-32.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <mrt:navigation/>
@@ -54,7 +31,7 @@
     <mrt:role role="${user.role}"></mrt:role>
 </div>
 <div class="h2" style="text-align: center;">
-    <fmt:message key="admin.account"></fmt:message>
+    <fmt:message key="admin.account"/>
 </div>
 <p class="h4">
     <h12><fmt:message key="admin.rout.information"/></h12>

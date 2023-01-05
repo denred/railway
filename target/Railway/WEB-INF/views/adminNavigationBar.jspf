@@ -1,93 +1,98 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark justify-content-center">
-    <a class="navbar-brand" href="#">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Circle-icons-train.svg" width="35" height="35"
-             class="d-inline-block align-top" alt="">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
-            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse my-auto" id="navbarTogglerDemo02">
-        <ul class="nav navbar-nav mr-auto">
-            <li class="nav-item active my-0 my-lg-0">
-                <a class="btn btn-secondary"
-                   href="http://localhost:8087/home"><fmt:message key="homepage"/></a>
-            </li>
-            <li class="nav-item active my-0 my-lg-0">
-                <form class="form-inline mx-2 my-lg-0" action="user_account" method="GET">
-                    <input type="hidden" name="user_id" value="${user.userId}">
-                    <input class="btn btn-secondary btn-block text-down" type="submit" name="account"
-                           value="<fmt:message key="user.account"/>">
-                </form>
-            </li>
-            <li class="nav-item dropdown my-0 my-lg-0">
-                <div class="btn-group">
-                    <form class="form-inline mx-0 my-lg-0" action="administrator_account" method="GET">
+<nav class="navbar navbar-expand-sm navbar-light">
+    <div class="container-fluid">
+        <%-- User navigation menu --%>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <%-- Home page --%>
+                <li class="nav-item">
+                    <a class="btn btn-outline-primary text-center"
+                       href="http://localhost:8087/home"><fmt:message key="homepage"/></a>
+                </li>
+
+                <%-- User orders --%>
+                <li class="nav-item">
+                    <form class="form-inline mx-2 my-lg-0" action="user_account" method="GET">
                         <input type="hidden" name="user_id" value="${user.userId}">
-                        <input class="btn btn-secondary btn-block text-down" type="submit" name="account"
-                               value="<fmt:message key="admin.account"/>">
+                        <input class="btn btn-outline-primary text-center mx-2" type="submit" name="account"
+                               value="<fmt:message key="user.account"/>">
                     </form>
-                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    </button>
-                    <div class="dropdown-menu" style="background-color: rgb(108, 117, 125)">
-                        <a class="dropdown-item" href="#1" style="background-color: rgb(108, 117, 125)">
-                            <form class="form-inline mx-0 my-lg-0" action="administrator_account#1" method="GET">
-                                <input type="hidden" name="user_id" value="${user.userId}">
-                                <input class="btn btn-secondary btn-block text-down" type="submit" name="account"
-                                       value="<fmt:message key="admin.rout.information"/>">
-                            </form>
-                        </a>
-                        <a class="dropdown-item" href="#2" style="background-color: rgb(108, 117, 125)">
-                            <form class="form-inline mx-0 my-lg-0" action="administrator_account#2" method="GET">
-                                <input type="hidden" name="user_id" value="${user.userId}">
-                                <input class="btn btn-secondary btn-block text-down" type="submit" name="account"
-                                       value="<fmt:message key="admin.station.information"/>">
-                            </form>
-                        </a>
-                        <a class="dropdown-item" href="#3" style="background-color: rgb(108, 117, 125)">
-                            <form class="form-inline mx-0 my-lg-0" action="administrator_account#3" method="GET">
-                                <input type="hidden" name="user_id" value="${user.userId}">
-                                <input class="btn btn-secondary btn-block text-down" type="submit" name="account"
-                                       value="<fmt:message key="admin.car.information"/>">
-                            </form>
-                        </a>
-                        <a class="dropdown-item" href="#4" style="background-color: rgb(108, 117, 125)">
-                            <form class="form-inline mx-0 my-lg-0" action="administrator_account#4" method="GET">
-                                <input type="hidden" name="user_id" value="${user.userId}">
-                                <input class="btn btn-secondary btn-block text-down" type="submit" name="account"
-                                       value="<fmt:message key="admin.train.information"/>">
-                            </form>
-                        </a>
-                        <a class="dropdown-item" href="#5" style="background-color: rgb(108, 117, 125)">
-                            <form class="form-inline mx-0 my-lg-0" action="administrator_account#5" method="GET">
-                                <input type="hidden" name="user_id" value="${user.userId}">
-                                <input class="btn btn-secondary btn-block text-down" type="submit" name="account"
-                                       value="<fmt:message key="admin.user.information"/>">
-                            </form>
-                        </a>
-                        <a class="dropdown-item" href="#6" style="background-color: rgb(108, 117, 125)">
-                            <form class="form-inline mx-0 my-lg-0" action="administrator_account#6" method="GET">
-                                <input type="hidden" name="user_id" value="${user.userId}">
-                                <input class="btn btn-secondary btn-block text-down" type="submit" name="account"
-                                       value="<fmt:message key="admin.order.information"/>">
-                            </form>
-                        </a>
+                </li>
+
+                <%-- Admin menu --%>
+                <li class="nav-item dropdown my-0 my-lg-0">
+                    <div class="btn-group">
+                        <form class="form-inline mx-0 my-lg-0" action="administrator_account" method="GET">
+                            <input type="hidden" name="user_id" value="${user.userId}">
+                            <input class="btn btn-outline-primary btn-block text-down" type="submit" name="account"
+                                   value="<fmt:message key="admin.account"/>">
+                        </form>
+                        <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </button>
+                        <div class="dropdown-menu" style="background-color: #f8f9fa;">
+                            <a class="dropdown-item" href="#1">
+                                <form class="form-inline mx-0 my-lg-0" action="administrator_account#1" method="GET">
+                                    <input type="hidden" name="user_id" value="${user.userId}">
+                                    <input class="btn btn-outline-primary btn-block text-down" type="submit" name="account"
+                                           value="<fmt:message key="admin.rout.information"/>">
+                                </form>
+                            </a>
+                            <a class="dropdown-item" href="#2" >
+                                <form class="form-inline mx-0 my-lg-0" action="administrator_account#2" method="GET">
+                                    <input type="hidden" name="user_id" value="${user.userId}">
+                                    <input class="btn btn-outline-primary btn-block text-down" type="submit" name="account"
+                                           value="<fmt:message key="admin.station.information"/>">
+                                </form>
+                            </a>
+                            <a class="dropdown-item" href="#3">
+                                <form class="form-inline mx-0 my-lg-0" action="administrator_account#3" method="GET">
+                                    <input type="hidden" name="user_id" value="${user.userId}">
+                                    <input class="btn btn-outline-primary btn-block text-down" type="submit" name="account"
+                                           value="<fmt:message key="admin.car.information"/>">
+                                </form>
+                            </a>
+                            <a class="dropdown-item" href="#4">
+                                <form class="form-inline mx-0 my-lg-0" action="administrator_account#4" method="GET">
+                                    <input type="hidden" name="user_id" value="${user.userId}">
+                                    <input class="btn btn-outline-primary btn-block text-down" type="submit" name="account"
+                                           value="<fmt:message key="admin.train.information"/>">
+                                </form>
+                            </a>
+                            <a class="dropdown-item" href="#5">
+                                <form class="form-inline mx-0 my-lg-0" action="administrator_account#5" method="GET">
+                                    <input type="hidden" name="user_id" value="${user.userId}">
+                                    <input class="btn btn-outline-primary btn-block text-down" type="submit" name="account"
+                                           value="<fmt:message key="admin.user.information"/>">
+                                </form>
+                            </a>
+                            <a class="dropdown-item" href="#6">
+                                <form class="form-inline mx-0 my-lg-0" action="administrator_account#6" method="GET">
+                                    <input type="hidden" name="user_id" value="${user.userId}">
+                                    <input class="btn btn-outline-primary btn-block text-down" type="submit" name="account"
+                                           value="<fmt:message key="admin.order.information"/>">
+                                </form>
+                            </a>
+                        </div>
                     </div>
-                </div>
-            </li>
-        </ul>
-        <div class="btn-group btn-group-sm mx-2" role="group" aria-label="Basic example">
-            <form class="form-inline my-2 my-lg-0" action="change_language" method="POST">
-                <input type="submit" class="btn btn-secondary mx-1" name="lang" value="en">
-                <input type="submit" class="btn btn-secondary" name="lang" value="ru">
+                </li>
+                <%-- Admin menu --%>
+
+            </ul>
+
+            <%-- Change language --%>
+            <form class="d-flex mx-2" action="change_language" method="POST">
+                <input type="submit" class="btn btn-outline-primary text-center mx-2" name="lang" value="en">
+                <input type="submit" class="btn btn-outline-primary text-center" name="lang" value="ua">
             </form>
+
+            <%-- Logout button Start--%>
+            <form class="form-inline" action="logout" method="POST">
+                <input class="btn btn-outline-primary" type="submit" value="<fmt:message key="logout"/>">
+            </form>
+
         </div>
-        <form class="form-inline my-2 my-lg-0" action="logout" method="POST">
-            <input class="btn btn-secondary my-2 my-lg-0" type="submit" value="<fmt:message key="logout"/>">
-        </form>
     </div>
 </nav>
 

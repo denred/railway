@@ -5,6 +5,7 @@ import com.epam.redkin.model.dto.RoutsOrderDto;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.service.RoutService;
+import com.epam.redkin.service.SeatService;
 import com.epam.redkin.util.constants.AppContextConstant;
 import com.epam.redkin.validator.SearchValidator;
 import jakarta.servlet.ServletConfig;
@@ -20,15 +21,13 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
+import java.util.*;
 
 @WebServlet("/search_rout_for_order")
 public class SearchRoutForOrderController extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchRoutForOrderController.class);
-
     private RoutService routService;
+    private SeatService seatService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SearchValidator searchValidator = new SearchValidator();
@@ -43,11 +42,20 @@ public class SearchRoutForOrderController extends HttpServlet {
             throw new IncorrectDataException("Incorrect data entered", e);
         }
 
-        List<CarriageType> carTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
-        searchValidator.isValidSearch(departureStation, arrivalStation);
-        request.setAttribute("carTypeList", carTypeList);
-        List<RoutsOrderDto> routList = routService.getRouteListWithParameters(departureStation, arrivalStation, departureDate);
 
+        searchValidator.isValidSearch(departureStation, arrivalStation);
+        List<RoutsOrderDto> routList = routService.getRouteListWithParameters(departureStation, arrivalStation, departureDate);
+        List<CarriageType> carriageTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
+        Map<CarriageType, Integer> freeSeatsCount = new HashMap<>();
+        Map<CarriageType, Double> freeSeatsPrice = new HashMap<>();
+        carriageTypeList.forEach(type -> {
+            freeSeatsCount.put(type, seatService.getCountSeatByCarType(routList.get(0).getTrainId(), type));
+            freeSeatsPrice.put(type, type.getPrice());
+        });
+
+        request.setAttribute("carTypeList", carriageTypeList);
+        request.setAttribute("seatsCount", freeSeatsCount);
+        request.setAttribute("seatsPrice", freeSeatsPrice);
         request.setAttribute("rout_list", routList);
         request.setAttribute("user_id", userId);
         request.setAttribute("departure_station", departureStation);
@@ -60,6 +68,7 @@ public class SearchRoutForOrderController extends HttpServlet {
 
     public void init(ServletConfig config) {
         routService = (RoutService) config.getServletContext().getAttribute((AppContextConstant.ROUT_SERVICE));
+        seatService = (SeatService) config.getServletContext().getAttribute((AppContextConstant.SEAT_SERVICE));
         LOGGER.trace("search_rout_for_order Servlet init");
     }
 }

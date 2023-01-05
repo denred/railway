@@ -8,33 +8,11 @@
 <html>
 <head>
     <title><fmt:message key="user.makeOrder"/></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <style>
-        body {
-            background-color: #f5f5f5;
-        }
-
-        table {
-            table-layout: fixed;
-            width: auto;
-            height: auto;
-            text-align: center;
-        }
-
-        tr {
-            width: auto;
-            height: auto;
-            text-align: center;
-
-        }
-
-        td {
-            width: auto;
-            text-align: center;
-
-        }
-    </style>
+    <link rel="icon" type="image/x-icon" href="../../img/icons8-high-speed-train-32.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <mrt:navigation/>
@@ -47,13 +25,16 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-<div class="h5" align="right">
-    <fmt:message key="enterRole"></fmt:message>
-    <mrt:role role="${user.role}"></mrt:role>
+<div class="d-flex justify-content-end">
+    <div class="h5 mr-auto p-2">
+        <fmt:message key="enterRole"/>
+        <mrt:role role="${user.role}"/>
+    </div>
 </div>
 <form action="select_cars_and_seats_for_order" method="GET">
-    <table class="table table-bordered table-hover text-center" border="1" style="width: auto">
-        <thead class="thead-light text-center">
+    <div class="container d-flex align-items-center justify-content-center">
+    <table class="table table-bordered table-hover text-lg-start" style="width: auto">
+        <thead class="thead-light text-center text-bg-secondary align-middle">
         <tr>
             <th><fmt:message key="station.dispatch"/></th>
             <th><fmt:message key="station.arrival"/></th>
@@ -61,8 +42,9 @@
             <th><fmt:message key="order.make.order"/></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="align-middle ttext-center">
         <tr>
+            <%--1--%>
             <td><select class="btn btn-info dropdown-toggle" name="departure_station_id">
                 <c:set var="departure_station" value="${departure_station}"/>
                 <c:forEach items="${station_list}" var="stationList">
@@ -77,6 +59,7 @@
                 </c:forEach>
             </select>
             </td>
+                <%--2--%>
             <td><select class="btn btn-info dropdown-toggle" name="arrival_station_id">
                 <c:set var="arrival_station" value="${arrival_station}"/>
                 <c:forEach items="${station_list}" var="stationList">
@@ -90,6 +73,7 @@
                     </option>
                 </c:forEach>
             </select></td>
+                <%--3--%>
             <td><select class="btn btn-info dropdown-toggle" name="car_type">
                 <c:forEach items="${carTypeList}" var="car_type">
                     <option value="${car_type}"><fmt:message key="${car_type}"/></option>
@@ -105,11 +89,12 @@
                 <input type="hidden" name="arrival_station" value="${arrival_station}">
                 <input type="hidden" name="departure_date" value="${departure_date}">
                 <input type="hidden" name="train_id" value="${train_id}">
-                <input type="submit" class="btn btn-success" name="add_order"
+                <input type="submit" class="btn btn-info" name="add_order"
                        value="<fmt:message key="next"/>">
             </td>
         </tr>
     </table>
+    </div>
 </form>
 <form action="search_rout_for_order" method="GET">
     <input type="hidden" name="user_id" value="${user_id}">
