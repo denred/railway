@@ -1,0 +1,64 @@
+[ERROR] 2023-01-04 16:11:27,845 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Cannot add or update a child row: a foreign key constraint fails (`test_railway`.`carriage`, CONSTRAINT `fk_carriage_train` FOREIGN KEY (`train_id`) REFERENCES `train` (`id`))
+[ERROR] 2023-01-04 16:11:27,871 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Column 'number' cannot be null
+[ERROR] 2023-01-04 16:11:27,891 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Cannot invoke "com.epam.redkin.model.entity.CarriageType.toString()" because the return value of "com.epam.redkin.model.entity.Carriage.getType()" is null
+[ERROR] 2023-01-04 16:11:27,909 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Cannot invoke "com.epam.redkin.model.entity.CarriageType.toString()" because the return value of "com.epam.redkin.model.entity.Carriage.getType()" is null
+[ERROR] 2023-01-04 16:11:27,928 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Cannot invoke "com.epam.redkin.model.entity.CarriageType.toString()" because the return value of "com.epam.redkin.model.entity.Carriage.getType()" is null
+[ERROR] 2023-01-04 16:11:27,945 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Cannot invoke "com.epam.redkin.model.entity.CarriageType.toString()" because the return value of "com.epam.redkin.model.entity.Carriage.getType()" is null
+[ERROR] 2023-01-04 16:11:27,985 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '07-1' for key 'carriage.carriage_number_train_id_uq'
+[ERROR] 2023-01-04 16:11:28,003 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '08-1' for key 'carriage.carriage_number_train_id_uq'
+[ERROR] 2023-01-04 16:11:28,021 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '09-1' for key 'carriage.carriage_number_train_id_uq'
+[ERROR] 2023-01-04 16:11:28,041 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '10-1' for key 'carriage.carriage_number_train_id_uq'
+[ERROR] 2023-01-04 16:11:28,059 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '11-1' for key 'carriage.carriage_number_train_id_uq'
+[ERROR] 2023-01-04 16:11:28,078 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '12-1' for key 'carriage.carriage_number_train_id_uq'
+[ERROR] 2023-01-04 16:11:32,150 com.epam.redkin.model.repository.impl.StationRepositoryImpl - Column 'station' cannot be null
+[ERROR] 2023-01-04 16:11:32,178 com.epam.redkin.model.repository.impl.StationRepositoryImpl - Duplicate entry 'Zaporizhzhia' for key 'station.station_UNIQUE'
+[ERROR] 2023-01-04 16:11:32,203 com.epam.redkin.model.repository.impl.StationRepositoryImpl - Duplicate entry 'Zaporizhzhia' for key 'station.station_UNIQUE'
+[ERROR] 2023-01-04 16:11:36,206 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Cannot invoke "String.toLowerCase()" because "role" is null
+[ERROR] 2023-01-04 16:11:36,216 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Column 'email' cannot be null
+[ERROR] 2023-01-04 16:11:36,232 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Column 'password' cannot be null
+[ERROR] 2023-01-04 16:11:36,239 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Column 'first_name' cannot be null
+[ERROR] 2023-01-04 16:11:36,247 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Column 'last_name' cannot be null
+[ERROR] 2023-01-04 16:11:36,254 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Column 'phone' cannot be null
+[ERROR] 2023-01-04 16:11:36,262 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Column 'birth_date' cannot be null
+[ERROR] 2023-01-04 16:11:36,301 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Duplicate entry 'null@email' for key 'user.email_UNIQUE'
+[ERROR] 2023-01-04 16:11:36,421 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Column 'seat_number' cannot be null
+[ERROR] 2023-01-04 16:11:37,073 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '1055-1' for key 'seat.seat_number_carriage_id_uq'
+[ERROR] 2023-01-04 16:11:37,158 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '1055-1' for key 'seat.seat_number_carriage_id_uq'
+[ERROR] 2023-01-04 16:11:37,158 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '1055-1' for key 'seat.seat_number_carriage_id_uq'
+[ERROR] 2023-01-04 16:11:40,084 com.epam.redkin.model.repository.impl.RouteRepositoryImpl - Duplicate entry 'Dnipro-Odessa-1-1' for key 'route.name_number_train_id_uq'
+[ERROR] 2023-01-04 16:11:40,144 com.epam.redkin.model.repository.impl.RouteRepositoryImpl - Column 'name' cannot be null
+[ERROR] 2023-01-04 16:11:40,236 com.epam.redkin.model.repository.impl.TrainRepositoryImpl - Column 'number' cannot be null
+[ERROR] 2023-01-04 16:11:40,248 com.epam.redkin.model.repository.impl.TrainRepositoryImpl - Duplicate entry '17(Skovoroda Ekspress)' for key 'train.number_UNIQUE'
+[ERROR] 2023-01-04 16:11:40,255 com.epam.redkin.model.repository.impl.TrainRepositoryImpl - Duplicate entry 'FAST' for key 'train.number_UNIQUE'
+[ERROR] 2023-01-05 22:16:42,477 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Cannot add or update a child row: a foreign key constraint fails (`test_railway`.`carriage`, CONSTRAINT `fk_carriage_train` FOREIGN KEY (`train_id`) REFERENCES `train` (`id`))
+[ERROR] 2023-01-05 22:16:42,502 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Column 'number' cannot be null
+[ERROR] 2023-01-05 22:16:42,521 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Cannot invoke "com.epam.redkin.model.entity.CarriageType.toString()" because the return value of "com.epam.redkin.model.entity.Carriage.getType()" is null
+[ERROR] 2023-01-05 22:16:42,539 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Cannot invoke "com.epam.redkin.model.entity.CarriageType.toString()" because the return value of "com.epam.redkin.model.entity.Carriage.getType()" is null
+[ERROR] 2023-01-05 22:16:42,556 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Cannot invoke "com.epam.redkin.model.entity.CarriageType.toString()" because the return value of "com.epam.redkin.model.entity.Carriage.getType()" is null
+[ERROR] 2023-01-05 22:16:42,575 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Cannot invoke "com.epam.redkin.model.entity.CarriageType.toString()" because the return value of "com.epam.redkin.model.entity.Carriage.getType()" is null
+[ERROR] 2023-01-05 22:16:42,616 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '07-1' for key 'carriage.carriage_number_train_id_uq'
+[ERROR] 2023-01-05 22:16:42,634 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '08-1' for key 'carriage.carriage_number_train_id_uq'
+[ERROR] 2023-01-05 22:16:42,651 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '09-1' for key 'carriage.carriage_number_train_id_uq'
+[ERROR] 2023-01-05 22:16:42,667 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '10-1' for key 'carriage.carriage_number_train_id_uq'
+[ERROR] 2023-01-05 22:16:42,687 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '11-1' for key 'carriage.carriage_number_train_id_uq'
+[ERROR] 2023-01-05 22:16:42,704 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '12-1' for key 'carriage.carriage_number_train_id_uq'
+[ERROR] 2023-01-05 22:16:47,083 com.epam.redkin.model.repository.impl.StationRepositoryImpl - Column 'station' cannot be null
+[ERROR] 2023-01-05 22:16:47,102 com.epam.redkin.model.repository.impl.StationRepositoryImpl - Duplicate entry 'Zaporizhzhia' for key 'station.station_UNIQUE'
+[ERROR] 2023-01-05 22:16:47,123 com.epam.redkin.model.repository.impl.StationRepositoryImpl - Duplicate entry 'Zaporizhzhia' for key 'station.station_UNIQUE'
+[ERROR] 2023-01-05 22:16:51,555 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Cannot invoke "String.toLowerCase()" because "role" is null
+[ERROR] 2023-01-05 22:16:51,566 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Column 'email' cannot be null
+[ERROR] 2023-01-05 22:16:51,581 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Column 'password' cannot be null
+[ERROR] 2023-01-05 22:16:51,590 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Column 'first_name' cannot be null
+[ERROR] 2023-01-05 22:16:51,598 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Column 'last_name' cannot be null
+[ERROR] 2023-01-05 22:16:51,608 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Column 'phone' cannot be null
+[ERROR] 2023-01-05 22:16:51,616 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Column 'birth_date' cannot be null
+[ERROR] 2023-01-05 22:16:51,654 com.epam.redkin.model.repository.impl.UserRepositoryImpl - Duplicate entry 'null@email' for key 'user.email_UNIQUE'
+[ERROR] 2023-01-05 22:16:51,795 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Column 'seat_number' cannot be null
+[ERROR] 2023-01-05 22:16:52,497 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '1055-1' for key 'seat.seat_number_carriage_id_uq'
+[ERROR] 2023-01-05 22:16:52,590 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '1055-1' for key 'seat.seat_number_carriage_id_uq'
+[ERROR] 2023-01-05 22:16:52,591 com.epam.redkin.model.repository.impl.CarriageRepositoryImpl - Duplicate entry '1055-1' for key 'seat.seat_number_carriage_id_uq'
+[ERROR] 2023-01-05 22:16:55,891 com.epam.redkin.model.repository.impl.RouteRepositoryImpl - Duplicate entry 'Dnipro-Odessa-1-1' for key 'route.name_number_train_id_uq'
+[ERROR] 2023-01-05 22:16:55,979 com.epam.redkin.model.repository.impl.RouteRepositoryImpl - Column 'name' cannot be null
+[ERROR] 2023-01-05 22:16:56,081 com.epam.redkin.model.repository.impl.TrainRepositoryImpl - Column 'number' cannot be null
+[ERROR] 2023-01-05 22:16:56,096 com.epam.redkin.model.repository.impl.TrainRepositoryImpl - Duplicate entry '17(Skovoroda Ekspress)' for key 'train.number_UNIQUE'
+[ERROR] 2023-01-05 22:16:56,103 com.epam.redkin.model.repository.impl.TrainRepositoryImpl - Duplicate entry 'FAST' for key 'train.number_UNIQUE'
