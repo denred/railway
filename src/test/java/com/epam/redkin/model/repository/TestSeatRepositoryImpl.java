@@ -28,7 +28,7 @@ public class TestSeatRepositoryImpl implements TestConstants {
 
     @BeforeAll
     public static void setup() throws SQLException {
-        connection = ConnectionPools.getTransactional().getConnection();
+        connection = ConnectionPools.getTesting().getConnection();
     }
 
     @AfterAll
@@ -38,7 +38,7 @@ public class TestSeatRepositoryImpl implements TestConstants {
 
     @BeforeEach
     public void init() throws SQLException {
-        seatRepository = new SeatRepositoryImpl(ConnectionPools.getTransactional());
+        seatRepository = new SeatRepositoryImpl(ConnectionPools.getTesting());
         connection.createStatement().executeUpdate(CREATE_TRAIN_TABLE);
         connection.createStatement().executeUpdate(CREATE_CARRIAGE_TABLE);
         connection.createStatement().executeUpdate(CREATE_SEAT_TABLE);

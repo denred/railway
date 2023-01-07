@@ -21,67 +21,48 @@ import java.util.List;
 @WebServlet("/administrator_account")
 public class AdministratorAccountController extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(AdministratorAccountController.class);
-
     private OrderService orderService;
     private UserService userService;
     private StationService stationService;
-    private RoutService routService;
+    private RouteService routeService;
     private TrainService trainService;
     private CarService carService;
     private RoutMappingService routMappingService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         List<Order> orderList = orderService.getAllOrderList();
-
-
-        /* RoutInfoDto routInfoDto = routService.getRoutById(orderList.get(i).getRoutsId());
-
-            orderList.get(i).setRoutsId(routInfoDto.getRoutName());*/
-
-        orderList.forEach(order -> {
-
-            order.setRouteId(
-                    routService.getRoutById(
-                                    order.getRouteId())
-                            .getRoutsId());
-        });
-
-        LOGGER.debug("order_list: " + orderList);
-
+        for (Order order : orderList) {
+            order.setRouteId(routeService.getRoutById(order.getRouteId()).getRoutsId());
+        }
         request.setAttribute("order_list", orderList);
+
         List<User> userInfoList = userService.getUserInfo(Role.USER.name());
-
-        LOGGER.debug("userInfoList: " + userInfoList);
-
         request.setAttribute("user_list", userInfoList);
 
         List<Station> stationList = stationService.getAllStationList();
-
-        LOGGER.debug("stationList: " + stationList);
-
         request.setAttribute("station_list", stationList);
 
+        // List<RouteInfoDTO> routeDto_list = routeService.getAllRouteList();
+        int page = 1;
+        int recordsPerPage = 5;
+        if (request.getParameter("page") != null)
+            page = Integer.parseInt(request.getParameter("page"));
+        List<RouteInfoDTO> routeDtoList = routeService.getRouteListByCurrentRecordAndRecordsPerPage(
+                (page - 1) * recordsPerPage,
+                recordsPerPage * page);
+        int noOfRecords = routeService.getRouteListSize();
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        request.setAttribute("noOfPages", noOfPages);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("routeDto_list", routeDtoList);
 
-        List<RouteInfoDTO> routList = routService.getAllRoutList();
-
-        LOGGER.debug("routList: " + routList);
-
-        request.setAttribute("rout_list", routList);
         List<RoutePoint> routToStationMappingList = routMappingService.getAllRoutToStationMappingList();
-
-        LOGGER.debug("routToStationMappingList: " + routToStationMappingList);
-
         request.setAttribute("rout_m_list", routToStationMappingList);
+
         List<Train> trainList = trainService.getAllTrainList();
-
-        LOGGER.debug("trainList: " + trainList);
-
         request.setAttribute("train_list", trainList);
+
         List<CarriageDTO> carList = carService.getAllCarList();
-
-        LOGGER.debug("carList: " + carList);
-
         request.setAttribute("car_list", carList);
 
         request.getRequestDispatcher("WEB-INF/jsp/administratorAccount.jsp").forward(request, response);
@@ -92,7 +73,7 @@ public class AdministratorAccountController extends HttpServlet {
         orderService = (OrderService) config.getServletContext().getAttribute(AppContextConstant.ORDER_SERVICE);
         userService = (UserService) config.getServletContext().getAttribute(AppContextConstant.USER_SERVICE);
         stationService = (StationService) config.getServletContext().getAttribute((AppContextConstant.STATION_SERVICE));
-        routService = (RoutService) config.getServletContext().getAttribute((AppContextConstant.ROUT_SERVICE));
+        routeService = (RouteService) config.getServletContext().getAttribute((AppContextConstant.ROUT_SERVICE));
         routMappingService = (RoutMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
         trainService = (TrainService) config.getServletContext().getAttribute((AppContextConstant.TRAIN_SERVICE));
         carService = (CarService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));

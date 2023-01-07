@@ -68,7 +68,7 @@
             <td><input class="form-control" name="station_order"></td>
             <td><select class="btn btn-info dropdown-toggle" name="station_station">
                 <c:forEach items="${station_list}" var="station">
-                    <option value="${station.stationId}"><c:out value="${station.station}"/></option>
+                    <option value="${station.id}"><c:out value="${station.station}"/></option>
                 </c:forEach>
             </select></td>
             <td><input class="form-control" name="station_arrival_date" type="datetime-local"></td>

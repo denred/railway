@@ -16,6 +16,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ import java.util.List;
 
 @WebServlet("/administrator_add_car")
 public class AdministratorAddCarController extends HttpServlet {
-    //private static final Logger LOGGER = Logger.getLogger(AdministratorAddCarController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdministratorAddCarController.class);
     private CarService carService;
     private TrainService trainService;
 
@@ -44,28 +46,24 @@ public class AdministratorAddCarController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         CarValidator carValidator = new CarValidator();
         CarriageDTO carriageDTO = new CarriageDTO();
+
         String trainId = request.getParameter("train_id");
         String trainNotSelected = trainId.equals("TRAIN_NOT_SELECTED") ? null : trainId;
         carriageDTO.setTrainId(Integer.parseInt(trainNotSelected));
-        Train train = trainService.getTrainById(Integer.parseInt(trainId));
-        List<Carriage> carByTrainId = carService.getCarByTrainId(train.getId());
+        Train train = trainService.getTrainById(carriageDTO.getTrainId());
+        List<Carriage> trainCarriages = carService.getCarByTrainId(train.getId());
         String carNumber = request.getParameter("car_number");
+        carriageDTO.setCarNumber(carNumber);
 
-        /*if (train.getId() == null || !containsCarWithCarNumber(carByTrainId, carNumber) && trainId.equals(train.getTrainId())) {
-            carDto.setCarNumber(carNumber);
-        } else {
-            LOGGER.error("Incorrect data entered");
-            throw new IncorrectDataException("Incorrect data entered");
-        }*/
         try {
             carriageDTO.setCarType(CarriageType.valueOf(request.getParameter("car_type")));
             carriageDTO.setSeats(Integer.valueOf(request.getParameter("seats")));
         } catch (IllegalArgumentException e) {
-            //LOGGER.error("Incorrect data entered");
+            LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         carValidator.isValidCar(carriageDTO);
-        carService.addCar(carriageDTO);
+        carService.addCarriage(carriageDTO);
         response.sendRedirect("administrator_account");
     }
 
@@ -81,7 +79,7 @@ public class AdministratorAddCarController extends HttpServlet {
     public void init(ServletConfig config) {
         trainService = (TrainService) config.getServletContext().getAttribute(AppContextConstant.TRAIN_SERVICE);
         carService = (CarService) config.getServletContext().getAttribute(AppContextConstant.CARS_SERVICE);
-       // LOGGER.trace("administrator_add_car Servlet init");
+        LOGGER.trace("administrator_add_car Servlet init");
 
     }
 }

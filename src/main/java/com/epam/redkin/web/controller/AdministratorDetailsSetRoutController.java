@@ -22,11 +22,11 @@ public class AdministratorDetailsSetRoutController extends HttpServlet {
     private RoutMappingService routMappingService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String routsId = request.getParameter("routs_id");
+        String routeId = request.getParameter("routs_id");
         String stationId = request.getParameter("station_id");
         request.setAttribute("station_id", stationId);
-        request.setAttribute("routs_id", routsId);
-        List<MappingInfoDTO> AllRoutToStationMappingListById = routMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routsId));
+        request.setAttribute("routs_id", routeId);
+        List<MappingInfoDTO> AllRoutToStationMappingListById = routMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routeId));
         LOGGER.debug(AllRoutToStationMappingListById.toString());
         request.setAttribute("rout_m_list", AllRoutToStationMappingListById);
         request.getRequestDispatcher("WEB-INF/jsp/administratorDetailsSetRout.jsp").forward(request, response);

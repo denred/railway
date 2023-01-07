@@ -80,7 +80,7 @@ public interface Constants {
 
     /* ROUTE MAPPING */
     String GET_ALL_ROUTE_MAPPING = "SELECT * FROM station_has_route";
-    String ADD_ROUTE_MAPPINGS = "INSERT INTO station_has_route as rm " +
+    String ADD_ROUTE_MAPPINGS = "INSERT INTO station_has_route " +
             "(station_id, route_id, station_arrival, station_dispatch, station_order) VALUES (?, ?, ?, ?, ?)";
     String GET_ROUT_MAPPING_BY_ID = "SELECT * FROM station_has_route WHERE route_id = ?";
     String UPDATE_ROUTE_MAPPING = "UPDATE station_has_route " +

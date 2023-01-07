@@ -61,7 +61,7 @@
     <tbody>
     <tr>
         <form action="administrator_edit_info_station" method="POST">
-            <input type="hidden" name="station_id" value="${current_station.stationId}">
+            <input type="hidden" name="station_id" value="${current_station.id}">
             <td><input name="station" class="form-control" value="${current_station.station}"></td>
             <td>
                 <input type="submit" class="btn btn-success" name="save_edit_information" value="<fmt:message key="admin.saveInformation"/>">

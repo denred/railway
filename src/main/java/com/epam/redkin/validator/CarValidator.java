@@ -3,6 +3,8 @@ package com.epam.redkin.validator;
 import com.epam.redkin.model.dto.CarriageDTO;
 import com.epam.redkin.model.exception.IncorrectDataException;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,9 +12,9 @@ import java.util.Map;
 import static java.util.stream.Collectors.joining;
 
 public class CarValidator {
-   // private static final Logger LOGGER = Logger.getLogger(CarValidator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CarValidator.class);
     private static final String CAR_NUMBER = "^(?<![-\\d])(?<!\\d[.,])\\d*[1-9](?![.,]?\\d){1,2}$";
-    private static final String COUNT_OF_SEATS = "^(?<![-\\d])(?<!\\d[.,])\\d*[1-9](?![.,]?\\d){1,2}$";
+    private static final String COUNT_OF_SEATS = "^\\d+$";
 
     public void isValidCar(CarriageDTO carriageDTO) {
         Map<String, String> errors = new HashMap<>();
@@ -32,7 +34,7 @@ public class CarValidator {
                         .append(";<br/>\n");
             }
             IncorrectDataException e = new IncorrectDataException(builder.toString());
-           // LOGGER.error(e);
+            LOGGER.error(e.getMessage());
             throw e;
         }
     }

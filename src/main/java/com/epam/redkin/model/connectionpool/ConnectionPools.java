@@ -23,18 +23,18 @@ public class ConnectionPools {
     }
 
 
-    private enum Transactional {
+    private enum Testing {
         INSTANCE(ConnectionPools.dataSourceTest);
         private final HikariDataSource dataSource;
-        private Transactional(HikariDataSource dataSource) {
+        private Testing(HikariDataSource dataSource) {
             this.dataSource = dataSource;
         }
         public HikariDataSource getDataSource() {
             return dataSource;
         }
     }
-    public static HikariDataSource getTransactional() {
-        return Transactional.INSTANCE.getDataSource();
+    public static HikariDataSource getTesting() {
+        return Testing.INSTANCE.getDataSource();
     }
 
     private enum Processing {
@@ -56,8 +56,8 @@ public class ConnectionPools {
         logger.debug("starting");
         DataSource processing = ConnectionPools.getProcessing();
         logger.debug("processing started");
-        DataSource transactional = ConnectionPools.getTransactional();
-        logger.debug("transactional started");
+        DataSource testing = ConnectionPools.getTesting();
+        logger.debug("testing started");
         logger.debug("done");
     }
 }

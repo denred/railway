@@ -61,7 +61,7 @@
     <tbody>
     <tr>
         <form action="administrator_edit_info_order" method="POST">
-            <input type="hidden" name="order_id" value="${current_order.orderId}">
+            <input type="hidden" name="order_id" value="${current_order.id}">
             <td><select class="btn btn-info dropdown-toggle"  name="order_status">
                 <c:set var="current_order_status" value="${current_order.orderStatus}"/>
                 <c:forEach items="${statusList}" var="status">

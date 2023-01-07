@@ -64,28 +64,28 @@
     <tbody>
     <tr>
         <form action="administrator_edit_info_car" method="POST">
-            <input type="hidden" name="car_id" value="${current_car.carId}">
+            <input type="hidden" name="car_id" value="${current_car.carriageId}">
             <td><select class="btn btn-info dropdown-toggle" name="train_id">
                 <option value="TRAIN_NOT_SELECTED"><fmt:message key="in.the.depot"/></option>
                 <c:set var="train_id" value="${current_car.trainId}"/>
                 <c:forEach items="${trainList}" var="train">
                     <option
                             <c:choose>
-                                <c:when test="${train.trainId eq train_id}">
+                                <c:when test="${train.id eq train_id}">
                                     selected
                                 </c:when>
                             </c:choose>
-                            value="${train.trainId}"><c:out value="${train.trainNumber}"/>
+                            value="${train.id}"><c:out value="${train.number}"/>
                     </option>
                 </c:forEach>
             </select>
             </td>
             <td><select class="btn btn-info dropdown-toggle" name="car_type">
-                <c:set var="train_id" value="${current_car.carType}"/>
+                <c:set var="train_id" value="${current_car.type}"/>
                 <c:forEach items="${carTypeList}" var="car_type">
                     <option
                             <c:choose>
-                                <c:when test="${car_type eq current_car.carType}">
+                                <c:when test="${car_type eq current_car.type}">
                                     selected
                                 </c:when>
                             </c:choose>
@@ -94,10 +94,10 @@
                 </c:forEach>
             </select>
             </td>
-            <td><input name="car_number" class="form-control" value="${current_car.carNumber}"></td>
+            <td><input name="car_number" class="form-control" value="${current_car.number}"></td>
             <td><input name="seats" class="form-control" value="${countSeat}"></td>
             <td>
-                <input type="hidden" name="car_id" value="${current_car.carId}">
+                <input type="hidden" name="car_id" value="${current_car.carriageId}">
                 <input type="submit" class="btn btn-success" name="save_edit_information"
                        value="<fmt:message key="admin.saveInformation"/>">
             </td>

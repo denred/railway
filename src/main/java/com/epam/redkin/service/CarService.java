@@ -17,7 +17,7 @@ public interface CarService {
     List<Carriage> getCarByTrainId(int trainId);
 
 
-    void addCar(CarriageDTO carriageDTO);
+    void addCarriage(CarriageDTO carriageDTO);
 
 
     Carriage getCarById(int carId);

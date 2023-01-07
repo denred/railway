@@ -5,7 +5,7 @@ import com.epam.redkin.model.dto.RouteInfoDTO;
 import com.epam.redkin.model.entity.Carriage;
 import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.service.CarService;
-import com.epam.redkin.service.RoutService;
+import com.epam.redkin.service.RouteService;
 import com.epam.redkin.util.constants.AppContextConstant;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -25,7 +25,7 @@ import java.util.List;
 public class SelectCarAndCountSeatsForOrderController extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SelectCarAndCountSeatsForOrderController.class);
-    private RoutService routService;
+    private RouteService routeService;
     private CarService carService;
 
 
@@ -60,7 +60,7 @@ public class SelectCarAndCountSeatsForOrderController extends HttpServlet {
         request.setAttribute("car_type", carType);
         request.setAttribute("user_id", userId);
         request.setAttribute("train_id", trainId);
-        RouteInfoDTO routeInfoDto = routService.getRoutById(Integer.parseInt(routsId));
+        RouteInfoDTO routeInfoDto = routeService.getRoutById(Integer.parseInt(routsId));
         List<Carriage> carList = carService.getCarByTrainIdAndCarType(routeInfoDto.getTrainId(), carType);
         request.setAttribute("car_list", carList);
 
@@ -68,7 +68,7 @@ public class SelectCarAndCountSeatsForOrderController extends HttpServlet {
     }
 
     public void init(ServletConfig config) {
-        routService = (RoutService) config.getServletContext().getAttribute((AppContextConstant.ROUT_SERVICE));
+        routeService = (RouteService) config.getServletContext().getAttribute((AppContextConstant.ROUT_SERVICE));
         carService = (CarService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));
        // LOGGER.trace("select_cars_and_seats_for_order Servlet init");
     }

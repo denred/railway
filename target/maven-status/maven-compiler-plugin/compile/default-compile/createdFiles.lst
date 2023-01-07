@@ -1,4 +1,3 @@
-com/epam/redkin/model/connectionpool/ConnectionCreator.class
 com/epam/redkin/validator/RoutMappingValidator.class
 com/epam/redkin/validator/SeatValidator.class
 com/epam/redkin/web/controller/AdministratorAccountController.class
@@ -31,7 +30,6 @@ com/epam/redkin/service/StationService.class
 com/epam/redkin/service/TrainService.class
 com/epam/redkin/model/dto/StationDTO.class
 com/epam/redkin/web/controller/StationDeleteController.class
-com/epam/redkin/model/connectionpool/ConnectionPools$Transactional.class
 com/epam/redkin/model/exception/ServiceException.class
 com/epam/redkin/model/entity/OrderStatus.class
 com/epam/redkin/validator/TrainValidator.class
@@ -41,7 +39,6 @@ com/epam/redkin/web/controller/RegistrationController.class
 com/epam/redkin/web/controller/LogoutController.class
 com/epam/redkin/web/controller/DetailRoutController.class
 com/epam/redkin/web/controller/HelloServlet.class
-com/epam/redkin/model/connectionpool/TestConnection.class
 com/epam/redkin/service/impl/SeatServiceImpl.class
 com/epam/redkin/validator/LoginValidator.class
 com/epam/redkin/web/controller/AdministratorAddTrainController.class
@@ -87,7 +84,6 @@ com/epam/redkin/model/entity/User.class
 com/epam/redkin/service/OrderService.class
 com/epam/redkin/validator/SearchValidator.class
 com/epam/redkin/model/dto/RoutsOrderDto.class
-com/epam/redkin/model/connectionpool/DataSourceManager.class
 com/epam/redkin/web/controller/RoutMappingDeleteController.class
 com/epam/redkin/web/controller/AdministratorSetRoutController.class
 com/epam/redkin/web/controller/SelectCarAndCountSeatsForOrderController.class

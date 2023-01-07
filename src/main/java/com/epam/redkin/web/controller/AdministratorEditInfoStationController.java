@@ -11,13 +11,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 @WebServlet("/administrator_edit_info_station")
 public class AdministratorEditInfoStationController extends HttpServlet {
-    //private static final Logger LOGGER = Logger.getLogger(AdministratorEditInfoStationController.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdministratorEditInfoStationController.class);
     private StationService stationService;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -31,7 +32,6 @@ public class AdministratorEditInfoStationController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String stationId = request.getParameter("station");
         Station station = stationService.getStationById(Integer.parseInt(stationId));
         request.setAttribute("current_station", station);
@@ -41,7 +41,7 @@ public class AdministratorEditInfoStationController extends HttpServlet {
     @Override
     public void init(ServletConfig config) {
         stationService = (StationService) config.getServletContext().getAttribute(AppContextConstant.STATION_SERVICE);
-        //LOGGER.trace("administrator_edit_info_station Servlet init");
+        LOGGER.trace("administrator_edit_info_station Servlet init");
 
     }
 }

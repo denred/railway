@@ -38,7 +38,7 @@ public class ConfirmOrderController extends HttpServlet {
     private CarService carService;
     private UserService userService;
     private SeatService seatService;
-    private RoutService routService;
+    private RouteService routeService;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -204,7 +204,7 @@ public class ConfirmOrderController extends HttpServlet {
 
 
         String routsId = request.getParameter("routs_id");
-        RouteInfoDTO routById = routService.getRoutById(Integer.parseInt(routsId));
+        RouteInfoDTO routById = routeService.getRoutById(Integer.parseInt(routsId));
 
         LOGGER.debug("================================!!!!");
         LOGGER.debug("numbers: " + Arrays.toString(numbers));
@@ -292,7 +292,7 @@ public class ConfirmOrderController extends HttpServlet {
         carService = (CarService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));
         userService = (UserService) config.getServletContext().getAttribute((AppContextConstant.USER_SERVICE));
         seatService = (SeatService) config.getServletContext().getAttribute((AppContextConstant.SEAT_SERVICE));
-        routService = (RoutService) config.getServletContext().getAttribute((AppContextConstant.ROUT_SERVICE));
+        routeService = (RouteService) config.getServletContext().getAttribute((AppContextConstant.ROUT_SERVICE));
         LOGGER.trace("confirm_order Servlet init");
 
     }

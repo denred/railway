@@ -27,7 +27,7 @@ public class TestUserRepository implements TestConstants {
 
     @BeforeAll
     public static void setup() throws SQLException {
-        connection = ConnectionPools.getTransactional().getConnection();
+        connection = ConnectionPools.getTesting().getConnection();
     }
 
     @AfterAll
@@ -37,7 +37,7 @@ public class TestUserRepository implements TestConstants {
 
     @BeforeEach
     public void init() throws SQLException {
-        userRepository = new UserRepositoryImpl(ConnectionPools.getTransactional());
+        userRepository = new UserRepositoryImpl(ConnectionPools.getTesting());
         connection.createStatement().executeUpdate(CREATE_USER_TABLE);
         connection.createStatement().executeUpdate(INSERT_USER1);
         connection.createStatement().executeUpdate(INSERT_USER2);

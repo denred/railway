@@ -66,8 +66,8 @@
             <td><input class="form-control" name="rout_name"></td>
             <td><input class="form-control" name="rout_number"></td>
             <td><select class="btn btn-info dropdown-toggle" name="train_number">
-                <c:forEach items="${trainList}" var="trainList">
-                    <option value="${trainList.trainId}"><c:out value="${trainList.trainNumber}"/></option>
+                <c:forEach items="${trainList}" var="train">
+                    <option value="${train.id}"><c:out value="${train.number}"/></option>
                 </c:forEach>
             </select></td>
 

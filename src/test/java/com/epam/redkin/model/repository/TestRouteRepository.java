@@ -26,7 +26,7 @@ public class TestRouteRepository implements TestConstants {
 
     @BeforeAll
     public static void setup() throws SQLException {
-        connection = ConnectionPools.getTransactional().getConnection();
+        connection = ConnectionPools.getTesting().getConnection();
     }
 
     @AfterAll
@@ -36,7 +36,7 @@ public class TestRouteRepository implements TestConstants {
 
     @BeforeEach
     public void init() throws SQLException {
-        routeRepository = new RouteRepositoryImpl(ConnectionPools.getTransactional());
+        routeRepository = new RouteRepositoryImpl(ConnectionPools.getTesting());
         connection.createStatement().executeUpdate(CREATE_STATION_TABLE);
         connection.createStatement().executeUpdate(CREATE_ROUTE_TABLE);
         connection.createStatement().executeUpdate(CREATE_ROUTE_POINT_TABLE);
@@ -154,7 +154,7 @@ public class TestRouteRepository implements TestConstants {
 
 
     private RouteInfoDTO getRouteInfoDTO(Integer i) {
-        TrainRepository trainRepository = new TrainRepositoryImpl(ConnectionPools.getTransactional());
+        TrainRepository trainRepository = new TrainRepositoryImpl(ConnectionPools.getTesting());
         return new RouteInfoDTO(i,
                 routeRepository.read(i).getTrainId(),
                 trainRepository.read(routeRepository.read(i).getTrainId()).getNumber(),

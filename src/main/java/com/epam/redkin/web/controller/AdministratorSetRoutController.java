@@ -15,6 +15,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -23,13 +25,11 @@ import java.util.List;
 
 @WebServlet("/administrator_set_rout_mapping")
 public class AdministratorSetRoutController extends HttpServlet {
-
-    //private static final Logger LOGGER = Logger.getLogger(AdministratorSetRoutController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdministratorSetRoutController.class);
     private StationService stationService;
     private RoutMappingService routMappingService;
 
     public static boolean contains(final List<MappingInfoDTO> array, final int order) {
-
         boolean result = false;
 
         for (MappingInfoDTO mappingInfoDto : array) {
@@ -55,11 +55,11 @@ public class AdministratorSetRoutController extends HttpServlet {
             if (!contains(mappingList, stationOrder)) {
                 routToStationMapping.setOrderId(stationOrder);
             } else {
-                //LOGGER.error("Incorrect data entered");
+                LOGGER.error("Incorrect data entered");
                 throw new IncorrectDataException("Incorrect data entered");
             }
         } catch (NumberFormatException | DateTimeParseException e) {
-           // LOGGER.error("Incorrect data entered");
+            LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         routMappingValidator.isValidRoutToStationMapping(routToStationMapping, mappingList);
@@ -80,10 +80,8 @@ public class AdministratorSetRoutController extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) {
-
         stationService = (StationService) config.getServletContext().getAttribute((AppContextConstant.STATION_SERVICE));
         routMappingService = (RoutMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
-        //LOGGER.trace("administrator_set_rout_mapping Servlet init");
-
+        LOGGER.trace("administrator_set_rout_mapping Servlet init");
     }
 }

@@ -78,4 +78,16 @@ public class MappingInfoDTO {
         this.stationDispatchData = stationDispatchData;
 
     }
+
+    @Override
+    public String toString() {
+        return "MappingInfoDTO{" +
+                "stationId='" + stationId + '\'' +
+                ", station='" + station + '\'' +
+                ", order=" + order +
+                ", routsId='" + routsId + '\'' +
+                ", stationArrivalDate=" + stationArrivalDate +
+                ", stationDispatchData=" + stationDispatchData +
+                '}';
+    }
 }

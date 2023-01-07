@@ -32,7 +32,7 @@ public class ApplicationContextListener implements ServletContextListener {
         SeatService seatService = new SeatServiceImpl(seatRepository);
         CarService carService = new CarServiceImpl(carRepository, seatRepository);
         UserService userService = new UserServiceImpl(userRepository);
-        RoutService routService = new RoutServiceImpl(routsRepository, seatService, carService);
+        RouteService routeService = new RouteServiceImpl(routsRepository, seatService, carService);
         OrderService orderService = new OrderServiceImpl(orderRepository, seatService, seatRepository);
         StationService stationService = new StationServiceImpl(stationRepository);
         TrainService trainService = new TrainServiceImpl(trainRepository);
@@ -42,7 +42,7 @@ public class ApplicationContextListener implements ServletContextListener {
         sce.getServletContext().setAttribute(AppContextConstant.USER_SERVICE, userService);
         sce.getServletContext().setAttribute(AppContextConstant.ORDER_SERVICE, orderService);
         sce.getServletContext().setAttribute(AppContextConstant.STATION_SERVICE, stationService);
-        sce.getServletContext().setAttribute(AppContextConstant.ROUT_SERVICE, routService);
+        sce.getServletContext().setAttribute(AppContextConstant.ROUT_SERVICE, routeService);
         sce.getServletContext().setAttribute(AppContextConstant.TRAIN_SERVICE, trainService);
         sce.getServletContext().setAttribute(AppContextConstant.CARS_SERVICE, carService);
         sce.getServletContext().setAttribute(AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE, routMappingService);

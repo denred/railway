@@ -13,6 +13,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import java.util.List;
 
 @WebServlet("/administrator_edit_info_order")
 public class AdministratorEditInfoOrderController extends HttpServlet {
-    //private static final Logger LOGGER = Logger.getLogger(AdministratorEditInfoOrderController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdministratorEditInfoOrderController.class);
     private OrderService orderService;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -32,7 +34,7 @@ public class AdministratorEditInfoOrderController extends HttpServlet {
         try {
             status = OrderStatus.valueOf(request.getParameter("order_status"));
         } catch (IllegalArgumentException e) {
-            //LOGGER.error("Incorrect data entered");
+            LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         orderValidator.isValidOrder(order);
@@ -53,7 +55,7 @@ public class AdministratorEditInfoOrderController extends HttpServlet {
     @Override
     public void init(ServletConfig config) {
         orderService = (OrderService) config.getServletContext().getAttribute(AppContextConstant.ORDER_SERVICE);
-        //LOGGER.trace("administrator_edit_info_order Servlet init");
+        LOGGER.trace("administrator_edit_info_order Servlet init");
 
     }
 }

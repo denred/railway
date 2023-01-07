@@ -22,7 +22,7 @@ public class TestStationRepository implements TestConstants {
 
     @BeforeAll
     public static void setup() throws SQLException {
-        connection = ConnectionPools.getTransactional().getConnection();
+        connection = ConnectionPools.getTesting().getConnection();
     }
 
     @AfterAll
@@ -32,7 +32,7 @@ public class TestStationRepository implements TestConstants {
 
     @BeforeEach
     public void init() throws SQLException {
-        stationRepository = new StationRepositoryImpl(ConnectionPools.getTransactional());
+        stationRepository = new StationRepositoryImpl(ConnectionPools.getTesting());
         connection.createStatement().executeUpdate(CREATE_STATION_TABLE);
         connection.createStatement().executeUpdate(INSERT_STATION1);
         connection.createStatement().executeUpdate(INSERT_STATION2);

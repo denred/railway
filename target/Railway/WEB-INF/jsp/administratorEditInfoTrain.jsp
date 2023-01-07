@@ -61,8 +61,8 @@
     <tbody>
     <tr>
         <form action="administrator_edit_info_train" method="POST">
-            <input type="hidden" name="train_id" value="${current_train.trainId}">
-            <td><input name="train_number" class="form-control" value="${current_train.trainNumber}"></td>
+            <input type="hidden" name="train_id" value="${current_train.id}">
+            <td><input name="train_number" class="form-control" value="${current_train.number}"></td>
             <td>
                 <input type="submit" class="btn btn-success" name="save_edit_information"
                        value="<fmt:message key="admin.saveInformation"/>">

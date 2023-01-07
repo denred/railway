@@ -15,21 +15,19 @@ import java.util.List;
 
 @SuppressWarnings({"ALL", "FieldMayBeFinal"})
 public class CarServiceImpl implements CarService {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(CarServiceImpl.class);
-
-    private CarriageRepository carRepository;
+    private CarriageRepository carriageRepository;
     private SeatRepository seatRepository;
 
-    public CarServiceImpl(CarriageRepository carRepository, SeatRepository seatRepository) {
-        this.carRepository = carRepository;
+    public CarServiceImpl(CarriageRepository carriageRepository, SeatRepository seatRepository) {
+        this.carriageRepository = carriageRepository;
         this.seatRepository = seatRepository;
     }
 
     @Override
     public void updateCar(CarriageDTO carriageDTO) {
         Carriage car = getCarFromCarDto(carriageDTO);
-        carRepository.update(car);
+        carriageRepository.update(car);
         int countSeatBusy = seatRepository.getBusySeatsCountByCarriageId(carriageDTO.getCarId());
         int countSeat = seatRepository.getSeatsCountByCarriageId(carriageDTO.getCarId());
         if (countSeatBusy == 0) {
@@ -43,6 +41,7 @@ public class CarServiceImpl implements CarService {
             if (countSeat < carriageDTO.getSeats()) {
                 for (int i = countSeat + 1; i <= carriageDTO.getSeats(); i++) {
                     Seat seat = getSeatFromCarDto(carriageDTO, String.valueOf(i));
+                    LOGGER.debug("1" + seat.getSeatNumber() + " - " + seat.getCarriageId());
                     seatRepository.create(seat);
                 }
             }
@@ -55,19 +54,22 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Carriage getCarById(int carId) {
-        return carRepository.read(carId);
+        return carriageRepository.read(carId);
     }
 
     @Override
     public List<Carriage> getCarByTrainId(int trainId) {
-        return carRepository.getCarriagesByTrainId(trainId);
+        return carriageRepository.getCarriagesByTrainId(trainId);
     }
 
     @Override
-    public void addCar(CarriageDTO carriageDTO) {
-        Carriage car = getCarFromCarDto(carriageDTO);
-        int carId = carRepository.create(car);
-        carriageDTO.setCarId(carId);
+    public void addCarriage(CarriageDTO carriageDTO) {
+        Carriage carriage = getCarFromCarDto(carriageDTO);
+        int carriageId = carriage.getCarriageId();
+        if (carriageRepository.read(carriageId) == null) {
+            carriageId = carriageRepository.create(carriage);
+        }
+        carriageDTO.setCarId(carriageId);
         for (int i = 1; i <= carriageDTO.getSeats(); i++) {
             Seat seat = getSeatFromCarDto(carriageDTO, String.valueOf(i));
             seatRepository.create(seat);
@@ -76,18 +78,18 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Carriage> getCarByTrainIdAndCarType(int trainId, String carType) {
-        return carRepository.getCarriagesByTrainIdAndType(trainId, carType);
+        return carriageRepository.getCarriagesByTrainIdAndType(trainId, carType);
     }
 
     @Override
     public void removeCar(int carId) {
         seatRepository.deleteAllSeatsByCarriageId(carId);
-        carRepository.delete(carId);
+        carriageRepository.delete(carId);
     }
 
     @Override
     public List<CarriageDTO> getAllCarList() {
-        List<CarriageDTO> result = carRepository.getAllCarriageDTOList();
+        List<CarriageDTO> result = carriageRepository.getAllCarriageDTOList();
         for (CarriageDTO car : result) {
             int seat = seatRepository.getSeatsCountByCarriageId(car.getCarId());
             car.setSeats(seat);
@@ -98,7 +100,7 @@ public class CarServiceImpl implements CarService {
 
     private Seat getSeatFromCarDto(CarriageDTO carriageDTO, String seatNumber) {
         Seat seat = new Seat();
-        seat.setId(carriageDTO.getCarId());
+        seat.setCarriageId(carriageDTO.getCarId());
         seat.setSeatNumber(seatNumber);
         seat.setBusy(false);
         return seat;

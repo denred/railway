@@ -31,7 +31,7 @@ public class TestCarriageRepository implements TestConstants {
 
     @BeforeEach
     public void init() throws SQLException {
-        carriageRepo = new CarriageRepositoryImpl(ConnectionPools.getTransactional());
+        carriageRepo = new CarriageRepositoryImpl(ConnectionPools.getTesting());
         connection.createStatement().executeUpdate(CREATE_TRAIN_TABLE);
         connection.createStatement().executeUpdate(CREATE_CARRIAGE_TABLE);
         connection.createStatement().executeUpdate(INSERT_TRAIN1);
@@ -55,7 +55,7 @@ public class TestCarriageRepository implements TestConstants {
 
     @BeforeAll
     public static void setup() throws SQLException {
-        connection = ConnectionPools.getTransactional().getConnection();
+        connection = ConnectionPools.getTesting().getConnection();
         carriages = new ArrayList<>();
     }
 
@@ -183,7 +183,7 @@ public class TestCarriageRepository implements TestConstants {
     @Test
     public void testGetAllCarriageDTOList() {
         List<CarriageDTO> expectedList = carriageRepo.getAllCarriageDTOList();
-        TrainRepository trainRepository = new TrainRepositoryImpl(ConnectionPools.getTransactional());
+        TrainRepository trainRepository = new TrainRepositoryImpl(ConnectionPools.getTesting());
 
         expectedList.forEach(carrDTO -> {
             assertEquals(carriageRepo.read(carrDTO.getCarId()).getCarriageId(), carrDTO.getCarId());

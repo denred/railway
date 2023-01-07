@@ -15,6 +15,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -23,7 +25,7 @@ import java.util.List;
 
 @WebServlet("/administrator_edit_info_details_set_rout")
 public class AdministratorEditInfoDetailsSetRoutController extends HttpServlet {
-    //private static final Logger LOGGER = Logger.getLogger(AdministratorEditInfoDetailsSetRoutController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdministratorEditInfoDetailsSetRoutController.class);
     private RoutMappingService routMappingService;
     private StationService stationService;
 
@@ -40,7 +42,7 @@ public class AdministratorEditInfoDetailsSetRoutController extends HttpServlet {
             routToStationMapping.setDispatch(LocalDateTime.parse(request.getParameter("station_dispatch_data")));
             routToStationMapping.setOrderId(Integer.parseInt(request.getParameter("station_order")));
         } catch (NumberFormatException | DateTimeParseException e) {
-            //LOGGER.error("Incorrect data entered");
+            LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         routMappingValidator.isValidUpdateRoutToStationMapping(routToStationMapping);
@@ -53,10 +55,10 @@ public class AdministratorEditInfoDetailsSetRoutController extends HttpServlet {
         String routsId = request.getParameter("routs_id");
         String stationId = request.getParameter("station_id");
         List<Station> stationList = stationService.getAllStationList();
-        MappingInfoDTO MappingInfo = routMappingService.getMappingInfo(Integer.parseInt(routsId), Integer.parseInt(stationId));
+        MappingInfoDTO mappingInfo = routMappingService.getMappingInfo(Integer.parseInt(routsId), Integer.parseInt(stationId));
         request.setAttribute("routs_id", routsId);
         request.setAttribute("station_id", stationId);
-        request.setAttribute("current_rout", MappingInfo);
+        request.setAttribute("current_rout", mappingInfo);
         request.setAttribute("station_list", stationList);
 
         request.getRequestDispatcher("WEB-INF/jsp/administratorEditInfoDetailsSetRout.jsp").forward(request, response);
@@ -66,7 +68,7 @@ public class AdministratorEditInfoDetailsSetRoutController extends HttpServlet {
     public void init(ServletConfig config) {
         routMappingService = (RoutMappingService) config.getServletContext().getAttribute(AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE);
         stationService = (StationService) config.getServletContext().getAttribute((AppContextConstant.STATION_SERVICE));
-        //LOGGER.trace("administrator_edit_info_details_set_rout Servlet init");
+        LOGGER.trace("administrator_edit_info_details_set_rout Servlet init");
 
     }
 }

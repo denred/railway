@@ -28,7 +28,7 @@ public class TestOrderRepository implements TestConstants {
 
     @BeforeAll
     public static void setup() throws SQLException {
-        connection = ConnectionPools.getTransactional().getConnection();
+        connection = ConnectionPools.getTesting().getConnection();
     }
 
     @AfterAll
@@ -38,7 +38,7 @@ public class TestOrderRepository implements TestConstants {
 
     @BeforeEach
     public void init() throws SQLException {
-        orderRepository = new OrderRepositoryImpl(ConnectionPools.getTransactional());
+        orderRepository = new OrderRepositoryImpl(ConnectionPools.getTesting());
         connection.createStatement().executeUpdate(CREATE_USER_TABLE);
         connection.createStatement().executeUpdate(CREATE_ORDER_TABLE);
         connection.createStatement().executeUpdate(INSERT_USER1);
@@ -71,7 +71,7 @@ public class TestOrderRepository implements TestConstants {
         double price = Math.ceil(random.nextDouble() * 100) / 100 + random.nextInt(100);
         LocalDateTime arrivalDate = LocalDateTime.of(2022, Month.APRIL, 1, 10, 45);
         LocalDateTime dispatchDate = LocalDateTime.of(2022, Month.APRIL, 12, 2, 45);
-        User user = (new UserRepositoryImpl(ConnectionPools.getTransactional())).read(1);
+        User user = (new UserRepositoryImpl(ConnectionPools.getTesting())).read(1);
         LocalDateTime orderDate = LocalDateTime.of(2022, Month.APRIL, 15, 2, 45);
         OrderStatus orderStatus = OrderStatus.values()[random.nextInt(OrderStatus.values().length)];
         int countOfSeats = random.nextInt(200) + 1;

@@ -4,10 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.sql.rowset.JdbcRowSet;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,7 +14,7 @@ class TestConnection {
 
     @BeforeEach
     public void init() throws SQLException {
-        connection = ConnectionPools.getTransactional().getConnection();
+        connection = ConnectionPools.getTesting().getConnection();
     }
 
     @AfterEach
@@ -27,7 +24,7 @@ class TestConnection {
 
     @Test
     public void shouldGetJDBCConnection() throws SQLException {
-        try (Connection connection = ConnectionPools.getTransactional().getConnection()) {
+        try (Connection connection = ConnectionPools.getTesting().getConnection()) {
             assertTrue(connection.isValid(1));
             assertFalse(connection.isClosed());
         }

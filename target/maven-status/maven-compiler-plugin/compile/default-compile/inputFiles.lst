@@ -37,7 +37,6 @@
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/web/controller/AdministratorAccountController.java
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/service/UserService.java
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/web/controller/AdministratorEditInfoStationController.java
-/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/model/connectionpool/ConnectionCreator.java
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/model/entity/Order.java
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/model/repository/impl/TrainRepositoryImpl.java
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/service/impl/StationServiceImpl.java
@@ -47,7 +46,6 @@
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/model/exception/IncorrectDataException.java
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/model/repository/TrainRepository.java
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/web/controller/HelloServlet.java
-/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/model/connectionpool/TestConnection.java
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/web/controller/CarDeleteController.java
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/validator/OrderValidator.java
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/web/controller/ConfirmOrderController.java
@@ -97,7 +95,6 @@
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/web/controller/AdministratorAddRoutController.java
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/model/repository/impl/RoutePointRepositoryImpl.java
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/model/entity/User.java
-/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/model/connectionpool/DataSourceManager.java
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/model/repository/impl/OrderRepositoryImpl.java
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/web/filter/SecurityFilter.java
 /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/src/main/java/com/epam/redkin/model/exception/UserAlreadyExistException.java

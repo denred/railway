@@ -4,7 +4,7 @@ package com.epam.redkin.web.controller;
 import com.epam.redkin.model.dto.RoutsOrderDto;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.exception.IncorrectDataException;
-import com.epam.redkin.service.RoutService;
+import com.epam.redkin.service.RouteService;
 import com.epam.redkin.service.SeatService;
 import com.epam.redkin.util.constants.AppContextConstant;
 import com.epam.redkin.validator.SearchValidator;
@@ -26,7 +26,7 @@ import java.util.*;
 @WebServlet("/search_rout_for_order")
 public class SearchRoutForOrderController extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchRoutForOrderController.class);
-    private RoutService routService;
+    private RouteService routeService;
     private SeatService seatService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -44,7 +44,7 @@ public class SearchRoutForOrderController extends HttpServlet {
 
 
         searchValidator.isValidSearch(departureStation, arrivalStation);
-        List<RoutsOrderDto> routList = routService.getRouteListWithParameters(departureStation, arrivalStation, departureDate);
+        List<RoutsOrderDto> routList = routeService.getRouteListWithParameters(departureStation, arrivalStation, departureDate);
         List<CarriageType> carriageTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
         Map<CarriageType, Integer> freeSeatsCount = new HashMap<>();
         Map<CarriageType, Double> freeSeatsPrice = new HashMap<>();
@@ -67,7 +67,7 @@ public class SearchRoutForOrderController extends HttpServlet {
     }
 
     public void init(ServletConfig config) {
-        routService = (RoutService) config.getServletContext().getAttribute((AppContextConstant.ROUT_SERVICE));
+        routeService = (RouteService) config.getServletContext().getAttribute((AppContextConstant.ROUT_SERVICE));
         seatService = (SeatService) config.getServletContext().getAttribute((AppContextConstant.SEAT_SERVICE));
         LOGGER.trace("search_rout_for_order Servlet init");
     }

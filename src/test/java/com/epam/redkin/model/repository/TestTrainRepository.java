@@ -21,7 +21,7 @@ public class TestTrainRepository implements TestConstants {
 
     @BeforeAll
     public static void setup() throws SQLException {
-        connection = ConnectionPools.getTransactional().getConnection();
+        connection = ConnectionPools.getTesting().getConnection();
     }
 
     @AfterAll
@@ -31,7 +31,7 @@ public class TestTrainRepository implements TestConstants {
 
     @BeforeEach
     public void init() throws SQLException {
-        trainRepository = new TrainRepositoryImpl(ConnectionPools.getTransactional());
+        trainRepository = new TrainRepositoryImpl(ConnectionPools.getTesting());
         connection.createStatement().executeUpdate(CREATE_TRAIN_TABLE);
         connection.createStatement().executeUpdate(INSERT_TRAIN1);
         connection.createStatement().executeUpdate(INSERT_TRAIN2);

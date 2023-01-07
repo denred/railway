@@ -36,7 +36,7 @@ public class ChangeLanguageController extends HttpServlet {
 
     @Override
     public void init(ServletConfig config)  {
-       // LOGGER.trace("change_language Servlet init");
+       LOGGER.trace("change_language Servlet init");
 
     }
 }

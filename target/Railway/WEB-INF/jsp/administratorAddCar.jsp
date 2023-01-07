@@ -64,17 +64,21 @@
         </thead>
         <tbody>
         <tr>
-            <td><select class="btn btn-info dropdown-toggle" name="train_id">
-                <option value="TRAIN_NOT_SELECTED"><fmt:message key="in.the.depot"/></option>
-                <c:forEach items="${trainList}" var="trainList">
-                    <option value="${trainList.trainId}"><c:out value="${trainList.trainNumber}"/></option>
-                </c:forEach>
-            </select></td>
-            <td><select class="btn btn-info dropdown-toggle" name="car_type">
-                <c:forEach items="${carTypeList}" var="car_type">
-                    <option value="${car_type}"><fmt:message key="${car_type}"/></option>
-                </c:forEach>
-            </select></td>
+            <td>
+                <select class="btn btn-info dropdown-toggle" name="train_id">
+                    <option value="TRAIN_NOT_SELECTED"><fmt:message key="in.the.depot"/></option>
+                    <c:forEach items="${trainList}" var="train">
+                        <option value="${train.id}"><c:out value="${train.number}"/></option>
+                    </c:forEach>
+                </select>
+            </td>
+            <td>
+                <select class="btn btn-info dropdown-toggle" name="car_type">
+                    <c:forEach items="${carTypeList}" var="car_type">
+                        <option value="${car_type}"><fmt:message key="${car_type}"/></option>
+                    </c:forEach>
+                </select>
+            </td>
             <td><input class="form-control" name="car_number"></td>
             <td><input class="form-control" name="seats"></td>
             <td>

@@ -1,7 +1,7 @@
 package com.epam.redkin.web.controller;
 
 
-import com.epam.redkin.service.RoutService;
+import com.epam.redkin.service.RouteService;
 import com.epam.redkin.util.constants.AppContextConstant;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,17 +15,17 @@ import java.io.IOException;
 public class RoutDeleteController extends HttpServlet {
     //private static final Logger LOGGER = Logger.getLogger(RoutDeleteController.class);
 
-    private RoutService routService;
+    private RouteService routeService;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String routsId = request.getParameter("routs_id");
-        routService.removeRout(Integer.parseInt(routsId));
+        routeService.removeRout(Integer.parseInt(routsId));
         response.sendRedirect("administrator_account");
     }
 
     @Override
     public void init(ServletConfig config) {
-        routService = (RoutService) config.getServletContext().getAttribute(AppContextConstant.ROUT_SERVICE);
+        routeService = (RouteService) config.getServletContext().getAttribute(AppContextConstant.ROUT_SERVICE);
         //LOGGER.trace("rout_delete Servlet init");
     }
 }

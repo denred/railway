@@ -16,6 +16,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ import java.util.List;
 
 @WebServlet("/administrator_edit_info_car")
 public class AdministratorEditInfoCarController extends HttpServlet {
-    //private static final Logger LOGGER = Logger.getLogger(AdministratorEditInfoCarController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdministratorEditInfoCarController.class);
     private CarService carService;
     private TrainService trainService;
     private SeatService seatService;
@@ -52,7 +54,7 @@ public class AdministratorEditInfoCarController extends HttpServlet {
                 && containsCarWithCarNumber(carByTrainId, carNumber) && trainId.equals(train.getId())) {
             carriageDTO.setCarNumber(carNumber);
         } else {
-           // LOGGER.error("Incorrect data entered");
+            LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered");
         }
         try {
@@ -60,7 +62,7 @@ public class AdministratorEditInfoCarController extends HttpServlet {
             carriageDTO.setSeats(Integer.valueOf(request.getParameter("seats")));
 
         } catch (IllegalArgumentException e) {
-           // LOGGER.error("Incorrect data entered");
+            LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         carValidator.isValidCar(carriageDTO);
@@ -87,7 +89,7 @@ public class AdministratorEditInfoCarController extends HttpServlet {
         trainService = (TrainService) config.getServletContext().getAttribute(AppContextConstant.TRAIN_SERVICE);
         carService = (CarService) config.getServletContext().getAttribute(AppContextConstant.CARS_SERVICE);
         seatService = (SeatService) config.getServletContext().getAttribute(AppContextConstant.SEAT_SERVICE);
-        //LOGGER.trace("administrator_edit_info_car Servlet init");
+        LOGGER.trace("administrator_edit_info_car Servlet init");
 
     }
 }

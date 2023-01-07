@@ -9,7 +9,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.*;
@@ -25,7 +24,7 @@ public class TestRoutePointRepository implements TestConstants {
 
     @BeforeAll
     public static void setup() throws SQLException {
-        connection = ConnectionPools.getTransactional().getConnection();
+        connection = ConnectionPools.getTesting().getConnection();
     }
 
     @AfterAll
@@ -35,7 +34,7 @@ public class TestRoutePointRepository implements TestConstants {
 
     @BeforeEach
     public void init() throws SQLException {
-        routePointRepository = new RoutePointRepositoryImpl(ConnectionPools.getTransactional());
+        routePointRepository = new RoutePointRepositoryImpl(ConnectionPools.getTesting());
         connection.createStatement().executeUpdate(CREATE_STATION_TABLE);
         connection.createStatement().executeUpdate(CREATE_ROUTE_TABLE);
         connection.createStatement().executeUpdate(CREATE_ROUTE_POINT_TABLE);

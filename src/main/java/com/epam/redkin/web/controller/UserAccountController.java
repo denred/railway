@@ -4,7 +4,7 @@ package com.epam.redkin.web.controller;
 import com.epam.redkin.model.dto.RouteInfoDTO;
 import com.epam.redkin.model.entity.Order;
 import com.epam.redkin.service.OrderService;
-import com.epam.redkin.service.RoutService;
+import com.epam.redkin.service.RouteService;
 import com.epam.redkin.util.constants.AppContextConstant;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -23,7 +23,7 @@ import java.util.List;
 public class UserAccountController extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountController.class);
     private OrderService orderService;
-    private RoutService routService;
+    private RouteService routeService;
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,7 +32,7 @@ public class UserAccountController extends HttpServlet {
         List<Order> orderList = orderService.getOrderByUserId(Integer.parseInt(userId));
 
         for (int i = 0; i <= orderList.size() - 1; i++) {
-            RouteInfoDTO routeInfoDto = routService.getRoutById(orderList.get(i).getRouteId());
+            RouteInfoDTO routeInfoDto = routeService.getRoutById(orderList.get(i).getRouteId());
             orderList.get(i).setRouteId(routeInfoDto.getRoutsId());
         }
         request.setAttribute("order_list", orderList);
@@ -46,7 +46,7 @@ public class UserAccountController extends HttpServlet {
     @Override
     public void init(ServletConfig config) {
         orderService = (OrderService) config.getServletContext().getAttribute(AppContextConstant.ORDER_SERVICE);
-        routService = (RoutService) config.getServletContext().getAttribute(AppContextConstant.ROUT_SERVICE);
+        routeService = (RouteService) config.getServletContext().getAttribute(AppContextConstant.ROUT_SERVICE);
         LOGGER.trace("user_account Servlet init");
 
     }

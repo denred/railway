@@ -71,11 +71,11 @@
                 <c:forEach items="${trainList}" var="train">
                     <option
                             <c:choose>
-                                <c:when test="${train.trainId eq train_id}">
+                                <c:when test="${train.id eq train_id}">
                                     selected
                                 </c:when>
                             </c:choose>
-                            value="${train.trainId}"><c:out value="${train.trainNumber}"/>
+                            value="${train.id}"><c:out value="${train.number}"/>
                     </option>
                 </c:forEach>
             </select>
