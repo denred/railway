@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class CarriageDTO {
     private int carId;
-    private CarriageType carType;
+    private CarriageType carriageType;
     private String carNumber;
     private int trainId;
     private Integer seats;
@@ -19,7 +19,7 @@ public class CarriageDTO {
         if (o == null || getClass() != o.getClass()) return false;
         CarriageDTO carriageDTO = (CarriageDTO) o;
         return Objects.equals(carId, carriageDTO.carId) &&
-                carType == carriageDTO.carType &&
+                carriageType == carriageDTO.carriageType &&
                 Objects.equals(carNumber, carriageDTO.carNumber) &&
                 Objects.equals(trainId, carriageDTO.trainId) &&
                 Objects.equals(seats, carriageDTO.seats) &&
@@ -29,7 +29,7 @@ public class CarriageDTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(carId, carType, carNumber, trainId, seats, price, trainNumber);
+        return Objects.hash(carId, carriageType, carNumber, trainId, seats, price, trainNumber);
     }
 
     public int getCarId() {
@@ -40,12 +40,12 @@ public class CarriageDTO {
         this.carId = carId;
     }
 
-    public CarriageType getCarType() {
-        return carType;
+    public CarriageType getCarriageType() {
+        return carriageType;
     }
 
-    public void setCarType(CarriageType carType) {
-        this.carType = carType;
+    public void setCarriageType(CarriageType carriageType) {
+        this.carriageType = carriageType;
     }
 
     public String getCarNumber() {

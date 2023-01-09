@@ -21,9 +21,8 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/administrator_edit_info_rout")
-public class AdministratorEditInfoRoutController extends HttpServlet {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AdministratorEditInfoRoutController.class);
-
+public class AdministratorEditInfoRouteController extends HttpServlet {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdministratorEditInfoRouteController.class);
     private RouteService routeService;
     private TrainService trainService;
 
@@ -36,7 +35,7 @@ public class AdministratorEditInfoRoutController extends HttpServlet {
         route.setTrainId(Integer.parseInt(request.getParameter("train_number")));
         routValidator.isValidRout(route);
         routeService.updateRout(route);
-        response.sendRedirect("administrator_account");
+        response.sendRedirect("administrator_info_route");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

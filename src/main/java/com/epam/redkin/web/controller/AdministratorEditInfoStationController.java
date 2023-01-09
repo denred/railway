@@ -28,7 +28,7 @@ public class AdministratorEditInfoStationController extends HttpServlet {
         station.setStation(request.getParameter("station"));
         stationValidator.isValidStation(station);
         stationService.updateStation(station);
-        response.sendRedirect("administrator_account");
+        response.sendRedirect("administrator_info_station");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

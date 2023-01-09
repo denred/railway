@@ -29,7 +29,7 @@ public class AdministratorEditInfoTrainController extends HttpServlet {
         train.setNumber(request.getParameter("train_number"));
         trainValidator.isValidTrain(train);
         trainService.updateTrain(train);
-        response.sendRedirect("administrator_account");
+        response.sendRedirect("administrator_info_train");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,7 +43,7 @@ public class AdministratorEditInfoTrainController extends HttpServlet {
     @Override
     public void init(ServletConfig config) {
         trainService = (TrainService) config.getServletContext().getAttribute(AppContextConstant.TRAIN_SERVICE);
-       // LOGGER.trace("administrator_edit_info_train Servlet init");
+        LOGGER.trace("administrator_edit_info_train Servlet init");
 
     }
 }

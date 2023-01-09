@@ -26,7 +26,7 @@ public class AdministratorAccountController extends HttpServlet {
     private StationService stationService;
     private RouteService routeService;
     private TrainService trainService;
-    private CarService carService;
+    private CarriageService carriageService;
     private RoutMappingService routMappingService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,7 +62,7 @@ public class AdministratorAccountController extends HttpServlet {
         List<Train> trainList = trainService.getAllTrainList();
         request.setAttribute("train_list", trainList);
 
-        List<CarriageDTO> carList = carService.getAllCarList();
+        List<CarriageDTO> carList = carriageService.getAllCarList();
         request.setAttribute("car_list", carList);
 
         request.getRequestDispatcher("WEB-INF/jsp/administratorAccount.jsp").forward(request, response);
@@ -76,7 +76,7 @@ public class AdministratorAccountController extends HttpServlet {
         routeService = (RouteService) config.getServletContext().getAttribute((AppContextConstant.ROUT_SERVICE));
         routMappingService = (RoutMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
         trainService = (TrainService) config.getServletContext().getAttribute((AppContextConstant.TRAIN_SERVICE));
-        carService = (CarService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));
+        carriageService = (CarriageService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));
         LOGGER.trace("administrator_account Servlet init");
     }
 }

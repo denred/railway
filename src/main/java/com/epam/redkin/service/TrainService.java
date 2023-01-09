@@ -21,5 +21,8 @@ public interface TrainService {
 
     Train getTrainById(int trainId);
 
+    List<Train> getTrainListBySetRecords(int currentPage, int recordsPerPage);
+
+    int getTrainListSize();
 }
 

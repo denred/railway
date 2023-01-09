@@ -4,7 +4,7 @@ package com.epam.redkin.web.controller;
 import com.epam.redkin.model.dto.RouteInfoDTO;
 import com.epam.redkin.model.entity.Carriage;
 import com.epam.redkin.model.exception.IncorrectDataException;
-import com.epam.redkin.service.CarService;
+import com.epam.redkin.service.CarriageService;
 import com.epam.redkin.service.RouteService;
 import com.epam.redkin.util.constants.AppContextConstant;
 import jakarta.servlet.ServletConfig;
@@ -26,7 +26,7 @@ public class SelectCarAndCountSeatsForOrderController extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SelectCarAndCountSeatsForOrderController.class);
     private RouteService routeService;
-    private CarService carService;
+    private CarriageService carriageService;
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -61,7 +61,7 @@ public class SelectCarAndCountSeatsForOrderController extends HttpServlet {
         request.setAttribute("user_id", userId);
         request.setAttribute("train_id", trainId);
         RouteInfoDTO routeInfoDto = routeService.getRoutById(Integer.parseInt(routsId));
-        List<Carriage> carList = carService.getCarByTrainIdAndCarType(routeInfoDto.getTrainId(), carType);
+        List<Carriage> carList = carriageService.getCarByTrainIdAndCarType(routeInfoDto.getTrainId(), carType);
         request.setAttribute("car_list", carList);
 
         request.getRequestDispatcher("WEB-INF/jsp/selectCarAndCountSeatsForOrder.jsp").forward(request, response);
@@ -69,7 +69,7 @@ public class SelectCarAndCountSeatsForOrderController extends HttpServlet {
 
     public void init(ServletConfig config) {
         routeService = (RouteService) config.getServletContext().getAttribute((AppContextConstant.ROUT_SERVICE));
-        carService = (CarService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));
+        carriageService = (CarriageService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));
        // LOGGER.trace("select_cars_and_seats_for_order Servlet init");
     }
 }

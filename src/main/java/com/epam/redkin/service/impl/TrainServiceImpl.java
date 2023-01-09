@@ -22,13 +22,24 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
+    public List<Train> getTrainListBySetRecords(int currentPage, int recordsPerPage) {
+        List<Train> allRecords = trainRepository.getAllTrains();
+        return allRecords.subList(currentPage, Math.min(recordsPerPage, allRecords.size()));
+    }
+
+    @Override
+    public int getTrainListSize() {
+        return trainRepository.getAllTrains().size();
+    }
+
+    @Override
     public void updateTrain(Train train) {
         trainRepository.update(train);
     }
 
     @Override
     public void addTrain(Train train) {
-            trainRepository.create(train);
+        trainRepository.create(train);
     }
 
     @Override
@@ -38,7 +49,7 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public void removeTrain(int trainId) {
-            trainRepository.delete(trainId);
+        trainRepository.delete(trainId);
     }
 
 }

@@ -7,7 +7,7 @@ import com.epam.redkin.model.dto.StationDTO;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.entity.Route;
 import com.epam.redkin.model.repository.RouteRepository;
-import com.epam.redkin.service.CarService;
+import com.epam.redkin.service.CarriageService;
 import com.epam.redkin.service.RouteService;
 import com.epam.redkin.service.SeatService;
 import org.slf4j.Logger;
@@ -19,14 +19,14 @@ import java.util.*;
 @SuppressWarnings("FieldCanBeLocal")
 public class RouteServiceImpl implements RouteService {
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteServiceImpl.class);
-    private final CarService carService;
+    private final CarriageService carriageService;
     private final RouteRepository routeRepository;
     private final SeatService seatService;
 
 
-    public RouteServiceImpl(RouteRepository routsRepository, SeatService seatService, CarService carService) {
+    public RouteServiceImpl(RouteRepository routsRepository, SeatService seatService, CarriageService carriageService) {
         this.routeRepository = routsRepository;
-        this.carService = carService;
+        this.carriageService = carriageService;
         this.seatService = seatService;
     }
 

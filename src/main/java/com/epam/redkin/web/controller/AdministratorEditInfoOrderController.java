@@ -39,7 +39,7 @@ public class AdministratorEditInfoOrderController extends HttpServlet {
         }
         orderValidator.isValidOrder(order);
         orderService.updateOrderStatus(Integer.parseInt(orderId), status);
-        response.sendRedirect("administrator_account");
+        response.sendRedirect("administrator_info_order");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

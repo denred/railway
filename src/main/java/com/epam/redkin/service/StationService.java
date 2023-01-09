@@ -9,6 +9,9 @@ public interface StationService {
 
     List<Station> getAllStationList();
 
+    List<Station> getStationListByCurrentPage(int currentPage, int recordsPerPage);
+    int getStationListSize();
+
 
     void addStation(Station station);
 

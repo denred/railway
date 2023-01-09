@@ -3,6 +3,8 @@ package com.epam.redkin.validator;
 import com.epam.redkin.model.entity.Train;
 import com.epam.redkin.model.exception.IncorrectDataException;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.util.HashMap;
@@ -11,8 +13,8 @@ import java.util.Map;
 import static java.util.stream.Collectors.joining;
 
 public class TrainValidator {
-   // private static final Logger LOGGER = Logger.getLogger(TrainValidator.class);
-    private static final String TRAIN_NUMBER = "^(?![-\\/\\\\d])(?<!\\d[.,])0*+([\\d-\\/]*)(?![.,]?\\d)$";
+    private static final Logger LOGGER = LoggerFactory.getLogger(TrainValidator.class);
+    private static final String TRAIN_NUMBER = "^[\\d]+$";
 
     public void isValidTrain(Train train) {
         Map<String, String> errors = new HashMap<>();
@@ -28,7 +30,7 @@ public class TrainValidator {
                         .append(";<br/>\n");
             }
             IncorrectDataException e = new IncorrectDataException(builder.toString());
-            //LOGGER.error(e);
+            LOGGER.error(e.getMessage());
             throw e;
         }
     }

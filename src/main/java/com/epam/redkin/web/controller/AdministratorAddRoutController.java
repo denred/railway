@@ -33,7 +33,7 @@ public class AdministratorAddRoutController extends HttpServlet {
         rout.setTrainId(Integer.parseInt(request.getParameter("train_number")));
         routValidator.isValidRout(rout);
         routeService.addRout(rout);
-        response.sendRedirect("administrator_account");
+        response.sendRedirect("administrator_info_route");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,7 +45,7 @@ public class AdministratorAddRoutController extends HttpServlet {
     public void init(ServletConfig config) {
         routeService = (RouteService) config.getServletContext().getAttribute(AppContextConstant.ROUT_SERVICE);
         trainService = (TrainService) config.getServletContext().getAttribute(AppContextConstant.TRAIN_SERVICE);
-       // LOGGER.trace("administrator_add_rout Servlet init");
+        LOGGER.trace("administrator_add_rout Servlet init");
 
     }
 }

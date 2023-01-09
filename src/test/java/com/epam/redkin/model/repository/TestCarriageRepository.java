@@ -188,7 +188,7 @@ public class TestCarriageRepository implements TestConstants {
         expectedList.forEach(carrDTO -> {
             assertEquals(carriageRepo.read(carrDTO.getCarId()).getCarriageId(), carrDTO.getCarId());
             assertEquals(carriageRepo.read(carrDTO.getCarId()).getNumber(), carrDTO.getCarNumber());
-            assertEquals(carriageRepo.read(carrDTO.getCarId()).getType(), carrDTO.getCarType());
+            assertEquals(carriageRepo.read(carrDTO.getCarId()).getType(), carrDTO.getCarriageType());
             assertEquals(trainRepository.read(carrDTO.getTrainId()).getId(), carrDTO.getTrainId());
             assertEquals(trainRepository.read(carrDTO.getTrainId()).getNumber(), carrDTO.getTrainNumber());
         });

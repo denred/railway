@@ -6,7 +6,7 @@ import com.epam.redkin.model.entity.Carriage;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.entity.Train;
 import com.epam.redkin.model.exception.IncorrectDataException;
-import com.epam.redkin.service.CarService;
+import com.epam.redkin.service.CarriageService;
 import com.epam.redkin.service.TrainService;
 import com.epam.redkin.util.constants.AppContextConstant;
 import com.epam.redkin.validator.CarValidator;
@@ -27,7 +27,7 @@ import java.util.List;
 @WebServlet("/administrator_add_car")
 public class AdministratorAddCarController extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(AdministratorAddCarController.class);
-    private CarService carService;
+    private CarriageService carriageService;
     private TrainService trainService;
 
     public static boolean containsCarWithCarNumber(final List<Carriage> array, final String carNumber) {
@@ -51,20 +51,20 @@ public class AdministratorAddCarController extends HttpServlet {
         String trainNotSelected = trainId.equals("TRAIN_NOT_SELECTED") ? null : trainId;
         carriageDTO.setTrainId(Integer.parseInt(trainNotSelected));
         Train train = trainService.getTrainById(carriageDTO.getTrainId());
-        List<Carriage> trainCarriages = carService.getCarByTrainId(train.getId());
+        List<Carriage> trainCarriages = carriageService.getCarByTrainId(train.getId());
         String carNumber = request.getParameter("car_number");
         carriageDTO.setCarNumber(carNumber);
 
         try {
-            carriageDTO.setCarType(CarriageType.valueOf(request.getParameter("car_type")));
+            carriageDTO.setCarriageType(CarriageType.valueOf(request.getParameter("car_type")));
             carriageDTO.setSeats(Integer.valueOf(request.getParameter("seats")));
         } catch (IllegalArgumentException e) {
             LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         carValidator.isValidCar(carriageDTO);
-        carService.addCarriage(carriageDTO);
-        response.sendRedirect("administrator_account");
+        carriageService.addCarriage(carriageDTO);
+        response.sendRedirect("administrator_info_carraiage");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -78,7 +78,7 @@ public class AdministratorAddCarController extends HttpServlet {
 
     public void init(ServletConfig config) {
         trainService = (TrainService) config.getServletContext().getAttribute(AppContextConstant.TRAIN_SERVICE);
-        carService = (CarService) config.getServletContext().getAttribute(AppContextConstant.CARS_SERVICE);
+        carriageService = (CarriageService) config.getServletContext().getAttribute(AppContextConstant.CARS_SERVICE);
         LOGGER.trace("administrator_add_car Servlet init");
 
     }

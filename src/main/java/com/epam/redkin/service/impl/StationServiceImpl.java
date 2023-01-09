@@ -1,6 +1,7 @@
 package com.epam.redkin.service.impl;
 
 
+import com.epam.redkin.model.dto.RouteInfoDTO;
 import com.epam.redkin.model.entity.Station;
 import com.epam.redkin.model.repository.StationRepository;
 import com.epam.redkin.service.StationService;
@@ -20,6 +21,17 @@ public class StationServiceImpl implements StationService {
     @Override
     public List<Station> getAllStationList() {
         return stationRepository.getAllStations();
+    }
+
+    @Override
+    public List<Station> getStationListByCurrentPage(int currentPage, int recordsPerPage) {
+        List<Station> allRecords = stationRepository.getAllStations();
+        return allRecords.subList(currentPage, Math.min(recordsPerPage, allRecords.size()));
+    }
+
+    @Override
+    public int getStationListSize() {
+        return stationRepository.getAllStations().size();
     }
 
     @Override

@@ -158,7 +158,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
         CarriageDTO dto = new CarriageDTO();
 
         dto.setCarId(rs.getInt("c.id"));
-        dto.setCarType(CarriageType.valueOf(rs.getString("type")));
+        dto.setCarriageType(CarriageType.valueOf(rs.getString("type")));
         dto.setCarNumber(rs.getString("c.number"));
         dto.setTrainId(rs.getInt("train_id"));
         dto.setTrainNumber(rs.getString("t.number"));

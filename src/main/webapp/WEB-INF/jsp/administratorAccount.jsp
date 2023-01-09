@@ -187,23 +187,23 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${car_list}" var="car">
+    <c:forEach items="${car_list}" var="carriage">
         <tr>
-            <td>${car.trainNumber}</td>
-            <td><fmt:message key="${car.carType}"/></td>
-            <td>${car.carNumber}</td>
-            <td>${car.seats}</td>
-            <td>${car.price}</td>
+            <td>${carriage.trainNumber}</td>
+            <td><fmt:message key="${carriage.carType}"/></td>
+            <td>${carriage.carNumber}</td>
+            <td>${carriage.seats}</td>
+            <td>${carriage.price}</td>
             <td>
                 <form action="administrator_edit_info_car" method="GET">
-                    <input type="hidden" name="car_id" value="${car.carId}">
+                    <input type="hidden" name="car_id" value="${carriage.carId}">
                     <input type="submit" class="btn btn-info" name="edit_info_car"
                            value="<fmt:message key="admin.editInformation"/>">
                 </form>
             </td>
             <td>
                 <form action="car_delete" method="POST">
-                    <input type="hidden" name="car_id" value="${car.carId}">
+                    <input type="hidden" name="car_id" value="${carriage.carId}">
                     <input type="submit" class="btn btn-danger" name="remove_car"
                            value="<fmt:message key="admin.remove"/>">
                 </form>

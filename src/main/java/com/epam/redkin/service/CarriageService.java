@@ -6,7 +6,7 @@ import com.epam.redkin.model.entity.Carriage;
 
 import java.util.List;
 
-public interface CarService {
+public interface CarriageService {
 
     List<CarriageDTO> getAllCarList();
 
@@ -28,4 +28,7 @@ public interface CarService {
 
     List<Carriage> getCarByTrainIdAndCarType(int trainId, String carType);
 
+    List<CarriageDTO> getCarriageDtoListByCurrentRecordAndRecordsPerPage(int i, int i1);
+
+    int getRouteListSize();
 }

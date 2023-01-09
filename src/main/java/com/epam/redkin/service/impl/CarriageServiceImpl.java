@@ -7,19 +7,19 @@ import com.epam.redkin.model.entity.Seat;
 import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.model.repository.CarriageRepository;
 import com.epam.redkin.model.repository.SeatRepository;
-import com.epam.redkin.service.CarService;
+import com.epam.redkin.service.CarriageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 @SuppressWarnings({"ALL", "FieldMayBeFinal"})
-public class CarServiceImpl implements CarService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CarServiceImpl.class);
+public class CarriageServiceImpl implements CarriageService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CarriageServiceImpl.class);
     private CarriageRepository carriageRepository;
     private SeatRepository seatRepository;
 
-    public CarServiceImpl(CarriageRepository carriageRepository, SeatRepository seatRepository) {
+    public CarriageServiceImpl(CarriageRepository carriageRepository, SeatRepository seatRepository) {
         this.carriageRepository = carriageRepository;
         this.seatRepository = seatRepository;
     }
@@ -82,6 +82,17 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    public List<CarriageDTO> getCarriageDtoListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage) {
+        List<CarriageDTO> allRecords = getAllCarList();
+        return allRecords.subList(currentPage, Math.min(recordsPerPage, allRecords.size()));
+    }
+
+    @Override
+    public int getRouteListSize() {
+        return carriageRepository.getAllCarriageDTOList().size();
+    }
+
+    @Override
     public void removeCar(int carId) {
         seatRepository.deleteAllSeatsByCarriageId(carId);
         carriageRepository.delete(carId);
@@ -109,14 +120,14 @@ public class CarServiceImpl implements CarService {
     private Carriage getCarFromCarDto(CarriageDTO carriageDTO) {
         Carriage car = new Carriage();
         car.setCarriageId(carriageDTO.getCarId());
-        car.setType(carriageDTO.getCarType());
+        car.setType(carriageDTO.getCarriageType());
         car.setNumber(carriageDTO.getCarNumber());
         car.setTrainId(carriageDTO.getTrainId());
         return car;
     }
 
     private void calculatePrice(CarriageDTO car) {
-        car.setPrice(car.getCarType().getPrice());
+        car.setPrice(car.getCarriageType().getPrice());
     }
 
 }

@@ -5,7 +5,7 @@ import com.epam.redkin.model.entity.Carriage;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.entity.Train;
 import com.epam.redkin.model.exception.IncorrectDataException;
-import com.epam.redkin.service.CarService;
+import com.epam.redkin.service.CarriageService;
 import com.epam.redkin.service.SeatService;
 import com.epam.redkin.service.TrainService;
 import com.epam.redkin.util.constants.AppContextConstant;
@@ -27,7 +27,7 @@ import java.util.List;
 @WebServlet("/administrator_edit_info_car")
 public class AdministratorEditInfoCarController extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(AdministratorEditInfoCarController.class);
-    private CarService carService;
+    private CarriageService carriageService;
     private TrainService trainService;
     private SeatService seatService;
 
@@ -49,7 +49,7 @@ public class AdministratorEditInfoCarController extends HttpServlet {
         String trainNotSelected = trainId.equals("TRAIN_NOT_SELECTED") ? null : trainId;
         carriageDTO.setTrainId(Integer.parseInt(trainNotSelected));
         Train train = trainService.getTrainById(Integer.parseInt(trainId));
-        List<Carriage> carByTrainId = carService.getCarByTrainId(train.getId());
+        List<Carriage> carByTrainId = carriageService.getCarByTrainId(train.getId());
         if (train != null || containsCarWithCarId(carByTrainId, Integer.parseInt(carId))
                 && containsCarWithCarNumber(carByTrainId, carNumber) && trainId.equals(train.getId())) {
             carriageDTO.setCarNumber(carNumber);
@@ -58,7 +58,7 @@ public class AdministratorEditInfoCarController extends HttpServlet {
             throw new IncorrectDataException("Incorrect data entered");
         }
         try {
-            carriageDTO.setCarType(CarriageType.valueOf(request.getParameter("car_type")));
+            carriageDTO.setCarriageType(CarriageType.valueOf(request.getParameter("car_type")));
             carriageDTO.setSeats(Integer.valueOf(request.getParameter("seats")));
 
         } catch (IllegalArgumentException e) {
@@ -66,13 +66,13 @@ public class AdministratorEditInfoCarController extends HttpServlet {
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         carValidator.isValidCar(carriageDTO);
-        carService.updateCar(carriageDTO);
-        response.sendRedirect("administrator_account");
+        carriageService.updateCar(carriageDTO);
+        response.sendRedirect("administrator_info_carriage");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         int carId = Integer.parseInt(request.getParameter("car_id"));
-        Carriage car = carService.getCarById(carId);
+        Carriage car = carriageService.getCarById(carId);
         request.setAttribute("current_car", car);
         List<Train> trainList = trainService.getAllTrainList();
         request.setAttribute("trainList", trainList);
@@ -87,7 +87,7 @@ public class AdministratorEditInfoCarController extends HttpServlet {
     @Override
     public void init(ServletConfig config) {
         trainService = (TrainService) config.getServletContext().getAttribute(AppContextConstant.TRAIN_SERVICE);
-        carService = (CarService) config.getServletContext().getAttribute(AppContextConstant.CARS_SERVICE);
+        carriageService = (CarriageService) config.getServletContext().getAttribute(AppContextConstant.CARS_SERVICE);
         seatService = (SeatService) config.getServletContext().getAttribute(AppContextConstant.SEAT_SERVICE);
         LOGGER.trace("administrator_edit_info_car Servlet init");
 

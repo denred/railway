@@ -35,7 +35,7 @@ public class ConfirmOrderController extends HttpServlet {
     private StationService stationService;
     private TrainService trainService;
     private RoutMappingService routMappingService;
-    private CarService carService;
+    private CarriageService carriageService;
     private UserService userService;
     private SeatService seatService;
     private RouteService routeService;
@@ -72,7 +72,7 @@ public class ConfirmOrderController extends HttpServlet {
 
         LOGGER.debug("PARAMS: " + routsId + " | " + trainId + " | " + stationIdA + " | " + stationIdD + " | " + carId);
 
-        Carriage car = carService.getCarById(Integer.parseInt(carId));
+        Carriage car = carriageService.getCarById(Integer.parseInt(carId));
 
         LOGGER.debug("car: " + car);
 
@@ -216,7 +216,7 @@ public class ConfirmOrderController extends HttpServlet {
         LOGGER.debug("================================!!!!");
 
         String routName = routById.getRoutName();
-        Carriage car = carService.getCarById(Integer.parseInt(carId));
+        Carriage car = carriageService.getCarById(Integer.parseInt(carId));
         String carNumber = car.getNumber();
         Double price = orderService.getPrice(carType, Integer.parseInt(countOfSeats));
 
@@ -289,7 +289,7 @@ public class ConfirmOrderController extends HttpServlet {
         stationService = (StationService) config.getServletContext().getAttribute((AppContextConstant.STATION_SERVICE));
         routMappingService = (RoutMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
         trainService = (TrainService) config.getServletContext().getAttribute((AppContextConstant.TRAIN_SERVICE));
-        carService = (CarService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));
+        carriageService = (CarriageService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));
         userService = (UserService) config.getServletContext().getAttribute((AppContextConstant.USER_SERVICE));
         seatService = (SeatService) config.getServletContext().getAttribute((AppContextConstant.SEAT_SERVICE));
         routeService = (RouteService) config.getServletContext().getAttribute((AppContextConstant.ROUT_SERVICE));

@@ -5,7 +5,7 @@ import com.epam.redkin.model.dto.MappingInfoDTO;
 import com.epam.redkin.model.entity.Carriage;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.exception.IncorrectDataException;
-import com.epam.redkin.service.CarService;
+import com.epam.redkin.service.CarriageService;
 import com.epam.redkin.service.RoutMappingService;
 import com.epam.redkin.util.constants.AppContextConstant;
 import jakarta.servlet.ServletConfig;
@@ -28,7 +28,7 @@ import java.util.Set;
 public class SelectStationAndCarTypeForOrderController extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(SelectStationAndCarTypeForOrderController.class);
     private RoutMappingService routMappingService;
-    private CarService carService;
+    private CarriageService carriageService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String departureStation = request.getParameter("departure_station");
@@ -50,7 +50,7 @@ public class SelectStationAndCarTypeForOrderController extends HttpServlet {
         String routsId = request.getParameter("routs_id");
         List<MappingInfoDTO> allRoutToStationMappingListById = routMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routsId));
         request.setAttribute("station_list", allRoutToStationMappingListById);
-        List<Carriage> allCarList = carService.getCarByTrainId(Integer.parseInt(trainId));
+        List<Carriage> allCarList = carriageService.getCarByTrainId(Integer.parseInt(trainId));
         Set<CarriageType> carSet = new HashSet<>();
         for (Carriage car : allCarList) {
             carSet.add(car.getType());
@@ -70,7 +70,7 @@ public class SelectStationAndCarTypeForOrderController extends HttpServlet {
     @Override
     public void init(ServletConfig config) {
         routMappingService = (RoutMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
-        carService = (CarService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));
+        carriageService = (CarriageService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));
         //LOGGER.trace("select_station_and_car_type_for_order Servlet init");
     }
 }
