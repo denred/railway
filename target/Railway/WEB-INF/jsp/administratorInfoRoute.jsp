@@ -39,7 +39,7 @@
     </div>
 </div>
 <h3 style="text-align: center;">
-    <fmt:message key="admin.rout.information"/>
+    <fmt:message key="admin.rout.list"/>
 </h3>
 
 

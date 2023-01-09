@@ -35,7 +35,7 @@
         <mrt:role role="${user.role}"/>
     </div>
 </div>
-<
+
 <div class="container mt-4">
     <div class="d-flex justify-content-center">
         <table class="table table-bordered table-hover caption-top" style="width: 1000px;">

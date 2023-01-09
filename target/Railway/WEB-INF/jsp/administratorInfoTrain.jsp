@@ -31,9 +31,15 @@
 
 <body>
 <mrt:navigation/>
+<div class="d-flex justify-content-end">
+    <div class="h5 p-2">
+        <fmt:message key="enterRole"/>
+        <mrt:role role="${user.role}"/>
+    </div>
+</div>
 
 <h3 style="text-align: center;">
-    <fmt:message key="admin.train.information"/>
+    <fmt:message key="admin.train.list"/>
 </h3>
 <div class="container mt-4">
     <div class="d-flex justify-content-center">
