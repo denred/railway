@@ -46,15 +46,17 @@
             </thead>
             <tbody>
             <tr>
-                <td><input class="form-control" name="train_number"></td>
-                <td>
-                    <input type="submit" class="btn btn-success" name="add_train"
-                           value="<fmt:message key="admin.addTrain"/>">
-                </td>
+                <form action="administrator_add_train" method="POST">
+                    <td><input class="form-control" name="train_number"></td>
+                    <td>
+                        <input type="submit" class="btn btn-success" name="add_train"
+                               value="<fmt:message key="admin.addTrain"/>">
+                    </td>
+                </form>
             </tr>
         </table>
     </div>
-    </form>
+
     <form action="administrator_info_train" method="GET">
         <input type="submit" class="btn btn-primary" value="<fmt:message key="back"/>">
     </form>

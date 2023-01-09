@@ -5,12 +5,12 @@
 <%@ taglib prefix="period" uri="/WEB-INF/tags/custom.tld" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 
-
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="lang"/>
+
 <html>
 <head>
-    <title><fmt:message key="user.account"/></title>
+    <title><fmt:message key="admin.order.information"/></title>
     <link rel="icon" type="image/x-icon" href="../../img/icons8-high-speed-train-32.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -30,6 +30,7 @@
     <!-- Template Stylesheet -->
     <link href="../../css/style.css" rel="stylesheet"/>
 </head>
+
 <body>
 <mrt:navigation/>
 <div class="d-flex justify-content-end">
@@ -39,14 +40,9 @@
     </div>
 </div>
 
-<h2 style="text-align: center;">
-    <fmt:message key="account"/>
-</h2>
-
 <h3 style="text-align: center;">
-    <fmt:message key="user.order.information"/>
+    <fmt:message key="admin.order.list"/>
 </h3>
-
 <div class="container mt-4">
     <div class="d-flex justify-content-center">
         <table class="table table-bordered table-hover caption-top" style="width: 1400px;">
@@ -66,7 +62,6 @@
                 <th style="width: 10%"><fmt:message key="order.travel.time"/></th>
                 <th style="width: 10%"><fmt:message key="order.date"/></th>
                 <th style="width: 12%"><fmt:message key="order.status"/></th>
-                <th style="width: 12%"></th>
             </tr>
             </thead>
             <tbody class="text-center">
@@ -108,14 +103,9 @@
                     </td>
 
                     <td><span>${order.orderDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}</span></td>
-                    <td><fmt:message key="${order.orderStatus}"/></td>
                     <td>
-                        <form action="cancel_order" method="POST">
-                            <input type="hidden" name="order_id" value="${order.id}">
-                            <input type="hidden" name="user_id" value="${user_id}">
-                            <input type="submit" class="btn btn-info" name="edit_info_order"
-                                   value="<fmt:message key="decline"/>">
-                        </form>
+                        <a href="administrator_edit_info_order?order_id=${order.id}">
+                            <fmt:message key="${order.orderStatus}"/></a>
                     </td>
                 </tr>
             </c:forEach>
@@ -127,7 +117,7 @@
             <ul class="pagination">
                 <li class="page-item">
                     <c:if test="${currentPage != 1}">
-                        <a class="page-link" href="user_account?user_id=${user_id}&page=${currentPage - 1}"
+                        <a class="page-link" href="administrator_info_order?page=${currentPage - 1}"
                            aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                     </c:if>
                 </li>
@@ -139,14 +129,14 @@
                         </c:when>
                         <c:otherwise>
                             <li class="page-item"><a class="page-link"
-                                                     href="user_account?user_id=${user_id}&page=${i}">${i}</a></li>
+                                                     href="administrator_info_order?page=${i}">${i}</a></li>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
 
                 <c:if test="${currentPage lt noOfPages}">
                     <li class="page-item">
-                        <a class="page-link" href="user_account?user_id=${user_id}&page=${currentPage + 1}"
+                        <a class="page-link" href="administrator_info_order?page=${currentPage + 1}"
                            aria-label="Next">
                             <span aria-hidden="true">&raquo;</span></a>
                     </li>

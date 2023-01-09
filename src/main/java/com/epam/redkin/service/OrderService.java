@@ -31,4 +31,13 @@ public interface OrderService {
     Double getPrice(String carType, int countOfSeats);
 
     Double getPriceOfSuccessfulOrders(int userId);
+
+    List<Order> getOrderListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage);
+
+    int getOrderListSize();
+
+    List<Order> getOrderListByUserIdAndByCurrentRecordAndRecordsPerPage(String userId, int currentPage, int recordsPerPage);
+
+
+    int getOrderListSizeByUserId(String userId);
 }

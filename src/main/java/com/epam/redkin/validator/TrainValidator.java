@@ -14,7 +14,7 @@ import static java.util.stream.Collectors.joining;
 
 public class TrainValidator {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainValidator.class);
-    private static final String TRAIN_NUMBER = "^[\\d]+$";
+    private static final String TRAIN_NUMBER = "^\\d+\\(?\\w*[\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F']*\\)?$";
 
     public void isValidTrain(Train train) {
         Map<String, String> errors = new HashMap<>();

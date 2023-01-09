@@ -16,4 +16,8 @@ public interface UserService {
     void updateBlocked(int idUser, boolean blockStatus);
 
     User read(int userId);
+
+    List<User> getUserListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage);
+
+    int getUserListSize();
 }

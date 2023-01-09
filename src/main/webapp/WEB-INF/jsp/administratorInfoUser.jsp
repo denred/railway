@@ -8,7 +8,7 @@
 
 <html>
 <head>
-    <title><fmt:message key="admin.train.information"/></title>
+    <title><fmt:message key="admin.user.information"/></title>
     <link rel="icon" type="image/x-icon" href="../../img/icons8-high-speed-train-32.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -39,37 +39,52 @@
 </div>
 
 <h3 style="text-align: center;">
-    <fmt:message key="admin.train.list"/>
+    <fmt:message key="admin.user.list"/>
 </h3>
 <div class="container mt-4">
     <div class="d-flex justify-content-center">
-        <table class="table table-bordered table-hover caption-top" style="width: 900px;">
+        <table class="table table-bordered table-hover caption-top" style="width: 1000px;">
             <thead class="thead-light text-center">
             <tr>
                 <th style="width: 1%"><fmt:message key="order"/></th>
-                <th style="width: 15%"><fmt:message key="train.number"/></th>
-                <th style="width: 15%"><fmt:message key="edit"/></th>
-                <th style="width: 10%"><fmt:message key="delete"/></th>
+                <th style="width: 15%"><fmt:message key="user.email"/></th>
+                <th style="width: 15%"><fmt:message key="user.first_name"/></th>
+                <th style="width: 15%"><fmt:message key="user.last_name"/></th>
+                <th style="width: 20%"><fmt:message key="user.birth_date"/></th>
+                <th style="width: 15%"><fmt:message key="user.phone"/></th>
+                <th style="width: 15%"><fmt:message key="admin.blockStatus"/></th>
+                <th style="width: 15%"><fmt:message key="admin.block"/></th>
             </tr>
             </thead>
-            <tbody class="text-center">
-            <c:forEach var="train" items="${train_list}" varStatus="i">
+            <tbody class="text-center" style="align-content: center">
+            <c:forEach var="user" items="${user_list}" varStatus="i">
                 <tr>
                     <td>${i.index + recordsPerPage * (currentPage - 1) + 1}</td>
-                    <td>${train.number}</td>
+                    <td>${user.email}</td>
+                    <td>${user.firstName}</td>
+                    <td>${user.lastName}</td>
+                    <td>${user.birthDate}</td>
+                    <td>${user.phone}</td>
+                    <td><fmt:message key="${user.blocked}"/></td>
                     <td>
-                        <form action="administrator_edit_info_train" method="GET">
-                            <input type="hidden" name="train_id" value="${train.id}">
-                            <input type="submit" class="btn btn-info" name="edit_info_train"
-                                   value="<fmt:message key="admin.editInformation"/>">
-                        </form>
-                    </td>
-                    <td>
-                        <form action="train_delete" method="POST">
-                            <input type="hidden" name="train_id" value="${train.id}">
-                            <input type="submit" class="btn btn-danger" name="remove_train"
-                                   value="<fmt:message key="admin.remove"/>">
-                        </form>
+                        <c:choose>
+                            <c:when test="${user.blocked == false}">
+                                <form action="user_block" method="POST">
+                                    <input type="hidden" name="user_id" value="${user.userId}">
+                                    <input type="hidden" name="block_status" value="true">
+                                    <input type="submit" class="btn btn-warning" name="block"
+                                           value="<fmt:message key="admin.block"/>">
+                                </form>
+                            </c:when>
+                            <c:when test="${user.blocked == true}">
+                                <form action="user_block" method="POST">
+                                    <input type="hidden" name="user_id" value="${user.userId}">
+                                    <input type="hidden" name="block_status" value="false">
+                                    <input type="submit" class="btn btn-warning" name="block"
+                                           value="<fmt:message key="admin.unblock"/>">
+                                </form>
+                            </c:when>
+                        </c:choose>
                     </td>
                 </tr>
             </c:forEach>
@@ -77,17 +92,15 @@
         </table>
     </div>
     <div class="d-flex justify-content-center">
-        <%--For displaying Previous link except for the 1st page --%>
-        <nav aria-label="Page navigation example">
+        <nav aria-label="Page navigation">
             <ul class="pagination">
                 <li class="page-item">
                     <c:if test="${currentPage != 1}">
-                        <a class="page-link" href="administrator_info_train?page=${currentPage - 1}"
+                        <a class="page-link" href="administrator_info_user?page=${currentPage - 1}"
                            aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                     </c:if>
                 </li>
-                <%--For displaying Page numbers.
-                The when condition does not display a link for the current page--%>
+
                 <c:forEach begin="1" end="${noOfPages}" var="i">
                     <c:choose>
                         <c:when test="${currentPage eq i}">
@@ -95,15 +108,14 @@
                         </c:when>
                         <c:otherwise>
                             <li class="page-item"><a class="page-link"
-                                                     href="administrator_info_train?page=${i}">${i}</a></li>
+                                                     href="administrator_info_user?page=${i}">${i}</a></li>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
 
-                <%--For displaying Next link --%>
                 <c:if test="${currentPage lt noOfPages}">
                     <li class="page-item">
-                        <a class="page-link" href="administrator_info_train?page=${currentPage + 1}"
+                        <a class="page-link" href="administrator_info_user?page=${currentPage + 1}"
                            aria-label="Next">
                             <span aria-hidden="true">&raquo;</span></a>
                     </li>
@@ -111,9 +123,6 @@
             </ul>
         </nav>
     </div>
-    <form action="administrator_add_train" method="GET">
-        <input type="submit" class="btn btn-success" name="add_train" value="<fmt:message key="admin.addTrain"/>">
-    </form>
 </div>
 </body>
 </html>

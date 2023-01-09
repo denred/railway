@@ -1,5 +1,6 @@
 package com.epam.redkin.service.impl;
 
+import com.epam.redkin.model.dto.RouteInfoDTO;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.entity.Order;
 import com.epam.redkin.model.entity.OrderStatus;
@@ -73,7 +74,7 @@ public class OrderServiceImpl implements OrderService {
             String seatNumber = String.valueOf(order.getSeatNumber());
             List<String> seatsId = seatService.getSeatsId(seatNumber);
             List<Seat> seatsByIdBatch = seatRepository.getListSeatsByIdBatch(seatsId);
-            seatsByIdBatch.forEach(seat-> seatRepository.clearSeat(seat.getId()));
+            seatsByIdBatch.forEach(seat -> seatRepository.clearSeat(seat.getId()));
         }
         return orderRepository.updateOrderStatus(orderId, status);
     }
@@ -97,4 +98,28 @@ public class OrderServiceImpl implements OrderService {
     public Double getPriceOfSuccessfulOrders(int userId) {
         return orderRepository.getPriceOfSuccessfulOrders(userId);
     }
+
+    @Override
+    public List<Order> getOrderListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage) {
+        List<Order> allRecords = orderRepository.getAllOrders();
+        return allRecords.subList(currentPage, Math.min(recordsPerPage, allRecords.size()));
+    }
+
+    @Override
+    public int getOrderListSize() {
+        return orderRepository.getAllOrders().size();
+    }
+
+    @Override
+    public List<Order> getOrderListByUserIdAndByCurrentRecordAndRecordsPerPage(String userId, int currentPage, int recordsPerPage) {
+        List<Order> allRecords = orderRepository.getOrderByUserId(Integer.parseInt(userId));
+        return allRecords.subList(currentPage, Math.min(recordsPerPage, allRecords.size()));
+    }
+
+    @Override
+    public int getOrderListSizeByUserId(String userId) {
+        return orderRepository.getOrderByUserId(Integer.parseInt(userId)).size();
+    }
+
+
 }

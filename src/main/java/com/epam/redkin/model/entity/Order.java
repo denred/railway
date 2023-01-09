@@ -7,6 +7,7 @@ public class Order {
     private int id;
     private LocalDateTime orderDate;
     private int routeId;
+    private String routeName;
     private String dispatchStation;
     private LocalDateTime dispatchDate;
     private String arrivalStation;
@@ -156,6 +157,14 @@ public class Order {
 
     public void setRouteId(int routeId) {
         this.routeId = routeId;
+    }
+
+    public String getRouteName() {
+        return routeName;
+    }
+
+    public void setRouteName(String routeName) {
+        this.routeName = routeName;
     }
 
     public String getCarriageNumber() {

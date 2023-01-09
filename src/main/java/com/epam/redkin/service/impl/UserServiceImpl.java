@@ -1,5 +1,7 @@
 package com.epam.redkin.service.impl;
 
+import com.epam.redkin.model.entity.Role;
+import com.epam.redkin.model.entity.Train;
 import com.epam.redkin.model.entity.User;
 import com.epam.redkin.model.exception.UnauthorizedException;
 import com.epam.redkin.model.exception.UserAlreadyExistException;
@@ -15,12 +17,10 @@ public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class.getName());
 
     private final UserRepository userRepository;
-    // private TransactionManager transactionManager;
 
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        // this.transactionManager = transactionManager;
     }
 
 
@@ -70,5 +70,16 @@ public class UserServiceImpl implements UserService {
             throw e;
         }
         return user;
+    }
+
+    @Override
+    public List<User> getUserListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage) {
+        List<User> allRecords = userRepository.getUsersByRole(Role.USER.name());
+        return allRecords.subList(currentPage, Math.min(recordsPerPage, allRecords.size()));
+    }
+
+    @Override
+    public int getUserListSize() {
+        return userRepository.getUsersByRole(Role.USER.name()).size();
     }
 }
