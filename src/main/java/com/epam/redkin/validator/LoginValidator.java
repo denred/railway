@@ -13,7 +13,7 @@ import java.util.Map;
 public class LoginValidator {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginValidator.class.getName());
     private static final String EMAIL = "[a-zA-Z0-9._-][a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}";
-    private static final String PASSWORD = "[a-zA-Z0-9]{3,16}";
+    private static final String PASSWORD = "^(?:(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*)[^\\s]{8,}$";
 
 
     public void isValid(String email, String password) {

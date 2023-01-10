@@ -1,37 +1,31 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<nav class="navbar navbar-expand-sm navbar-light">
-    <div class="container-fluid">
-        <%-- User navigation menu --%>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="btn btn-outline-primary text-center"
-                       href="http://localhost:8087/home"><fmt:message key="homepage"/></a>
-                </li>
-
-                <%-- User orders --%>
-                <li class="nav-item">
-                    <form class="form-inline mx-2 my-lg-0" action="user_account" method="GET">
-                        <input type="hidden" name="user_id" value="${user.userId}">
-                        <input class="btn btn-outline-primary text-center mx-2" type="submit" name="account"
-                               value="<fmt:message key="user.account"/>">
-                    </form>
-                </li>
-
-            </ul>
-
-            <%-- Change language --%>
-            <form class="d-flex mx-2" action="change_language" method="POST">
-                <input type="submit" class="btn btn-outline-primary text-center mx-2" name="lang" value="en">
-                <input type="submit" class="btn btn-outline-primary text-center" name="lang" value="ua">
-            </form>
-
-            <%-- Logout button Start--%>
-            <form class="form-inline" action="logout" method="POST">
-                <input class="btn btn-outline-primary" type="submit" value="<fmt:message key="logout"/>">
-            </form>
-
+<nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5" style="top: -100px;">
+    <a href="home" class="navbar-brand d-flex align-items-center">
+        <h3 class="m-0">
+            <img class="img-fluid me-3" src="../../img/train-main.png" alt="train logo" width="96px">
+            <fmt:message key="app.name"/>
+        </h3>
+    </a>
+    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav mx-auto bg-light rounded pe-4 py-3 py-lg-0">
+            <a href="home" class="nav-item nav-link"><fmt:message key="homepage"/></a>
+            <a href="user_account?user_id=${user.userId}" class="nav-item nav-link"><fmt:message key="user.account"/></a>
         </div>
     </div>
+    <%--<a href="" class="btn btn-primary px-3 d-none d-lg-block">Get A Quote</a>--%>
+    <%-- Change language --%>
+    <form class="d-flex mx-2" action="change_language" method="POST">
+        <input type="submit" class="btn btn-outline-primary text-center mx-2" name="lang" value="en">
+        <input type="submit" class="btn btn-outline-primary text-center" name="lang" value="ua">
+    </form>
+
+    <%-- Logout button Start--%>
+    <form class="form-inline" action="logout" method="POST">
+        <input class="btn btn-outline-primary" type="submit" value="<fmt:message key="logout"/>">
+    </form>
+
 </nav>
