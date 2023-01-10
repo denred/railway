@@ -1,6 +1,5 @@
 package com.epam.redkin.web.controller;
 
-
 import com.epam.redkin.model.dto.MappingInfoDTO;
 import com.epam.redkin.model.dto.RouteInfoDTO;
 import com.epam.redkin.model.entity.*;
@@ -29,7 +28,6 @@ import java.util.List;
 
 @WebServlet("/confirm_order")
 public class ConfirmOrderController extends HttpServlet {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfirmOrderController.class);
     private OrderService orderService;
     private StationService stationService;
@@ -42,24 +40,9 @@ public class ConfirmOrderController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        /*form action="confirm_order" method="POST">
-                <input type="hidden" name="routs_id" value="${routs_id}">OK
-                <input type="hidden" name="train_id" value="${train_id}">OK
-                <input type="hidden" name="arrival_station_id" value="${arrival_station_id}">
-                <input type="hidden" name="departure_station_id" value="${departure_station_id}">
-                <input type="hidden" name="car_id" value="${car_id}">
-                <input type="hidden" name="car_type" value="${car_type}">
-                <input type="hidden" name="count_of_seats" value="${count_of_seats}">
-                <input type="hidden" name="seat_id"  value="${seat_id}">
-                <input type="submit" class="btn btn-success" name="add_order"
-                       value="<fmt:message key="order.make.order"/>">
-            </form>*/
-
-
         OrderValidator orderValidator = new OrderValidator();
         Order order = new Order();
         User user = (User) request.getSession().getAttribute(AppContextConstant.SESSION_USER);
-        LOGGER.debug("User: " + user);
 
         String routsId = request.getParameter("routs_id");
 
@@ -70,33 +53,26 @@ public class ConfirmOrderController extends HttpServlet {
 
         String carId = request.getParameter("car_id");
 
-        LOGGER.debug("PARAMS: " + routsId + " | " + trainId + " | " + stationIdA + " | " + stationIdD + " | " + carId);
 
         Carriage car = carriageService.getCarById(Integer.parseInt(carId));
 
-        LOGGER.debug("car: " + car);
 
         Train train = trainService.getTrainById(Integer.parseInt(trainId));
 
-        LOGGER.debug("train: " + train);
 
         Station dispatchStation = stationService.getStationById(Integer.parseInt(stationIdA));
 
-        LOGGER.debug("dispatchStation: " + dispatchStation);
 
         Station arrivalStation = stationService.getStationById(Integer.parseInt(stationIdD));
 
-        LOGGER.debug("arrivalStation: " + arrivalStation);
 
 
         MappingInfoDTO arrivalMapping = routMappingService.getMappingInfo(Integer.parseInt(routsId), arrivalStation.getId());
 
-        LOGGER.debug("arrivalMapping: " + arrivalMapping);
 
 
         MappingInfoDTO dispatchMapping = routMappingService.getMappingInfo(Integer.parseInt(routsId), dispatchStation.getId());
 
-        LOGGER.debug("dispatchMapping: " + dispatchMapping);
 
 
         HttpSession session = request.getSession();
@@ -104,9 +80,6 @@ public class ConfirmOrderController extends HttpServlet {
         try {
             order.setCarrType(CarriageType.valueOf(request.getParameter("car_type")));
             order.setCountOfSeats(Integer.parseInt(request.getParameter("count_of_seats")));
-
-            LOGGER.debug("order: " + order);
-
 
             if (locale == AppContextConstant.LOCALE_EN) {
                 Duration duration = Duration.between(arrivalMapping.getStationDispatchData(), dispatchMapping.getStationArrivalDate());
@@ -138,15 +111,12 @@ public class ConfirmOrderController extends HttpServlet {
 
         String seatId = Arrays.toString(request.getParameterValues("seat_id"));
 
-        LOGGER.debug("seatId: " + seatId);
 
         List<String> seatIdList = seatService.getSeatsId(seatId);
 
-        LOGGER.debug("seatIdList: " + seatIdList);
 
         List<Seat> seats = seatService.getSeatsByIdBatch(seatIdList);
 
-        LOGGER.debug("seats: " + seats);
 
         StringBuilder sb = new StringBuilder();
         String number = "";
@@ -154,7 +124,6 @@ public class ConfirmOrderController extends HttpServlet {
             number = sb.append(seats.get(i).getSeatNumber()).append(" ").toString();
         }
 
-        LOGGER.debug("number: " + number);
 
 
         order.setSeatNumber(number);
@@ -163,13 +132,11 @@ public class ConfirmOrderController extends HttpServlet {
         for (int i = 0; i <= seats.size() - 1; i++) {
             id = sb.append(seats.get(i).getId()).append(" ").toString();
         }
-        LOGGER.debug("id: " + id);
         order.setSeatsId(id);
         orderValidator.isValidOrder(order);
 
         orderService.addOrder(order, Integer.parseInt(routsId), seats);
         int userId = user.getUserId();
-        LOGGER.debug("userId: " + userId);
         response.sendRedirect("user_account?user_id=" + userId);
     }
 
@@ -206,30 +173,12 @@ public class ConfirmOrderController extends HttpServlet {
         String routsId = request.getParameter("routs_id");
         RouteInfoDTO routById = routeService.getRoutById(Integer.parseInt(routsId));
 
-        LOGGER.debug("================================!!!!");
-        LOGGER.debug("numbers: " + Arrays.toString(numbers));
-        LOGGER.debug("seatsNumber: " + seatsNumber.toString());
-        LOGGER.debug("routsId: " + routsId);
-        LOGGER.debug("routById: " + routById);
-
-
-        LOGGER.debug("================================!!!!");
 
         String routName = routById.getRoutName();
         Carriage car = carriageService.getCarById(Integer.parseInt(carId));
         String carNumber = car.getNumber();
         Double price = orderService.getPrice(carType, Integer.parseInt(countOfSeats));
 
-        LOGGER.debug("================================1!!!!");
-        LOGGER.debug("numbers: " + Arrays.toString(numbers));
-        LOGGER.debug("seatsNumber: " + seatsNumber.toString());
-        LOGGER.debug("routsId: " + routsId);
-        LOGGER.debug("routById: " + routById);
-        LOGGER.debug("routName: " + routName);
-        LOGGER.debug("car: " + car);
-        LOGGER.debug("carNumber: " + carNumber);
-        LOGGER.debug("price: " + price);
-        LOGGER.debug("================================1!!!!");
 
 
         request.setAttribute("price", price);
@@ -252,13 +201,6 @@ public class ConfirmOrderController extends HttpServlet {
         String trainNumber = train.getNumber();
 
 
-        LOGGER.debug("================================2!!!!");
-        LOGGER.debug("user: " + user);
-        LOGGER.debug("firstName: " + firstName);
-        LOGGER.debug("lastName: " + lastName);
-        LOGGER.debug("train: " + train);
-        LOGGER.debug("trainNumber: " + trainNumber);
-        LOGGER.debug("================================2!!!!");
 
 
         request.setAttribute("train_number", trainNumber);
@@ -270,15 +212,11 @@ public class ConfirmOrderController extends HttpServlet {
         request.setAttribute("car_id", carId);
         List<Seat> seats = seatService.getSeatsByIdBatch(seatsNumber);
 
-        LOGGER.debug("================================3!!!!");
-        LOGGER.debug("seats: " + seats.toString());
-        LOGGER.debug("================================3!!!!");
 
 
         request.setAttribute("seats", seats);
         request.setAttribute("seat_id", Arrays.deepToString(numbers));
         seatValidator.isValidSeat(seats, countOfSeats);
-        LOGGER.debug("seatValidator: OK");
 
         request.getRequestDispatcher("WEB-INF/jsp/confirmOrder.jsp").forward(request, response);
     }
