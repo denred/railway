@@ -5,10 +5,10 @@ import com.epam.redkin.model.dto.MappingInfoDTO;
 import com.epam.redkin.model.entity.RoutePoint;
 import com.epam.redkin.model.entity.Station;
 import com.epam.redkin.model.exception.IncorrectDataException;
-import com.epam.redkin.service.RoutMappingService;
+import com.epam.redkin.service.RouteMappingService;
 import com.epam.redkin.service.StationService;
 import com.epam.redkin.util.constants.AppContextConstant;
-import com.epam.redkin.validator.RoutMappingValidator;
+import com.epam.redkin.validator.RouteMappingValidator;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -27,7 +27,7 @@ import java.util.List;
 public class AdministratorSetRoutController extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(AdministratorSetRoutController.class);
     private StationService stationService;
-    private RoutMappingService routMappingService;
+    private RouteMappingService routeMappingService;
 
     public static boolean contains(final List<MappingInfoDTO> array, final int order) {
         boolean result = false;
@@ -42,12 +42,12 @@ public class AdministratorSetRoutController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        RoutMappingValidator routMappingValidator = new RoutMappingValidator();
+        RouteMappingValidator routeMappingValidator = new RouteMappingValidator();
         RoutePoint routToStationMapping = new RoutePoint();
         String routsId = request.getParameter("routs_id");
         routToStationMapping.setRouteId(Integer.parseInt(routsId));
         routToStationMapping.setStationId(Integer.parseInt(request.getParameter("station_station")));
-        List<MappingInfoDTO> mappingList = routMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routsId));
+        List<MappingInfoDTO> mappingList = routeMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routsId));
         try {
             int stationOrder = Integer.parseInt(request.getParameter("station_order"));
             routToStationMapping.setArrival(LocalDateTime.parse(request.getParameter("station_arrival_date")));
@@ -62,8 +62,8 @@ public class AdministratorSetRoutController extends HttpServlet {
             LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered", e);
         }
-        routMappingValidator.isValidRoutToStationMapping(routToStationMapping, mappingList);
-        routMappingService.addRoutToStationMapping(routToStationMapping);
+        routeMappingValidator.isValidRoutToStationMapping(routToStationMapping, mappingList);
+        routeMappingService.addRoutToStationMapping(routToStationMapping);
 
         response.sendRedirect("administrator_details_set_rout?routs_id=" + routsId);
     }
@@ -81,7 +81,7 @@ public class AdministratorSetRoutController extends HttpServlet {
     @Override
     public void init(ServletConfig config) {
         stationService = (StationService) config.getServletContext().getAttribute((AppContextConstant.STATION_SERVICE));
-        routMappingService = (RoutMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
+        routeMappingService = (RouteMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
         LOGGER.trace("administrator_set_rout_mapping Servlet init");
     }
 }

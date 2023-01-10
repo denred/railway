@@ -56,8 +56,8 @@
                 <th><fmt:message key="order.dispatch.station.and.dispatch.time"/></th>
                 <th><fmt:message key="order.travel.time"/></th>
                 <th><fmt:message key="order.arrival.station.and.dispatch.time"/></th>
-                <th><fmt:message key="order.make.order"/></th>
-                <th><fmt:message key="order.cancel"/></th>
+                <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>

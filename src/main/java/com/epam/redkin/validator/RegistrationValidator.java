@@ -2,7 +2,6 @@ package com.epam.redkin.validator;
 
 
 import com.epam.redkin.model.entity.User;
-import com.epam.redkin.model.exception.IncorrectDataException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static java.util.stream.Collectors.joining;
 
 public class RegistrationValidator {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationValidator.class);
@@ -30,7 +28,7 @@ public class RegistrationValidator {
             errors.put("Incorrect format, type something like \"user@gmail.com\"", user.getEmail());
         }
         if (StringUtils.isBlank(user.getPassword()) || !ValidatorUtils.isMatch(PASSWORD, user.getPassword())) {
-            errors.put("Incorrect format, type something like \"passw0r$4\"", user.getPassword());
+            errors.put("Incorrect format, type something like \"Password$4\"", user.getPassword());
         }
         if (StringUtils.isBlank(user.getFirstName()) || !ValidatorUtils.isMatch(USER_NAME, user.getFirstName())) {
             errors.put("Incorrect format, type something like \"Alexandr or Александр\"", user.getFirstName());
@@ -46,17 +44,6 @@ public class RegistrationValidator {
             errors.put("Incorrect format, type something like \"+380965467832\"", user.getPhone());
         }
 
-        if (!errors.isEmpty()) {
-            StringBuilder builder = new StringBuilder();
-            for (Map.Entry<String, String> entry : errors.entrySet()) {
-                builder.append(entry.getKey())
-                        .append("Entered data:&nbsp;")
-                        .append(entry.getValue())
-                        .append(";<br/>\n");
-            }
-            IncorrectDataException e = new IncorrectDataException(builder.toString());
-            LOGGER.error(e.getMessage());
-            throw e;
-        }
+        ValidatorUtils.errorBuilder(errors, LOGGER);
     }
 }

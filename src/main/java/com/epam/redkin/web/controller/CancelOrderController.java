@@ -9,13 +9,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 @WebServlet("/cancel_order")
 public class CancelOrderController extends HttpServlet {
-    //private static final Logger LOGGER = Logger.getLogger(CancelOrderController.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(CancelOrderController.class);
     private OrderService orderService;
 
     @Override
@@ -35,7 +36,7 @@ public class CancelOrderController extends HttpServlet {
     @Override
     public void init(ServletConfig config) {
         orderService = (OrderService) config.getServletContext().getAttribute(AppContextConstant.ORDER_SERVICE);
-        //LOGGER.trace("cancel_order Servlet init");
+        LOGGER.trace("cancel_order Servlet init");
 
     }
 }

@@ -4,7 +4,6 @@ package com.epam.redkin.service;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.entity.Seat;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface SeatService {

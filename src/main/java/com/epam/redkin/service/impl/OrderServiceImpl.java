@@ -42,10 +42,8 @@ public class OrderServiceImpl implements OrderService {
         LocalDateTime now = LocalDateTime.now();
         order.setOrderStatus(OrderStatus.CANCELED);
         validateDate(order, now);
-        String seatNumber = String.valueOf(order.getSeatNumber());
-
-        List<String> seatsNumber = seatService.getSeatsId(seatNumber);
-        List<Seat> seatsByIdBatch = seatRepository.getListSeatsByIdBatch(seatsNumber);
+        String seatNumber = order.getSeatNumber();
+        List<Seat> seatsByIdBatch = seatRepository.getListSeatsByIdBatch(List.of(seatNumber.split(" ")));
         seatsByIdBatch.forEach(seat -> seatRepository.clearSeat(seat.getId()));
         orderRepository.updateOrderStatus(order.getId(), order.getOrderStatus());
     }

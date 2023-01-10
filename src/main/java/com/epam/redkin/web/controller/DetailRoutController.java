@@ -3,7 +3,7 @@ package com.epam.redkin.web.controller;
 
 import com.epam.redkin.model.dto.MappingInfoDTO;
 import com.epam.redkin.model.exception.IncorrectDataException;
-import com.epam.redkin.service.RoutMappingService;
+import com.epam.redkin.service.RouteMappingService;
 import com.epam.redkin.util.constants.AppContextConstant;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -23,7 +23,7 @@ import java.util.List;
 @WebServlet("/detail_rout")
 public class DetailRoutController extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(DetailRoutController.class);
-    private RoutMappingService routMappingService;
+    private RouteMappingService routeMappingService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String routsId = request.getParameter("routs_id");
@@ -42,7 +42,7 @@ public class DetailRoutController extends HttpServlet {
         request.setAttribute("departure_date", departureDate);
         request.setAttribute("user_id", userId);
         request.setAttribute("routs_id", routsId);
-        List<MappingInfoDTO> allRouteToStationMappingListById = routMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routsId));
+        List<MappingInfoDTO> allRouteToStationMappingListById = routeMappingService.getAllRoutToStationMappingListById(Integer.parseInt(routsId));
 
         request.setAttribute("rout_m_list", allRouteToStationMappingListById);
         HttpSession session = request.getSession();
@@ -52,7 +52,7 @@ public class DetailRoutController extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) {
-        routMappingService = (RoutMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
+        routeMappingService = (RouteMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
         LOGGER.trace("detail_rout Servlet init");
     }
 }

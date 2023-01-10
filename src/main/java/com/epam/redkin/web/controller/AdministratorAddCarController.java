@@ -9,7 +9,7 @@ import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.service.CarriageService;
 import com.epam.redkin.service.TrainService;
 import com.epam.redkin.util.constants.AppContextConstant;
-import com.epam.redkin.validator.CarValidator;
+import com.epam.redkin.validator.CarriageValidator;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -44,7 +44,7 @@ public class AdministratorAddCarController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        CarValidator carValidator = new CarValidator();
+        CarriageValidator carriageValidator = new CarriageValidator();
         CarriageDTO carriageDTO = new CarriageDTO();
 
         String trainId = request.getParameter("train_id");
@@ -62,7 +62,7 @@ public class AdministratorAddCarController extends HttpServlet {
             LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered", e);
         }
-        carValidator.isValidCar(carriageDTO);
+        carriageValidator.isValidCar(carriageDTO);
         carriageService.addCarriage(carriageDTO);
         response.sendRedirect("administrator_info_carraiage");
     }

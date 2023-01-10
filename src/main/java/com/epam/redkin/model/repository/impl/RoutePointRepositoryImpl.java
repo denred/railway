@@ -1,7 +1,6 @@
 package com.epam.redkin.model.repository.impl;
 
 import com.epam.redkin.model.connectionpool.ConnectionPools;
-import com.epam.redkin.model.connectionpool.DBManager;
 import com.epam.redkin.model.dto.MappingInfoDTO;
 import com.epam.redkin.model.entity.RoutePoint;
 import com.epam.redkin.model.exception.DataBaseException;
@@ -130,7 +129,7 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
     @Override
     public MappingInfoDTO getMappingInfo(int routeId, int stationId) {
         MappingInfoDTO mapping = new MappingInfoDTO();
-        try (Connection connection = DBManager.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ROUTE_MAPPING_BY_STATION_AND_ROUTE_ID)) {
             statement.setInt(1, routeId);
             statement.setInt(2, stationId);

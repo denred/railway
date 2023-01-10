@@ -6,7 +6,7 @@ import com.epam.redkin.model.entity.Train;
 import com.epam.redkin.service.RouteService;
 import com.epam.redkin.service.TrainService;
 import com.epam.redkin.util.constants.AppContextConstant;
-import com.epam.redkin.validator.RoutValidator;
+import com.epam.redkin.validator.RouteValidator;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,12 +26,12 @@ public class AdministratorAddRoutController extends HttpServlet {
     private TrainService trainService;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        RoutValidator routValidator = new RoutValidator();
+        RouteValidator routeValidator = new RouteValidator();
         Route rout = new Route();
         rout.setRouteName(request.getParameter("rout_name"));
         rout.setRouteNumber(Integer.parseInt(request.getParameter("rout_number")));
         rout.setTrainId(Integer.parseInt(request.getParameter("train_number")));
-        routValidator.isValidRout(rout);
+        routeValidator.isValidRout(rout);
         routeService.addRout(rout);
         response.sendRedirect("administrator_info_route");
     }

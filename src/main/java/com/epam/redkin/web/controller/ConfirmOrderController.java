@@ -32,7 +32,7 @@ public class ConfirmOrderController extends HttpServlet {
     private OrderService orderService;
     private StationService stationService;
     private TrainService trainService;
-    private RoutMappingService routMappingService;
+    private RouteMappingService routeMappingService;
     private CarriageService carriageService;
     private UserService userService;
     private SeatService seatService;
@@ -52,8 +52,8 @@ public class ConfirmOrderController extends HttpServlet {
         Train train = trainService.getTrainById(Integer.parseInt(trainId));
         Station dispatchStation = stationService.getStationById(Integer.parseInt(stationIdA));
         Station arrivalStation = stationService.getStationById(Integer.parseInt(stationIdD));
-        MappingInfoDTO arrivalMapping = routMappingService.getMappingInfo(Integer.parseInt(routeId), arrivalStation.getId());
-        MappingInfoDTO dispatchMapping = routMappingService.getMappingInfo(Integer.parseInt(routeId), dispatchStation.getId());
+        MappingInfoDTO arrivalMapping = routeMappingService.getMappingInfo(Integer.parseInt(routeId), arrivalStation.getId());
+        MappingInfoDTO dispatchMapping = routeMappingService.getMappingInfo(Integer.parseInt(routeId), dispatchStation.getId());
         HttpSession session = request.getSession();
         Object locale = session.getAttribute(AppContextConstant.LOCALE);
         String seatId = Arrays.toString(request.getParameterValues("seat_id"));
@@ -187,7 +187,7 @@ public class ConfirmOrderController extends HttpServlet {
     public void init(ServletConfig config) {
         orderService = (OrderService) config.getServletContext().getAttribute(AppContextConstant.ORDER_SERVICE);
         stationService = (StationService) config.getServletContext().getAttribute((AppContextConstant.STATION_SERVICE));
-        routMappingService = (RoutMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
+        routeMappingService = (RouteMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
         trainService = (TrainService) config.getServletContext().getAttribute((AppContextConstant.TRAIN_SERVICE));
         carriageService = (CarriageService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));
         userService = (UserService) config.getServletContext().getAttribute((AppContextConstant.USER_SERVICE));

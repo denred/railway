@@ -18,11 +18,9 @@ import static com.epam.redkin.model.repository.impl.Constants.*;
 public class SeatRepositoryImpl implements SeatRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(CarriageRepositoryImpl.class);
     private final DataSource dataSource;
-
     public SeatRepositoryImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-
     public SeatRepositoryImpl() {
         dataSource = ConnectionPools.getProcessing();
     }

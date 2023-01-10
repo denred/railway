@@ -44,6 +44,7 @@ public class SelectSeatsForOrderController extends HttpServlet {
         request.setAttribute("travel_time",travelTime);
         String countOfSeats = request.getParameter("count_of_seats");
         seatValidator.isValidSeat(countOfSeats);
+        countOfSeats = seatValidator.checkCountSeats(countOfSeats, seatService.getCountSeat(Integer.parseInt(carId)));
         LocalDateTime departureDate;
         try {
             departureDate = LocalDateTime.parse(request.getParameter("departure_date"));

@@ -25,7 +25,7 @@ public class AdministratorInfoRouteController extends HttpServlet {
     private RouteService routeService;
     private TrainService trainService;
     private CarriageService carriageService;
-    private RoutMappingService routMappingService;
+    private RouteMappingService routeMappingService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int page = 1;
@@ -50,7 +50,7 @@ public class AdministratorInfoRouteController extends HttpServlet {
         userService = (UserService) config.getServletContext().getAttribute(AppContextConstant.USER_SERVICE);
         stationService = (StationService) config.getServletContext().getAttribute((AppContextConstant.STATION_SERVICE));
         routeService = (RouteService) config.getServletContext().getAttribute((AppContextConstant.ROUT_SERVICE));
-        routMappingService = (RoutMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
+        routeMappingService = (RouteMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
         trainService = (TrainService) config.getServletContext().getAttribute((AppContextConstant.TRAIN_SERVICE));
         carriageService = (CarriageService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));
         LOGGER.trace("administrator_account Servlet init");

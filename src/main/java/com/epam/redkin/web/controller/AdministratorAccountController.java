@@ -27,7 +27,7 @@ public class AdministratorAccountController extends HttpServlet {
     private RouteService routeService;
     private TrainService trainService;
     private CarriageService carriageService;
-    private RoutMappingService routMappingService;
+    private RouteMappingService routeMappingService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Order> orderList = orderService.getAllOrderList();
@@ -56,7 +56,7 @@ public class AdministratorAccountController extends HttpServlet {
         request.setAttribute("currentPage", page);
         request.setAttribute("routeDto_list", routeDtoList);
 
-        List<RoutePoint> routToStationMappingList = routMappingService.getAllRoutToStationMappingList();
+        List<RoutePoint> routToStationMappingList = routeMappingService.getAllRoutToStationMappingList();
         request.setAttribute("rout_m_list", routToStationMappingList);
 
         List<Train> trainList = trainService.getAllTrainList();
@@ -74,7 +74,7 @@ public class AdministratorAccountController extends HttpServlet {
         userService = (UserService) config.getServletContext().getAttribute(AppContextConstant.USER_SERVICE);
         stationService = (StationService) config.getServletContext().getAttribute((AppContextConstant.STATION_SERVICE));
         routeService = (RouteService) config.getServletContext().getAttribute((AppContextConstant.ROUT_SERVICE));
-        routMappingService = (RoutMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
+        routeMappingService = (RouteMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
         trainService = (TrainService) config.getServletContext().getAttribute((AppContextConstant.TRAIN_SERVICE));
         carriageService = (CarriageService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));
         LOGGER.trace("administrator_account Servlet init");

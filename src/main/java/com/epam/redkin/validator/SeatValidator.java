@@ -1,7 +1,6 @@
 package com.epam.redkin.validator;
 
 import com.epam.redkin.model.entity.Seat;
-import com.epam.redkin.model.exception.IncorrectDataException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static java.util.stream.Collectors.joining;
 
 public class SeatValidator {
     private static final Logger LOGGER = LoggerFactory.getLogger(SeatValidator.class);
@@ -32,18 +29,7 @@ public class SeatValidator {
             errors.put("Incorrect format, choose different places", countOfSeats);
         }
 
-        if (!errors.isEmpty()) {
-            StringBuilder builder = new StringBuilder();
-            for (Map.Entry<String, String> entry : errors.entrySet()) {
-                builder.append(entry.getKey())
-                        .append("Entered data:&nbsp;")
-                        .append(entry.getValue())
-                        .append(";<br/>\n");
-            }
-            IncorrectDataException e = new IncorrectDataException(builder.toString());
-            LOGGER.error(e.getMessage());
-            throw e;
-        }
+        ValidatorUtils.errorBuilder(errors, LOGGER);
 
     }
 
@@ -54,17 +40,10 @@ public class SeatValidator {
             errors.put("Incorrect format, choose different places", countOfSeats);
         }
 
-        if (!errors.isEmpty()) {
-            StringBuilder builder = new StringBuilder();
-            for (Map.Entry<String, String> entry : errors.entrySet()) {
-                builder.append(entry.getKey())
-                        .append("Entered data:&nbsp;")
-                        .append(entry.getValue())
-                        .append(";<br/>\n");
-            }
-            IncorrectDataException e = new IncorrectDataException(builder.toString());
-            LOGGER.error(e.getMessage());
-            throw e;
-        }
+        ValidatorUtils.errorBuilder(errors, LOGGER);
+    }
+
+    public String checkCountSeats(String countOfSeats, int countSeat) {
+        return countSeat >= Integer.parseInt(countOfSeats) ? countOfSeats : String.valueOf(countSeat);
     }
 }

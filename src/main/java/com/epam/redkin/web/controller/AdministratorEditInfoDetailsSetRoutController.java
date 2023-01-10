@@ -5,10 +5,10 @@ import com.epam.redkin.model.dto.MappingInfoDTO;
 import com.epam.redkin.model.entity.RoutePoint;
 import com.epam.redkin.model.entity.Station;
 import com.epam.redkin.model.exception.IncorrectDataException;
-import com.epam.redkin.service.RoutMappingService;
+import com.epam.redkin.service.RouteMappingService;
 import com.epam.redkin.service.StationService;
 import com.epam.redkin.util.constants.AppContextConstant;
-import com.epam.redkin.validator.RoutMappingValidator;
+import com.epam.redkin.validator.RouteMappingValidator;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,11 +26,11 @@ import java.util.List;
 @WebServlet("/administrator_edit_info_details_set_rout")
 public class AdministratorEditInfoDetailsSetRoutController extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(AdministratorEditInfoDetailsSetRoutController.class);
-    private RoutMappingService routMappingService;
+    private RouteMappingService routeMappingService;
     private StationService stationService;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        RoutMappingValidator routMappingValidator = new RoutMappingValidator();
+        RouteMappingValidator routeMappingValidator = new RouteMappingValidator();
         RoutePoint routToStationMapping = new RoutePoint();
         String routsId = request.getParameter("routs_id");
         String stationId = request.getParameter("station_current_id");
@@ -45,8 +45,8 @@ public class AdministratorEditInfoDetailsSetRoutController extends HttpServlet {
             LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered", e);
         }
-        routMappingValidator.isValidUpdateRoutToStationMapping(routToStationMapping);
-        routMappingService.updateRoutToStationMapping(routToStationMapping, Integer.parseInt(stationId));
+        routeMappingValidator.isValidUpdateRoutToStationMapping(routToStationMapping);
+        routeMappingService.updateRoutToStationMapping(routToStationMapping, Integer.parseInt(stationId));
         response.sendRedirect("administrator_details_set_rout?routs_id=" + routsId);
     }
 
@@ -55,7 +55,7 @@ public class AdministratorEditInfoDetailsSetRoutController extends HttpServlet {
         String routsId = request.getParameter("routs_id");
         String stationId = request.getParameter("station_id");
         List<Station> stationList = stationService.getAllStationList();
-        MappingInfoDTO mappingInfo = routMappingService.getMappingInfo(Integer.parseInt(routsId), Integer.parseInt(stationId));
+        MappingInfoDTO mappingInfo = routeMappingService.getMappingInfo(Integer.parseInt(routsId), Integer.parseInt(stationId));
         request.setAttribute("routs_id", routsId);
         request.setAttribute("station_id", stationId);
         request.setAttribute("current_rout", mappingInfo);
@@ -66,7 +66,7 @@ public class AdministratorEditInfoDetailsSetRoutController extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) {
-        routMappingService = (RoutMappingService) config.getServletContext().getAttribute(AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE);
+        routeMappingService = (RouteMappingService) config.getServletContext().getAttribute(AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE);
         stationService = (StationService) config.getServletContext().getAttribute((AppContextConstant.STATION_SERVICE));
         LOGGER.trace("administrator_edit_info_details_set_rout Servlet init");
 

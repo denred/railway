@@ -3,7 +3,7 @@ package com.epam.redkin.service;
 
 
 import com.epam.redkin.model.dto.RouteInfoDTO;
-import com.epam.redkin.model.dto.RoutsOrderDto;
+import com.epam.redkin.model.dto.RoutsOrderDTO;
 import com.epam.redkin.model.entity.Route;
 
 import java.time.LocalDateTime;
@@ -26,6 +26,6 @@ public interface RouteService {
 
     RouteInfoDTO getRoutById(int routsId);
 
-    List<RoutsOrderDto> getRouteListWithParameters(String departureStation, String arrivalStation, LocalDateTime departureDate);
+    List<RoutsOrderDTO> getRouteListWithParameters(String departureStation, String arrivalStation, LocalDateTime departureDate);
 }
 

@@ -1,7 +1,7 @@
 package com.epam.redkin.web.controller;
 
 
-import com.epam.redkin.model.dto.RoutsOrderDto;
+import com.epam.redkin.model.dto.RoutsOrderDTO;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.service.RouteService;
@@ -42,7 +42,7 @@ public class SearchRoutForOrderController extends HttpServlet {
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         searchValidator.isValidSearch(departureStation, arrivalStation);
-        List<RoutsOrderDto> routList = routeService.getRouteListWithParameters(departureStation, arrivalStation, departureDate);
+        List<RoutsOrderDTO> routList = routeService.getRouteListWithParameters(departureStation, arrivalStation, departureDate);
         List<CarriageType> carriageTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
         Map<CarriageType, Integer> freeSeatsCount = new HashMap<>();
         Map<CarriageType, Double> freeSeatsPrice = new HashMap<>();

@@ -2,7 +2,7 @@ package com.epam.redkin.service.impl;
 
 
 import com.epam.redkin.model.dto.RouteInfoDTO;
-import com.epam.redkin.model.dto.RoutsOrderDto;
+import com.epam.redkin.model.dto.RoutsOrderDTO;
 import com.epam.redkin.model.dto.StationDTO;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.entity.Route;
@@ -37,7 +37,7 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public List<RoutsOrderDto> getRouteListWithParameters(String departureStation, String arrivalStation,
+    public List<RoutsOrderDTO> getRouteListWithParameters(String departureStation, String arrivalStation,
                                                           LocalDateTime departureDate) {
         List<StationDTO> stations = routeRepository.getStationDTOListWithParameters(departureStation, arrivalStation);
         Map<Integer, List<StationDTO>> routToStationMap = new HashMap<>();
@@ -47,7 +47,7 @@ public class RouteServiceImpl implements RouteService {
             routStations.add(stationDto);
         }
 
-        List<RoutsOrderDto> result = new ArrayList<>();
+        List<RoutsOrderDTO> result = new ArrayList<>();
 
         for (List<StationDTO> stationDTOS : routToStationMap.values()) {
             StationDTO departure = null;
@@ -111,8 +111,8 @@ public class RouteServiceImpl implements RouteService {
         return routeRepository.getAllRouteInfoDTOList().size();
     }
 
-    private RoutsOrderDto toRoutsOrderDto(List<StationDTO> stationDTOS) {
-        RoutsOrderDto routsOrderDto = new RoutsOrderDto();
+    private RoutsOrderDTO toRoutsOrderDto(List<StationDTO> stationDTOS) {
+        RoutsOrderDTO routsOrderDto = new RoutsOrderDTO();
         routsOrderDto.setStations(stationDTOS);
         StationDTO stationDto = stationDTOS.get(0);
         routsOrderDto.setRoutName(stationDto.getRoutName());

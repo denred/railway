@@ -10,7 +10,6 @@
      <welcome-file-list>
          <welcome-file>login.jsp</welcome-file>
      </welcome-file-list>
-    <!--
         <error-page>
             <exception-type>com.epam.redkin.model.exception.ServiceException</exception-type>
             <location>/errorPage.jsp</location>
@@ -19,7 +18,6 @@
         <error-page>
             <location>/generalErrorPage.jsp</location>
         </error-page>
-    -->
 
     <resource-ref>
         <description>DB Connection</description>
