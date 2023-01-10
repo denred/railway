@@ -7,7 +7,9 @@ public interface Constants {
     String UPDATE_CARRIAGE = "UPDATE carriage SET type = ?, number = ?, train_id = ? WHERE id = ?";
     String DELETE_CARRIAGE = "DELETE FROM carriage WHERE id = ?";
     String GET_CARRIAGES_BY_TRAIN_ID = "SELECT * FROM carriage WHERE train_id = ?";
-    String GET_CARRIAGES_BY_TRAIN_ID_AND_TYPE = "SELECT * FROM carriage WHERE train_id = ? AND type = ? ORDER BY id";
+    String GET_CARRIAGES_BY_TRAIN_ID_AND_TYPE = "SELECT * FROM carriage" +
+            " JOIN seat ON carriage.id=seat.carriage_id " +
+            "WHERE carriage.train_id = ? AND type = ? AND busy = false ORDER BY carriage.id";
     String GET_ALL_CARRIAGE = "SELECT c.id, type, c.number, train_id,t.number " +
             "FROM carriage as c LEFT OUTER JOIN train as t\n" +
             "ON train_id = t.id ORDER BY t.number, c.number";
@@ -24,7 +26,7 @@ public interface Constants {
             "JOIN carriage ON carriage.id = seat.carriage_id " +
             "JOIN train ON train.id = carriage.train_id " +
             "WHERE train_id = ? AND carriage.type = ? AND busy = FALSE";
-    String GET_LIST_SEATS_BY_CARRIAGE_ID = "SELECT * FROM seat WHERE carriage_id = ?";
+    String GET_LIST_SEATS_BY_CARRIAGE_ID = "SELECT * FROM seat WHERE carriage_id = ? AND busy = FALSE";
     String GET_SEATS_LIST_BY_ID_BATCH = "SELECT * FROM seat WHERE id IN (%s)";
     String TAKE_IN_SEAT = "UPDATE seat SET busy = true WHERE id = ?";
     String TAKE_OFF_SEAT = "UPDATE seat SET busy = false WHERE id = ?";

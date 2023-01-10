@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 public class SeatServiceImpl implements SeatService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SeatServiceImpl.class);
-    private static final String UUID = "([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})";
     private SeatRepository seatRepository;
 
     public SeatServiceImpl(SeatRepository seatRepository) {

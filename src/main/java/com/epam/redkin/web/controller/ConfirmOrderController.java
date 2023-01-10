@@ -43,40 +43,21 @@ public class ConfirmOrderController extends HttpServlet {
         OrderValidator orderValidator = new OrderValidator();
         Order order = new Order();
         User user = (User) request.getSession().getAttribute(AppContextConstant.SESSION_USER);
-
-        String routsId = request.getParameter("routs_id");
-
+        String routeId = request.getParameter("routs_id");
         String trainId = request.getParameter("train_id");
-
         String stationIdA = request.getParameter("arrival_station_id");
         String stationIdD = request.getParameter("departure_station_id");
-
-        String carId = request.getParameter("car_id");
-
-
-        Carriage car = carriageService.getCarById(Integer.parseInt(carId));
-
-
+        String carriageId = request.getParameter("car_id");
+        Carriage carriage = carriageService.getCarById(Integer.parseInt(carriageId));
         Train train = trainService.getTrainById(Integer.parseInt(trainId));
-
-
         Station dispatchStation = stationService.getStationById(Integer.parseInt(stationIdA));
-
-
         Station arrivalStation = stationService.getStationById(Integer.parseInt(stationIdD));
-
-
-
-        MappingInfoDTO arrivalMapping = routMappingService.getMappingInfo(Integer.parseInt(routsId), arrivalStation.getId());
-
-
-
-        MappingInfoDTO dispatchMapping = routMappingService.getMappingInfo(Integer.parseInt(routsId), dispatchStation.getId());
-
-
-
+        MappingInfoDTO arrivalMapping = routMappingService.getMappingInfo(Integer.parseInt(routeId), arrivalStation.getId());
+        MappingInfoDTO dispatchMapping = routMappingService.getMappingInfo(Integer.parseInt(routeId), dispatchStation.getId());
         HttpSession session = request.getSession();
         Object locale = session.getAttribute(AppContextConstant.LOCALE);
+        String seatId = Arrays.toString(request.getParameterValues("seat_id"));
+
         try {
             order.setCarrType(CarriageType.valueOf(request.getParameter("car_type")));
             order.setCountOfSeats(Integer.parseInt(request.getParameter("count_of_seats")));
@@ -92,50 +73,41 @@ public class ConfirmOrderController extends HttpServlet {
                         duration.toHours() % 24, duration.toMinutes() % 60));
             }
 
+            List<String> seatIdList = seatService.getSeatsId(seatId);
+            List<Seat> seats = seatService.getSeatsByIdBatch(seatIdList);
+
+            StringBuilder sb = new StringBuilder();
+            String number = "";
+            for (int i = 0; i <= seats.size() - 1; i++) {
+                number = sb.append(seats.get(i).getSeatNumber()).append(" ").toString();
+            }
+            order.setRouteId(Integer.parseInt(routeId));
+            order.setArrivalDate(arrivalMapping.getStationDispatchData());
+            order.setDispatchDate(dispatchMapping.getStationArrivalDate());
+            order.setUser(user);
+            order.setTrainNumber(train.getNumber());
+            order.setCarriageNumber(carriage.getNumber());
+            order.setOrderDate(LocalDateTime.now());
+            order.setOrderStatus(OrderStatus.PROCESSING);
+            order.setArrivalStation(dispatchStation.getStation());
+            order.setDispatchStation(arrivalStation.getStation());
+            order.setSeatNumber(number);
+
+            sb = new StringBuilder();
+            String id = "";
+            for (int i = 0; i <= seats.size() - 1; i++) {
+                id = sb.append(seats.get(i).getId()).append(" ").toString();
+            }
+            order.setSeatsId(id);
+            orderService.addOrder(order, Integer.parseInt(routeId), seats);
+
+
         } catch (IllegalArgumentException | ArithmeticException | DateTimeException e) {
             LOGGER.error(e.getMessage());
             throw new IncorrectDataException("Incorrect data entered", e);
         }
 
-
-        order.setRouteId(Integer.parseInt(routsId));
-        order.setArrivalDate(arrivalMapping.getStationDispatchData());
-        order.setDispatchDate(dispatchMapping.getStationArrivalDate());
-        order.setUser(user);
-        order.setTrainNumber(train.getNumber());
-        order.setCarriageNumber(car.getNumber());
-        order.setOrderDate(LocalDateTime.now());
-        order.setOrderStatus(OrderStatus.PROCESSING);
-        order.setArrivalStation(dispatchStation.getStation());
-        order.setDispatchStation(arrivalStation.getStation());
-
-        String seatId = Arrays.toString(request.getParameterValues("seat_id"));
-
-
-        List<String> seatIdList = seatService.getSeatsId(seatId);
-
-
-        List<Seat> seats = seatService.getSeatsByIdBatch(seatIdList);
-
-
-        StringBuilder sb = new StringBuilder();
-        String number = "";
-        for (int i = 0; i <= seats.size() - 1; i++) {
-            number = sb.append(seats.get(i).getSeatNumber()).append(" ").toString();
-        }
-
-
-
-        order.setSeatNumber(number);
-        sb = new StringBuilder();
-        String id = "";
-        for (int i = 0; i <= seats.size() - 1; i++) {
-            id = sb.append(seats.get(i).getId()).append(" ").toString();
-        }
-        order.setSeatsId(id);
         orderValidator.isValidOrder(order);
-
-        orderService.addOrder(order, Integer.parseInt(routsId), seats);
         int userId = user.getUserId();
         response.sendRedirect("user_account?user_id=" + userId);
     }
@@ -179,8 +151,6 @@ public class ConfirmOrderController extends HttpServlet {
         String carNumber = car.getNumber();
         Double price = orderService.getPrice(carType, Integer.parseInt(countOfSeats));
 
-
-
         request.setAttribute("price", price);
         request.setAttribute("rout_name", routName);
         request.setAttribute("car_number", carNumber);
@@ -193,16 +163,11 @@ public class ConfirmOrderController extends HttpServlet {
         request.setAttribute("car_type", carType);
         request.setAttribute("train_id", trainId);
         request.setAttribute("user_id", userId);
-
         User user = userService.read(Integer.parseInt(userId));
         String firstName = user.getFirstName();
         String lastName = user.getLastName();
         Train train = trainService.getTrainById(Integer.parseInt(trainId));
         String trainNumber = train.getNumber();
-
-
-
-
         request.setAttribute("train_number", trainNumber);
         request.setAttribute("first_name", firstName);
         request.setAttribute("last_name", lastName);
@@ -211,9 +176,6 @@ public class ConfirmOrderController extends HttpServlet {
         request.setAttribute("seats_number", seatsNumber);
         request.setAttribute("car_id", carId);
         List<Seat> seats = seatService.getSeatsByIdBatch(seatsNumber);
-
-
-
         request.setAttribute("seats", seats);
         request.setAttribute("seat_id", Arrays.deepToString(numbers));
         seatValidator.isValidSeat(seats, countOfSeats);

@@ -71,6 +71,6 @@ public class SelectStationAndCarTypeForOrderController extends HttpServlet {
     public void init(ServletConfig config) {
         routMappingService = (RoutMappingService) config.getServletContext().getAttribute((AppContextConstant.ROUT_TO_STATION_MAPPING_SERVICE));
         carriageService = (CarriageService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));
-        //LOGGER.trace("select_station_and_car_type_for_order Servlet init");
+        LOGGER.trace("select_station_and_car_type_for_order Servlet init");
     }
 }

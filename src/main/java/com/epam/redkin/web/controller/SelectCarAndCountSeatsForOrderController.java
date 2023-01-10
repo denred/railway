@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet("/select_cars_and_seats_for_order")
 public class SelectCarAndCountSeatsForOrderController extends HttpServlet {
@@ -40,14 +41,14 @@ public class SelectCarAndCountSeatsForOrderController extends HttpServlet {
         String station1 = request.getParameter("station1");
         String station2 = request.getParameter("station2");
         String travelTime = request.getParameter("travel_time");
-        request.setAttribute("station1",station1);
-        request.setAttribute("station2",station2);
-        request.setAttribute("travel_time",travelTime);
+        request.setAttribute("station1", station1);
+        request.setAttribute("station2", station2);
+        request.setAttribute("travel_time", travelTime);
         LocalDateTime departureDate;
         try {
             departureDate = LocalDateTime.parse(request.getParameter("departure_date"));
         } catch (DateTimeParseException e) {
-           LOGGER.error("Incorrect data entered");
+            LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         String routsId = request.getParameter("routs_id");
@@ -61,15 +62,18 @@ public class SelectCarAndCountSeatsForOrderController extends HttpServlet {
         request.setAttribute("user_id", userId);
         request.setAttribute("train_id", trainId);
         RouteInfoDTO routeInfoDto = routeService.getRoutById(Integer.parseInt(routsId));
-        List<Carriage> carList = carriageService.getCarByTrainIdAndCarType(routeInfoDto.getTrainId(), carType);
-        request.setAttribute("car_list", carList);
+        List<Carriage> carList = carriageService.getCarByTrainIdAndCarType(routeInfoDto.getTrainId(), carType)
+                .stream()
+                .distinct()
+                .collect(Collectors.toList());
 
+        request.setAttribute("car_list", carList);
         request.getRequestDispatcher("WEB-INF/jsp/selectCarAndCountSeatsForOrder.jsp").forward(request, response);
     }
 
     public void init(ServletConfig config) {
         routeService = (RouteService) config.getServletContext().getAttribute((AppContextConstant.ROUT_SERVICE));
         carriageService = (CarriageService) config.getServletContext().getAttribute((AppContextConstant.CARS_SERVICE));
-       // LOGGER.trace("select_cars_and_seats_for_order Servlet init");
+        LOGGER.trace("select_cars_and_seats_for_order Servlet init");
     }
 }

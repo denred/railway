@@ -41,8 +41,6 @@ public class SearchRoutForOrderController extends HttpServlet {
             LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered", e);
         }
-
-
         searchValidator.isValidSearch(departureStation, arrivalStation);
         List<RoutsOrderDto> routList = routeService.getRouteListWithParameters(departureStation, arrivalStation, departureDate);
         List<CarriageType> carriageTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));

@@ -48,7 +48,7 @@ public class SelectSeatsForOrderController extends HttpServlet {
         try {
             departureDate = LocalDateTime.parse(request.getParameter("departure_date"));
         } catch (DateTimeParseException e) {
-            LOGGER.error("Incorrect data entered");
+            LOGGER.error("Incorrect data entered", e);
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         String routsId = request.getParameter("routs_id");
@@ -70,6 +70,6 @@ public class SelectSeatsForOrderController extends HttpServlet {
 
     public void init(ServletConfig config) {
         seatService = (SeatService) config.getServletContext().getAttribute((AppContextConstant.SEAT_SERVICE));
-        //LOGGER.trace("select_seats_for_order Servlet init");
+        LOGGER.trace("select_seats_for_order Servlet init");
     }
 }

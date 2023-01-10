@@ -1,6 +1,5 @@
 package com.epam.redkin.service.impl;
 
-import com.epam.redkin.model.dto.RouteInfoDTO;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.entity.Order;
 import com.epam.redkin.model.entity.OrderStatus;
@@ -18,7 +17,6 @@ import java.util.List;
 
 
 public class OrderServiceImpl implements OrderService {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     private OrderRepository orderRepository;
