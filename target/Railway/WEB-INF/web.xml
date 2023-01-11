@@ -10,6 +10,7 @@
      <welcome-file-list>
          <welcome-file>login.jsp</welcome-file>
      </welcome-file-list>
+
         <error-page>
             <exception-type>com.epam.redkin.model.exception.ServiceException</exception-type>
             <location>/errorPage.jsp</location>
@@ -52,5 +53,24 @@
         <param-name>jakarta.servlet.jsp.jstl.fmt.localizationContext</param-name>
         <param-value>com.acme.MyResources</param-value>
     </context-param>
+
+    <!--============================================================
+       Controller
+   =============================================================-->
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>com.epam.redkin.web.controller.Controller</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/controller</url-pattern>
+    </servlet-mapping>
+
+    <!--============================================================
+	Context listener
+    =============================================================-->
+    <listener>
+        <listener-class>com.epam.redkin.web.controller.listener.ContextListener</listener-class>
+    </listener>
 
 </web-app>
