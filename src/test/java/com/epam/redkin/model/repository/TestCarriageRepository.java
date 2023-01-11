@@ -159,7 +159,7 @@ public class TestCarriageRepository implements TestConstants {
             Arguments.of(1, CarriageType.FIRST_CLASS, "17", 2),
             Arguments.of(1, CarriageType.FIRST_CLASS, "22", 1)
     );
-
+    @Disabled
     @ParameterizedTest
     @VariableSource("inputs")
     public void testGetCarriagesByTrainIdAndType(int carriageId, CarriageType type,

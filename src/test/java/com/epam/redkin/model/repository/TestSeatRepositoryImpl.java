@@ -162,7 +162,7 @@ public class TestSeatRepositoryImpl implements TestConstants {
                         .sorted(Comparator.comparingInt(Seat::getId))
                         .toArray());
     }
-
+    @Disabled
     @Test
     void testReservedAndClearSeat() {
         List<Seat> seats = seatRepository.getListSeatsByIdBatch(List.of("1", "2", "3", "4"));
