@@ -1,30 +1,14 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="lang"/>
 
+<!doctype html>
 <html>
+<jsp:include page="/WEB-INF/templates/_head.jsp"/>
 <head>
     <title><fmt:message key="signIn"/></title>
-    <link rel="icon" type="image/x-icon" href="img/icons8-high-speed-train-32.png">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@600;700&display=swap"
-          rel="stylesheet"/>
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet"/>
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet"/>
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"/>
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet"/>
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet"/>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -49,10 +33,11 @@
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
 
 
-            <form action="login" method="POST">
+            <form action="controller?action=login" method="POST">
                 <h1 class="h3 mb-3 font-weight-normal"><fmt:message key="user.signin"/></h1>
                 <!-- Email input -->
                 <div class="form-outline mb-4">
+                    <label for="form3Example3"><fmt:message key="user.email"/></label>
                     <input name="login" type="email" id="form3Example3" class="form-control form-control-lg"
                            placeholder="<fmt:message key="user.email"/>" required autofocus>
                 </div>
@@ -67,7 +52,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center">
-                    <a href="#!" class="text-body"><fmt:message key="user.forgotPassword"/></a>
+                    <a href="registration.jsp" class="text-body"><fmt:message key="user.forgotPassword"/></a>
                 </div>
 
                 <div class="text-center text-lg-start mt-4 pt-2">
