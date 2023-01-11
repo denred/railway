@@ -17,11 +17,19 @@
         <h1 class="text-white"><fmt:message key="app.name"/></h1>
         <p><fmt:message key="app.description"/></p>
     </div>
-    <div class="p-2 btn-group btn-group-sm d-flex justify-content-end" role="group" aria-label="Basic example">
-        <form action="change_language" method="POST">
-            <input type="submit" class="btn btn-outline-primary" name="lang" value="en">
-            <input type="submit" class="btn btn-outline-primary" name="lang" value="ua">
-        </form>
+    <div class="d-flex justify-content-end m-5">
+        <div class="dropdown">
+            <button class="btn btn-outline-primary btn-sm" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="material-icons">lang</span>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <form class="form-inline" method="post" action="controller?action=i18n">
+                    <button type="submit" name="lang" value="ua" class="dropdown-item">UA</button>
+                    <button type="submit" name="lang" value="en" class="dropdown-item">EN</button>
+                </form>
+            </div>
+        </div>
     </div>
 </header>
 
@@ -31,7 +39,6 @@
             <img src="img/train-main.png" class="img-fluid" alt="Sample image">
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-
 
             <form action="controller?action=login" method="POST">
                 <h1 class="h3 mb-3 font-weight-normal"><fmt:message key="user.signin"/></h1>
@@ -71,10 +78,9 @@
 
 <footer class="mt-auto">
     <div class="mt-5 p-3 bg-primary text-white text-center">
-        <!-- Copyright -->
         <p><fmt:message key="footer.text"/></p>
     </div>
 </footer>
-
+<jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
 </body>
 </html>

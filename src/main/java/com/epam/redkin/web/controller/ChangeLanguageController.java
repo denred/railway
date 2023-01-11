@@ -20,6 +20,7 @@ public class ChangeLanguageController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
+        boolean f = session.isNew();
         if (!Objects.isNull(request.getParameter("lang"))) {
             if (AppContextConstant.LOCALE_EN.equals(request.getParameter("lang"))) {
                 session.setAttribute("locale", AppContextConstant.LOCALE_EN);
@@ -27,7 +28,7 @@ public class ChangeLanguageController extends HttpServlet {
                 session.setAttribute("locale", AppContextConstant.LOCALE_UA);
             }
         }
-        if (session.isNew()) {
+        if (f) {
             response.sendRedirect("login.jsp");
         } else {
             response.sendRedirect(request.getHeader("Referer"));

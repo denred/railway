@@ -49,10 +49,32 @@
         <param-value>UTF-8</param-value>
     </context-param>
 
+    <!--<context-param>
+        <param-name>jakarta.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>com.acme.MyResources</param-value>
+    </context-param>-->
+
+    <!--============================================================
+   i18n support
+   =============================================================-->
+    <!-- this way we set the resource bundle name -->
     <context-param>
         <param-name>jakarta.servlet.jsp.jstl.fmt.localizationContext</param-name>
         <param-value>com.acme.MyResources</param-value>
     </context-param>
+
+    <!-- this way we set the default locale (optional) -->
+    <!-- the (preferable) browser's locale will be used if we don't set the default locale -->
+    <context-param>
+        <param-name>jakarta.servlet.jsp.jstl.fmt.locale</param-name>
+        <param-value>ua</param-value>
+    </context-param>
+    <!-- supported locales -->
+    <context-param>
+        <param-name>locales</param-name>
+        <param-value>ua en</param-value>
+    </context-param>
+
 
     <!--============================================================
        Controller

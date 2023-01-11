@@ -40,6 +40,9 @@ public class Path {
     public static final String COMMAND_TRANSACTIONS = "controller?action=transactions";
 
     // i18n
-    public static final String LOCALE_NAME_UA = "ua";
-    public static final String LOCALE_NAME_EN = "en";
+    public static final String LOCALE_UA = "ua";
+    public static final String LOCALE_EN = "en";
+    public static final String LOCALE = "locale";
+    public static final String LANG = "lang";
+
 }

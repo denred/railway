@@ -1,6 +1,7 @@
 package com.epam.redkin.web.controller.command;
 
 import com.epam.redkin.web.controller.command.common.HomeCommand;
+import com.epam.redkin.web.controller.command.common.I18NCommand;
 import com.epam.redkin.web.controller.command.common.LoginCommand;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -25,11 +26,12 @@ public class CommandFactory {
         // common commands
         commands.put("login", new LoginCommand());
         commands.put("home", new HomeCommand());
+        commands.put("i18n", new I18NCommand());
         /* commands.put("logout", new LogoutCommand());
         commands.put("pdf_builder", new PdfBuilderCommand());
-        commands.put("no_command", new NoCommand());
-        commands.put("i18n", new I18NCommand());
-        commands.put("redirect", null);*/
+        commands.put("no_command", new NoCommand());*/
+
+        commands.put("redirect", null);
 
         // admin commands
         /*commands.put("main", new MainCommand());
