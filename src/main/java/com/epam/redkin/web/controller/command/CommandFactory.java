@@ -1,5 +1,7 @@
 package com.epam.redkin.web.controller.command;
 
+import com.epam.redkin.web.controller.command.common.HomeCommand;
+import com.epam.redkin.web.controller.command.common.LoginCommand;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
@@ -21,8 +23,9 @@ public class CommandFactory {
 
     static {
         // common commands
-       /* commands.put("login", new LoginCommand());
-        commands.put("logout", new LogoutCommand());
+        commands.put("login", new LoginCommand());
+        commands.put("home", new HomeCommand());
+        /* commands.put("logout", new LogoutCommand());
         commands.put("pdf_builder", new PdfBuilderCommand());
         commands.put("no_command", new NoCommand());
         commands.put("i18n", new I18NCommand());
