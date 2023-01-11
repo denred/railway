@@ -24,11 +24,12 @@ public class Controller extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         CommandFactory commandFactory = CommandFactory.commandFactory();
-        Command ic = commandFactory.getCommand(req);
-        String page = ic.execute(req, resp);
+        Command command = commandFactory.getCommand(req);
+        String page = command.execute(req, resp);
         RequestDispatcher dispatcher = req.getRequestDispatcher(page);
         if (!page.equals("redirect")) {
             dispatcher.forward(req, resp);
         }
+
     }
 }
