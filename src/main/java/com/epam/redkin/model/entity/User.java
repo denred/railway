@@ -1,5 +1,7 @@
 package com.epam.redkin.model.entity;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -26,7 +28,7 @@ public class User {
 
     public User(String email, String password, String firstName, String lastName, String phone, LocalDate birthDate, Role role, boolean blocked) {
         this.email = email;
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
@@ -56,7 +58,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     public String getFirstName() {

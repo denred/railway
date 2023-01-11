@@ -7,6 +7,7 @@ import com.epam.redkin.model.exception.UnauthorizedException;
 import com.epam.redkin.model.exception.UserAlreadyExistException;
 import com.epam.redkin.model.repository.UserRepository;
 import com.epam.redkin.service.UserService;
+import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService {
     public User isValidUser(String email, String password) {
         User user = userRepository.getUserByEmail(email);
         if (user.getEmail() != null && !user.isBlocked()) {
-            if (user.getPassword().equals(password)) {
+            if (BCrypt.checkpw(password, user.getPassword())) {
                 return user;
             }
         } else {
