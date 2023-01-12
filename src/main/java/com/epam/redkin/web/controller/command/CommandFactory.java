@@ -49,6 +49,7 @@ public class CommandFactory {
         commands.put("route", new DetailRouteCommand());
         commands.put("select_station_and_carriage_type", new SelectStationAndCarriageTypeCommand());
         commands.put("select_carriage_and_count_seats", new SelectCarriageAndSeatsCommand());
+        commands.put("select_seats", new SelectSeatsCommand());
         /*commands.put("account", new AccountCommand());
         commands.put("personal_data", new PersonalDataCommand());
         commands.put("user_profile", new UserProfileCommand());

@@ -13,7 +13,7 @@
 <mrt:navigation/>
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
 
-<form action="select_seats_for_order" method="GET">
+<form action="controller?action=select_seats" method="POST">
     <div class="d-flex justify-content-center">
         <table class="table table-bordered table-hover caption-top" style="width: 600px;">
             <thead class="thead-light text-center">
