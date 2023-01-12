@@ -1,6 +1,5 @@
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="period" uri="/WEB-INF/tags/custom.tld" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 
@@ -15,7 +14,6 @@
 <body>
 <mrt:navigation/>
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
-
 <h2 style="text-align: center;">
     <fmt:message key="account"/>
 </h2>
@@ -67,7 +65,7 @@
                         </div>
                         <div class="row">
                         <span class="text-start">
-                                ${order.dispatchDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}
+                                ${order.dispatchDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}
                         </span>
                         </div>
 
@@ -76,7 +74,7 @@
                         </div>
                         <div class="row">
                         <span class="text-start">
-                                ${order.arrivalDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}
+                                ${order.arrivalDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}
                         </span>
                         </div>
                     </td>
@@ -84,7 +82,7 @@
                                        locale="${lang}"/>
                     </td>
 
-                    <td><span>${order.orderDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}</span></td>
+                    <td><span>${order.orderDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}</span></td>
                     <td><fmt:message key="${order.orderStatus}"/></td>
                     <td>
                         <form action="cancel_order" method="POST">
@@ -132,5 +130,6 @@
         </nav>
     </div>
 </div>
+<jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
 </body>
 </html>

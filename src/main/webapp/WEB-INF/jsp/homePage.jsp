@@ -11,13 +11,7 @@
 </head>
 <body>
 <mrt:navigation/>
-
-<div class="d-flex justify-content-end">
-    <div class="h5 mr-auto p-2">
-        <fmt:message key="enterRole"/>
-        <mrt:role role="${user.role}"/>
-    </div>
-</div>
+<jsp:include page="/WEB-INF/templates/_role.jsp"/>
 
 
 <div class="container-fluid mx-5 mt-5">
@@ -25,17 +19,17 @@
         <div class="input-group w-25">
             <span class="input-group-text"><fmt:message key="rout.from"/></span>
             <label for="exampleInputRoutFrom"></label>
-            <input name="departure_station" type="text" class="form-control" id="exampleInputRoutFrom">
+            <input name="departure_station" type="text" class="form-control" id="exampleInputRoutFrom" required>
         </div>
         <div class="input-group my-3 w-25">
             <span class="input-group-text"><fmt:message key="rout.to"/></span>
             <label for="exampleInputRoutTo"></label>
-            <input name="arrival_station" type="text" class="form-control" id="exampleInputRoutTo">
+            <input name="arrival_station" type="text" class="form-control" id="exampleInputRoutTo" required>
         </div>
         <div class="input-group w-25">
             <span class="input-group-text"><fmt:message key="date"/></span>
             <label for="exampleInputRoutWhen"></label>
-            <input name="departure_date" type="datetime-local" class="form-control" id="exampleInputRoutWhen">
+            <input name="departure_date" type="datetime-local" class="form-control" id="exampleInputRoutWhen" value="${dateTime}">
         </div>
         <div>
             <input type="hidden" name="user_id" value="${user.userId}"/>

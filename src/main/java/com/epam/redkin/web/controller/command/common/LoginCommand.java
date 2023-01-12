@@ -11,6 +11,10 @@ import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
 import static com.epam.redkin.web.controller.Path.*;
 
 public class LoginCommand implements Command {
@@ -33,11 +37,11 @@ public class LoginCommand implements Command {
             LOGGER.debug("Login or password is empty");
             return forward;
         }
-
         User user = userService.isValidUser(login, password);
         LOGGER.debug("User successfully extracted");
         forward = COMMAND_HOME;
         session.setAttribute("user", user);
+        session.setAttribute("dateTime", LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         session.setAttribute(LOCALE, LOCALE_UA);
         LOGGER.debug("LoginCommand done");
         return forward;

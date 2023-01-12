@@ -24,7 +24,6 @@ public class OrderCommand implements Command {
         LOGGER.debug("OrderCommand started");
         RouteService routeService = AppContext.getInstance().getRouteService();
         OrderService orderService = AppContext.getInstance().getOrderService();
-        HttpSession session = request.getSession();
         String userId = request.getParameter(USER_ID);
         int noOfRecords = orderService.getOrderListSizeByUserId(userId);
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
@@ -46,6 +45,7 @@ public class OrderCommand implements Command {
         request.setAttribute("user_id", userId);
         request.setAttribute("order_list", orderList);
         request.setAttribute("sum", priceOfSuccessfulOrders);
+        HttpSession session = request.getSession();
         request.setAttribute("lang", session.getAttribute(LOCALE));
         LOGGER.debug("OrderCommand done");
         return PAGE_ORDERS;

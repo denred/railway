@@ -5,10 +5,7 @@ import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.service.RouteService;
 import com.epam.redkin.service.SeatService;
-import com.epam.redkin.util.constants.AppContextConstant;
 import com.epam.redkin.validator.SearchValidator;
-import com.epam.redkin.web.controller.Path;
-import com.epam.redkin.web.controller.SearchRoutForOrderController;
 import com.epam.redkin.web.controller.command.Command;
 import com.epam.redkin.web.listener.AppContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -61,7 +58,7 @@ public class SearchRoutesCommand implements Command {
         request.setAttribute("arrival_station", arrivalStation);
         request.setAttribute("departure_date", departureDate);
         HttpSession session = request.getSession();
-        request.setAttribute("language", session.getAttribute(LOCALE));
+        request.setAttribute("lang", session.getAttribute(LOCALE));
 
         return PAGE_SEARCH_ROUTES;
     }
