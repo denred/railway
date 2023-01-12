@@ -7,6 +7,7 @@ public class Path {
     public static final String PAGE_SEARCH_ROUTES = "WEB-INF/jsp/searchRoutForOrder.jsp";
     public static final String PAGE_ORDERS = "WEB-INF/jsp/user/userAccount.jsp";
     public static final String PAGE_ROUTE_DETAIL = "WEB-INF/jsp/detailRout.jsp";
+    public static final String PAGE_SELECT_STATION_AND_CARRIAGE_TYPE = "WEB-INF/jsp/selectStationAndCarriageType.jsp";
     public static final String PAGE_ERROR_PAGE = "/WEB-INF/jsp/error_page.jsp";
     public static final String PAGE_MAIN = "/WEB-INF/jsp/admin/main.jsp";
     public static final String PAGE_PROFILE = "/WEB-INF/jsp/admin/profile.jsp";

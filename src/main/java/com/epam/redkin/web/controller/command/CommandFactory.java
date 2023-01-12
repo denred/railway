@@ -25,9 +25,7 @@ public class CommandFactory {
         commands.put("login", new LoginCommand());
         commands.put("home", new HomeCommand());
         commands.put("i18n", new I18NCommand());
-        commands.put("search_routes", new SearchRoutesCommand());
-        commands.put("orders", new OrderCommand());
-        commands.put("route", new DetailRouteCommand());
+
         /* commands.put("logout", new LogoutCommand());
         commands.put("pdf_builder", new PdfBuilderCommand());
         commands.put("no_command", new NoCommand());*/
@@ -45,7 +43,11 @@ public class CommandFactory {
         commands.put("edit_tariff", new EditTariffCommand());
         commands.put("remove_tariff", new RemoveTariffCommand());*/
 
-        // client commands
+        // user commands
+        commands.put("search_routes", new SearchRoutesCommand());
+        commands.put("orders", new OrderCommand());
+        commands.put("route", new DetailRouteCommand());
+        commands.put("select_station_and_carriage_type", new SelectStationAndCarriageTypeCommand());
         /*commands.put("account", new AccountCommand());
         commands.put("personal_data", new PersonalDataCommand());
         commands.put("user_profile", new UserProfileCommand());

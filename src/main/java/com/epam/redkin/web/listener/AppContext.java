@@ -47,4 +47,6 @@ public class AppContext {
 
     public RouteMappingService getRouteMappingService(){return routeMappingService;}
 
+    public CarriageService getCarriageService(){return carriageService;}
+
 }
