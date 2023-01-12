@@ -73,7 +73,7 @@
                                value="${rout.stations.get(rout.stations.size() - 1).stationArrivalTime}"/>
 
                         <td>${rout.trainNumber}
-                            <form action="detail_rout" method="GET">
+                            <form action="controller?action=route" method="POST">
                                 <input type="hidden" name="routs_id" value="${rout.routsId}">
                                 <input type="hidden" name="user_id" value="${user_id}">
                                 <input type="hidden" name="departure_station" value="${departure_station}">

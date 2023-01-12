@@ -1,8 +1,6 @@
 package com.epam.redkin.web.controller.command;
 
-import com.epam.redkin.web.controller.command.common.HomeCommand;
-import com.epam.redkin.web.controller.command.common.I18NCommand;
-import com.epam.redkin.web.controller.command.common.LoginCommand;
+import com.epam.redkin.web.controller.command.common.*;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
@@ -10,7 +8,7 @@ import java.util.Map;
 
 public class CommandFactory {
     private static CommandFactory factory = new CommandFactory();
-    private static Map<String, Command> commands = new HashMap<>();
+    private static final Map<String, Command> commands = new HashMap<>();
 
     private CommandFactory() {
     }
@@ -27,6 +25,9 @@ public class CommandFactory {
         commands.put("login", new LoginCommand());
         commands.put("home", new HomeCommand());
         commands.put("i18n", new I18NCommand());
+        commands.put("search_routes", new SearchRoutesCommand());
+        commands.put("orders", new OrderCommand());
+        commands.put("route", new DetailRouteCommand());
         /* commands.put("logout", new LogoutCommand());
         commands.put("pdf_builder", new PdfBuilderCommand());
         commands.put("no_command", new NoCommand());*/

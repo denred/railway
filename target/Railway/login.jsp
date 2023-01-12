@@ -1,8 +1,6 @@
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
-<fmt:setLocale value="${lang}" />
-
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="lang"/>
 
@@ -42,7 +40,6 @@
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
 
-
             <form action="controller?action=login" method="POST">
                 <h1 class="h3 mb-3 font-weight-normal"><fmt:message key="user.signin"/></h1>
                 <!-- Email input -->
@@ -81,7 +78,6 @@
 
 <footer class="mt-auto">
     <div class="mt-5 p-3 bg-primary text-white text-center">
-        <!-- Copyright -->
         <p><fmt:message key="footer.text"/></p>
     </div>
 </footer>

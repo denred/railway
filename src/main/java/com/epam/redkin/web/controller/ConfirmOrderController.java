@@ -146,7 +146,7 @@ public class ConfirmOrderController extends HttpServlet {
         RouteInfoDTO routById = routeService.getRoutById(Integer.parseInt(routsId));
 
 
-        String routName = routById.getRoutName();
+        String routName = routById.getRouteName();
         Carriage car = carriageService.getCarById(Integer.parseInt(carId));
         String carNumber = car.getNumber();
         Double price = orderService.getPrice(carType, Integer.parseInt(countOfSeats));

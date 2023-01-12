@@ -3,7 +3,6 @@ package com.epam.redkin.web.controller.listener;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
-import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +62,7 @@ public class ContextListener implements ServletContextListener {
      * Initializes CommandFactory.
      */
     private void initCommandFactory() {
-        log.debug("ICommand container initialization started");
+        log.debug("Command container initialization started");
 
         // initialize commands container
         // just load class to JVM
@@ -73,7 +72,7 @@ public class ContextListener implements ServletContextListener {
             throw new RuntimeException(ex);
         }
 
-        log.debug("ICommand container initialization finished");
+        log.debug("Command container initialization finished");
     }
 
 

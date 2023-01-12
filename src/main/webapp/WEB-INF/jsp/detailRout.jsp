@@ -58,14 +58,14 @@
                 <td>${item.stationArrivalDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}</td>
                 <td>${item.stationDispatchData.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}</td>
                 <td><period:period dateFrom="${item.stationArrivalDate}" dateTo="${item.stationDispatchData}"
-                                   locale="${language}"/></td>
+                                   locale="${lang}"/></td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
 </div>
 <p>
-<form action="search_rout_for_order" method="GET">
+<form action="controller?action=search_routes" method="POST">
     <input type="hidden" name="user_id" value="${user_id}">
     <input type="hidden" name="departure_station" value="${departure_station}">
     <input type="hidden" name="arrival_station" value="${arrival_station}">

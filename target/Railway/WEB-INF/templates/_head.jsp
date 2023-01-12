@@ -1,6 +1,3 @@
-<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
-<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
-
 <head>
     <link rel="icon" type="image/x-icon" href="../../img/icons8-high-speed-train-32.png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"

@@ -35,7 +35,7 @@ public class AdministratorInfoOrderController extends HttpServlet {
                 (page - 1) * recordsPerPage,
                 recordsPerPage * page);
         for (Order order : orderList) {
-            order.setRouteName(routeService.getRoutById(order.getRouteId()).getRoutName());
+            order.setRouteName(routeService.getRoutById(order.getRouteId()).getRouteName());
         }
         request.setAttribute("recordsPerPage", recordsPerPage);
         request.setAttribute("noOfPages", noOfPages);

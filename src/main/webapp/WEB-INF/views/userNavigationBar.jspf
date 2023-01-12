@@ -1,7 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5" style="top: -100px;">
-    <a href="home" class="navbar-brand d-flex align-items-center">
+    <a href="controller?action=home" class="navbar-brand d-flex align-items-center">
         <h3 class="m-0">
             <img class="img-fluid me-3" src="../../img/train-main.png" alt="train logo" width="96px">
             <fmt:message key="app.name"/>
@@ -11,21 +11,40 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav mx-auto bg-light rounded pe-4 py-3 py-lg-0">
-            <a href="home" class="nav-item nav-link"><fmt:message key="homepage"/></a>
-            <a href="user_account?user_id=${user.userId}" class="nav-item nav-link"><fmt:message key="user.account"/></a>
+        <div class="navbar-nav mx-auto bg-light">
+            <div class="btn-group btn-group-toggle" role="group">
+                <form action="controller?action=home" method="post">
+                    <input type="hidden" name="user_id" value="${user.userId}">
+                    <button type="submit" class="btn btn-primary text-decoration-none align-content-center"><fmt:message key="homepage"/></button>
+                </form>
+                <form action="controller?action=orders" method="post">
+                    <input type="hidden" name="user_id" value="${user.userId}">
+                    <button type="submit" class="btn btn-primary"><fmt:message
+                            key="user.account"/></button>
+                </form>
+            </div>
         </div>
     </div>
-    <%--<a href="" class="btn btn-primary px-3 d-none d-lg-block">Get A Quote</a>--%>
-    <%-- Change language --%>
-    <form class="d-flex mx-2" action="change_language" method="POST">
-        <input type="submit" class="btn btn-outline-primary text-center mx-2" name="lang" value="en">
-        <input type="submit" class="btn btn-outline-primary text-center" name="lang" value="ua">
-    </form>
 
-    <%-- Logout button Start--%>
-    <form class="form-inline" action="logout" method="POST">
-        <input class="btn btn-outline-primary" type="submit" value="<fmt:message key="logout"/>">
-    </form>
-
+    <div class="row">
+        <div class="col-6">
+            <%-- Change language button --%>
+            <div class="form-inline text-center align-content-center dropdown">
+                <input class="btn btn-outline-primary" type="button" id="dropdownMenuButton"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="lang">
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <form class="form-inline" method="post" action="controller?action=i18n">
+                        <button type="submit" name="lang" value="ua" class="dropdown-item">UA</button>
+                        <button type="submit" name="lang" value="en" class="dropdown-item">EN</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <%-- Logout button --%>
+            <form class="form-inline" action="logout" method="POST">
+                <input class="btn btn-outline-primary" type="submit" value="<fmt:message key="logout"/>">
+            </form>
+        </div>
+    </div>
 </nav>

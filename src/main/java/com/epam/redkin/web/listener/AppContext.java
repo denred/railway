@@ -14,7 +14,7 @@ public class AppContext {
     private final RouteRepository routsRepository = new RouteRepositoryImpl();
     private final TrainRepository trainRepository = new TrainRepositoryImpl();
     private final CarriageRepository carRepository = new CarriageRepositoryImpl();
-    private final RoutePointRepository routMappingRepository = new RoutePointRepositoryImpl();
+    private final RoutePointRepository routePointRepository = new RoutePointRepositoryImpl();
     private final SeatRepository seatRepository = new SeatRepositoryImpl();
 
     private final SeatService seatService = new SeatServiceImpl(seatRepository);
@@ -24,7 +24,7 @@ public class AppContext {
     private final OrderService orderService = new OrderServiceImpl(orderRepository, seatService, seatRepository);
     private final StationService stationService = new StationServiceImpl(stationRepository);
     private final TrainService trainService = new TrainServiceImpl(trainRepository);
-    private final RouteMappingService routeMappingService = new RouteMappingServiceImpl(routMappingRepository);
+    private final RouteMappingService routeMappingService = new RouteMappingServiceImpl(routePointRepository);
     private final LogoutService logoutService = new LogoutServiceImpl();
 
     public static AppContext getInstance() {
@@ -34,5 +34,17 @@ public class AppContext {
     public UserService getUserService(){
         return userService;
     }
+
+    public RouteService getRouteService(){
+        return routeService;
+    }
+
+    public SeatService getSeatService(){
+        return seatService;
+    }
+
+    public OrderService getOrderService(){return orderService;}
+
+    public RouteMappingService getRouteMappingService(){return routeMappingService;}
 
 }

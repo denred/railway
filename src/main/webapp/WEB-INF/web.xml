@@ -60,7 +60,7 @@
     <!-- this way we set the resource bundle name -->
     <context-param>
         <param-name>jakarta.servlet.jsp.jstl.fmt.localizationContext</param-name>
-        <param-value>com.acme.MyResources</param-value>
+        <param-value>lang</param-value>
     </context-param>
 
     <!-- this way we set the default locale (optional) -->
@@ -74,7 +74,6 @@
         <param-name>locales</param-name>
         <param-value>ua en</param-value>
     </context-param>
-
 
     <!--============================================================
        Controller
