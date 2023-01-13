@@ -2,7 +2,8 @@ package com.epam.redkin.web.controller;
 
 
 import com.epam.redkin.model.entity.*;
-import com.epam.redkin.service.*;
+import com.epam.redkin.model.service.OrderService;
+import com.epam.redkin.model.service.RouteService;
 import com.epam.redkin.util.constants.AppContextConstant;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -35,7 +36,7 @@ public class AdministratorInfoOrderController extends HttpServlet {
                 (page - 1) * recordsPerPage,
                 recordsPerPage * page);
         for (Order order : orderList) {
-            order.setRouteName(routeService.getRoutById(order.getRouteId()).getRouteName());
+            order.setRouteName(routeService.getRoutById(order.getRouteId()).getRoutName());
         }
         request.setAttribute("recordsPerPage", recordsPerPage);
         request.setAttribute("noOfPages", noOfPages);

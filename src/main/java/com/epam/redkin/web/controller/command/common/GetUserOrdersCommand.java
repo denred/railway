@@ -2,8 +2,8 @@ package com.epam.redkin.web.controller.command.common;
 
 import com.epam.redkin.model.entity.Order;
 import com.epam.redkin.model.entity.User;
-import com.epam.redkin.service.OrderService;
-import com.epam.redkin.service.RouteService;
+import com.epam.redkin.model.service.OrderService;
+import com.epam.redkin.model.service.RouteService;
 import com.epam.redkin.web.controller.command.Command;
 import com.epam.redkin.web.listener.AppContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,7 +40,7 @@ public class GetUserOrdersCommand implements Command {
                 (page - 1) * RECORDS_PER_PAGE,
                 RECORDS_PER_PAGE * page);
         for (Order order : orderList) {
-            order.setRouteName(routeService.getRoutById(order.getRouteId()).getRouteName());
+            order.setRouteName(routeService.getRoutById(order.getRouteId()).getRoutName());
         }
         Double priceOfSuccessfulOrders = orderService.getPriceOfSuccessfulOrders(Integer.parseInt(userId));
         request.setAttribute(PAGE_RECORDS, RECORDS_PER_PAGE);

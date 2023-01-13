@@ -2,8 +2,8 @@ package com.epam.redkin.web.controller.command.common;
 
 import com.epam.redkin.model.entity.Seat;
 import com.epam.redkin.model.exception.IncorrectDataException;
-import com.epam.redkin.service.SeatService;
-import com.epam.redkin.validator.SeatValidator;
+import com.epam.redkin.model.service.SeatService;
+import com.epam.redkin.model.validator.SeatValidator;
 import com.epam.redkin.web.controller.command.Command;
 import com.epam.redkin.web.listener.AppContext;
 import jakarta.servlet.http.HttpServletRequest;

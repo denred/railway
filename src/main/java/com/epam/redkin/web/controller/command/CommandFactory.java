@@ -1,5 +1,6 @@
 package com.epam.redkin.web.controller.command;
 
+import com.epam.redkin.web.controller.command.admin.*;
 import com.epam.redkin.web.controller.command.common.*;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -34,8 +35,12 @@ public class CommandFactory {
         commands.put("redirect", null);
 
         // admin commands
+        commands.put("routes", new InfoRouteCommand());
+        commands.put("add_route", new AddRouteCommand());
+        commands.put("edit_route", new EditRouteCommand());
+        commands.put("delete_route", new DeleteRouteCommand());
+        commands.put("route_mapping", new RouteMappingCommand());
         /*commands.put("main", new MainCommand());
-        commands.put("users", new ShowUserListCommand());
         commands.put("services", new EditServicesCommand());
         commands.put("registration", new RegistrationCommand());
         commands.put("edit_client", new EditClientCommand());

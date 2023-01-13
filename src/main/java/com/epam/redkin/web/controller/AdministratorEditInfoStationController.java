@@ -2,9 +2,9 @@ package com.epam.redkin.web.controller;
 
 
 import com.epam.redkin.model.entity.Station;
-import com.epam.redkin.service.StationService;
+import com.epam.redkin.model.service.StationService;
 import com.epam.redkin.util.constants.AppContextConstant;
-import com.epam.redkin.validator.StationValidator;
+import com.epam.redkin.model.validator.StationValidator;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

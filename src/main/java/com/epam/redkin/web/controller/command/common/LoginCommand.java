@@ -1,8 +1,7 @@
 package com.epam.redkin.web.controller.command.common;
 
 import com.epam.redkin.model.entity.User;
-import com.epam.redkin.service.UserService;
-import com.epam.redkin.web.controller.Path;
+import com.epam.redkin.model.service.UserService;
 import com.epam.redkin.web.controller.command.Command;
 import com.epam.redkin.web.listener.AppContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 import static com.epam.redkin.web.controller.Path.*;
@@ -22,7 +20,7 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.debug("LoginCommand started");
+        LOGGER.info("started");
         UserService userService = AppContext.getInstance().getUserService();
         HttpSession session = request.getSession();
 
@@ -38,12 +36,12 @@ public class LoginCommand implements Command {
             return forward;
         }
         User user = userService.isValidUser(login, password);
-        LOGGER.debug("User successfully extracted");
+        LOGGER.info("User successfully extracted");
         forward = COMMAND_HOME;
         session.setAttribute("user", user);
         session.setAttribute("dateTime", LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         session.setAttribute(LOCALE, LOCALE_UA);
-        LOGGER.debug("LoginCommand done");
+        LOGGER.info("done");
         return forward;
     }
 }

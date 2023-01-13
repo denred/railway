@@ -11,14 +11,14 @@
          <welcome-file>login.jsp</welcome-file>
      </welcome-file-list>
 
-        <error-page>
+       <!-- <error-page>
             <exception-type>com.epam.redkin.model.exception.ServiceException</exception-type>
             <location>/errorPage.jsp</location>
         </error-page>
 
         <error-page>
             <location>/generalErrorPage.jsp</location>
-        </error-page>
+        </error-page>-->
 
     <resource-ref>
         <description>DB Connection</description>
@@ -34,15 +34,15 @@
         </taglib>
     </jsp-config>
 
-    <filter-mapping>
+    <!--<filter-mapping>
         <filter-name>SecurityFilter</filter-name>
         <servlet-name>*</servlet-name>
-    </filter-mapping>
+    </filter-mapping>-->
 
-    <filter>
+    <!--<filter>
         <filter-name>SecurityFilter</filter-name>
         <filter-class>com.epam.redkin.web.filter.SecurityFilter</filter-class>
-    </filter>
+    </filter>-->
 
     <context-param>
         <param-name>encoding</param-name>

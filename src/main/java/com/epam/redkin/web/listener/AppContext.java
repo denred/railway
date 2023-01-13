@@ -2,8 +2,10 @@ package com.epam.redkin.web.listener;
 
 import com.epam.redkin.model.repository.*;
 import com.epam.redkin.model.repository.impl.*;
-import com.epam.redkin.service.*;
-import com.epam.redkin.service.impl.*;
+import com.epam.redkin.model.service.*;
+import com.epam.redkin.model.service.impl.*;
+import com.epam.redkin.model.service.*;
+import com.epam.redkin.model.service.impl.*;
 
 public class AppContext {
     private static final AppContext appContext = new AppContext();

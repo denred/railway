@@ -6,8 +6,8 @@ import com.epam.redkin.model.entity.Seat;
 import com.epam.redkin.model.entity.Train;
 import com.epam.redkin.model.entity.User;
 import com.epam.redkin.model.exception.IncorrectDataException;
-import com.epam.redkin.service.*;
-import com.epam.redkin.validator.SeatValidator;
+import com.epam.redkin.model.service.*;
+import com.epam.redkin.model.validator.SeatValidator;
 import com.epam.redkin.web.controller.command.Command;
 import com.epam.redkin.web.listener.AppContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -60,7 +60,7 @@ public class CreateOrderCommand implements Command {
         String routsId = request.getParameter("routs_id");
 
         RouteInfoDTO routById = routeService.getRoutById(Integer.parseInt(routsId));
-        String routName = routById.getRouteName();
+        String routName = routById.getRoutName();
         Carriage car = carriageService.getCarById(Integer.parseInt(carId));
         String carNumber = car.getNumber();
         Double price = orderService.getPrice(carType, Integer.parseInt(countOfSeats));

@@ -11,6 +11,10 @@ public class Path {
     public static final String PAGE_SELECT_CARRIAGE_AND_COUNT_SEATS = "WEB-INF/jsp/selectCarriageAndCountSeats.jsp";
     public static final String PAGE_SELECT_SEATS_NUMBER = "WEB-INF/jsp/selectSeats.jsp";
     public static final String PAGE_CONFIRM_ORDER = "WEB-INF/jsp/confirmOrder.jsp";
+    public static final String PAGE_INFO_ROUTE = "WEB-INF/jsp/admin/infoRoutes.jsp";
+    public static final String PAGE_ADD_ROUTE = "WEB-INF/jsp/admin/addRoute.jsp";
+    public static final String PAGE_EDIT_ROUTE = "WEB-INF/jsp/admin/editRoute.jsp";
+    public static final String PAGE_ADMIN_ROUTE_DETAIL = "WEB-INF/jsp/admin/routeMapping.jsp";
     public static final String PAGE_ERROR_PAGE = "/WEB-INF/errorPage.jsp";
     public static final String PAGE_MAIN = "/WEB-INF/jsp/admin/main.jsp";
     public static final String PAGE_PROFILE = "/WEB-INF/jsp/admin/profile.jsp";
@@ -32,6 +36,7 @@ public class Path {
     public static final String COMMAND_MAIN = "controller?action=main";
     public static final String COMMAND_SHOW_USERS = "controller?action=users";
     public static final String COMMAND_HOME = "controller?action=home";
+    public static final String COMMAND_INFO_ROUTE = "controller?action=routes";
     public static final String COMMAND_SHOW_SERVICES = "controller?action=services";
     public static final String COMMAND_REGISTRATION = "controller?action=registration";
     public static final String COMMAND_EDIT_CLIENT = "controller?action=edit_client";
@@ -80,6 +85,8 @@ public class Path {
     public static final String SEATS_ID = "seats_id";
     public static final String COUNT_SEATS = "count_of_seats";
 
+    //RouteDTO
+    public static final String ROUTE_DTO_LIST = "routeDto_list";
 
 
 

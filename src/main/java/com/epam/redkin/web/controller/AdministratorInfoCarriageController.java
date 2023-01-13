@@ -2,8 +2,8 @@ package com.epam.redkin.web.controller;
 
 
 import com.epam.redkin.model.dto.CarriageDTO;
-import com.epam.redkin.model.entity.Order;
-import com.epam.redkin.service.*;
+import com.epam.redkin.model.service.CarriageService;
+import com.epam.redkin.model.service.*;
 import com.epam.redkin.util.constants.AppContextConstant;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;

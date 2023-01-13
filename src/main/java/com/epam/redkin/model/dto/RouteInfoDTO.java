@@ -44,7 +44,7 @@ public class RouteInfoDTO {
         this.trainNumber = trainNumber;
     }
 
-    public String getRouteName() {
+    public String getRoutName() {
         return routName;
     }
 
@@ -65,12 +65,12 @@ public class RouteInfoDTO {
         if (this == o) return true;
         if (!(o instanceof RouteInfoDTO)) return false;
         RouteInfoDTO that = (RouteInfoDTO) o;
-        return getRoutsId() == that.getRoutsId() && getTrainId() == that.getTrainId() && getTrainNumber().equals(that.getTrainNumber()) && getRouteName().equals(that.getRouteName()) && getRoutNumber().equals(that.getRoutNumber());
+        return getRoutsId() == that.getRoutsId() && getTrainId() == that.getTrainId() && getTrainNumber().equals(that.getTrainNumber()) && getRoutName().equals(that.getRoutName()) && getRoutNumber().equals(that.getRoutNumber());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getRoutsId(), getTrainId(), getTrainNumber(), getRouteName(), getRoutNumber());
+        return Objects.hash(getRoutsId(), getTrainId(), getTrainNumber(), getRoutName(), getRoutNumber());
     }
 
     @Override

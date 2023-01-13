@@ -1,6 +1,6 @@
 package com.epam.redkin.web.controller.command.common;
 
-import com.epam.redkin.service.OrderService;
+import com.epam.redkin.model.service.OrderService;
 import com.epam.redkin.web.controller.command.Command;
 import com.epam.redkin.web.listener.AppContext;
 import jakarta.servlet.http.HttpServletRequest;

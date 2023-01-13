@@ -1,7 +1,6 @@
 package com.epam.redkin.service.impl;
 
-import com.epam.redkin.model.repository.VariableSource;
-import com.epam.redkin.service.SeatService;
+import com.epam.redkin.model.service.SeatService;
 import com.epam.redkin.web.listener.AppContext;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
