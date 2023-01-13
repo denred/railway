@@ -10,7 +10,7 @@ import org.junit.jupiter.params.support.AnnotationConsumer;
 import java.lang.reflect.Field;
 import java.util.stream.Stream;
 
-class VariableArgumentsProvider
+public class VariableArgumentsProvider
         implements ArgumentsProvider, AnnotationConsumer<VariableSource> {
 
     private String variableName;

@@ -67,7 +67,7 @@ public class Order {
         return carrType;
     }
 
-    public void setCarrType(CarriageType carrType) {
+    public void setCarriageType(CarriageType carrType) {
         this.carrType = carrType;
     }
 

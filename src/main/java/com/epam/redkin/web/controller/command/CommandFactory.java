@@ -23,10 +23,11 @@ public class CommandFactory {
     static {
         // common commands
         commands.put("login", new LoginCommand());
+        commands.put("logout", new LogoutCommand());
         commands.put("home", new HomeCommand());
         commands.put("i18n", new I18NCommand());
 
-        /* commands.put("logout", new LogoutCommand());
+        /*
         commands.put("pdf_builder", new PdfBuilderCommand());
         commands.put("no_command", new NoCommand());*/
 
@@ -45,11 +46,14 @@ public class CommandFactory {
 
         // user commands
         commands.put("search_routes", new SearchRoutesCommand());
-        commands.put("orders", new OrderCommand());
+        commands.put("orders", new GetUserOrdersCommand());
         commands.put("route", new DetailRouteCommand());
         commands.put("select_station_and_carriage_type", new SelectStationAndCarriageTypeCommand());
         commands.put("select_carriage_and_count_seats", new SelectCarriageAndSeatsCommand());
         commands.put("select_seats", new SelectSeatsCommand());
+        commands.put("confirm_order", new ConfirmOrderCommand());
+        commands.put("create_order", new CreateOrderCommand());
+        commands.put("cancel_order", new CancelOrderCommand());
         /*commands.put("account", new AccountCommand());
         commands.put("personal_data", new PersonalDataCommand());
         commands.put("user_profile", new UserProfileCommand());

@@ -13,7 +13,7 @@
 <mrt:navigation/>
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
 
-<form action="confirm_order" method="GET">
+<form action="controller?action=create_order" method="POST">
     <div class="d-flex justify-content-center">
         <table class="table table-bordered table-hover caption-top" style="width: 600px;">
             <thead class="thead-light text-center">
@@ -27,7 +27,7 @@
         <tbody class="text-center">
         <tr>
             <c:forEach begin="1" end="${count_of_seats}">
-                <td><select class="btn btn-info dropdown-toggle" name="seats_number">
+                <td><select class="btn btn-info dropdown-toggle" name="seats_id">
                     <c:forEach var="seat" items="${seat_list}">
                         <option value="${seat.id}"><c:out value="${seat.seatNumber}"/></option>
                     </c:forEach>
@@ -71,5 +71,6 @@
     <input type="hidden" name="car_type" value="${car_type}">
     <input type="submit" class="btn btn-primary" value="<fmt:message key="back"/>">
 </form>
+<jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
 </body>
 </html>

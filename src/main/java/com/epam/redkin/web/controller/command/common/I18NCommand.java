@@ -15,10 +15,10 @@ public class I18NCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
 
-        if (!Objects.isNull(request.getParameter(LANG))) {
-            if (LOCALE_EN.equals(request.getParameter(LANG))) {
+        if (!Objects.isNull(request.getParameter(LANGUAGE))) {
+            if (LOCALE_EN.equals(request.getParameter(LANGUAGE))) {
                 session.setAttribute(LOCALE, LOCALE_EN);
-            } else if (LOCALE_UA.equals(request.getParameter(LANG))) {
+            } else if (LOCALE_UA.equals(request.getParameter(LANGUAGE))) {
                 session.setAttribute(LOCALE, LOCALE_UA);
             }
         }

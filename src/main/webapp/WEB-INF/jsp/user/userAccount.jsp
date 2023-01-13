@@ -85,7 +85,7 @@
                     <td><span>${order.orderDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}</span></td>
                     <td><fmt:message key="${order.orderStatus}"/></td>
                     <td>
-                        <form action="cancel_order" method="POST">
+                        <form action="controller?action=cancel_order" method="POST">
                             <input type="hidden" name="order_id" value="${order.id}">
                             <input type="hidden" name="user_id" value="${user_id}">
                             <input type="submit" class="btn btn-info" name="edit_info_order"

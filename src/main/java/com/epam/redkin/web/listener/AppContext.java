@@ -49,4 +49,10 @@ public class AppContext {
 
     public CarriageService getCarriageService(){return carriageService;}
 
+    public TrainService getTrainService(){return trainService;}
+
+    public StationService getStationService(){return stationService;}
+
+    public LogoutService getLogoutService(){return logoutService;}
+
 }

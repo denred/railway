@@ -2,7 +2,7 @@ package com.epam.redkin.web.controller;
 
 public class Path {
     // pages
-    public static final String PAGE_INDEX = "/index.jsp";
+    public static final String PAGE_HOME = "WEB-INF/jsp/homePage.jsp";
     public static final String PAGE_LOGIN = "/login.jsp";
     public static final String PAGE_SEARCH_ROUTES = "WEB-INF/jsp/searchRoutForOrder.jsp";
     public static final String PAGE_ORDERS = "WEB-INF/jsp/user/userAccount.jsp";
@@ -10,7 +10,8 @@ public class Path {
     public static final String PAGE_SELECT_STATION_AND_CARRIAGE_TYPE = "WEB-INF/jsp/selectStationAndCarriageType.jsp";
     public static final String PAGE_SELECT_CARRIAGE_AND_COUNT_SEATS = "WEB-INF/jsp/selectCarriageAndCountSeats.jsp";
     public static final String PAGE_SELECT_SEATS_NUMBER = "WEB-INF/jsp/selectSeats.jsp";
-    public static final String PAGE_ERROR_PAGE = "/WEB-INF/jsp/error_page.jsp";
+    public static final String PAGE_CONFIRM_ORDER = "WEB-INF/jsp/confirmOrder.jsp";
+    public static final String PAGE_ERROR_PAGE = "/WEB-INF/errorPage.jsp";
     public static final String PAGE_MAIN = "/WEB-INF/jsp/admin/main.jsp";
     public static final String PAGE_PROFILE = "/WEB-INF/jsp/admin/profile.jsp";
     public static final String PAGE_ACCOUNT = "/WEB-INF/jsp/client/account.jsp";
@@ -40,6 +41,7 @@ public class Path {
     public static final String COMMAND_REMOVE_TARIFF = "controller?action=remove_tariff";
 
     // client commands
+    public static final String COMMAND_ORDERS = "controller?action=orders";
     public static final String COMMAND_ACCOUNT = "controller?action=account";
     public static final String COMMAND_PERSONAL_DATA = "controller?action=personal_data";
     public static final String COMMAND_SAVE_PROFILE = "controller?action=save_profile";
@@ -49,9 +51,44 @@ public class Path {
     public static final String LOCALE_UA = "ua";
     public static final String LOCALE_EN = "en";
     public static final String LOCALE = "locale";
-    public static final String LANG = "lang";
+    public static final String LANGUAGE = "lang";
 
     //User
     public static final String USER_ID = "user_id";
+    public static final String SESSION_USER = "user";
+
+    //Order
+    public static final String ORDER_LIST = "order_list";
+    public static final String TRAVEL_TIME = "travel_time";
+
+    //Route
+    public static final String ROUTE_ID = "routs_id";
+
+    //Train
+    public static final String TRAIN_ID = "train_id";
+
+    //Station
+    public static final String ARRIVAL_STATION_ID = "arrival_station_id";
+    public static final String DEPARTURE_STATION_ID = "departure_station_id";
+
+
+    //Carriage
+    public static final String CARRIAGE_ID = "car_id";
+    public static final String CARRIAGE_TYPE = "car_type";
+
+    //Seat
+    public static final String SEATS_ID = "seats_id";
+    public static final String COUNT_SEATS = "count_of_seats";
+
+
+
+
+    //Util
+    public static final String PAGE_RECORDS = "recordsPerPage";
+    public static final String PAGE_COUNT = "noOfPages";
+    public static final String CURRENT_PAGE = "currentPage";
+    public static final String SUM = "sum";
+    public static final String PAGE = "page";
+
 
 }

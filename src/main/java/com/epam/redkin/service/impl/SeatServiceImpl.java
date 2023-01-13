@@ -42,9 +42,10 @@ public class SeatServiceImpl implements SeatService {
     }
 
     @Override
-    public List<String> getSeatsId(String seatId) {
-        return Arrays.stream(seatId.replaceAll("\\[\\[", "")
-                        .replaceAll("\\]\\]", "")
+    public List<String> getSeatsId(String seatsId) {
+        return Arrays.stream(seatsId.replaceAll("\\[", "")
+                        .replaceAll("\\]", "")
+                        .trim()
                         .split(","))
                 .collect(Collectors.toList());
     }
