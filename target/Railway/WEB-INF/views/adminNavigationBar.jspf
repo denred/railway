@@ -1,7 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5" style="top: -100px;">
-    <a href="home" class="navbar-brand d-flex align-items-center">
+    <a href="controller?action=home" class="navbar-brand d-flex align-items-center">
         <h3 class="m-0">
             <img class="img-fluid me-3" src="../../img/train-main.png" alt="train logo" width="96px">
             <fmt:message key="app.name"/>
@@ -12,8 +12,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav mx-auto bg-light rounded pe-4 py-3 py-lg-0">
-            <a href="home" class="nav-item nav-link"><fmt:message key="homepage"/></a>
-            <a href="user_account?user_id=${user.userId}" class="nav-item nav-link"><fmt:message key="user.account"/></a>
+            <a href="controller?action=home" class="nav-item nav-link"><fmt:message key="homepage"/></a>
+            <a href="controller?action=orders" class="nav-item nav-link"><fmt:message key="user.account"/></a>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true"><fmt:message key="admin.account"/></a>
                 <div class="dropdown-menu bg-light border-0 m-0 show" data-bs-popper="none">
@@ -35,7 +35,7 @@
     </form>
 
     <%-- Logout button Start--%>
-    <form class="form-inline" action="logout" method="POST">
+    <form class="form-inline" action="controller?action=logout" method="POST">
         <input class="btn btn-outline-primary" type="submit" value="<fmt:message key="logout"/>">
     </form>
 
