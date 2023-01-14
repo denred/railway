@@ -17,6 +17,7 @@ public class Path {
     public static final String PAGE_ADMIN_ROUTE_DETAIL = "WEB-INF/jsp/admin/routeMapping.jsp";
     public static final String PAGE_ADMIN_SET_STATION_IN_ROUTE = "WEB-INF/jsp/admin/routeMappingSetStation.jsp";
     public static final String PAGE_ADMIN_INFO_STATION = "WEB-INF/jsp/admin/stationInfo.jsp";
+    public static final String PAGE_ADMIN_SET_STATION = "WEB-INF/jsp/admin/stationSet.jsp";
     public static final String PAGE_ERROR_PAGE = "/WEB-INF/errorPage.jsp";
     public static final String PAGE_MAIN = "/WEB-INF/jsp/admin/main.jsp";
     public static final String PAGE_PROFILE = "/WEB-INF/jsp/admin/profile.jsp";
@@ -40,6 +41,7 @@ public class Path {
     public static final String COMMAND_HOME = "controller?action=home";
     public static final String COMMAND_INFO_ROUTE = "controller?action=routes";
     public static final String COMMAND_ROUTE_MAPPING = "controller?action=route_mapping";
+    public static final String COMMAND_INFO_STATIONS = "controller?action=stations";
     public static final String COMMAND_SHOW_SERVICES = "controller?action=services";
     public static final String COMMAND_REGISTRATION = "controller?action=registration";
     public static final String COMMAND_EDIT_CLIENT = "controller?action=edit_client";
