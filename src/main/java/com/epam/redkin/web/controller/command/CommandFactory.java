@@ -48,6 +48,7 @@ public class CommandFactory {
         commands.put("block", new UserBlockCommand());
         commands.put("order_status", new OrderChangeStatusCommand());
         commands.put("set_train", new TrainSetCommand());
+        commands.put("remove_train", new TrainRemoveCommand());
         commands.put("set_carriage", new CarriageSetCommand());
         commands.put("remove_carriage", new CarriageRemoveCommand());
 
