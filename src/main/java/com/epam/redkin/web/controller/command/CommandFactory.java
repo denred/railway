@@ -35,11 +35,12 @@ public class CommandFactory {
         commands.put("redirect", null);
 
         // admin commands
-        commands.put("routes", new InfoRouteCommand());
-        commands.put("add_route", new AddRouteCommand());
-        commands.put("edit_route", new EditRouteCommand());
-        commands.put("delete_route", new DeleteRouteCommand());
+        commands.put("routes", new RouteInfoCommand());
+        commands.put("add_route", new RouteAddCommand());
+        commands.put("edit_route", new RouteEditCommand());
+        commands.put("delete_route", new RouteDeleteCommand());
         commands.put("route_mapping", new RouteMappingCommand());
+        commands.put("route_mapping_add_station", new RouteMappingAddStationCommand());
         /*commands.put("main", new MainCommand());
         commands.put("services", new EditServicesCommand());
         commands.put("registration", new RegistrationCommand());

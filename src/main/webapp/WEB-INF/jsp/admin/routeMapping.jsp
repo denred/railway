@@ -52,7 +52,7 @@
             </tbody>
         </table>
     </div>
-    <form action="administrator_set_rout_mapping" method="GET">
+    <form action="controller?action=route_mapping_add_station" method="POST">
         <input type="hidden" name="routs_id" value="${routs_id}">
         <input type="submit" class="btn btn-success" name="add_rout_mapping"
                value="<fmt:message key="admin.addStationMapping"/>">
@@ -63,5 +63,6 @@
     </form>
     </p>
 </div>
+<jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
 </body>
 </html>
