@@ -22,6 +22,9 @@ public class Path {
     public static final String PAGE_ADMIN_INFO_CARRIAGE = "WEB-INF/jsp/admin/carriageInfo.jsp";
     public static final String PAGE_ADMIN_INFO_TRAIN = "WEB-INF/jsp/admin/trainInfo.jsp";
     public static final String PAGE_ADMIN_INFO_ORDER = "WEB-INF/jsp/admin/orderInfo.jsp";
+    public static final String PAGE_ADMIN_SET_ORDER_STATUS = "WEB-INF/jsp/admin/orderStatus.jsp";
+    public static final String PAGE_ADMIN_SET_CARRIAGE = "WEB-INF/jsp/admin/carriageSet.jsp";
+    public static final String PAGE_ADMIN_SET_TRAIN = "WEB-INF/jsp/admin/trainSet.jsp";
 
 
     // common commands
@@ -39,13 +42,10 @@ public class Path {
     public static final String COMMAND_INFO_ROUTE = "controller?action=routes";
     public static final String COMMAND_ROUTE_MAPPING = "controller?action=route_mapping";
     public static final String COMMAND_INFO_STATIONS = "controller?action=stations";
-    public static final String COMMAND_SHOW_SERVICES = "controller?action=services";
-    public static final String COMMAND_REGISTRATION = "controller?action=registration";
-    public static final String COMMAND_EDIT_CLIENT = "controller?action=edit_client";
-    public static final String COMMAND_PROFILE = "controller?action=profile";
-    public static final String COMMAND_ADD_TARIFF = "controller?action=add_tariff";
-    public static final String COMMAND_EDIT_TARIFF = "controller?action=edit_tariff";
-    public static final String COMMAND_REMOVE_TARIFF = "controller?action=remove_tariff";
+    public static final String COMMAND_INFO_USERS = "controller?action=users";
+    public static final String COMMAND_INFO_ORDERS = "controller?action=admin_orders";
+    public static final String COMMAND_INFO_CARRIAGES = "controller?action=carriages";
+    public static final String COMMAND_INFO_TRAINS = "controller?action=trains";
 
     // client commands
     public static final String COMMAND_ORDERS = "controller?action=orders";

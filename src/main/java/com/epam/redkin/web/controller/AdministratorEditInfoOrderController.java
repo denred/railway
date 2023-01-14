@@ -49,7 +49,7 @@ public class AdministratorEditInfoOrderController extends HttpServlet {
         List<OrderStatus> orderStatusList = new ArrayList<>(EnumSet.allOf(OrderStatus.class));
         request.setAttribute("statusList", orderStatusList);
 
-        request.getRequestDispatcher("WEB-INF/jsp/administratorEditInfoOrder.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/orderStatus.jsp").forward(request, response);
     }
 
     @Override

@@ -45,6 +45,10 @@ public class CommandFactory {
         commands.put("trains", new TrainInfoCommand());
         commands.put("admin_orders", new OrderInfoCommand());
         commands.put("users", new UserInfoCommand());
+        commands.put("block", new UserBlockCommand());
+        commands.put("order_status", new OrderChangeStatusCommand());
+        commands.put("set_train", new TrainSetCommand());
+        commands.put("set_carriage", new CarriageSetCommand());
 
 
         // user commands

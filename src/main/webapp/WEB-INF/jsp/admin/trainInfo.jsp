@@ -34,7 +34,7 @@
                     <td>${i.index + recordsPerPage * (currentPage - 1) + 1}</td>
                     <td>${train.number}</td>
                     <td>
-                        <form action="administrator_edit_info_train" method="GET">
+                        <form action="controller?action=set_train" method="POST">
                             <input type="hidden" name="train_id" value="${train.id}">
                             <input type="submit" class="btn btn-info" name="edit_info_train"
                                    value="<fmt:message key="admin.editInformation"/>">
@@ -58,7 +58,7 @@
             <ul class="pagination">
                 <li class="page-item">
                     <c:if test="${currentPage != 1}">
-                        <a class="page-link" href="administrator_info_train?page=${currentPage - 1}"
+                        <a class="page-link" href="controller?action=trains&page=${currentPage - 1}"
                            aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                     </c:if>
                 </li>
@@ -71,7 +71,7 @@
                         </c:when>
                         <c:otherwise>
                             <li class="page-item"><a class="page-link"
-                                                     href="administrator_info_train?page=${i}">${i}</a></li>
+                                                     href="controller?action=trains&page=${i}">${i}</a></li>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
@@ -79,7 +79,7 @@
                 <%--For displaying Next link --%>
                 <c:if test="${currentPage lt noOfPages}">
                     <li class="page-item">
-                        <a class="page-link" href="administrator_info_train?page=${currentPage + 1}"
+                        <a class="page-link" href="controller?action=trains&page=${currentPage + 1}"
                            aria-label="Next">
                             <span aria-hidden="true">&raquo;</span></a>
                     </li>
@@ -87,7 +87,7 @@
             </ul>
         </nav>
     </div>
-    <form action="administrator_add_train" method="GET">
+    <form action="controller?action=set_train" method="POST">
         <input type="submit" class="btn btn-success" name="add_train" value="<fmt:message key="admin.addTrain"/>">
     </form>
 </div>

@@ -45,7 +45,7 @@
                     <td>
                         <c:choose>
                             <c:when test="${user.blocked == false}">
-                                <form action="user_block" method="POST">
+                                <form action="controller?action=block" method="POST">
                                     <input type="hidden" name="user_id" value="${user.userId}">
                                     <input type="hidden" name="block_status" value="true">
                                     <input type="submit" class="btn btn-warning" name="block"
@@ -53,7 +53,7 @@
                                 </form>
                             </c:when>
                             <c:when test="${user.blocked == true}">
-                                <form action="user_block" method="POST">
+                                <form action="controller?action=block" method="POST">
                                     <input type="hidden" name="user_id" value="${user.userId}">
                                     <input type="hidden" name="block_status" value="false">
                                     <input type="submit" class="btn btn-warning" name="block"
@@ -72,7 +72,7 @@
             <ul class="pagination">
                 <li class="page-item">
                     <c:if test="${currentPage != 1}">
-                        <a class="page-link" href="administrator_info_user?page=${currentPage - 1}"
+                        <a class="page-link" href="controller?action=users&page=${currentPage - 1}"
                            aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                     </c:if>
                 </li>
@@ -84,14 +84,14 @@
                         </c:when>
                         <c:otherwise>
                             <li class="page-item"><a class="page-link"
-                                                     href="administrator_info_user?page=${i}">${i}</a></li>
+                                                     href="controller?action=users&page=${i}">${i}</a></li>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
 
                 <c:if test="${currentPage lt noOfPages}">
                     <li class="page-item">
-                        <a class="page-link" href="administrator_info_user?page=${currentPage + 1}"
+                        <a class="page-link" href="controller?action=users&page=${currentPage + 1}"
                            aria-label="Next">
                             <span aria-hidden="true">&raquo;</span></a>
                     </li>

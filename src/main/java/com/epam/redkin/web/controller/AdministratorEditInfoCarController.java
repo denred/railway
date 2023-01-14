@@ -81,7 +81,7 @@ public class AdministratorEditInfoCarController extends HttpServlet {
         int countSeat = seatService.getCountSeat(carId);
         request.setAttribute("countSeat", countSeat);
 
-        request.getRequestDispatcher("WEB-INF/jsp/administratorEditInfoCar.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/carriageSet.jsp").forward(request, response);
     }
 
     @Override

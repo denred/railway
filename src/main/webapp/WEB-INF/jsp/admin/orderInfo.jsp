@@ -80,7 +80,7 @@
 
                     <td><span>${order.orderDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}</span></td>
                     <td>
-                        <a href="administrator_edit_info_order?order_id=${order.id}">
+                        <a href="controller?action=order_status&order_id=${order.id}">
                             <fmt:message key="${order.orderStatus}"/></a>
                     </td>
                 </tr>
@@ -93,7 +93,7 @@
             <ul class="pagination">
                 <li class="page-item">
                     <c:if test="${currentPage != 1}">
-                        <a class="page-link" href="administrator_info_order?page=${currentPage - 1}"
+                        <a class="page-link" href="controller?action=admin_orders&page=${currentPage - 1}"
                            aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                     </c:if>
                 </li>
@@ -105,14 +105,14 @@
                         </c:when>
                         <c:otherwise>
                             <li class="page-item"><a class="page-link"
-                                                     href="administrator_info_order?page=${i}">${i}</a></li>
+                                                     href="controller?action=admin_orders&page=${i}">${i}</a></li>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
 
                 <c:if test="${currentPage lt noOfPages}">
                     <li class="page-item">
-                        <a class="page-link" href="administrator_info_order?page=${currentPage + 1}"
+                        <a class="page-link" href="controller?action=admin_orders&page=${currentPage + 1}"
                            aria-label="Next">
                             <span aria-hidden="true">&raquo;</span></a>
                     </li>
