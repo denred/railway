@@ -48,4 +48,13 @@ public class SeatServiceImpl implements SeatService {
                         .split(","))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<String> getSeatsIdFromOrder(String seatsId) {
+        return Arrays.stream(seatsId.replaceAll("\\[", "")
+                        .replaceAll("\\]", "")
+                        .trim()
+                        .split(" "))
+                .collect(Collectors.toList());
+    }
 }

@@ -22,4 +22,5 @@ public interface SeatService {
 
 
     List<String> getSeatsId(String seatNumber);
+    List<String> getSeatsIdFromOrder(String seatNumber);
 }

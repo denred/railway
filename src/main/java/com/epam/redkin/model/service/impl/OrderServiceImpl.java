@@ -67,8 +67,8 @@ public class OrderServiceImpl implements OrderService {
     public boolean updateOrderStatus(int orderId, OrderStatus status) {
         if (status == OrderStatus.DECLINED || status == OrderStatus.CANCELED) {
             Order order = orderRepository.read(orderId);
-            String seatNumber = String.valueOf(order.getSeatNumber());
-            List<String> seatsId = seatService.getSeatsId(seatNumber);
+            String seatNumber = order.getSeatNumber();
+            List<String> seatsId = seatService.getSeatsIdFromOrder(seatNumber);
             List<Seat> seatsByIdBatch = seatRepository.getListSeatsByIdBatch(seatsId);
             seatsByIdBatch.forEach(seat -> seatRepository.clearSeat(seat.getId()));
         }
