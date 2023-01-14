@@ -28,10 +28,6 @@ public class CommandFactory {
         commands.put("home", new HomeCommand());
         commands.put("i18n", new I18NCommand());
 
-        /*
-        commands.put("pdf_builder", new PdfBuilderCommand());
-        commands.put("no_command", new NoCommand());*/
-
         commands.put("redirect", null);
 
         // admin commands
@@ -40,15 +36,9 @@ public class CommandFactory {
         commands.put("edit_route", new RouteEditCommand());
         commands.put("delete_route", new RouteDeleteCommand());
         commands.put("route_mapping", new RouteMappingCommand());
-        commands.put("route_mapping_add_station", new RouteMappingAddStationCommand());
-        /*commands.put("main", new MainCommand());
-        commands.put("services", new EditServicesCommand());
-        commands.put("registration", new RegistrationCommand());
-        commands.put("edit_client", new EditClientCommand());
-        commands.put("profile", new ProfileCommand());
-        commands.put("add_tariff", new AddTariffCommand());
-        commands.put("edit_tariff", new EditTariffCommand());
-        commands.put("remove_tariff", new RemoveTariffCommand());*/
+        commands.put("route_mapping_set_station", new RouteMappingSetStationCommand());
+        commands.put("route_mapping_remove_station", new RouteMappingRemoveCommand());
+
 
         // user commands
         commands.put("search_routes", new SearchRoutesCommand());
@@ -60,11 +50,6 @@ public class CommandFactory {
         commands.put("confirm_order", new ConfirmOrderCommand());
         commands.put("create_order", new CreateOrderCommand());
         commands.put("cancel_order", new CancelOrderCommand());
-        /*commands.put("account", new AccountCommand());
-        commands.put("personal_data", new PersonalDataCommand());
-        commands.put("user_profile", new UserProfileCommand());
-        commands.put("transactions", new TransactionCommand());
-        commands.put("save_profile", new SaveUserProfileCommand());*/
     }
 
 

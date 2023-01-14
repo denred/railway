@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="lang"/>
@@ -29,10 +30,10 @@
                 <tr>
                     <td>${item.order}</td>
                     <td>${item.station}</td>
-                    <td>${item.stationArrivalDate}</td>
-                    <td>${item.stationDispatchData}</td>
+                    <td>${item.stationArrivalDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}</td>
+                    <td>${item.stationDispatchData.format( DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}</td>
                     <td>
-                        <form action="administrator_edit_info_details_set_rout" method="GET">
+                        <form action="controller?action=route_mapping_set_station" method="POST">
                             <input type="hidden" name="station_id" value="${item.stationId}">
                             <input type="hidden" name="routs_id" value="${item.routsId}">
                             <input type="submit" class="btn btn-info" name="edit_info_rout_mapping"
@@ -40,7 +41,7 @@
                         </form>
                     </td>
                     <td>
-                        <form action="remove_rout_mapping" method="POST">
+                        <form action="controller?action=route_mapping_remove_station" method="POST">
                             <input type="hidden" name="routs_id" value="${item.routsId}">
                             <input type="hidden" name="station_id" value="${item.stationId}">
                             <input type="submit" class="btn btn-danger" name="remove_rout_to_station_mapping"
@@ -52,7 +53,7 @@
             </tbody>
         </table>
     </div>
-    <form action="controller?action=route_mapping_add_station" method="POST">
+    <form action="controller?action=route_mapping_set_station" method="POST">
         <input type="hidden" name="routs_id" value="${routs_id}">
         <input type="submit" class="btn btn-success" name="add_rout_mapping"
                value="<fmt:message key="admin.addStationMapping"/>">
