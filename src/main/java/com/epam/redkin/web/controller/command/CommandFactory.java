@@ -38,6 +38,7 @@ public class CommandFactory {
         commands.put("route_mapping", new RouteMappingCommand());
         commands.put("route_mapping_set_station", new RouteMappingSetStationCommand());
         commands.put("route_mapping_remove_station", new RouteMappingRemoveCommand());
+        commands.put("stations", new StationInfoCommand());
 
 
         // user commands

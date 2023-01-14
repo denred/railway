@@ -18,7 +18,7 @@
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true"><fmt:message key="admin.account"/></a>
                 <div class="dropdown-menu bg-light border-0 m-0 show" data-bs-popper="none">
                     <a href="controller?action=routes" class="dropdown-item"><fmt:message key="admin.rout.information"/></a>
-                    <a href="controller?action=administrator_info_station" class="dropdown-item"><fmt:message key="admin.station.information"/></a>
+                    <a href="controller?action=stations" class="dropdown-item"><fmt:message key="admin.station.information"/></a>
                     <a href="controller?action=administrator_info_carriage" class="dropdown-item"><fmt:message key="admin.car.information"/></a>
                     <a href="controller?action=administrator_info_train" class="dropdown-item"><fmt:message key="admin.train.information"/></a>
                     <a href="controller?action=administrator_info_user}" class="dropdown-item"><fmt:message key="admin.user.information"/></a>
