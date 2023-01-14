@@ -7,7 +7,6 @@
 <html>
 <head>
     <title><fmt:message key="admin.station.information"/></title>
-    <link rel="icon" type="image/x-icon" href="../../../img/icons8-high-speed-train-32.png">
     <jsp:include page="/WEB-INF/templates/_head.jsp"/>
 </head>
 <body>
