@@ -43,19 +43,34 @@ public class CarriageSetCommand implements Command {
         String carriageType = request.getParameter("car_type");
         String countSeats = request.getParameter("seats");
 
-        String trainNotSelected = trainId.equals("TRAIN_NOT_SELECTED") ? null : trainId;
-
         if (StringUtils.isNoneBlank(carriageId, carriageNumber, trainId, carriageType, countSeats)) {
+            String trainNotSelected = trainId.equals("TRAIN_NOT_SELECTED") ? null : trainId;
             carriageDTO.setCarId(Integer.parseInt(carriageId));
             assert trainNotSelected != null;
             carriageDTO.setTrainId(Integer.parseInt(trainNotSelected));
             Train train = trainService.getTrainById(Integer.parseInt(trainId));
-            List<Carriage> carByTrainId = carriageService.getCarByTrainId(train.getId());
-            if (containsCarWithCarId(carByTrainId, Integer.parseInt(carriageId))) {
-                containsCarWithCarNumber(carByTrainId, carriageNumber);
+            List<Carriage> carriagesByTrainId = carriageService.getCarByTrainId(train.getId());
+            if (containsCarWithCarId(carriagesByTrainId, Integer.parseInt(carriageId))
+                    && containsCarWithCarNumber(carriagesByTrainId, carriageNumber)
+                    && Integer.parseInt(trainId) == train.getId()) {
+                carriageDTO.setCarNumber(carriageNumber);
+            } else {
+                LOGGER.error("Incorrect data entered");
+                throw new IncorrectDataException("Incorrect data entered");
             }
+            try {
+                carriageDTO.setCarriageType(CarriageType.valueOf(request.getParameter("car_type")));
+                carriageDTO.setSeats(Integer.valueOf(request.getParameter("seats")));
+
+            } catch (IllegalArgumentException e) {
+                LOGGER.error("Incorrect data entered");
+                throw new IncorrectDataException("Incorrect data entered", e);
+            }
+            carriageValidator.isValidCar(carriageDTO);
+            carriageService.updateCar(carriageDTO);
             forward = COMMAND_INFO_CARRIAGES;
         } else if (StringUtils.isNoneBlank(trainId, carriageType, countSeats)) {
+            String trainNotSelected = trainId.equals("TRAIN_NOT_SELECTED") ? null : trainId;
             assert trainNotSelected != null;
             carriageDTO.setTrainId(Integer.parseInt(trainNotSelected));
             Train train = trainService.getTrainById(carriageDTO.getTrainId());
@@ -91,8 +106,8 @@ public class CarriageSetCommand implements Command {
         return forward;
     }
 
-    public static void containsCarWithCarNumber(final List<Carriage> array, final String carNumber) {
-        array.stream().anyMatch(car -> car.getNumber().equals(carNumber));
+    public static boolean containsCarWithCarNumber(final List<Carriage> array, final String carNumber) {
+        return array.stream().anyMatch(car -> car.getNumber().equals(carNumber));
     }
 
     public static boolean containsCarWithCarId(final List<Carriage> array, final int carId) {

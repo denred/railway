@@ -48,7 +48,7 @@
                         </form>
                     </td>
                     <td>
-                        <form action="car_delete" method="POST">
+                        <form action="controller?action=remove_carriage" method="POST">
                             <input type="hidden" name="car_id" value="${carriage.carId}">
                             <input type="submit" class="btn btn-danger" name="remove_car"
                                    value="<fmt:message key="admin.remove"/>">
