@@ -58,7 +58,7 @@ public interface Constants {
     String UPDATE_BLOCKED = "UPDATE user SET blocked = ? WHERE id = ?";
     String UPDATE_USER_LOG_IN_TOKEN_BY_ID = "UPDATE user SET user.log_in_token = (?) WHERE user.id = (?)";
     String FIND_USER_BY_ID_AND_TOKEN = "SELECT * FROM user WHERE id = (?) AND log_in_token = (?)";
-    String UPDATE_USER_LOG_IN_TOKEN_TO_NULL = "UPDATE user SET user.log_in_token = NULL WHERE user.id = (?)";;
+    String UPDATE_USER_LOG_IN_TOKEN_TO_NULL = "UPDATE user SET log_in_token = NULL WHERE id = (?)";
 
     /* ROUTES */
     String GET_ROUTE_LIST_WITH_PARAMETERS = "SELECT r.name, r.number, r.id, station, " +

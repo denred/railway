@@ -165,28 +165,32 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findUserByIdAndToken(int userId, String token) {
-        ResultSet resultSet = null;
         try (Connection connection = ConnectionPools.getProcessing().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_ID_AND_TOKEN)) {
+            System.out.println(userId + ":" + token);
             preparedStatement.setInt(1, userId);
             preparedStatement.setString(2, token);
-            resultSet = preparedStatement.executeQuery();
-            return extractUser(resultSet);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            User user = null;
+            if (resultSet.next()) {
+                user = extractUser(resultSet);
+            }
+            return user;
         } catch (SQLException | DataBaseException e) {
             LOGGER.warn(String.format("User userId: %d, token %s finding error", userId, token), e);
             throw new DataBaseException("service.commonError", e);
-        } finally {
-            closeResultSet(resultSet);
         }
     }
 
     @Override
     public void deleteRememberUserToken(int userId) {
-        try(Connection connection = ConnectionPools.getProcessing().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_LOG_IN_TOKEN_TO_NULL)) {
+        LOGGER.info("started");
+        try (Connection connection = ConnectionPools.getProcessing().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_LOG_IN_TOKEN_TO_NULL)) {
             preparedStatement.setInt(1, userId);
             preparedStatement.executeUpdate();
-        } catch (SQLException | DataBaseException e) {
+            LOGGER.info("done");
+        } catch (SQLException e) {
             LOGGER.warn(String.format("User id: %d, token delete error", userId), e);
             throw new DataBaseException("service.commonError", e);
         }

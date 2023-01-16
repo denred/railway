@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 import java.util.Locale;
 
 public enum SupportedLocaleStorage {
-    ENG(Locale.US),
-    UA(new Locale("ua", "UA"));
+    ENG(new Locale("en")),
+    UA(new Locale("ua"));
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SupportedLocaleStorage.class);
 

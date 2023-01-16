@@ -21,7 +21,7 @@ import static com.epam.redkin.web.controller.Path.*;
 
 public class UserServiceImpl implements UserService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
     private static final int TOKEN_VALUE_COOKIE_INDEX = 0;
     private static final int USER_ID_COOKIE_INDEX = 1;
     private final UserRepository userRepository;
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int registerUser(User user, String pageRootUrl) {
-        int id = -1;
+        int id;
         if (user == null || StringUtils.isBlank(pageRootUrl)) {
             LOGGER.error("service.commonError");
             throw new ServiceException("service.commonError");
@@ -78,10 +78,9 @@ public class UserServiceImpl implements UserService {
             user = userRepository.getUserByEmail(user.getEmail());
             String token = getUpdatedRememberUserToken(user.getUserId());
 
-            String userLogInLink = constructLogInLink(POST_REGISTRATION_ACCOUNT_APPROVAL, token);
+            String userLogInLink = constructLogInLink(pageRootUrl + COMMAND_POST_REGISTRATION_ACCOUNT_APPROVAL, token);
             String messageTitle = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.TITLE_USER_REGISTRATION_LINK);
-            String messageText = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.MESSAGE_USER_REGISTRATION_LINK, userLogInLink);
-            emailDistributorUtil.addEmailToSendingQueue(messageTitle, messageText, user.getEmail());
+            emailDistributorUtil.addEmailToSendingQueue(messageTitle, userLogInLink, user.getEmail());
         } catch (Exception e) {
             LOGGER.warn(e.getMessage(), e);
             throw new ServiceException("service.commonError", e.getMessage());
@@ -129,10 +128,9 @@ public class UserServiceImpl implements UserService {
         try {
             User user = userRepository.getUserByEmail(email);
             String token = getUpdatedRememberUserToken(user.getUserId());
-            String userLogInLink = constructLogInLink(pageRootUrl, token);
+            String userLogInLink = constructLogInLink(pageRootUrl + COMMAND_POST_REGISTRATION_ACCOUNT_APPROVAL, token);
             String messageTitle = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.TITLE_FORGET_PASSWORD);
-            String messageText = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.MESSAGE_FORGET_PASSWORD, userLogInLink);
-            emailDistributorUtil.addEmailToSendingQueue(messageTitle, messageText, email);
+            emailDistributorUtil.addEmailToSendingQueue(messageTitle, userLogInLink, email);
         } catch (ServiceException e) {
             throw new ServiceException(e.getMessage());
         } catch (Exception e) {
@@ -149,6 +147,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User logInByToken(String token) {
+        LOGGER.info("logInByToken started");
         if (token == null) {
             LOGGER.warn("token is null");
             throw new ServiceException("service.commonError");
@@ -162,6 +161,7 @@ public class UserServiceImpl implements UserService {
                 if (user.isBlocked()) {
                     throw new ServiceException("validation.user.login.isBanned");
                 }
+                LOGGER.info("done");
                 return user;
             }
             LOGGER.warn(String.format("Cant use token %s for log in", token));
@@ -177,6 +177,21 @@ public class UserServiceImpl implements UserService {
             userRepository.deleteRememberUserToken(userId);
         } catch (DataBaseException e) {
             throw new DataBaseException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void postRegistrationApprovalByToken(String token) {
+        if (StringUtils.isBlank(token)) {
+            LOGGER.info("invalid input token");
+            throw new ServiceException("service.commonError");
+        }
+        String[] tokenComponents = token.split(COOKIE_REMEMBER_USER_TOKEN_DIVIDER);
+        int userId = Integer.parseInt(tokenComponents[USER_ID_COOKIE_INDEX]);
+        try {
+            userRepository.updateBlocked(userId, false);
+        } catch (DataBaseException e) {
+            throw new ServiceException(e.getMessage());
         }
     }
 

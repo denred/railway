@@ -4,6 +4,7 @@ import com.epam.redkin.web.controller.command.admin.*;
 import com.epam.redkin.web.controller.command.common.*;
 import com.epam.redkin.web.controller.command.user.ForgetPasswordEmailSendingCommand;
 import com.epam.redkin.web.controller.command.user.LoginByTokenLinkCommand;
+import com.epam.redkin.web.controller.command.user.RegistrationApprovalCommand;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
@@ -67,7 +68,8 @@ public class CommandFactory {
         commands.put("create_order", new CreateOrderCommand());
         commands.put("cancel_order", new CancelOrderCommand());
         commands.put("sendForgetPasswordData", new ForgetPasswordEmailSendingCommand());
-        commands.put("logInByForgetPasswordLink", new LoginByTokenLinkCommand());
+        commands.put("login_by_token_link", new LoginByTokenLinkCommand());
+        commands.put("postRegistrationAccountApproval", new RegistrationApprovalCommand());
     }
 
 

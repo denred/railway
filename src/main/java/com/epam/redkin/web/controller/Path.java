@@ -52,8 +52,8 @@ public class Path {
 
     // user commands
     public static final String COMMAND_ORDERS = "controller?action=orders";
-    public static final String COMMAND_FORGET_PASSWORD_LOGIN = "controller?action=logInByForgetPasswordLink";
-    public static final String POST_REGISTRATION_ACCOUNT_APPROVAL = "controller?action=postRegistrationAccountApproval";
+    public static final String COMMAND_LOGIN_BY_TOKEN_LINK = "controller?action=login_by_token_link";
+    public static final String COMMAND_POST_REGISTRATION_ACCOUNT_APPROVAL = "?action=postRegistrationAccountApproval";
     public static final String COMMAND_ACCOUNT = "controller?action=account";
     public static final String COMMAND_PERSONAL_DATA = "controller?action=personal_data";
     public static final String COMMAND_SAVE_PROFILE = "controller?action=save_profile";

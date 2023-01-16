@@ -27,4 +27,6 @@ public interface UserService {
     User logInByToken(String token);
 
     void deleteRememberUserToken(int userId);
+
+    void postRegistrationApprovalByToken(String token);
 }

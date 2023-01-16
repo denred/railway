@@ -4,6 +4,7 @@ import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.web.controller.command.SupportedLocaleStorage;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class EmailMessageLocalizationDispatcher {
@@ -17,7 +18,7 @@ public class EmailMessageLocalizationDispatcher {
         for (SupportedLocaleStorage locale : SupportedLocaleStorage.values()) {
             ResourceBundle resourceBundle = ResourceBundle.getBundle(RESOURCE_NAME, locale.getLocale());
             String[] localizedArgs = getLocalizedMessageArgs(resourceBundle, messageArgs);
-            String formattedMessageFragment = String.format(resourceBundle.getString(key), localizedArgs);
+            String formattedMessageFragment = String.format(resourceBundle.getString(key), (Object) localizedArgs);
             message.append(formattedMessageFragment).append('\n');
         }
         return message.toString();

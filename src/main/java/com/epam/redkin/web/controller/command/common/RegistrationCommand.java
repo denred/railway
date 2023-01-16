@@ -41,7 +41,7 @@ public class RegistrationCommand implements Command {
             int id = userService.registerUser(user, request.getRequestURL().toString());
             session.setAttribute(SESSION_USER, user);
             user.setUserId(id);
-            forward = PAGE_HOME;
+            forward = PAGE_LOGIN;
         }
         LOGGER.info("done");
         return forward;

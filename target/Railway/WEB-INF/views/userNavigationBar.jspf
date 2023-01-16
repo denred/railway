@@ -17,7 +17,7 @@
             <a href="controller?action=orders" class="nav-item nav-link"><fmt:message key="user.account"/></a>
         </div>
     </div>
-    
+
     <%-- Change language --%>
     <form class="d-flex mx-2" method="POST" action="controller">
         <input type="hidden" name="action" value="i18n">

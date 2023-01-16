@@ -30,7 +30,7 @@ public class I18NCommand implements Command {
         User user = (User) session.getAttribute(SESSION_USER);
         String page = getRedirectPage(request);
         LOGGER.info("done");
-        return user == null ? PAGE_LOGIN : page;
+        return page == null ? PAGE_LOGIN : page;
     }
 
 
