@@ -1,5 +1,8 @@
 package com.epam.redkin.model.dto;
 
+import com.epam.redkin.model.entity.CarriageType;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,6 +16,11 @@ public class RoutsOrderDTO {
     private int routNumber;
     private int firstClassFreeSeatsCount;
     private int secondClassFreeSeatsCount;
+    private int compartmentFreeSeatsCount;
+    private int berthFreeSeatsCount;
+    private int luxeFreeSeatsCount;
+    private HashMap<CarriageType, Integer> availableSeats;
+    private HashMap<CarriageType, Double> priceInfo;
 
     @Override
     public boolean equals(Object o) {
@@ -96,6 +104,22 @@ public class RoutsOrderDTO {
 
     public void setStations(List<StationDTO> stations) {
         this.stations = stations;
+    }
+
+    public HashMap<CarriageType, Integer> getAvailableSeats() {
+        return availableSeats;
+    }
+
+    public void setAvailableSeats(HashMap<CarriageType, Integer> availableSeats) {
+        this.availableSeats = availableSeats;
+    }
+
+    public HashMap<CarriageType, Double> getPriceInfo() {
+        return priceInfo;
+    }
+
+    public void setPriceInfo(HashMap<CarriageType, Double> priceInfo) {
+        this.priceInfo = priceInfo;
     }
 
     @Override

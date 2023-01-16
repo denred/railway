@@ -25,9 +25,11 @@ public class Path {
     public static final String PAGE_ADMIN_SET_ORDER_STATUS = "WEB-INF/jsp/admin/orderStatus.jsp";
     public static final String PAGE_ADMIN_SET_CARRIAGE = "WEB-INF/jsp/admin/carriageSet.jsp";
     public static final String PAGE_ADMIN_SET_TRAIN = "WEB-INF/jsp/admin/trainSet.jsp";
+    public static final String PAGE_FORGET_PASSWORD = "WEB-INF/jsp/user/forgetPassword.jsp";
 
 
     // common commands
+    public static final String COMMAND = "action";
     public static final String COMMAND_LOGIN = "controller?action=login";
     public static final String COMMAND_LOGOUT = "controller?action=logout";
     public static final String COMMAND_PDF_BUILDER = "controller?action=pdf_builder";
@@ -47,8 +49,9 @@ public class Path {
     public static final String COMMAND_INFO_CARRIAGES = "controller?action=carriages";
     public static final String COMMAND_INFO_TRAINS = "controller?action=trains";
 
-    // client commands
+    // user commands
     public static final String COMMAND_ORDERS = "controller?action=orders";
+    public static final String COMMAND_FORGET_PASSWORD_LOGIN = "controller?action=logInByForgetPasswordLink";
     public static final String COMMAND_ACCOUNT = "controller?action=account";
     public static final String COMMAND_PERSONAL_DATA = "controller?action=personal_data";
     public static final String COMMAND_SAVE_PROFILE = "controller?action=save_profile";
@@ -59,10 +62,28 @@ public class Path {
     public static final String LOCALE_EN = "en";
     public static final String LOCALE = "locale";
     public static final String LANGUAGE = "lang";
+    public static final String LANGUAGE_PRE_SWITCH_PAGE_PARAMETERS = "currentParameters";
+    public static final String LANGUAGE_PRE_SWITCH_PAGE_ABSOLUTE_URL = "currentPageAbsoluteURL";
+
 
     //User
     public static final String USER_ID = "user_id";
     public static final String SESSION_USER = "user";
+    public static final String CONTROLLER_NAME = "controller";
+    public static final String COOKIE_REMEMBER_USER_TOKEN_DIVIDER = ":";
+    public static final String COOKIE_REMEMBER_USER_TOKEN = "rememberToken";
+    public static final String EMAIL = "email";
+    public static final String PASSWORD = "password";
+    public static final String USER_LOGIN = "login";
+    public static final String USER_ROLE = "user";
+    public static final String ERROR_MESSAGE = "Login or password can't be empty";
+
+
+    public static final String FIRST_NAME = "first_name";
+    public static final String LAST_NAME = "last_name";
+    public static final String PHONE_NUMBER = "phone";
+    public static final String BIRTH_DATE = "birth_date";
+
 
     //Order
     public static final String ORDER_LIST = "order_list";
@@ -77,11 +98,17 @@ public class Path {
     //Station
     public static final String ARRIVAL_STATION_ID = "arrival_station_id";
     public static final String DEPARTURE_STATION_ID = "departure_station_id";
+    public static final String DEPARTURE_STATION = "departure_station";
+    public static final String ARRIVAL_STATION = "arrival_station";
+    public static final String DEPARTURE_DATE = "departure_date";
+    public static final String CURRENT_DATE_TIME = "dateTime";
+
 
 
     //Carriage
     public static final String CARRIAGE_ID = "car_id";
     public static final String CARRIAGE_TYPE = "car_type";
+    public static final String CARRIAGE_TYPE_LIST = "carTypeList";
 
     //Seat
     public static final String SEATS_ID = "seats_id";
@@ -89,6 +116,7 @@ public class Path {
 
     //RouteDTO
     public static final String ROUTE_DTO_LIST = "routeDto_list";
+    public static final String ROUTE_ORDER_DTO_LIST = "rout_order_dto_list";
 
 
 

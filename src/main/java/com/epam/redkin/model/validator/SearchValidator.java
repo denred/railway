@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class SearchValidator {
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchValidator.class);
-    private static final String DEPARTURE_STATION = "[a-zA-Zа-яА-яёЁ]*-?[a-zA-Zа-яА-яёЁ]*";
-    private static final String ARRIVAL_STATION = "[a-zA-Zа-яА-яёЁ]*-?[a-zA-Zа-яА-яёЁ]*";
+    private static final String DEPARTURE_STATION = "[a-zA-Zа-яА-яёЁ]*\\w*[\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F']*-?[a-zA-Zа-яА-яёЁ]*\\w*[\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F']*";
+    private static final String ARRIVAL_STATION = "[a-zA-Zа-яА-яёЁ]*\\w*[\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F']*-?[a-zA-Zа-яА-яёЁ]*\\w*[\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F']*";
 
     public void isValidSearch(String departureStation, String arrivalStation) {
         Map<String, String> errors = new HashMap<>();

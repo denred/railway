@@ -20,4 +20,11 @@ public interface UserService {
     List<User> getUserListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage);
 
     int getUserListSize();
+
+    void sendLogInTokenIfForgetPassword(String email, String toString);
+    String getUpdatedRememberUserToken(int id);
+
+    User logInByToken(String token);
+
+    void deleteRememberUserToken(int userId);
 }

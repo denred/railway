@@ -24,22 +24,20 @@ public class LoginCommand implements Command {
         UserService userService = AppContext.getInstance().getUserService();
         HttpSession session = request.getSession();
 
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        String errorMessage;
+        String login = request.getParameter(USER_LOGIN);
+        String password = request.getParameter(PASSWORD);
         String forward = PAGE_LOGIN;
 
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
-            errorMessage = "Login or password can't be empty";
-            request.setAttribute("errorMessage", errorMessage);
-            LOGGER.debug("Login or password is empty");
+            request.setAttribute(ERROR_MESSAGE, "Login or password can't be empty");
+            LOGGER.info("Login or password is empty");
             return forward;
         }
         User user = userService.isValidUser(login, password);
         LOGGER.info("User successfully extracted");
         forward = COMMAND_HOME;
-        session.setAttribute("user", user);
-        session.setAttribute("dateTime", LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        session.setAttribute(SESSION_USER, user);
+        session.setAttribute(CURRENT_DATE_TIME, LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         session.setAttribute(LOCALE, LOCALE_UA);
         LOGGER.info("done");
         return forward;

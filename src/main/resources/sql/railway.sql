@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `railway`.`user` (
                                                 `birth_date` DATE NOT NULL,
                                                 `role` VARCHAR(45) NOT NULL,
                                                 `blocked` BOOLEAN NOT NULL DEFAULT FALSE,
+                                                `log_in_token` VARCHAR(60) NULL,
                                                 UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
                                                 PRIMARY KEY (`id`));
 

@@ -79,6 +79,22 @@ public class RouteServiceImpl implements RouteService {
         return result;
     }
 
+    @Override
+    public void fillAvailibleSeats(List<RoutsOrderDTO> routeOrderDTOList) {
+        List<CarriageType> carriageTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
+        routeOrderDTOList.forEach(route -> {
+            HashMap<CarriageType, Integer> availableSeats = new HashMap<>();
+            carriageTypeList.forEach(type -> {
+                StringBuilder sb = new StringBuilder();
+                int count = seatService.getCountSeatByCarType(route.getTrainId(), type);
+                if (count > 0) {
+                    availableSeats.put(type, count);
+                }
+            });
+            route.setAvailableSeats(availableSeats);
+        });
+    }
+
 
     @Override
     public RouteInfoDTO getRoutById(int routsId) {

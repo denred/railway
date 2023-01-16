@@ -2,6 +2,8 @@ package com.epam.redkin.web.controller.command;
 
 import com.epam.redkin.web.controller.command.admin.*;
 import com.epam.redkin.web.controller.command.common.*;
+import com.epam.redkin.web.controller.command.user.ForgetPasswordEmailSendingCommand;
+import com.epam.redkin.web.controller.command.user.LoginByTokenLinkCommand;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
@@ -25,6 +27,7 @@ public class CommandFactory {
         // common commands
         commands.put("login", new LoginCommand());
         commands.put("logout", new LogoutCommand());
+        commands.put("register", new RegistrationCommand());
         commands.put("home", new HomeCommand());
         commands.put("i18n", new I18NCommand());
 
@@ -63,6 +66,8 @@ public class CommandFactory {
         commands.put("confirm_order", new ConfirmOrderCommand());
         commands.put("create_order", new CreateOrderCommand());
         commands.put("cancel_order", new CancelOrderCommand());
+        commands.put("sendForgetPasswordData", new ForgetPasswordEmailSendingCommand());
+        commands.put("logInByForgetPasswordLink", new LoginByTokenLinkCommand());
     }
 
 

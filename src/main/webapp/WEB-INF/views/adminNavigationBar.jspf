@@ -28,11 +28,15 @@
         </div>
     </div>
     <%-- Change language --%>
-    <form class="d-flex mx-2" action="controller?action=i18n" method="POST">
-        <input type="submit" class="btn btn-outline-primary text-center mx-2" name="lang" value="en">
-        <input type="submit" class="btn btn-outline-primary text-center" name="lang" value="ua">
+    <form class="d-flex mx-2" method="POST" action="controller">
+        <input type="hidden" name="action" value="i18n">
+        <input type="hidden" name="currentPageAbsoluteURL" value="${pageContext.request.requestURL}">
+        <input type="hidden" name="currentParameters" value="${pageContext.request.getQueryString()}">
+        <select class="form-select" id="locale" name="lang" onchange="submit()" aria-label="Change language">
+            <option value="en" ${sessionScope.locale == 'en' ? 'selected' : ''}>eng</option>
+            <option value="ua" ${sessionScope.locale == 'ua' ? 'selected' : ''}><fmt:message key="lang.ua"/></option>
+        </select>
     </form>
-
     <%-- Logout button Start--%>
     <form class="form-inline" action="controller?action=logout" method="POST">
         <input class="btn btn-outline-primary" type="submit" value="<fmt:message key="logout"/>">

@@ -1,8 +1,11 @@
 package com.epam.redkin.model.entity;
 
 public enum CarriageType {
-    FIRST_CLASS(54.0),
-    SECOND_CLASS(44.0);
+    FIRST_CLASS(872.58),
+    SECOND_CLASS(487.22),
+    COMPARTMENT(983.79),
+    BERTH(274.84),
+    DE_LUXE(1567.69);
 
     private double price;
 

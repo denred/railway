@@ -18,4 +18,10 @@ public interface UserRepository extends EntityDAO<User> {
     List<User> getUsersByRole(String role);
 
     void updateBlocked(int id, boolean status);
+
+    void updateRememberUserToken(int id, String token);
+
+    User findUserByIdAndToken(int userId, String tokenValue);
+
+    void deleteRememberUserToken(int userId);
 }

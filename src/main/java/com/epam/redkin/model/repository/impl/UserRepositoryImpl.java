@@ -150,6 +150,48 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    @Override
+    public void updateRememberUserToken(int id, String token) {
+        try (Connection connection = ConnectionPools.getProcessing().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_LOG_IN_TOKEN_BY_ID)) {
+            preparedStatement.setString(1, token);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException | DataBaseException e) {
+            LOGGER.warn(String.format("User id: %d, token %s update error", id, token), e);
+            throw new DataBaseException("service.commonError", e);
+        }
+    }
+
+    @Override
+    public User findUserByIdAndToken(int userId, String token) {
+        ResultSet resultSet = null;
+        try (Connection connection = ConnectionPools.getProcessing().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_ID_AND_TOKEN)) {
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setString(2, token);
+            resultSet = preparedStatement.executeQuery();
+            return extractUser(resultSet);
+        } catch (SQLException | DataBaseException e) {
+            LOGGER.warn(String.format("User userId: %d, token %s finding error", userId, token), e);
+            throw new DataBaseException("service.commonError", e);
+        } finally {
+            closeResultSet(resultSet);
+        }
+    }
+
+    @Override
+    public void deleteRememberUserToken(int userId) {
+        try(Connection connection = ConnectionPools.getProcessing().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_LOG_IN_TOKEN_TO_NULL)) {
+            preparedStatement.setInt(1, userId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException | DataBaseException e) {
+            LOGGER.warn(String.format("User id: %d, token delete error", userId), e);
+            throw new DataBaseException("service.commonError", e);
+        }
+    }
+
     private User extractUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setUserId(rs.getInt("id"));
@@ -161,6 +203,7 @@ public class UserRepositoryImpl implements UserRepository {
         user.setBirthDate(rs.getObject("birth_date", LocalDate.class));
         user.setRole(Role.valueOf(rs.getString("role").toUpperCase()));
         user.setBlocked(rs.getBoolean("blocked"));
+        user.setToken(rs.getString("log_in_token"));
         return user;
     }
 
@@ -174,6 +217,18 @@ public class UserRepositoryImpl implements UserRepository {
         statement.setObject(6, user.getBirthDate());
         statement.setString(7, user.getRole().getName());
         statement.setBoolean(8, user.isBlocked());
+        statement.setString(9, user.getToken());
+    }
+
+    protected void closeResultSet(ResultSet resultSet) throws DataBaseException {
+        if (resultSet != null) {
+            try {
+                resultSet.close();
+            } catch (SQLException e) {
+                LOGGER.error("Can`t close resultSet", e);
+                throw new DataBaseException("service.commonError", e);
+            }
+        }
     }
 
 }

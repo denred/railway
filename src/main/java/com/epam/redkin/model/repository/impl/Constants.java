@@ -48,7 +48,7 @@ public interface Constants {
     /* USER */
 
     String ADD_USER = "INSERT INTO user (email, password, first_name, last_name, phone, birth_date, role, blocked) " +
-            "VALUES (?,?,?,?,?,?,?,?)";
+            "VALUES (?,?,?,?,?,?,?,?,?)";
     String GET_USER_BY_ID = "SELECT * FROM user WHERE id = ?";
     String UPDATE_USER = "UPDATE user SET email = ?, password = ?, first_name = ?, last_name = ?, phone = ?, " +
             "birth_date = ?, role = ?, blocked = ? WHERE id = ?";
@@ -56,6 +56,9 @@ public interface Constants {
     String GET_USER_BY_EMAIL = "SELECT * FROM user WHERE email = ? LIMIT 1";
     String GET_USERS_BY_ROLE = "SELECT * FROM user WHERE role = ? ORDER BY id";
     String UPDATE_BLOCKED = "UPDATE user SET blocked = ? WHERE id = ?";
+    String UPDATE_USER_LOG_IN_TOKEN_BY_ID = "UPDATE user SET user.log_in_token = (?) WHERE user.id = (?)";
+    String FIND_USER_BY_ID_AND_TOKEN = "SELECT * FROM user WHERE id = (?) AND log_in_token = (?)";
+    String UPDATE_USER_LOG_IN_TOKEN_TO_NULL = "UPDATE user SET user.log_in_token = NULL WHERE user.id = (?)";;
 
     /* ROUTES */
     String GET_ROUTE_LIST_WITH_PARAMETERS = "SELECT r.name, r.number, r.id, station, " +

@@ -14,13 +14,13 @@
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
 
 <c:choose>
-    <c:when test="${empty rout_list}">
+    <c:when test="${empty rout_order_dto_list}">
         <div class="text-xs-center align-middle h3" style="text-align: center;">
             <fmt:message key="rout.no"/></div>
     </c:when>
     <c:otherwise>
         <div class="d-flex justify-content-center">
-            <table class="table table-bordered table-hover caption-top" style="width: 1000px;">
+            <table class="table table-bordered table-hover caption-top" style="width: 1400px;">
                 <thead class="thead-light text-center">
                 <tr>
                     <th><fmt:message key="train.number"/></th>
@@ -28,13 +28,13 @@
                     <th><fmt:message key="date"/></th>
                     <th><fmt:message key="departure"/><br><fmt:message key="arrival"/></th>
                     <th><fmt:message key="order.travel.time"/></th>
-                    <th><fmt:message key="free.seats.count"/></th>
+                    <th><fmt:message key="free.seats.count"/><br></th>
                     <th><fmt:message key="car.price"/></th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody class="text-center">
-                <c:forEach items="${rout_list}" var="rout">
+                <c:forEach items="${rout_order_dto_list}" var="rout">
                     <tr>
                         <c:set var="dispatchDateTime" value="${rout.stations.get(0).stationDispatchDateTime}"/>
                         <c:set var="arrivalDateTime"
@@ -76,7 +76,7 @@
                                            locale="${lang}"/></td>
 
                         <td>
-                            <c:forEach items="${seatsCount}" var="entry">
+                            <c:forEach items="${rout.availableSeats}" var="entry">
                                 <div class="row">
                                     <span class="col-md-8 text-start"><fmt:message key="${entry.key}"/></span>
                                     <span class="col-md-4 text-end">${entry.value}</span>
@@ -84,8 +84,8 @@
                             </c:forEach>
                         </td>
                         <td>
-                            <c:forEach items="${seatsPrice}" var="entry">
-                                <span>${entry.value}</span><br>
+                            <c:forEach items="${rout.availableSeats}" var="entry">
+                                <span>${entry.key.price} &#8372;</span><br>
                             </c:forEach>
                         </td>
 

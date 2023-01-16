@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+<c:set var="lang" value="${not empty param.lang ? param.lang : not empty lang ? lang : pageContext.request.locale}" scope="session" />
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="lang"/>
@@ -59,7 +60,9 @@
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center">
-                    <a href="registration.jsp" class="text-body"><fmt:message key="user.forgotPassword"/></a>
+                    <a href="controller?action=sendForgetPasswordData">
+                        <fmt:message key="user.forgotPassword"/>
+                    </a>
                 </div>
 
                 <div class="text-center text-lg-start mt-4 pt-2">

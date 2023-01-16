@@ -22,6 +22,7 @@ public class User {
     private Role role;
     private int roleId;
     private boolean blocked;
+    private String token;
 
     public User() {
     }
@@ -115,6 +116,14 @@ public class User {
 
     public void setBlocked(boolean blocked) {
         this.blocked = blocked;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override

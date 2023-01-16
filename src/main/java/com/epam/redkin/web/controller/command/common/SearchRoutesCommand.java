@@ -18,48 +18,41 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
-import static com.epam.redkin.web.controller.Path.LOCALE;
-import static com.epam.redkin.web.controller.Path.PAGE_SEARCH_ROUTES;
+import static com.epam.redkin.web.controller.Path.*;
 
 public class SearchRoutesCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchRoutesCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        LOGGER.info("started");
         RouteService routeService = AppContext.getInstance().getRouteService();
-        SeatService seatService = AppContext.getInstance().getSeatService();
         SearchValidator searchValidator = new SearchValidator();
+        HttpSession session = request.getSession();
 
-        String departureStation = request.getParameter("departure_station");
-        String arrivalStation = request.getParameter("arrival_station");
-        String userId = request.getParameter("user_id");
+        String departureStation = request.getParameter(DEPARTURE_STATION);
+        String arrivalStation = request.getParameter(ARRIVAL_STATION);
+        String userId = request.getParameter(USER_ID);
+        String startDate = request.getParameter(DEPARTURE_DATE);
         LocalDateTime departureDate;
         try {
-            departureDate = LocalDateTime.parse(request.getParameter("departure_date"));
+            departureDate = LocalDateTime.parse(startDate);
         } catch (DateTimeParseException e) {
-            LOGGER.error("Incorrect data entered");
-            throw new IncorrectDataException("Incorrect data entered", e);
+            LOGGER.error("Incorrect data entered. Date or time format");
+            throw new IncorrectDataException("Incorrect data entered. Date or time format", e);
         }
         searchValidator.isValidSearch(departureStation, arrivalStation);
-        List<RoutsOrderDTO> routList = routeService.getRouteListWithParameters(departureStation, arrivalStation, departureDate);
-        List<CarriageType> carriageTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
-        Map<CarriageType, Integer> freeSeatsCount = new HashMap<>();
-        Map<CarriageType, Double> freeSeatsPrice = new HashMap<>();
-        carriageTypeList.forEach(type -> {
-            freeSeatsCount.put(type, seatService.getCountSeatByCarType(routList.get(0).getTrainId(), type));
-            freeSeatsPrice.put(type, type.getPrice());
-        });
-        request.setAttribute("carTypeList", carriageTypeList);
-        request.setAttribute("seatsCount", freeSeatsCount);
-        request.setAttribute("seatsPrice", freeSeatsPrice);
-        request.setAttribute("rout_list", routList);
-        request.setAttribute("user_id", userId);
-        request.setAttribute("departure_station", departureStation);
-        request.setAttribute("arrival_station", arrivalStation);
-        request.setAttribute("departure_date", departureDate);
-        HttpSession session = request.getSession();
-        request.setAttribute("lang", session.getAttribute(LOCALE));
+        List<RoutsOrderDTO> routeOrderDTOList = routeService
+                .getRouteListWithParameters(departureStation, arrivalStation, departureDate);
+        routeService.fillAvailibleSeats(routeOrderDTOList);
 
+        request.setAttribute(ROUTE_ORDER_DTO_LIST, routeOrderDTOList);
+        request.setAttribute(USER_ID, userId);
+        request.setAttribute(DEPARTURE_STATION, departureStation);
+        request.setAttribute(ARRIVAL_STATION, arrivalStation);
+        request.setAttribute(DEPARTURE_DATE, departureDate);
+        request.setAttribute(LANGUAGE, session.getAttribute(LOCALE));
+        LOGGER.info("done");
         return PAGE_SEARCH_ROUTES;
     }
 }
