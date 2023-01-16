@@ -20,6 +20,28 @@
 
 <div class="container mt-4">
     <div class="d-flex justify-content-center">
+        <form action="controller?action=routes" method="POST">
+            <div class="row">
+                <div class="col-5 mr-2">
+                    <select class="btn btn-info dropdown-toggle" name="filter" aria-label="Filter">
+                        <option value="trainFilter"><fmt:message key="filter.train"/></option>
+                        <option value="routeFilter"><fmt:message key="filter.route"/></option>
+                        <option value="ArrivalStationFilter"><fmt:message key="filter.arrival.station"/></option>
+                        <option value="DepartureStationFilter"><fmt:message key="filter.departure.station"/></option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <input class="form-control" name="filter_area">
+                </div>
+                <div class="col-2">
+                    <input type="hidden" name="routeDto" value="${routeDto}">
+                    <input type="submit" class="btn btn-info" name="filter"
+                           value="<fmt:message key="route.filter"/>">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="d-flex justify-content-center">
         <table class="table table-bordered table-hover" style="width: 1000px;">
             <thead class="thead-light text-center">
             <tr>
@@ -39,7 +61,14 @@
                 <jsp:useBean id="recordsPerPage" scope="request" type="java.lang.Integer"/>
                 <tr>
                     <td>${i.index + recordsPerPage * (currentPage - 1) + 1}</td>
-                    <td>${routeDto.routName}</td>
+                    <td>
+                        <form action="controller?action=route_mapping" method="POST">
+                            <input type="hidden" name="routs_id" value="${routeDto.routsId}">
+                            <button type="submit" style="display:none;"></button>
+                            <a href="controller?action=route_mapping"
+                               onclick="event.preventDefault();this.closest('form').submit();">${routeDto.routName}</a>
+                        </form>
+                    </td>
                     <td>${routeDto.routNumber}</td>
                     <td>${routeDto.trainNumber}</td>
                     <td>
@@ -108,5 +137,6 @@
     <input type="submit" class="btn btn-success ml-2" name="add_route" value="<fmt:message key="admin.addRout"/>">
 </form>
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/xxsProtectionScript.js"></script>
 </body>
 </html>

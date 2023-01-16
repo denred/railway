@@ -13,7 +13,7 @@
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
 <div class="container mt-4">
     <div class="d-flex justify-content-center">
-        <form action="controller?action=route_mapping_add_station" method="POST">
+        <form action="controller?action=route_mapping_set_station" method="POST">
             <table class="table table-bordered text-center" style="width: auto">
                 <thead class="thead-light text-center">
                 <tr>

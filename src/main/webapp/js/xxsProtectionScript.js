@@ -31,3 +31,11 @@ const submitButtons = document.querySelectorAll('.submit');
 submitButtons.forEach(function(button) {
     xssProtectionListener(button);
 })
+
+
+window.onload = function() {
+    document.getElementById('mylink').onclick = function() {
+        document.getElementById('myform').submit();
+        return false;
+    };
+};
