@@ -15,7 +15,7 @@ import java.util.Objects;
 public class RegistrationValidator {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationValidator.class);
     private static final String EMAIL = "[a-zA-Z0-9._-][a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}";
-    private static final String PASSWORD = "[\\S+]{8,32}";
+    private static final String PASSWORD = "[\\S+]{8,}";
     private static final String USER_NAME = "[a-zA-Zа-яА-яёЁ\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F']{2,15}";
     private static final String USER_SURNAME = "[a-zA-Zа-яА-яёЁ\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F']{2,15}";
     private static final String USER_DATE_OF_BIRTH = "[0-9]{4}-[0-9]{2}\\-[0-9]{2}";

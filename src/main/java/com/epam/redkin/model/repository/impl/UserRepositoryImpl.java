@@ -34,7 +34,7 @@ public class UserRepositoryImpl implements UserRepository {
         int key = -1;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD_USER, Statement.RETURN_GENERATED_KEYS)) {
-            setData(user, statement);
+            setStatement(user, statement);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -69,8 +69,8 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean update(User user) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_USER)) {
-            setData(user, statement);
-            statement.setInt(9, user.getUserId());
+            setStatement(user, statement);
+            statement.setInt(10, user.getUserId());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -208,7 +208,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
 
-    private void setData(User user, PreparedStatement statement) throws SQLException {
+    private void setStatement(User user, PreparedStatement statement) throws SQLException {
         statement.setString(1, user.getEmail());
         statement.setString(2, user.getPassword());
         statement.setString(3, user.getFirstName());

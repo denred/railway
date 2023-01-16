@@ -40,6 +40,9 @@ public class UserServiceImpl implements UserService {
     public User isValidUser(String email, String password) {
         User user = userRepository.getUserByEmail(email);
         if (user.getEmail() != null && !user.isBlocked()) {
+            System.out.println(user.getPassword());
+            System.out.println(password);
+
             if (BCrypt.checkpw(password, user.getPassword())) {
                 return user;
             }
@@ -54,13 +57,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int registr(User user) {
-        boolean exist = userRepository.checkUserByEmail(user.getEmail());
-        if (!exist) {
-            return userRepository.create(user);
-        } else {
-            throw new UserAlreadyExistException();
+    public int registerUser(User user, String pageRootUrl) {
+        int id = -1;
+        if (user == null || StringUtils.isBlank(pageRootUrl)) {
+            LOGGER.error("service.commonError");
+            throw new ServiceException("service.commonError");
         }
+
+        try {
+            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+            user.setBlocked(true);
+            boolean exist = userRepository.checkUserByEmail(user.getEmail());
+            if (!exist) {
+                id = userRepository.create(user);
+            } else {
+                LOGGER.error("User already exist.");
+                throw new UserAlreadyExistException();
+            }
+
+            user = userRepository.getUserByEmail(user.getEmail());
+            String token = getUpdatedRememberUserToken(user.getUserId());
+
+            String userLogInLink = constructLogInLink(POST_REGISTRATION_ACCOUNT_APPROVAL, token);
+            String messageTitle = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.TITLE_USER_REGISTRATION_LINK);
+            String messageText = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.MESSAGE_USER_REGISTRATION_LINK, userLogInLink);
+            emailDistributorUtil.addEmailToSendingQueue(messageTitle, messageText, user.getEmail());
+        } catch (Exception e) {
+            LOGGER.warn(e.getMessage(), e);
+            throw new ServiceException("service.commonError", e.getMessage());
+        }
+        return id;
     }
 
     @Override
@@ -155,9 +181,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private String constructLogInLink(String pageRootUrl, String token) {
-        return pageRootUrl + '?' + COMMAND + '=' + COMMAND_FORGET_PASSWORD_LOGIN
-                + '&' + COOKIE_REMEMBER_USER_TOKEN + '=' + token;
+        return pageRootUrl + '&' + COOKIE_REMEMBER_USER_TOKEN + '=' + token;
     }
-
-
 }

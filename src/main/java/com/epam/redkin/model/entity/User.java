@@ -1,7 +1,9 @@
 package com.epam.redkin.model.entity;
 
+import com.epam.redkin.model.builder.UserBuilder;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -10,7 +12,7 @@ import java.util.Objects;
  *
  * @author Denis Redkin
  */
-public class User {
+public class User implements Serializable, Comparable<User> {
     private static final long serialVersionUID = 1L;
     private int userId;
     private String email;
@@ -23,6 +25,20 @@ public class User {
     private int roleId;
     private boolean blocked;
     private String token;
+
+    public User(UserBuilder builder) {
+        this.userId = builder.getUserId();
+        this.email = builder.getEmail();
+        this.password = builder.getPassword();
+        this.firstName = builder.getFirstName();
+        this.lastName = builder.getLastName();
+        this.phone = builder.getPhone();
+        this.birthDate = builder.getBirthDate();
+        this.role = builder.getRole();
+        this.roleId = builder.getRoleId();
+        this.blocked = builder.isBlocked();
+        this.token = builder.getLogInToken();
+    }
 
     public User() {
     }
@@ -59,7 +75,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -152,5 +168,10 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(getEmail(), getPassword(), getFirstName(), getLastName(), getPhone(), getBirthDate(), getRole(), getRoleId(), isBlocked());
+    }
+
+    @Override
+    public int compareTo(User o) {
+        return email.compareTo(o.getEmail());
     }
 }

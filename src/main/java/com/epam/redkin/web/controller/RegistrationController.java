@@ -48,7 +48,7 @@ public class RegistrationController extends HttpServlet {
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         registrationValidator.isValidClientRegister(user);
-        int id = userService.registr(user);
+        int id = userService.registerUser(user, request.getRequestURL().toString());
         user.setUserId(id);
         response.sendRedirect("home");
     }

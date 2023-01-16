@@ -21,14 +21,14 @@ USE `railway` ;
 CREATE TABLE IF NOT EXISTS `railway`.`user` (
                                                 `id` INT NOT NULL AUTO_INCREMENT,
                                                 `email` VARCHAR(255) NOT NULL,
-                                                `password` VARCHAR(64) NOT NULL,
+                                                `password` VARCHAR(256) NOT NULL,
                                                 `first_name` VARCHAR(60) NOT NULL,
                                                 `last_name` VARCHAR(60) NOT NULL,
                                                 `phone` VARCHAR(25) NOT NULL,
                                                 `birth_date` DATE NOT NULL,
                                                 `role` VARCHAR(45) NOT NULL,
                                                 `blocked` BOOLEAN NOT NULL DEFAULT FALSE,
-                                                `log_in_token` VARCHAR(60) NULL,
+                                                `log_in_token` VARCHAR(256) NULL,
                                                 UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
                                                 PRIMARY KEY (`id`));
 

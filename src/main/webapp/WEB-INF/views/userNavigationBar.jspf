@@ -18,25 +18,19 @@
         </div>
     </div>
 
-    <div class=" row">
-        <div class="col-6">
-            <%-- Change language button --%>
-            <div class="form-inline text-center align-content-center dropdown">
-                <input class="btn btn-outline-primary" type="button" id="dropdownMenuButton"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="lang">
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <form class="form-inline" method="post" action="controller?action=i18n">
-                        <button type="submit" name="lang" value="ua" class="dropdown-item">UA</button>
-                        <button type="submit" name="lang" value="en" class="dropdown-item">EN</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-6">
-            <%-- Logout button --%>
-            <form class="form-inline" action="controller?action=logout" method="POST">
-                <input class="btn btn-outline-primary" type="submit" value="<fmt:message key="logout"/>">
-            </form>
-        </div>
-    </div>
+    <%-- Change language --%>
+    <form class="d-flex mx-2" method="POST" action="controller">
+        <input type="hidden" name="action" value="i18n">
+        <input type="hidden" name="currentPageAbsoluteURL" value="${pageContext.request.requestURL}">
+        <input type="hidden" name="currentParameters" value="${pageContext.request.getQueryString()}">
+        <select class="form-select" id="locale" name="lang" onchange="submit()" aria-label="Change language">
+            <option value="en" ${sessionScope.locale == 'en' ? 'selected' : ''}>eng</option>
+            <option value="ua" ${sessionScope.locale == 'ua' ? 'selected' : ''}><fmt:message key="lang.ua"/></option>
+        </select>
+    </form>
+
+    <%-- Logout button --%>
+    <form class="form-inline" action="controller?action=logout" method="POST">
+        <input class="btn btn-outline-primary" type="submit" value="<fmt:message key="logout"/>">
+    </form>
 </nav>

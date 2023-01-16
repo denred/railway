@@ -9,7 +9,7 @@ public interface UserService {
 
     User isValidUser(String login, String password);
 
-    int registr(User user);
+    int registerUser(User user, String s);
 
     List<User> getUserInfo(String userRole);
 
@@ -21,7 +21,7 @@ public interface UserService {
 
     int getUserListSize();
 
-    void sendLogInTokenIfForgetPassword(String email, String toString);
+    void sendLogInTokenIfForgetPassword(String email, String pageRootUrl);
     String getUpdatedRememberUserToken(int id);
 
     User logInByToken(String token);

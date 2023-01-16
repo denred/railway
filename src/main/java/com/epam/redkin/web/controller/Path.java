@@ -26,6 +26,7 @@ public class Path {
     public static final String PAGE_ADMIN_SET_CARRIAGE = "WEB-INF/jsp/admin/carriageSet.jsp";
     public static final String PAGE_ADMIN_SET_TRAIN = "WEB-INF/jsp/admin/trainSet.jsp";
     public static final String PAGE_FORGET_PASSWORD = "WEB-INF/jsp/user/forgetPassword.jsp";
+    public static final String PAGE_REGISTRATION = "registration.jsp";
 
 
     // common commands
@@ -52,6 +53,7 @@ public class Path {
     // user commands
     public static final String COMMAND_ORDERS = "controller?action=orders";
     public static final String COMMAND_FORGET_PASSWORD_LOGIN = "controller?action=logInByForgetPasswordLink";
+    public static final String POST_REGISTRATION_ACCOUNT_APPROVAL = "controller?action=postRegistrationAccountApproval";
     public static final String COMMAND_ACCOUNT = "controller?action=account";
     public static final String COMMAND_PERSONAL_DATA = "controller?action=personal_data";
     public static final String COMMAND_SAVE_PROFILE = "controller?action=save_profile";

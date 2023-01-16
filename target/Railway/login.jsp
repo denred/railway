@@ -70,7 +70,7 @@
                            style="padding-left: 2.5rem; padding-right: 2.5rem;"
                            value="<fmt:message key="signIn"/>">
                     <p class="small fw-bold mt-2 pt-1 mb-0"><fmt:message key="user.account_question"/> <a
-                            href="registration.jsp"
+                            href="controller?action=register"
                             class="link-danger"><fmt:message key="registration"/></a></p>
                 </div>
 

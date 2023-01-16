@@ -47,11 +47,11 @@ public interface Constants {
 
     /* USER */
 
-    String ADD_USER = "INSERT INTO user (email, password, first_name, last_name, phone, birth_date, role, blocked) " +
+    String ADD_USER = "INSERT INTO user (email, password, first_name, last_name, phone, birth_date, role, blocked, log_in_token) " +
             "VALUES (?,?,?,?,?,?,?,?,?)";
     String GET_USER_BY_ID = "SELECT * FROM user WHERE id = ?";
     String UPDATE_USER = "UPDATE user SET email = ?, password = ?, first_name = ?, last_name = ?, phone = ?, " +
-            "birth_date = ?, role = ?, blocked = ? WHERE id = ?";
+            "birth_date = ?, role = ?, blocked = ?, log_in_token = ? WHERE id = ?";
     String DELETE_USER = "DELETE FROM user WHERE id = ?";
     String GET_USER_BY_EMAIL = "SELECT * FROM user WHERE email = ? LIMIT 1";
     String GET_USERS_BY_ROLE = "SELECT * FROM user WHERE role = ? ORDER BY id";
