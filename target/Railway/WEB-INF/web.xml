@@ -87,11 +87,4 @@
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
 
-    <!--============================================================
-	Context listener
-    =============================================================-->
-    <listener>
-        <listener-class>com.epam.redkin.web.controller.listener.ContextListener</listener-class>
-    </listener>
-
 </web-app>
