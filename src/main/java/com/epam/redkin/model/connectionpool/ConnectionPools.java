@@ -51,13 +51,4 @@ public class ConnectionPools {
     public static HikariDataSource getProcessing() {
         return Processing.INSTANCE.getDataSource();
     }
-
-    public static void main(String[] args) {
-        logger.debug("starting");
-        DataSource processing = ConnectionPools.getProcessing();
-        logger.debug("processing started");
-        DataSource testing = ConnectionPools.getTesting();
-        logger.debug("testing started");
-        logger.debug("done");
-    }
 }
