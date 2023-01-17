@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.epam.redkin.model.repository.impl.UserRepositoryImplTest" time="0.529" tests="14" errors="0" skipped="13" failures="0">
+  <properties>
+    <property name="java.specification.version" value="17"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/test-classes:/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/classes:/Users/denis/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.8.2/junit-jupiter-engine-5.8.2.jar:/Users/denis/.m2/repository/org/junit/platform/junit-platform-engine/1.8.2/junit-platform-engine-1.8.2.jar:/Users/denis/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/denis/.m2/repository/org/junit/platform/junit-platform-commons/1.8.2/junit-platform-commons-1.8.2.jar:/Users/denis/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.8.2/junit-jupiter-api-5.8.2.jar:/Users/denis/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/denis/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.8.2/junit-jupiter-params-5.8.2.jar:/Users/denis/.m2/repository/com/zaxxer/HikariCP/5.0.1/HikariCP-5.0.1.jar:/Users/denis/.m2/repository/jakarta/servlet/jakarta.servlet-api/6.0.0/jakarta.servlet-api-6.0.0.jar:/Users/denis/.m2/repository/com/mysql/mysql-connector-j/8.0.31/mysql-connector-j-8.0.31.jar:/Users/denis/.m2/repository/com/google/protobuf/protobuf-java/3.19.4/protobuf-java-3.19.4.jar:/Users/denis/.m2/repository/jakarta/servlet/jsp/jakarta.servlet.jsp-api/3.1.0/jakarta.servlet.jsp-api-3.1.0.jar:/Users/denis/.m2/repository/jakarta/servlet/jsp/jstl/jakarta.servlet.jsp.jstl-api/3.0.0/jakarta.servlet.jsp.jstl-api-3.0.0.jar:/Users/denis/.m2/repository/jakarta/el/jakarta.el-api/5.0.0/jakarta.el-api-5.0.0.jar:/Users/denis/.m2/repository/org/glassfish/web/jakarta.servlet.jsp.jstl/3.0.1/jakarta.servlet.jsp.jstl-3.0.1.jar:/Users/denis/.m2/repository/org/eclipse/jetty/apache-jstl/11.0.0/apache-jstl-11.0.0.jar:/Users/denis/.m2/repository/org/mortbay/jasper/taglibs-standard/10.0.0-M10/taglibs-standard-10.0.0-M10.jar:/Users/denis/.m2/repository/org/slf4j/slf4j-api/2.0.5/slf4j-api-2.0.5.jar:/Users/denis/.m2/repository/org/slf4j/slf4j-reload4j/2.0.5/slf4j-reload4j-2.0.5.jar:/Users/denis/.m2/repository/ch/qos/reload4j/reload4j/1.2.22/reload4j-1.2.22.jar:/Users/denis/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:/Users/denis/.m2/repository/org/mindrot/jbcrypt/0.4/jbcrypt-0.4.jar:/Users/denis/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar:/Users/denis/.m2/repository/com/sun/mail/javax.mail/1.6.2/javax.mail-1.6.2.jar:/Users/denis/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar:/Users/denis/.m2/repository/org/mockito/mockito-core/5.0.0/mockito-core-5.0.0.jar:/Users/denis/.m2/repository/net/bytebuddy/byte-buddy/1.12.22/byte-buddy-1.12.22.jar:/Users/denis/.m2/repository/net/bytebuddy/byte-buddy-agent/1.12.22/byte-buddy-agent-1.12.22.jar:/Users/denis/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/denis/.m2/repository/org/mockito/mockito-junit-jupiter/5.0.0/mockito-junit-jupiter-5.0.0.jar:"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="java.vm.specification.version" value="17"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="UA"/>
+    <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk-17.0.4.1.jdk/Contents/Home/lib"/>
+    <property name="sun.java.command" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/surefire/surefirebooter3013110214189049155.jar /Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/surefire 2023-01-17T21-06-06_269-jvmRun1 surefire12180489155583962930tmp surefire_07272774881208110617tmp"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/test-classes:/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/classes:/Users/denis/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.8.2/junit-jupiter-engine-5.8.2.jar:/Users/denis/.m2/repository/org/junit/platform/junit-platform-engine/1.8.2/junit-platform-engine-1.8.2.jar:/Users/denis/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/denis/.m2/repository/org/junit/platform/junit-platform-commons/1.8.2/junit-platform-commons-1.8.2.jar:/Users/denis/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.8.2/junit-jupiter-api-5.8.2.jar:/Users/denis/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/denis/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.8.2/junit-jupiter-params-5.8.2.jar:/Users/denis/.m2/repository/com/zaxxer/HikariCP/5.0.1/HikariCP-5.0.1.jar:/Users/denis/.m2/repository/jakarta/servlet/jakarta.servlet-api/6.0.0/jakarta.servlet-api-6.0.0.jar:/Users/denis/.m2/repository/com/mysql/mysql-connector-j/8.0.31/mysql-connector-j-8.0.31.jar:/Users/denis/.m2/repository/com/google/protobuf/protobuf-java/3.19.4/protobuf-java-3.19.4.jar:/Users/denis/.m2/repository/jakarta/servlet/jsp/jakarta.servlet.jsp-api/3.1.0/jakarta.servlet.jsp-api-3.1.0.jar:/Users/denis/.m2/repository/jakarta/servlet/jsp/jstl/jakarta.servlet.jsp.jstl-api/3.0.0/jakarta.servlet.jsp.jstl-api-3.0.0.jar:/Users/denis/.m2/repository/jakarta/el/jakarta.el-api/5.0.0/jakarta.el-api-5.0.0.jar:/Users/denis/.m2/repository/org/glassfish/web/jakarta.servlet.jsp.jstl/3.0.1/jakarta.servlet.jsp.jstl-3.0.1.jar:/Users/denis/.m2/repository/org/eclipse/jetty/apache-jstl/11.0.0/apache-jstl-11.0.0.jar:/Users/denis/.m2/repository/org/mortbay/jasper/taglibs-standard/10.0.0-M10/taglibs-standard-10.0.0-M10.jar:/Users/denis/.m2/repository/org/slf4j/slf4j-api/2.0.5/slf4j-api-2.0.5.jar:/Users/denis/.m2/repository/org/slf4j/slf4j-reload4j/2.0.5/slf4j-reload4j-2.0.5.jar:/Users/denis/.m2/repository/ch/qos/reload4j/reload4j/1.2.22/reload4j-1.2.22.jar:/Users/denis/.m2/repository/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar:/Users/denis/.m2/repository/org/mindrot/jbcrypt/0.4/jbcrypt-0.4.jar:/Users/denis/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar:/Users/denis/.m2/repository/com/sun/mail/javax.mail/1.6.2/javax.mail-1.6.2.jar:/Users/denis/.m2/repository/javax/activation/activation/1.1/activation-1.1.jar:/Users/denis/.m2/repository/org/mockito/mockito-core/5.0.0/mockito-core-5.0.0.jar:/Users/denis/.m2/repository/net/bytebuddy/byte-buddy/1.12.22/byte-buddy-1.12.22.jar:/Users/denis/.m2/repository/net/bytebuddy/byte-buddy-agent/1.12.22/byte-buddy-agent-1.12.22.jar:/Users/denis/.m2/repository/org/objenesis/objenesis/3.3/objenesis-3.3.jar:/Users/denis/.m2/repository/org/mockito/mockito-junit-jupiter/5.0.0/mockito-junit-jupiter-5.0.0.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/Users/denis"/>
+    <property name="user.language" value="ru"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2022-08-18"/>
+    <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk-17.0.4.1.jdk/Contents/Home"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="surefire.real.class.path" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway/target/surefire/surefirebooter3013110214189049155.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.runtime.version" value="17.0.4.1+1-LTS-2"/>
+    <property name="user.name" value="denis"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="13.1"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="US-ASCII"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="/Users/denis/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="/var/folders/bz/7mv7z2g138v96mchvysfthhh0000gn/T/"/>
+    <property name="idea.version" value="2022.1.2"/>
+    <property name="java.version" value="17.0.4.1"/>
+    <property name="user.dir" value="/Users/denis/Documents/Den/epam_lessons/fwdfinaltask/Railway"/>
+    <property name="os.arch" value="aarch64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="native.encoding" value="US-ASCII"/>
+    <property name="java.library.path" value="/Users/denis/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="17.0.4.1+1-LTS-2"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="java.class.version" value="61.0"/>
+  </properties>
+  <testcase name="testGetUserByEmail" classname="com.epam.redkin.model.repository.impl.UserRepositoryImplTest" time="0">
+    <skipped message="TODO: Complete this test"/>
+  </testcase>
+  <testcase name="testFindUserByIdAndToken" classname="com.epam.redkin.model.repository.impl.UserRepositoryImplTest" time="0">
+    <skipped message="TODO: Complete this test"/>
+  </testcase>
+  <testcase name="testRead" classname="com.epam.redkin.model.repository.impl.UserRepositoryImplTest" time="0">
+    <skipped message="TODO: Complete this test"/>
+  </testcase>
+  <testcase name="testConstructor2" classname="com.epam.redkin.model.repository.impl.UserRepositoryImplTest" time="0">
+    <skipped message="TODO: Complete this test"/>
+  </testcase>
+  <testcase name="testUpdateRememberUserToken" classname="com.epam.redkin.model.repository.impl.UserRepositoryImplTest" time="0">
+    <skipped message="TODO: Complete this test"/>
+  </testcase>
+  <testcase name="testUpdateBlocked" classname="com.epam.redkin.model.repository.impl.UserRepositoryImplTest" time="0">
+    <skipped message="TODO: Complete this test"/>
+  </testcase>
+  <testcase name="testDeleteRememberUserToken" classname="com.epam.redkin.model.repository.impl.UserRepositoryImplTest" time="0">
+    <skipped message="TODO: Complete this test"/>
+  </testcase>
+  <testcase name="testCreate" classname="com.epam.redkin.model.repository.impl.UserRepositoryImplTest" time="0">
+    <skipped message="TODO: Complete this test"/>
+  </testcase>
+  <testcase name="testDelete" classname="com.epam.redkin.model.repository.impl.UserRepositoryImplTest" time="0">
+    <skipped message="TODO: Complete this test"/>
+  </testcase>
+  <testcase name="testCloseResultSet" classname="com.epam.redkin.model.repository.impl.UserRepositoryImplTest" time="0">
+    <skipped message="TODO: Complete this test"/>
+  </testcase>
+  <testcase name="testGetUsersByRole" classname="com.epam.redkin.model.repository.impl.UserRepositoryImplTest" time="0">
+    <skipped message="TODO: Complete this test"/>
+  </testcase>
+  <testcase name="testUpdate" classname="com.epam.redkin.model.repository.impl.UserRepositoryImplTest" time="0">
+    <skipped message="TODO: Complete this test"/>
+  </testcase>
+  <testcase name="testCheckUserByEmail" classname="com.epam.redkin.model.repository.impl.UserRepositoryImplTest" time="0">
+    <skipped message="TODO: Complete this test"/>
+  </testcase>
+  <testcase name="testConstructor" classname="com.epam.redkin.model.repository.impl.UserRepositoryImplTest" time="0.529"/>
+</testsuite>

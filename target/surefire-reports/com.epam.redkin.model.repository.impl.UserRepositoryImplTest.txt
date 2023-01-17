@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.epam.redkin.model.repository.impl.UserRepositoryImplTest
+-------------------------------------------------------------------------------
+Tests run: 14, Failures: 0, Errors: 0, Skipped: 13, Time elapsed: 0.529 s - in com.epam.redkin.model.repository.impl.UserRepositoryImplTest
