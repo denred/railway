@@ -8,10 +8,14 @@ import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.model.repository.CarriageRepository;
 import com.epam.redkin.model.repository.SeatRepository;
 import com.epam.redkin.model.service.CarriageService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.epam.redkin.web.controller.Path.*;
 
 @SuppressWarnings({"ALL", "FieldMayBeFinal"})
 public class CarriageServiceImpl implements CarriageService {
@@ -82,8 +86,14 @@ public class CarriageServiceImpl implements CarriageService {
     }
 
     @Override
-    public List<CarriageDTO> getCarriageDtoListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage) {
-        List<CarriageDTO> allRecords = getAllCarList();
+    public List<CarriageDTO> getCarriageDtoListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage, String trainFilter, String carriageTypeFilter) {
+        List<CarriageDTO> allRecords = getAllCarriageDTOList();
+        if(!StringUtils.isAllBlank(trainFilter, carriageTypeFilter)) {
+            allRecords = getAllCarriageDTOList().stream()
+                    .filter(dto -> StringUtils.isBlank(trainFilter)?true:dto.getTrainNumber().toLowerCase().contains(trainFilter.toLowerCase()))
+                    .filter(dto -> StringUtils.isBlank(carriageTypeFilter)?true:dto.getCarriageType().name().toLowerCase().contains(carriageTypeFilter.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
         return allRecords.subList(currentPage, Math.min(recordsPerPage, allRecords.size()));
     }
 
@@ -99,7 +109,7 @@ public class CarriageServiceImpl implements CarriageService {
     }
 
     @Override
-    public List<CarriageDTO> getAllCarList() {
+    public List<CarriageDTO> getAllCarriageDTOList() {
         List<CarriageDTO> result = carriageRepository.getAllCarriageDTOList();
         for (CarriageDTO car : result) {
             int seat = seatRepository.getSeatsCountByCarriageId(car.getCarId());

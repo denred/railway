@@ -61,6 +61,9 @@
                     <td><input name="seats" class="form-control" value="${countSeat}"></td>
                     <td>
                         <input type="hidden" name="car_id" value="${current_car.carriageId}">
+                        <input type="hidden" name="routeDto" value="${car_list}">
+                        <input type="hidden" name="trainFilter" value="${trainFilter}">
+                        <input type="hidden" name="carriageTypeFilter" value="${carriageTypeFilter}">
                         <input type="submit" class="btn btn-success" name="save_edit_information"
                                value="<fmt:message key="admin.saveInformation"/>">
                     </td>

@@ -26,8 +26,7 @@
                     <select class="btn btn-info dropdown-toggle" name="filter" aria-label="Filter">
                         <option value="trainFilter"><fmt:message key="filter.train"/></option>
                         <option value="routeFilter"><fmt:message key="filter.route"/></option>
-                        <option value="ArrivalStationFilter"><fmt:message key="filter.arrival.station"/></option>
-                        <option value="DepartureStationFilter"><fmt:message key="filter.departure.station"/></option>
+                        <option value="routeNameFilter"><fmt:message key="filter.route.name"/></option>
                     </select>
                 </div>
                 <div class="col-4">

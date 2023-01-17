@@ -72,14 +72,18 @@ public class CreateOrderCommand implements Command {
         List<Seat> seats = seatService.getSeatsByIdBatch(seatsNumber);
         seatValidator.isValidSeat(seats, countOfSeats);
 
-        request.setAttribute("station1", station1);
-        request.setAttribute("station2", station2);
+        StationService stationService = AppContext.getInstance().getStationService();
+        String departure = stationService.getStationById(Integer.parseInt(departureStationId)).getStation();
+        String arrival = stationService.getStationById(Integer.parseInt(arrivalStationId)).getStation();
+
+        request.setAttribute("station1", departure);
+        request.setAttribute("station2", arrival);
         request.setAttribute("travel_time", travelTime);
         request.setAttribute("price", price);
         request.setAttribute("rout_name", routName);
         request.setAttribute("car_number", carNumber);
-        request.setAttribute("departure_station", departureStation);
-        request.setAttribute("arrival_station", arrivalStation);
+        request.setAttribute("departure_station", departure);
+        request.setAttribute("arrival_station", arrival);
         request.setAttribute("departure_date", departureDate);
         request.setAttribute("departure_station_id", departureStationId);
         request.setAttribute("arrival_station_id", arrivalStationId);

@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.*;
 
+import static com.epam.redkin.web.controller.Path.SESSION_USER;
+
 public class SecurityFilter implements Filter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityFilter.class);
@@ -95,7 +97,7 @@ public class SecurityFilter implements Filter {
             return;
         }
 
-        User user = (User) request.getSession().getAttribute(AppContextConstant.SESSION_USER);
+        User user = (User) request.getSession().getAttribute(SESSION_USER);
         if (Objects.isNull(user)) {
             String message = "You are not authorized. Please register to enter the site.";
             LOGGER.error(message);

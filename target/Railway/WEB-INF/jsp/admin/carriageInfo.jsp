@@ -18,6 +18,36 @@
 </h3>
 <div class="container mt-4">
     <div class="d-flex justify-content-center">
+        <form action="controller?action=carriages" method="POST">
+            <div class="row">
+                <div class="col-4">
+                    <input class="form-control" name="trainFilter" type="text"
+                           placeholder="<fmt:message key="filter.train"/>" value="${trainFilter}">
+                </div>
+                <div class="col-4">
+                    <select class="btn btn-info dropdown-toggle" name="carriageTypeFilter">
+                        <c:set var="train_id" value="${current_car.type}"/>
+                        <c:forEach items="${carTypeList}" var="car_type">
+                            <option
+                                    <c:choose>
+                                        <c:when test="${car_type eq current_car.type}">
+                                            selected
+                                        </c:when>
+                                    </c:choose>
+                                    value="${car_type}"><fmt:message key="${car_type}"/>
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <input type="hidden" name="routeDto" value="${car_list}">
+                    <input type="submit" class="btn btn-info" name="filter"
+                           value="<fmt:message key="route.filter"/>">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="d-flex justify-content-center">
         <table class="table table-bordered table-hover caption-top" style="width: 1000px;">
             <thead class="thead-light text-center">
             <tr>
@@ -43,6 +73,8 @@
                     <td>
                         <form action="controller?action=set_carriage" method="POST">
                             <input type="hidden" name="car_id" value="${carriage.carId}">
+                            <input type="hidden" name="trainFilter" value="${trainFilter}">
+                            <input type="hidden" name="carriageTypeFilter" value="${carriageTypeFilter}">
                             <input type="submit" class="btn btn-info" name="edit_info_car"
                                    value="<fmt:message key="admin.editInformation"/>">
                         </form>

@@ -12,6 +12,12 @@
 <body>
 <mrt:navigation/>
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
+<div class="d-flex justify-content-end">
+    <div class="h5 p-2">
+        <fmt:message key="enterRole"/>
+        <mrt:role role="${user.role}"/>
+    </div>
+</div>
 
 
 <div class="container-fluid mx-5 mt-5">

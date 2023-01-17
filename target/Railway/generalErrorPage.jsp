@@ -40,8 +40,11 @@
                     We’re sorry, the page you have looked for does not exist in our
                     website! Maybe go to our home page or try to use a search?
                 </p>
-
-                <a class="btn btn-primary py-3 px-5" href="login.jsp"><fmt:message key="back"/></a>
+                <form action="controller?action=login" method="POST">
+                    <input type="hidden" name="currentPageAbsoluteURL" value="${pageContext.request.requestURL}">
+                    <input type="hidden" name="currentParameters" value="${pageContext.request.getQueryString()}">
+                    <input type="submit" class="btn btn-primary" value="<fmt:message key="back"/>">
+                </form>
             </div>
         </div>
     </div>

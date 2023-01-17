@@ -7,6 +7,7 @@ import com.epam.redkin.web.listener.AppContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,11 +24,15 @@ public class RouteInfoCommand implements Command {
         LOGGER.info("started");
         RouteService routeService = AppContext.getInstance().getRouteService();
         int page = 1;
-        if (request.getParameter(PAGE) != null)
+        if (request.getParameter(PAGE) != null) {
             page = Integer.parseInt(request.getParameter(PAGE));
+        }
+        String filter = request.getParameter(FILTER);
+        String filterValue = request.getParameter(FILTER_VALUE);
         List<RouteInfoDTO> routeDtoList = routeService.getRouteListByCurrentRecordAndRecordsPerPage(
                 (page - 1) * RECORDS_PER_PAGE,
-                RECORDS_PER_PAGE * page);
+                RECORDS_PER_PAGE * page,
+                filter, filterValue);
         int noOfRecords = routeService.getRouteListSize();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
         HttpSession session = request.getSession();

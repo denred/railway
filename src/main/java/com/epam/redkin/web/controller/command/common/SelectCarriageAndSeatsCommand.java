@@ -53,9 +53,11 @@ public class SelectCarriageAndSeatsCommand implements Command {
         request.setAttribute("station1", station1);
         request.setAttribute("station2", station2);
         request.setAttribute("travel_time", travelTime);
-        request.setAttribute("departure_station", departureStation);
+        //request.setAttribute("departure_station", departureStation);
+        request.setAttribute("departure_station", departureStationId);
         request.setAttribute("departure_station_id", departureStationId);
-        request.setAttribute("arrival_station", arrivalStation);
+        request.setAttribute("arrival_station", arrivalStationId);
+        //request.setAttribute("arrival_station", arrivalStation);
         request.setAttribute("arrival_station_id", arrivalStationId);
         request.setAttribute("departure_date", departureDate);
         request.setAttribute("routs_id", routsId);

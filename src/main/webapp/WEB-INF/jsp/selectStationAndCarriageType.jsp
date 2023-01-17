@@ -28,14 +28,14 @@
                 <%--1--%>
                 <td><select class="btn btn-info dropdown-toggle" name="departure_station_id">
                     <c:set var="departure_station" value="${departure_station}"/>
-                    <c:forEach items="${station_list}" var="stationList">
+                    <c:forEach items="${station_list}" var="station">
                         <option
                                 <c:choose>
-                                    <c:when test="${departure_station eq stationList.station}">
+                                    <c:when test="${departure_station eq station.station}">
                                         selected
                                     </c:when>
                                 </c:choose>
-                                value="${stationList.stationId}"><c:out value="${stationList.station}"/>
+                                value="${station.stationId}"><c:out value="${station.station}"/>
                         </option>
                     </c:forEach>
                 </select>
@@ -43,14 +43,14 @@
                 <%--2--%>
                 <td><select class="btn btn-info dropdown-toggle" name="arrival_station_id">
                     <c:set var="arrival_station" value="${arrival_station}"/>
-                    <c:forEach items="${station_list}" var="stationList">
+                    <c:forEach items="${station_list}" var="station">
                         <option
                                 <c:choose>
-                                    <c:when test="${arrival_station eq stationList.station}">
+                                    <c:when test="${arrival_station eq station.station}">
                                         selected
                                     </c:when>
                                 </c:choose>
-                                value="${stationList.stationId}"><c:out value="${stationList.station}"/>
+                                value="${station.stationId}"><c:out value="${station.station}"/>
                         </option>
                     </c:forEach>
                 </select></td>
@@ -66,8 +66,8 @@
                     <input type="hidden" name="station2" value="${station2}">
                     <input type="hidden" name="routs_id" value="${routs_id}">
                     <input type="hidden" name="user_id" value="${user_id}">
-                    <input type="hidden" name="departure_station" value="${departure_station}">
-                    <input type="hidden" name="arrival_station" value="${arrival_station}">
+                    <input type="hidden" name="departure_station" value="${departure_station_id}">
+                    <input type="hidden" name="arrival_station" value="${arrival_station_id}">
                     <input type="hidden" name="departure_date" value="${departure_date}">
                     <input type="hidden" name="train_id" value="${train_id}">
                     <input type="submit" class="btn btn-info" name="add_order"
@@ -79,8 +79,8 @@
 </form>
 <form action="controller?action=search_routes" method="POST">
     <input type="hidden" name="user_id" value="${user_id}">
-    <input type="hidden" name="departure_station" value="${departure_station}">
-    <input type="hidden" name="arrival_station" value="${arrival_station}">
+    <input type="hidden" name="departure_station" value="${departure_station_id}">
+    <input type="hidden" name="arrival_station" value="${arrival_station_id}">
     <input type="hidden" name="departure_date" value="${departure_date}">
     <input type="submit" class="btn btn-primary" value="<fmt:message key="back"/>">
 </form>

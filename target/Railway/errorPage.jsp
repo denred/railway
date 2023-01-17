@@ -38,7 +38,11 @@
                 <h1 class="display-1"><%out.print(((ServiceException) exception).getHttpStatusCode());%></h1>
                 <h1 class="mb-4"><%out.print(exception.getMessage());%></h1>
 
-                <a class="btn btn-primary py-3 px-5" href="login.jsp"><fmt:message key="back"/></a>
+                <form action="controller?action=login" method="POST">
+                    <input type="hidden" name="currentPageAbsoluteURL" value="${pageContext.request.requestURL}">
+                    <input type="hidden" name="currentParameters" value="${pageContext.request.getQueryString()}">
+                    <input type="submit" class="btn btn-primary" value="<fmt:message key="back"/>">
+                </form>
             </div>
         </div>
     </div>

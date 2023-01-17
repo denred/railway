@@ -20,7 +20,7 @@ public interface RouteService {
     void updateRoute(Route route);
 
     List<RouteInfoDTO> getAllRouteList();
-    List<RouteInfoDTO> getRouteListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage);
+    List<RouteInfoDTO> getRouteListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage, String filter, String filterValue);
     int getRouteListSize();
 
 

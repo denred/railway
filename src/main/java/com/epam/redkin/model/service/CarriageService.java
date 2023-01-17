@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CarriageService {
 
-    List<CarriageDTO> getAllCarList();
+    List<CarriageDTO> getAllCarriageDTOList();
 
 
     void removeCar(int carId);
@@ -28,7 +28,7 @@ public interface CarriageService {
 
     List<Carriage> getCarByTrainIdAndCarType(int trainId, String carType);
 
-    List<CarriageDTO> getCarriageDtoListByCurrentRecordAndRecordsPerPage(int i, int i1);
+    List<CarriageDTO> getCarriageDtoListByCurrentRecordAndRecordsPerPage(int i, int i1, String filter, String filterValue);
 
     int getRouteListSize();
 }

@@ -18,20 +18,13 @@ import static com.epam.redkin.model.repository.impl.Constants.*;
 
 public class CarriageRepositoryImpl implements CarriageRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(CarriageRepositoryImpl.class);
-    private final DataSource dataSource;
+    private final static DataSource DATA_SOURCE = ConnectionPools.getProcessing();;
 
-    public CarriageRepositoryImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    public CarriageRepositoryImpl() {
-        dataSource = ConnectionPools.getProcessing();
-    }
 
     @Override
     public int create(Carriage carriage) {
         int key = -1;
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD_CARRIAGE, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, carriage.getType().toString());
             statement.setString(2, carriage.getNumber());
@@ -53,7 +46,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
     @Override
     public Carriage read(int id) {
         Carriage carriage = null;
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_CARRIAGE_BY_ID)) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
@@ -69,7 +62,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
 
     @Override
     public boolean update(Carriage carriage) {
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_CARRIAGE)) {
             statement.setString(1, carriage.getType().toString());
             statement.setString(2, carriage.getNumber());
@@ -84,7 +77,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
 
     @Override
     public boolean delete(int id) {
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_CARRIAGE)) {
             statement.setInt(1, id);
             return statement.executeUpdate() > 0;
@@ -97,7 +90,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
     @Override
     public List<Carriage> getCarriagesByTrainId(int trainId) {
         List<Carriage> carriages = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_CARRIAGES_BY_TRAIN_ID)) {
             statement.setInt(1, trainId);
             ResultSet rs = statement.executeQuery();
@@ -114,7 +107,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
     @Override
     public List<Carriage> getCarriagesByTrainIdAndType(int trainId, String type) {
         List<Carriage> carriages = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_CARRIAGES_BY_TRAIN_ID_AND_TYPE)) {
             statement.setInt(1, trainId);
             statement.setString(2, type);
@@ -133,7 +126,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
     @Override
     public List<CarriageDTO> getAllCarriageDTOList() {
         List<CarriageDTO> carriageDTOList = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = DATA_SOURCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_CARRIAGE)) {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {

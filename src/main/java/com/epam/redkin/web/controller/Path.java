@@ -129,5 +129,16 @@ public class Path {
     public static final String SUM = "sum";
     public static final String PAGE = "page";
 
+    //filters
+    public static final String FILTER = "filter";
+    public static final String FILTER_VALUE = "filter_area";
+    public static final String FILTER_TRAIN = "trainFilter";
+    public static final String FILTER_ROUTE_NUMBER = "routeFilter";
+    public static final String FILTER_ROUTE_NAME = "routeNameFilter";
+    public static final String FILTER_TYPE_CARRIAGE = "carriageTypeFilter";
+    public static final String FILTER_ARRIVAL_STATION = "arrivalStationFilter";
+    public static final String FILTER_DISPATCH_STATION = "departureStationFilter";
+
+
 
 }

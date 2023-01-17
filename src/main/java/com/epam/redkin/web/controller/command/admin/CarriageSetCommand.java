@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-import static com.epam.redkin.web.controller.Path.COMMAND_INFO_CARRIAGES;
-import static com.epam.redkin.web.controller.Path.PAGE_ADMIN_SET_CARRIAGE;
+import static com.epam.redkin.web.controller.Path.*;
+import static com.epam.redkin.web.controller.Path.FILTER_TYPE_CARRIAGE;
 
 public class CarriageSetCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(CarriageSetCommand.class);
@@ -102,6 +102,8 @@ public class CarriageSetCommand implements Command {
             List<CarriageType> carTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
             request.setAttribute("carTypeList", carTypeList);
         }
+        request.setAttribute(FILTER_TRAIN, request.getParameter(FILTER_TRAIN));
+        request.setAttribute(FILTER_TYPE_CARRIAGE, request.getParameter(FILTER_TYPE_CARRIAGE));
         LOGGER.info("done");
         return forward;
     }

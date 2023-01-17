@@ -9,7 +9,7 @@ import java.util.List;
 
 public class StationServiceImpl implements StationService {
 
-    private StationRepository stationRepository;
+    private final StationRepository stationRepository;
 
 
     public StationServiceImpl(StationRepository stationRepository) {
@@ -30,7 +30,7 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public int getStationListSize() {
-        return stationRepository.getAllStations().size();
+        return getAllStationList().size();
     }
 
     @Override
