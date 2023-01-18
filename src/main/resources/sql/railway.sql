@@ -49,13 +49,16 @@ CREATE TABLE IF NOT EXISTS `railway`.`booking` (
                                                `carriage_number` VARCHAR(64) NOT NULL,
                                                `carriage_type` VARCHAR(32) NOT NULL,
                                                `seat_count` INT NOT NULL,
-                                               `seat_number` VARCHAR(2064) NOT NULL,
-                                               `seats_id` VARCHAR(2064) NOT NULL,
+                                               `seat_number` VARCHAR(500) NOT NULL,
+                                               `seats_id` VARCHAR(500) NOT NULL,
                                                `user_id` INT NOT NULL,
                                                `price` DECIMAL(10,2) NOT NULL,
                                                `status` VARCHAR(45) NULL,
                                                 PRIMARY KEY (`id`),
                                                INDEX `fk_booking_user_idx` (`user_id` ASC) VISIBLE,
+                                               CONSTRAINT `transactional` UNIQUE(`route_id`,`dispatch_station`,`dispatch_date`,`arrival_station`,
+                                                                                 `arrival_date`,`train_number`,`carriage_number`,`carriage_type`,
+                                                                                 `seat_number`),
                                                CONSTRAINT `fk_booking_user`
                                                    FOREIGN KEY (`user_id`)
                                                        REFERENCES `railway`.`user` (`id`)

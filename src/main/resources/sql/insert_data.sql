@@ -1,15 +1,6 @@
 
 /*  Insert Users */
-INSERT INTO `railway`.`user` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `birth_date`, `role`, `blocked`, `log_in_token`) VALUES ('1', 'admin@mail.com', 'admin1@Admin', 'Тарас', 'Шевченко', '+380637872234', '1982-09-01', 'admin', '0',NULL);
-INSERT INTO `railway`.`user` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `birth_date`, `role`, `blocked`, `log_in_token`) VALUES ('2', 'user@mail.com', 'user1@User', 'Serhey', 'Petrenko', '+30501238845', '2001-01-22', 'user', '0', NULL);
-INSERT INTO `railway`.`user` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `birth_date`, `role`, `blocked`, `log_in_token`) VALUES ('3', 'user1@mail.com', 'user2@User', 'Павел', 'Старченко', '+30661228897', '1993-02-12', 'user', '0', NULL);
-INSERT INTO `railway`.`user` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `birth_date`, `role`, `blocked`, `log_in_token`) VALUES ('4', 'semen@i.ua', 'semen1@User', 'Владимир', 'Струй', '+30671818234', '1976-03-01', 'user', '0', NULL);
-INSERT INTO `railway`.`user` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `birth_date`, `role`, `blocked`, `log_in_token`) VALUES ('5', 'star@gmail.com', 'star1@User', 'Stas', 'Potapov', '+30441237777', '1987-05-11', 'user', '0', NULL);
-INSERT INTO `railway`.`user` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `birth_date`, `role`, `blocked`, `log_in_token`) VALUES ('6', 'fill@mail.com', 'fill1@User', 'Евгений', 'Новый', '+30562332233', '1976-08-10', 'user', '0' ,NULL);
-INSERT INTO `railway`.`user` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `birth_date`, `role`, `blocked`, `log_in_token`) VALUES ('7', 'yasno@yasno.ua', 'yasno1@User', 'Владимир', 'Старый', '+38077334455', '1976-08-10', 'user', '0', NULL);
-INSERT INTO `railway`.`user` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `birth_date`, `role`, `blocked`, `log_in_token`) VALUES ('8', 'kost@mail.com', 'kost1@User', 'Константин', 'Сидоренко', '+380663332211', '1976-08-10', 'user', '0', NULL);
-INSERT INTO `railway`.`user` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `birth_date`, `role`, `blocked`, `log_in_token`) VALUES ('9', 'mailer@i.ua', 'mailer1@User', 'Ольга', 'Бест', '+38055887736', '1976-08-10', 'user', '0', NULL);
-INSERT INTO `railway`.`user` (`id`, `email`, `password`, `first_name`, `last_name`, `phone`, `birth_date`, `role`, `blocked`, `log_in_token`) VALUES ('10', 'foo@mail.ua', 'foo77@User', 'Игорь', 'Кондратюк', '+38022222222', '1976-08-10', 'user', '1', NULL);
+
 
 /* Insert trains */
 INSERT INTO `railway`.`train` (`id`, `number`) VALUES ('1', '17(СКОВОРОДА ЕКСПРЕС)');

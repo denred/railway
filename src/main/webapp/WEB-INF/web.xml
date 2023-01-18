@@ -49,11 +49,6 @@
         <param-value>UTF-8</param-value>
     </context-param>
 
-   <!-- <context-param>
-        <param-name>jakarta.servlet.jsp.jstl.fmt.localizationContext</param-name>
-        <param-value>com.acme.MyResources</param-value>
-    </context-param>-->
-
     <!--============================================================
    i18n support
    =============================================================-->

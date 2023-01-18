@@ -16,21 +16,17 @@ import java.util.List;
 
 public class OrderRepositoryImpl implements OrderRepository, Constants {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderRepositoryImpl.class);
-    private final DataSource dataSource;
-
-    public OrderRepositoryImpl() {
-        dataSource = ConnectionPools.getProcessing();
-    }
-
-    public OrderRepositoryImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    private final DataSource dataSource = ConnectionPools.getProcessing();
 
     @Override
     public int create(Order entity) {
         int key = -1;
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ADD_ORDER, Statement.RETURN_GENERATED_KEYS)) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(ADD_ORDER, Statement.RETURN_GENERATED_KEYS);
             statement.setObject(1, entity.getOrderDate());
             statement.setInt(2, entity.getRouteId());
             statement.setString(3, entity.getDispatchStation());
@@ -48,16 +44,43 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
             statement.setDouble(15, entity.getPrice());
             statement.setString(16, entity.getOrderStatus().name());
             statement.executeUpdate();
+            connection.commit();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
                 key = resultSet.getInt(1);
             }
         } catch (SQLException e) {
+            try {
+                assert connection != null;
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new DataBaseException("Cannot create order = " + entity);
+            }
             LOGGER.error(e.getMessage());
             throw new DataBaseException("Cannot create order = " + entity);
+        } finally {
+            assert connection != null;
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            assert statement != null;
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
         }
         return key;
     }
+
 
     @Override
     public Order read(int id) {

@@ -1,5 +1,7 @@
 package com.epam.redkin.model.repository;
 
+import java.sql.SQLException;
+
 /**
  * @param <T> the entity of which will be operated
  * @author Denys Redkin
