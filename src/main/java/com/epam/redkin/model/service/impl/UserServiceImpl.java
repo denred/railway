@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.UUID;
 
+import static com.epam.redkin.util.constants.AppContextConstant.COOKIE_REMEMBER_USER_TOKEN;
+import static com.epam.redkin.util.constants.AppContextConstant.COOKIE_REMEMBER_USER_TOKEN_DIVIDER;
 import static com.epam.redkin.web.controller.Path.*;
 
 public class UserServiceImpl implements UserService {

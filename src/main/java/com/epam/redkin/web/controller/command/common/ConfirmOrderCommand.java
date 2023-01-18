@@ -4,7 +4,6 @@ import com.epam.redkin.model.dto.MappingInfoDTO;
 import com.epam.redkin.model.entity.*;
 import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.model.service.*;
-import com.epam.redkin.model.service.*;
 import com.epam.redkin.model.validator.OrderValidator;
 import com.epam.redkin.web.controller.command.Command;
 import com.epam.redkin.web.listener.AppContext;
@@ -19,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.epam.redkin.util.constants.AppContextConstant.*;
 import static com.epam.redkin.web.controller.Path.*;
 
 public class ConfirmOrderCommand implements Command {
@@ -49,7 +49,6 @@ public class ConfirmOrderCommand implements Command {
         Station arrivalStation = stationService.getStationById(Integer.parseInt(stationIdD));
         MappingInfoDTO arrivalMapping = routeMappingService.getMappingInfo(Integer.parseInt(routeId), arrivalStation.getId());
         MappingInfoDTO dispatchMapping = routeMappingService.getMappingInfo(Integer.parseInt(routeId), dispatchStation.getId());
-        Object locale = session.getAttribute(LOCALE);
         String seatsId = Arrays.toString(request.getParameterValues(SEATS_ID));
         try {
             order.setCarriageType(CarriageType.valueOf(request.getParameter(CARRIAGE_TYPE)));
@@ -76,8 +75,8 @@ public class ConfirmOrderCommand implements Command {
 
             sb = new StringBuilder();
             String id = "";
-            for (int i = 0; i < seats.size(); i++) {
-                id = sb.append(seats.get(i).getId()).append(" ").toString();
+            for (Seat seat : seats) {
+                id = sb.append(seat.getId()).append(" ").toString();
             }
             order.setSeatsId(id);
             orderService.addOrder(order, Integer.parseInt(routeId), seats);
@@ -87,7 +86,6 @@ public class ConfirmOrderCommand implements Command {
         }
         orderValidator.isValidOrder(order);
         int userId = user.getUserId();
-        LOGGER.info(userId + "");
         request.setAttribute(USER_ID, userId);
         request.setAttribute(LANGUAGE, session.getAttribute(LOCALE));
         LOGGER.info("done");

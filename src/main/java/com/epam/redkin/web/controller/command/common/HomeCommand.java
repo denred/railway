@@ -1,14 +1,13 @@
 package com.epam.redkin.web.controller.command.common;
 
 import com.epam.redkin.model.entity.User;
-import com.epam.redkin.util.constants.AppContextConstant;
 import com.epam.redkin.web.controller.command.Command;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import static com.epam.redkin.util.constants.AppContextConstant.SESSION_USER;
 import static com.epam.redkin.web.controller.Path.PAGE_HOME;
-import static com.epam.redkin.web.controller.Path.SESSION_USER;
 
 public class HomeCommand implements Command {
     @Override

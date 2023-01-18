@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+import static com.epam.redkin.util.constants.AppContextConstant.*;
 import static com.epam.redkin.web.controller.Path.*;
-import static com.epam.redkin.web.controller.Path.FILTER_TYPE_CARRIAGE;
 
 public class CarriageSetCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(CarriageSetCommand.class);
@@ -37,14 +37,14 @@ public class CarriageSetCommand implements Command {
         CarriageValidator carriageValidator = new CarriageValidator();
         CarriageDTO carriageDTO = new CarriageDTO();
 
-        String carriageId = request.getParameter("car_id");
-        String carriageNumber = request.getParameter("car_number");
-        String trainId = request.getParameter("train_id");
-        String carriageType = request.getParameter("car_type");
-        String countSeats = request.getParameter("seats");
+        String carriageId = request.getParameter(CARRIAGE_ID);
+        String carriageNumber = request.getParameter(CARRIAGE_NUMBER);
+        String trainId = request.getParameter(TRAIN_ID);
+        String carriageType = request.getParameter(CARRIAGE_TYPE);
+        String countSeats = request.getParameter(COUNT_SEATS);
 
         if (StringUtils.isNoneBlank(carriageId, carriageNumber, trainId, carriageType, countSeats)) {
-            String trainNotSelected = trainId.equals("TRAIN_NOT_SELECTED") ? null : trainId;
+            String trainNotSelected = trainId.equals(TRAIN_NOT_SELECTED) ? null : trainId;
             carriageDTO.setCarId(Integer.parseInt(carriageId));
             assert trainNotSelected != null;
             carriageDTO.setTrainId(Integer.parseInt(trainNotSelected));
@@ -59,8 +59,8 @@ public class CarriageSetCommand implements Command {
                 throw new IncorrectDataException("Incorrect data entered");
             }
             try {
-                carriageDTO.setCarriageType(CarriageType.valueOf(request.getParameter("car_type")));
-                carriageDTO.setSeats(Integer.valueOf(request.getParameter("seats")));
+                carriageDTO.setCarriageType(CarriageType.valueOf(carriageType));
+                carriageDTO.setSeats(Integer.valueOf(countSeats));
 
             } catch (IllegalArgumentException e) {
                 LOGGER.error("Incorrect data entered");
@@ -70,11 +70,9 @@ public class CarriageSetCommand implements Command {
             carriageService.updateCar(carriageDTO);
             forward = COMMAND_INFO_CARRIAGES;
         } else if (StringUtils.isNoneBlank(trainId, carriageType, countSeats)) {
-            String trainNotSelected = trainId.equals("TRAIN_NOT_SELECTED") ? null : trainId;
+            String trainNotSelected = trainId.equals(TRAIN_NOT_SELECTED) ? null : trainId;
             assert trainNotSelected != null;
             carriageDTO.setTrainId(Integer.parseInt(trainNotSelected));
-            Train train = trainService.getTrainById(carriageDTO.getTrainId());
-            List<Carriage> trainCarriages = carriageService.getCarByTrainId(train.getId());
             carriageDTO.setCarNumber(carriageNumber);
             try {
                 carriageDTO.setCarriageType(CarriageType.valueOf(carriageType));
@@ -91,16 +89,16 @@ public class CarriageSetCommand implements Command {
             Carriage car = carriageService.getCarById(carId);
             List<Train> trainList = trainService.getAllTrainList();
             List<CarriageType> carTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
-            request.setAttribute("current_car", car);
-            request.setAttribute("trainList", trainList);
-            request.setAttribute("carTypeList", carTypeList);
+            request.setAttribute(CARRIAGE, car);
+            request.setAttribute(TRAIN_LIST, trainList);
+            request.setAttribute(CARRIAGE_TYPE_LIST, carTypeList);
             int countSeat = seatService.getCountSeat(carId);
-            request.setAttribute("countSeat", countSeat);
+            request.setAttribute(COUNT_SEATS, countSeat);
         } else {
             List<Train> trainList = trainService.getAllTrainList();
-            request.setAttribute("trainList", trainList);
+            request.setAttribute(TRAIN_LIST, trainList);
             List<CarriageType> carTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
-            request.setAttribute("carTypeList", carTypeList);
+            request.setAttribute(CARRIAGE_TYPE_LIST, carTypeList);
         }
         request.setAttribute(FILTER_TRAIN, request.getParameter(FILTER_TRAIN));
         request.setAttribute(FILTER_TYPE_CARRIAGE, request.getParameter(FILTER_TYPE_CARRIAGE));

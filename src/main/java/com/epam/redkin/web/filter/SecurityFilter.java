@@ -5,7 +5,6 @@ import com.epam.redkin.model.entity.Role;
 import com.epam.redkin.model.entity.User;
 import com.epam.redkin.model.exception.ForbiddenException;
 import com.epam.redkin.model.exception.UnauthorizedException;
-import com.epam.redkin.util.constants.AppContextConstant;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.*;
 
-import static com.epam.redkin.web.controller.Path.SESSION_USER;
+import static com.epam.redkin.util.constants.AppContextConstant.SESSION_USER;
 
 public class SecurityFilter implements Filter {
 

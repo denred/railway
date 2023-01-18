@@ -1,6 +1,5 @@
 package com.epam.redkin.web.controller.command.common;
 
-import com.epam.redkin.model.entity.User;
 import com.epam.redkin.web.controller.command.Command;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+import static com.epam.redkin.util.constants.AppContextConstant.*;
 import static com.epam.redkin.web.controller.Path.*;
 
 public class I18NCommand implements Command {
@@ -27,7 +27,6 @@ public class I18NCommand implements Command {
             LOGGER.info("Set default language: " + LOCALE_UA);
             session.setAttribute(LOCALE, LOCALE_UA);
         }
-        User user = (User) session.getAttribute(SESSION_USER);
         String page = getRedirectPage(request);
         LOGGER.info("done");
         return page == null ? PAGE_LOGIN : page;

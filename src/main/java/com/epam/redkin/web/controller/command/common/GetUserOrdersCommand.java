@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+import static com.epam.redkin.util.constants.AppContextConstant.*;
 import static com.epam.redkin.web.controller.Path.*;
 
 public class GetUserOrdersCommand implements Command {

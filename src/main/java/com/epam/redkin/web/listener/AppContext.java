@@ -4,8 +4,6 @@ import com.epam.redkin.model.repository.*;
 import com.epam.redkin.model.repository.impl.*;
 import com.epam.redkin.model.service.*;
 import com.epam.redkin.model.service.impl.*;
-import com.epam.redkin.model.service.*;
-import com.epam.redkin.model.service.impl.*;
 
 public class AppContext {
     private static final AppContext appContext = new AppContext();
@@ -22,7 +20,7 @@ public class AppContext {
     private final SeatService seatService = new SeatServiceImpl(seatRepository);
     private final CarriageService carriageService = new CarriageServiceImpl(carRepository, seatRepository);
     private final UserService userService = new UserServiceImpl(userRepository);
-    private final RouteService routeService = new RouteServiceImpl(routsRepository, seatService, carriageService);
+    private final RouteService routeService = new RouteServiceImpl(routsRepository, seatService);
     private final OrderService orderService = new OrderServiceImpl(orderRepository, seatService, seatRepository);
     private final StationService stationService = new StationServiceImpl(stationRepository);
     private final TrainService trainService = new TrainServiceImpl(trainRepository);

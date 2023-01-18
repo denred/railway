@@ -7,12 +7,12 @@ import com.epam.redkin.web.listener.AppContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+import static com.epam.redkin.util.constants.AppContextConstant.*;
 import static com.epam.redkin.web.controller.Path.*;
 
 public class RouteInfoCommand implements Command {

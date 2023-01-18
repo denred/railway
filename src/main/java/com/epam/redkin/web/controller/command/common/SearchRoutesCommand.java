@@ -1,10 +1,8 @@
 package com.epam.redkin.web.controller.command.common;
 
 import com.epam.redkin.model.dto.RoutsOrderDTO;
-import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.model.service.RouteService;
-import com.epam.redkin.model.service.SeatService;
 import com.epam.redkin.model.validator.SearchValidator;
 import com.epam.redkin.web.controller.command.Command;
 import com.epam.redkin.web.listener.AppContext;
@@ -18,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
+import static com.epam.redkin.util.constants.AppContextConstant.*;
 import static com.epam.redkin.web.controller.Path.*;
 
 public class SearchRoutesCommand implements Command {
@@ -44,7 +43,7 @@ public class SearchRoutesCommand implements Command {
         searchValidator.isValidSearch(departureStation, arrivalStation);
         List<RoutsOrderDTO> routeOrderDTOList = routeService
                 .getRouteListWithParameters(departureStation, arrivalStation, departureDate);
-        routeService.fillAvailibleSeats(routeOrderDTOList);
+        routeService.fillAvailableSeats(routeOrderDTOList);
 
         request.setAttribute(ROUTE_ORDER_DTO_LIST, routeOrderDTOList);
         request.setAttribute(USER_ID, userId);

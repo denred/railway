@@ -8,8 +8,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.epam.redkin.util.constants.AppContextConstant.COOKIE_REMEMBER_USER_TOKEN;
 import static com.epam.redkin.web.controller.Path.COMMAND_LOGIN_BY_TOKEN_LINK;
-import static com.epam.redkin.web.controller.Path.COOKIE_REMEMBER_USER_TOKEN;
+
 
 public class RegistrationApprovalCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationApprovalCommand.class);

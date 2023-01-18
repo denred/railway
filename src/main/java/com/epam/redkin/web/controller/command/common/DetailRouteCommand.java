@@ -15,36 +15,36 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
-import static com.epam.redkin.web.controller.Path.LOCALE;
+import static com.epam.redkin.util.constants.AppContextConstant.*;
 import static com.epam.redkin.web.controller.Path.PAGE_ROUTE_DETAIL;
 
 public class DetailRouteCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(DetailRouteCommand.class);
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.debug("DetailRouteCommand started");
+        LOGGER.debug("started");
         RouteMappingService routeMappingService = AppContext.getInstance().getRouteMappingService();
-        String routsId = request.getParameter("routs_id");
-        String userId = request.getParameter("user_id");
-        String departureStation = request.getParameter("departure_station");
-        String arrivalStation = request.getParameter("arrival_station");
+        String routsId = request.getParameter(ROUTE_ID);
+        String userId = request.getParameter(USER_ID);
+        String departureStation = request.getParameter(DEPARTURE_STATION);
+        String arrivalStation = request.getParameter(ARRIVAL_STATION);
         LocalDateTime departureDate;
         try {
-            departureDate = LocalDateTime.parse(request.getParameter("departure_date"));
+            departureDate = LocalDateTime.parse(request.getParameter(DEPARTURE_DATE));
         } catch (DateTimeParseException e) {
             LOGGER.error("Incorrect data entered");
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         List<MappingInfoDTO> allRouteToStationMappingListById = routeMappingService
                 .getAllRoutToStationMappingListById(Integer.parseInt(routsId));
-        request.setAttribute("departure_station", departureStation);
-        request.setAttribute("arrival_station", arrivalStation);
-        request.setAttribute("departure_date", departureDate);
-        request.setAttribute("user_id", userId);
-        request.setAttribute("routs_id", routsId);
-        request.setAttribute("rout_m_list", allRouteToStationMappingListById);
+        request.setAttribute(DEPARTURE_STATION, departureStation);
+        request.setAttribute(ARRIVAL_STATION, arrivalStation);
+        request.setAttribute(DEPARTURE_DATE, departureDate);
+        request.setAttribute(USER_ID, userId);
+        request.setAttribute(ROUTE_ID, routsId);
+        request.setAttribute(ROUTE_MAPPING_LIST, allRouteToStationMappingListById);
         HttpSession session = request.getSession();
-        request.setAttribute("lang", session.getAttribute(LOCALE));
+        request.setAttribute(LANGUAGE, session.getAttribute(LOCALE));
         return PAGE_ROUTE_DETAIL;
     }
 }

@@ -58,7 +58,7 @@
                     </select>
                     </td>
                     <td><input name="car_number" class="form-control" value="${current_car.number}"></td>
-                    <td><input name="seats" class="form-control" value="${countSeat}"></td>
+                    <td><input name="count_of_seats" class="form-control" value="${count_of_seats}"></td>
                     <td>
                         <input type="hidden" name="car_id" value="${current_car.carriageId}">
                         <input type="hidden" name="routeDto" value="${car_list}">

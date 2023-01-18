@@ -1,3 +1,8 @@
+<jsp:useBean id="carriageTypeFilter" scope="request" type="java.lang.String"/>
+<jsp:useBean id="trainFilter" scope="request" type="java.lang.String"/>
+<jsp:useBean id="car_list" scope="request" type="java.util.List"/>
+<jsp:useBean id="count_of_seats" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="current_car" scope="request" type="com.epam.redkin.model.entity.Carriage"/>
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
@@ -28,37 +33,47 @@
             <tr>
                 <form action="controller?action=set_carriage" method="POST">
                     <input type="hidden" name="car_id" value="${current_car.carriageId}">
-                    <td><select class="btn btn-info dropdown-toggle" name="train_id">
-                        <option value="TRAIN_NOT_SELECTED"><fmt:message key="in.the.depot"/></option>
-                        <c:set var="train_id" value="${current_car.trainId}"/>
-                        <c:forEach items="${trainList}" var="train">
-                            <option
-                                    <c:choose>
-                                        <c:when test="${train.id eq train_id}">
-                                            selected
-                                        </c:when>
-                                    </c:choose>
-                                    value="${train.id}"><c:out value="${train.number}"/>
-                            </option>
-                        </c:forEach>
-                    </select>
+                    <td><label>
+                        <select class="btn btn-info dropdown-toggle" name="train_id">
+                            <option value="TRAIN_NOT_SELECTED"><fmt:message key="in.the.depot"/></option>
+                            <c:set var="train_id" value="${current_car.trainId}"/>
+                            <jsp:useBean id="trainList" scope="request" type="java.util.List"/>
+                            <c:forEach items="${trainList}" var="train">
+                                <option
+                                        <c:choose>
+                                            <c:when test="${train.id eq train_id}">
+                                                selected
+                                            </c:when>
+                                        </c:choose>
+                                        value="${train.id}"><c:out value="${train.number}"/>
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </label>
                     </td>
-                    <td><select class="btn btn-info dropdown-toggle" name="car_type">
-                        <c:set var="train_id" value="${current_car.type}"/>
-                        <c:forEach items="${carTypeList}" var="car_type">
-                            <option
-                                    <c:choose>
-                                        <c:when test="${car_type eq current_car.type}">
-                                            selected
-                                        </c:when>
-                                    </c:choose>
-                                    value="${car_type}"><fmt:message key="${car_type}"/>
-                            </option>
-                        </c:forEach>
-                    </select>
+                    <td><label>
+                        <select class="btn btn-info dropdown-toggle" name="car_type">
+                            <c:set var="train_id" value="${current_car.type}"/>
+                            <jsp:useBean id="carTypeList" scope="request" type="java.util.List"/>
+                            <c:forEach items="${carTypeList}" var="car_type">
+                                <option
+                                        <c:choose>
+                                            <c:when test="${car_type eq current_car.type}">
+                                                selected
+                                            </c:when>
+                                        </c:choose>
+                                        value="${car_type}"><fmt:message key="${car_type}"/>
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </label>
                     </td>
-                    <td><input name="car_number" class="form-control" value="${current_car.number}"></td>
-                    <td><input name="seats" class="form-control" value="${countSeat}"></td>
+                    <td><label>
+                        <input name="car_number" class="form-control" value="${current_car.number}">
+                    </label></td>
+                    <td><label>
+                        <input name="count_of_seats" class="form-control" value="${count_of_seats}">
+                    </label></td>
                     <td>
                         <input type="hidden" name="car_id" value="${current_car.carriageId}">
                         <input type="hidden" name="routeDto" value="${car_list}">

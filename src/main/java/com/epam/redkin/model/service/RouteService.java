@@ -28,6 +28,6 @@ public interface RouteService {
 
     List<RoutsOrderDTO> getRouteListWithParameters(String departureStation, String arrivalStation, LocalDateTime departureDate);
 
-    void fillAvailibleSeats(List<RoutsOrderDTO> routeOrderDTOList);
+    void fillAvailableSeats(List<RoutsOrderDTO> routeOrderDTOList);
 }
 

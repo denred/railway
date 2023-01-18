@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+import static com.epam.redkin.util.constants.AppContextConstant.*;
 import static com.epam.redkin.web.controller.Path.*;
 
 public class CarriageInfoCommand implements Command {
@@ -26,8 +27,8 @@ public class CarriageInfoCommand implements Command {
         CarriageService carriageService = AppContext.getInstance().getCarriageService();
         List<CarriageType> carriageTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
         int page = 1;
-        if (request.getParameter("page") != null)
-            page = Integer.parseInt(request.getParameter("page"));
+        if (request.getParameter(PAGE) != null)
+            page = Integer.parseInt(request.getParameter(PAGE));
         String trainFilter = request.getParameter(FILTER_TRAIN);
         String carriageFilter = request.getParameter(FILTER_TYPE_CARRIAGE);
         List<CarriageDTO> carriageDtoList = carriageService.getCarriageDtoListByCurrentRecordAndRecordsPerPage(
@@ -36,14 +37,13 @@ public class CarriageInfoCommand implements Command {
                 trainFilter, carriageFilter);
         int noOfRecords = carriageService.getRouteListSize();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
-        request.setAttribute("recordsPerPage", RECORDS_PER_PAGE);
-        request.setAttribute("noOfPages", noOfPages);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("carTypeList", carriageTypeList);
+        request.setAttribute(PAGE_RECORDS, RECORDS_PER_PAGE);
+        request.setAttribute(PAGE_COUNT, noOfPages);
+        request.setAttribute(CURRENT_PAGE, page);
+        request.setAttribute(CARRIAGE_TYPE_LIST, carriageTypeList);
         request.setAttribute(FILTER_TRAIN, trainFilter);
         request.setAttribute(FILTER_TYPE_CARRIAGE, carriageFilter);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("car_list", carriageDtoList);
+        request.setAttribute(CARRIAGE_DTO_LIST, carriageDtoList);
         LOGGER.info("done");
         return PAGE_ADMIN_INFO_CARRIAGE;
     }

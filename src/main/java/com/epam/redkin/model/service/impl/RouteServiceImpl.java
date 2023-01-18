@@ -7,7 +7,6 @@ import com.epam.redkin.model.dto.StationDTO;
 import com.epam.redkin.model.entity.CarriageType;
 import com.epam.redkin.model.entity.Route;
 import com.epam.redkin.model.repository.RouteRepository;
-import com.epam.redkin.model.service.CarriageService;
 import com.epam.redkin.model.service.RouteService;
 import com.epam.redkin.model.service.SeatService;
 import org.apache.commons.lang3.StringUtils;
@@ -18,19 +17,17 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.epam.redkin.web.controller.Path.*;
+import static com.epam.redkin.util.constants.AppContextConstant.*;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class RouteServiceImpl implements RouteService {
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteServiceImpl.class);
-    private final CarriageService carriageService;
     private final RouteRepository routeRepository;
     private final SeatService seatService;
 
 
-    public RouteServiceImpl(RouteRepository routsRepository, SeatService seatService, CarriageService carriageService) {
+    public RouteServiceImpl(RouteRepository routsRepository, SeatService seatService) {
         this.routeRepository = routsRepository;
-        this.carriageService = carriageService;
         this.seatService = seatService;
     }
 
@@ -84,12 +81,12 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public void fillAvailibleSeats(List<RoutsOrderDTO> routeOrderDTOList) {
+    public void fillAvailableSeats(List<RoutsOrderDTO> routeOrderDTOList) {
+        LOGGER.info("Started the method fillAvailableSeats");
         List<CarriageType> carriageTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
         routeOrderDTOList.forEach(route -> {
             HashMap<CarriageType, Integer> availableSeats = new HashMap<>();
             carriageTypeList.forEach(type -> {
-                StringBuilder sb = new StringBuilder();
                 int count = seatService.getCountSeatByCarType(route.getTrainId(), type);
                 if (count > 0) {
                     availableSeats.put(type, count);
@@ -159,9 +156,9 @@ public class RouteServiceImpl implements RouteService {
         routsOrderDto.setRoutsId(stationDto.getRoutsId());
         routsOrderDto.setTrainId(stationDto.getTrainId());
         routsOrderDto.setTrainNumber(stationDto.getTrainNumber());
-        int coutnFirstClassSeats = seatService.getCountSeatByCarType(stationDto.getTrainId(), CarriageType.FIRST_CLASS);
+        int countFirstClassSeats = seatService.getCountSeatByCarType(stationDto.getTrainId(), CarriageType.FIRST_CLASS);
         int countSecondClassSeats = seatService.getCountSeatByCarType(stationDto.getTrainId(), CarriageType.SECOND_CLASS);
-        routsOrderDto.setFirstClassFreeSeatsCount(coutnFirstClassSeats);
+        routsOrderDto.setFirstClassFreeSeatsCount(countFirstClassSeats);
         routsOrderDto.setSecondClassFreeSeatsCount(countSecondClassSeats);
 
         return routsOrderDto;

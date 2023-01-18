@@ -3,7 +3,6 @@ package com.epam.redkin.web.controller.command.common;
 import com.epam.redkin.model.builder.UserBuilder;
 import com.epam.redkin.model.entity.Role;
 import com.epam.redkin.model.entity.User;
-import com.epam.redkin.model.exception.IncorrectDataException;
 import com.epam.redkin.model.service.UserService;
 import com.epam.redkin.model.validator.RegistrationValidator;
 import com.epam.redkin.web.controller.command.Command;
@@ -15,8 +14,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Date;
 
+import static com.epam.redkin.util.constants.AppContextConstant.*;
 import static com.epam.redkin.web.controller.Path.*;
 
 public class RegistrationCommand implements Command {
