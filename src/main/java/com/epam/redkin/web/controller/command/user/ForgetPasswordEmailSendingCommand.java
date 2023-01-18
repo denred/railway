@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.epam.redkin.util.constants.AppContextConstant.EMAIL;
 import static com.epam.redkin.web.controller.Path.*;
 
 public class ForgetPasswordEmailSendingCommand implements Command {
