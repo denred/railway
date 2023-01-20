@@ -5,6 +5,7 @@ import com.epam.redkin.model.entity.Station;
 import com.epam.redkin.model.repository.StationRepository;
 import com.epam.redkin.model.service.StationService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class StationServiceImpl implements StationService {
@@ -35,7 +36,11 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public void updateStation(Station station) {
-        stationRepository.update(station);
+        try {
+            stationRepository.update(station);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -50,6 +55,10 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public void addStation(Station station) {
-        stationRepository.create(station);
+        try {
+            stationRepository.create(station);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -24,14 +24,14 @@ public class RegistrationCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
-        String forward= PAGE_REGISTRATION;
+        String forward = PAGE_REGISTRATION;
         String email = request.getParameter(EMAIL);
         String password = request.getParameter(PASSWORD);
         String firstName = request.getParameter(FIRST_NAME);
         String lastName = request.getParameter(LAST_NAME);
         String phoneNumber = request.getParameter(PHONE_NUMBER);
         String birthDate = request.getParameter(BIRTH_DATE);
-        if(StringUtils.isNoneBlank(email,password,firstName,lastName,phoneNumber,birthDate)) {
+        if (StringUtils.isNoneBlank(email, password, firstName, lastName, phoneNumber, birthDate)) {
             UserService userService = AppContext.getInstance().getUserService();
             User user = constructUser(request);
             RegistrationValidator registrationValidator = new RegistrationValidator();

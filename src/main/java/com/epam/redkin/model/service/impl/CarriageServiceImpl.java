@@ -12,10 +12,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.epam.redkin.web.controller.Path.*;
 
 @SuppressWarnings({"ALL", "FieldMayBeFinal"})
 public class CarriageServiceImpl implements CarriageService {
@@ -31,7 +31,11 @@ public class CarriageServiceImpl implements CarriageService {
     @Override
     public void updateCar(CarriageDTO carriageDTO) {
         Carriage car = getCarFromCarDto(carriageDTO);
-        carriageRepository.update(car);
+        try {
+            carriageRepository.update(car);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         int countSeatBusy = seatRepository.getBusySeatsCountByCarriageId(carriageDTO.getCarId());
         int countSeat = seatRepository.getSeatsCountByCarriageId(carriageDTO.getCarId());
         if (countSeatBusy == 0) {
@@ -39,14 +43,22 @@ public class CarriageServiceImpl implements CarriageService {
                 seatRepository.deleteAllSeatsByCarriageId(carriageDTO.getCarId());
                 for (int i = 1; i <= carriageDTO.getSeats(); i++) {
                     Seat seat = getSeatFromCarDto(carriageDTO, String.valueOf(i));
-                    seatRepository.create(seat);
+                    try {
+                        seatRepository.create(seat);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
             if (countSeat < carriageDTO.getSeats()) {
                 for (int i = countSeat + 1; i <= carriageDTO.getSeats(); i++) {
                     Seat seat = getSeatFromCarDto(carriageDTO, String.valueOf(i));
                     LOGGER.debug("1" + seat.getSeatNumber() + " - " + seat.getCarriageId());
-                    seatRepository.create(seat);
+                    try {
+                        seatRepository.create(seat);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         } else {
@@ -71,12 +83,20 @@ public class CarriageServiceImpl implements CarriageService {
         Carriage carriage = getCarFromCarDto(carriageDTO);
         int carriageId = carriage.getCarriageId();
         if (carriageRepository.read(carriageId) == null) {
-            carriageId = carriageRepository.create(carriage);
+            try {
+                carriageId = carriageRepository.create(carriage);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         carriageDTO.setCarId(carriageId);
         for (int i = 1; i <= carriageDTO.getSeats(); i++) {
             Seat seat = getSeatFromCarDto(carriageDTO, String.valueOf(i));
-            seatRepository.create(seat);
+            try {
+                seatRepository.create(seat);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

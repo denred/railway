@@ -1,5 +1,6 @@
 package com.epam.redkin.web.listener;
 
+import com.epam.redkin.model.connectionpool.ConnectionPools;
 import com.epam.redkin.model.repository.*;
 import com.epam.redkin.model.repository.impl.*;
 import com.epam.redkin.model.service.*;
@@ -8,12 +9,12 @@ import com.epam.redkin.model.service.impl.*;
 public class AppContext {
     private static final AppContext appContext = new AppContext();
 
-    private final UserRepository userRepository = new UserRepositoryImpl();
-    private final OrderRepository orderRepository = new OrderRepositoryImpl();
+    private final UserRepository userRepository = new UserRepositoryImpl(ConnectionPools.getProcessing());
+    private final OrderRepository orderRepository = new OrderRepositoryImpl(ConnectionPools.getProcessing());
     private final StationRepository stationRepository = new StationRepositoryImpl();
     private final RouteRepository routsRepository = new RouteRepositoryImpl();
     private final TrainRepository trainRepository = new TrainRepositoryImpl();
-    private final CarriageRepository carRepository = new CarriageRepositoryImpl();
+    private final CarriageRepository carRepository = new CarriageRepositoryImpl(ConnectionPools.getProcessing());
     private final RoutePointRepository routePointRepository = new RoutePointRepositoryImpl();
     private final SeatRepository seatRepository = new SeatRepositoryImpl();
 

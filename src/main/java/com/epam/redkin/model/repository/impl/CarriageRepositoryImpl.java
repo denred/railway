@@ -1,6 +1,5 @@
 package com.epam.redkin.model.repository.impl;
 
-import com.epam.redkin.model.connectionpool.ConnectionPools;
 import com.epam.redkin.model.dto.CarriageDTO;
 import com.epam.redkin.model.exception.DataBaseException;
 import com.epam.redkin.model.repository.CarriageRepository;
@@ -18,13 +17,16 @@ import static com.epam.redkin.model.repository.impl.Constants.*;
 
 public class CarriageRepositoryImpl implements CarriageRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(CarriageRepositoryImpl.class);
-    private final static DataSource DATA_SOURCE = ConnectionPools.getProcessing();;
+    private final DataSource dataSource;
 
+    public CarriageRepositoryImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
     public int create(Carriage carriage) {
         int key = -1;
-        try (Connection connection = DATA_SOURCE.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD_CARRIAGE, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, carriage.getType().toString());
             statement.setString(2, carriage.getNumber());
@@ -46,7 +48,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
     @Override
     public Carriage read(int id) {
         Carriage carriage = null;
-        try (Connection connection = DATA_SOURCE.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_CARRIAGE_BY_ID)) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
@@ -62,7 +64,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
 
     @Override
     public boolean update(Carriage carriage) {
-        try (Connection connection = DATA_SOURCE.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_CARRIAGE)) {
             statement.setString(1, carriage.getType().toString());
             statement.setString(2, carriage.getNumber());
@@ -76,11 +78,11 @@ public class CarriageRepositoryImpl implements CarriageRepository {
     }
 
     @Override
-    public boolean delete(int id) {
-        try (Connection connection = DATA_SOURCE.getConnection();
+    public void delete(int id) {
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_CARRIAGE)) {
             statement.setInt(1, id);
-            return statement.executeUpdate() > 0;
+            statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             throw new DataBaseException("Cannot delete carriage from database with carriage_id = " + id);
@@ -90,7 +92,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
     @Override
     public List<Carriage> getCarriagesByTrainId(int trainId) {
         List<Carriage> carriages = new ArrayList<>();
-        try (Connection connection = DATA_SOURCE.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_CARRIAGES_BY_TRAIN_ID)) {
             statement.setInt(1, trainId);
             ResultSet rs = statement.executeQuery();
@@ -107,7 +109,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
     @Override
     public List<Carriage> getCarriagesByTrainIdAndType(int trainId, String type) {
         List<Carriage> carriages = new ArrayList<>();
-        try (Connection connection = DATA_SOURCE.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_CARRIAGES_BY_TRAIN_ID_AND_TYPE)) {
             statement.setInt(1, trainId);
             statement.setString(2, type);
@@ -126,7 +128,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
     @Override
     public List<CarriageDTO> getAllCarriageDTOList() {
         List<CarriageDTO> carriageDTOList = new ArrayList<>();
-        try (Connection connection = DATA_SOURCE.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_CARRIAGE)) {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {

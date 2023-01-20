@@ -80,11 +80,11 @@ public class TrainRepositoryImpl implements TrainRepository {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_TRAIN)) {
             statement.setInt(1, id);
-            return statement.executeUpdate() > 0;
+            statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             throw new DataBaseException("Cannot delete train from database, id = " + id);

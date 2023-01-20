@@ -14,7 +14,7 @@ public interface EntityDAO<T> {
      * @param entity which will be created in database
      * @return the id of the created entity
      */
-    int create(T entity);
+    int create(T entity) throws RuntimeException, SQLException;
 
     /**
      * Return entity from database by the id
@@ -30,13 +30,12 @@ public interface EntityDAO<T> {
      * @param entity entity which necessary update
      * @return true if update successful and false otherwise
      */
-    boolean update(T entity);
+    boolean update(T entity) throws SQLException;
 
     /**
      * Delete entity in database by id
      *
      * @param id id of entity in database which will be deleted
-     * @return true if delete successful and false otherwise
      */
-    boolean delete(int id);
+    void delete(int id);
 }

@@ -21,6 +21,8 @@ public class AppContextConstant {
     public static final String USER_LOGIN = "login";
     public static final String USER_ROLE = "user";
     public static final String ERROR_MESSAGE = "Login or password can't be empty";
+    public static final String COUNT = "count";
+    public static final String LIST_OF_USERS = "user_list";
 
 
     public static final String FIRST_NAME = "first_name";
@@ -70,14 +72,16 @@ public class AppContextConstant {
     //Route mapping
     public static final String ROUTE_MAPPING_LIST = "rout_m_list";
 
-
-
     //Util
     public static final String PAGE_RECORDS = "recordsPerPage";
     public static final String PAGE_COUNT = "noOfPages";
     public static final String CURRENT_PAGE = "currentPage";
     public static final String SUM = "sum";
     public static final String PAGE = "page";
+    public static final String ID = "id";
+    public static final String ROLE = "role";
+    public static final String BLOCKED = "blocked";
+    public static final String LOGIN_TOKEN = "log_in_token";
 
     //filters
     public static final String FILTER = "filter";

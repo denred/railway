@@ -54,11 +54,12 @@ public interface Constants {
             "birth_date = ?, role = ?, blocked = ?, log_in_token = ? WHERE id = ?";
     String DELETE_USER = "DELETE FROM user WHERE id = ?";
     String GET_USER_BY_EMAIL = "SELECT * FROM user WHERE email = ? LIMIT 1";
-    String GET_USERS_BY_ROLE = "SELECT * FROM user WHERE role = ? ORDER BY id";
+    String GET_USERS_BY_ROLE = "SELECT * FROM user WHERE role = ? %s ORDER BY id LIMIT ? , ?";
     String UPDATE_BLOCKED = "UPDATE user SET blocked = ? WHERE id = ?";
     String UPDATE_USER_LOG_IN_TOKEN_BY_ID = "UPDATE user SET user.log_in_token = (?) WHERE user.id = (?)";
     String FIND_USER_BY_ID_AND_TOKEN = "SELECT * FROM user WHERE id = (?) AND log_in_token = (?)";
     String UPDATE_USER_LOG_IN_TOKEN_TO_NULL = "UPDATE user SET log_in_token = NULL WHERE id = (?)";
+    String GET_COUNT_OF_USERS = "SELECT count(*) as count FROM user WHERE role = 'user' %s";
 
     /* ROUTES */
     String GET_ROUTE_LIST_WITH_PARAMETERS = "SELECT r.name, r.number, r.id, station, " +

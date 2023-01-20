@@ -86,11 +86,11 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_ROUTE)) {
             statement.setInt(1, id);
-            return statement.executeUpdate() > 0;
+            statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             throw new DataBaseException("Can`t delete route. id = " + id);

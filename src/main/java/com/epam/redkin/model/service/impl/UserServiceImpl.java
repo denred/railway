@@ -14,7 +14,9 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static com.epam.redkin.util.constants.AppContextConstant.COOKIE_REMEMBER_USER_TOKEN;
@@ -40,7 +42,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User isValidUser(String email, String password) {
-        User user = userRepository.getUserByEmail(email);
+        User user;
+        try {
+            user = userRepository.getUserByEmail(email);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         if (user.getEmail() != null && !user.isBlocked()) {
             System.out.println(user.getPassword());
             System.out.println(password);
@@ -95,10 +102,6 @@ public class UserServiceImpl implements UserService {
         userRepository.updateBlocked(idUser, blockStatus);
     }
 
-    @Override
-    public List<User> getUserInfo(String userRole) {
-        return userRepository.getUsersByRole(userRole);
-    }
 
     @Override
     public User read(int userId) {
@@ -112,15 +115,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUserListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage) {
-        List<User> allRecords = userRepository.getUsersByRole(Role.USER.name());
-        return allRecords.subList(currentPage, Math.min(recordsPerPage, allRecords.size()));
+    public List<User> getUserList(int offset, int limit, Map<String, String> search) {
+        List<User> userList;
+        try {
+            userList = userRepository.getUsersByRole(Role.USER.name(), offset, limit, search);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return userList;
     }
 
-    @Override
-    public int getUserListSize() {
-        return userRepository.getUsersByRole(Role.USER.name()).size();
-    }
 
     @Override
     public void sendLogInTokenIfForgetPassword(String email, String pageRootUrl) throws ServiceException {
@@ -195,6 +199,20 @@ public class UserServiceImpl implements UserService {
         } catch (DataBaseException e) {
             throw new ServiceException(e.getMessage());
         }
+    }
+
+    @Override
+    public int getUserCount(Map<String, String> search) {
+        LOGGER.info("Started the method getUserCount");
+        int userCount = 0;
+        try {
+            userCount = userRepository.getUserCount(search);
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+            throw new DataBaseException("Cannot close the ResultSet", e);
+        }
+        LOGGER.info("The method getUserCount done, count of users: " + userCount);
+        return userCount;
     }
 
     private String constructLogInLink(String pageRootUrl, String token) {

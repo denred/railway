@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,7 +35,11 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public void addRout(Route route) {
-        routeRepository.create(route);
+        try {
+            routeRepository.create(route);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -104,7 +109,11 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public void updateRoute(Route route) {
-        routeRepository.update(route);
+        try {
+            routeRepository.update(route);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

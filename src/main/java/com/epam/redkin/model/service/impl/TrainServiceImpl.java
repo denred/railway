@@ -5,6 +5,7 @@ import com.epam.redkin.model.entity.Train;
 import com.epam.redkin.model.repository.TrainRepository;
 import com.epam.redkin.model.service.TrainService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class TrainServiceImpl implements TrainService {
@@ -34,12 +35,20 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public void updateTrain(Train train) {
-        trainRepository.update(train);
+        try {
+            trainRepository.update(train);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void addTrain(Train train) {
-        trainRepository.create(train);
+        try {
+            trainRepository.create(train);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

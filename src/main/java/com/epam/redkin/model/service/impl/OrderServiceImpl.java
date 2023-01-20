@@ -12,6 +12,7 @@ import com.epam.redkin.model.service.SeatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,7 +34,11 @@ public class OrderServiceImpl implements OrderService {
     public void addOrder(Order order, int routsId, List<Seat> seats) {
         order.setPrice(order.getCarrType().getPrice() * order.getCountOfSeats());
         seats.forEach(seat -> seatRepository.reservedSeat(seat.getId()));
-        orderRepository.create(order);
+        try {
+            orderRepository.create(order);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

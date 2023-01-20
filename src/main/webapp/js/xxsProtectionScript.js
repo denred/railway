@@ -4,7 +4,7 @@ const replaceVulnerableChars = (array) => {
     let ap = /'/g;
     let ic = /"/g;
 
-    array.forEach(function(element)  {
+    array.forEach(function (element) {
         element.value = element.value
             .replace(lt, "&lt;")
             .replace(gt, "&gt;")
@@ -23,19 +23,45 @@ const xssProtectionListener = (emenent) => {
 }
 
 
-
 const submitButtons = document.querySelectorAll('.submit');
 
 
-
-submitButtons.forEach(function(button) {
+submitButtons.forEach(function (button) {
     xssProtectionListener(button);
 })
 
 
-window.onload = function() {
-    document.getElementById('mylink').onclick = function() {
+window.onload = function () {
+    document.getElementById('mylink').onclick = function () {
         document.getElementById('myform').submit();
         return false;
     };
 };
+
+const searchFocus = document.getElementsB('search-focus');
+const keys = [
+    { keyCode: 'AltLeft', isTriggered: false },
+    { keyCode: 'ControlLeft', isTriggered: false },
+];
+
+window.addEventListener('keydown', (e) => {
+    keys.forEach((obj) => {
+        if (obj.keyCode === e.code) {
+            obj.isTriggered = true;
+        }
+    });
+
+    const shortcutTriggered = keys.filter((obj) => obj.isTriggered).length === keys.length;
+
+    if (shortcutTriggered) {
+        searchFocus.focus();
+    }
+});
+
+window.addEventListener('keyup', (e) => {
+    keys.forEach((obj) => {
+        if (obj.keyCode === e.code) {
+            obj.isTriggered = false;
+        }
+    });
+});
