@@ -2,7 +2,7 @@ package com.epam.redkin.model.repository.impl;
 
 import com.epam.redkin.model.connectionpool.ConnectionPools;
 import com.epam.redkin.model.entity.Train;
-import com.epam.redkin.model.exception.DataBaseException;
+import com.epam.redkin.model.exception.DAOException;
 import com.epam.redkin.model.repository.TrainRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +39,7 @@ public class TrainRepositoryImpl implements TrainRepository {
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DataBaseException(
+            throw new DAOException(
                     "Cannot add train into database, train number = " + (train == null ? null : train.getNumber()));
         }
         return key;
@@ -57,7 +57,7 @@ public class TrainRepositoryImpl implements TrainRepository {
             }
         } catch (SQLException | NullPointerException e) {
             LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot read train from database, train id = " + id);
+            throw new DAOException("Cannot read train from database, train id = " + id);
         }
         return train;
     }
@@ -75,7 +75,7 @@ public class TrainRepositoryImpl implements TrainRepository {
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot update train from database, train = " + train);
+            throw new DAOException("Cannot update train from database, train = " + train);
         }
     }
 
@@ -87,7 +87,7 @@ public class TrainRepositoryImpl implements TrainRepository {
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot delete train from database, id = " + id);
+            throw new DAOException("Cannot delete train from database, id = " + id);
         }
     }
 
@@ -102,7 +102,7 @@ public class TrainRepositoryImpl implements TrainRepository {
             }
         } catch (SQLException | NullPointerException e) {
             LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot get list of train from database.");
+            throw new DAOException("Cannot get list of train from database.");
         }
         return trains;
     }

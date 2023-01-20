@@ -3,7 +3,7 @@ package com.epam.redkin.model.repository.impl;
 import com.epam.redkin.model.builder.UserBuilder;
 import com.epam.redkin.model.entity.Role;
 import com.epam.redkin.model.entity.User;
-import com.epam.redkin.model.exception.DataBaseException;
+import com.epam.redkin.model.exception.DAOException;
 import com.epam.redkin.model.repository.UserRepository;
 import org.apache.commons.dbutils.DbUtils;
 import org.slf4j.Logger;
@@ -50,14 +50,14 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (SQLException | NullPointerException e) {
             assert connection != null;
             connection.rollback();
-            LOGGER.error(e.getClass() + " in method create: " + e.getMessage());
-            throw new DataBaseException("Cannot add user into database, user = " + user, e);
+            LOGGER.error(e.getClass() + " in method create: " + e);
+            throw new DAOException("Cannot add user into database, user = " + user, e);
         } finally {
             assert connection != null;
             connection.setAutoCommit(true);
-            DbUtils.close(connection);
-            DbUtils.close(statement);
             DbUtils.close(resultSet);
+            DbUtils.close(statement);
+            DbUtils.close(connection);
         }
         return key;
     }
@@ -76,8 +76,8 @@ public class UserRepositoryImpl implements UserRepository {
             }
             LOGGER.info("User successfully received from database. User: " + user);
         } catch (SQLException | NullPointerException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot read user from database, user_id = " + id, e);
+            LOGGER.error("Cannot read user from database, user_id = " + id, e);
+            throw new DAOException("Cannot read user from database, user_id = " + id, e);
         }
         return user;
     }
@@ -101,13 +101,13 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (SQLException e) {
             assert connection != null;
             connection.rollback();
-            LOGGER.error(e.getClass() + " in method update: " + e.getMessage());
-            throw new DataBaseException("Cannot update user, user = " + user, e);
+            LOGGER.error(e.getClass() + " in method update: " + e);
+            throw new DAOException("Cannot update user, user = " + user, e);
         } finally {
             assert connection != null;
             connection.setAutoCommit(true);
-            DbUtils.close(connection);
             DbUtils.close(statement);
+            DbUtils.close(connection);
         }
         return updateUser;
     }
@@ -121,8 +121,8 @@ public class UserRepositoryImpl implements UserRepository {
             statement.executeUpdate();
             LOGGER.info("Delete method done");
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot delete user with id = " + id, e);
+            LOGGER.error("Cannot delete user with id = " + id, e);
+            throw new DAOException("Cannot delete user with id = " + id, e);
         }
 
     }
@@ -141,8 +141,8 @@ public class UserRepositoryImpl implements UserRepository {
             }
             LOGGER.info("User successfully received from database. User: " + user);
         } catch (SQLException | NullPointerException e) {
-            LOGGER.error(e.getClass() + " in method getUserByEmail: " + e.getMessage());
-            throw new DataBaseException("Cannot extract user with email = " + email, e);
+            LOGGER.error(e.getClass() + " in method getUserByEmail: " + e);
+            throw new DAOException("Cannot extract user with email = " + email, e);
         } finally {
             DbUtils.close(resultSet);
         }
@@ -159,8 +159,8 @@ public class UserRepositoryImpl implements UserRepository {
             statement.setString(1, email);
             userExist = statement.executeQuery().next();
         } catch (SQLException | NullPointerException e) {
-            LOGGER.error(e.getClass() + " in method checkUserByEmail: " + e.getMessage());
-            throw new DataBaseException("User is not valid with email = " + email, e);
+            LOGGER.error(e.getClass() + " in method checkUserByEmail: " + e);
+            throw new DAOException("User is not valid with email = " + email, e);
         }
         LOGGER.info("checkUserByEmail method done");
         return userExist;
@@ -183,8 +183,8 @@ public class UserRepositoryImpl implements UserRepository {
                 users.add(extractUser(resultSet));
             }
         } catch (SQLException | NullPointerException e) {
-            LOGGER.error(e.getClass() + " in method getUsersByRole: " + e.getMessage());
-            throw new DataBaseException("Cannot extract list of users by role = " + role, e);
+            LOGGER.error(e.getClass() + " in method getUsersByRole: " + e);
+            throw new DAOException("Cannot extract list of users by role = " + role, e);
         } finally {
             DbUtils.close(resultSet);
         }
@@ -216,8 +216,8 @@ public class UserRepositoryImpl implements UserRepository {
             statement.executeUpdate();
             LOGGER.info("The method updateBlocked done");
         } catch (SQLException | NullPointerException e) {
-            LOGGER.error(e.getClass() + " in method updateBlocked: " + e.getMessage());
-            throw new DataBaseException("Cannot change status = " + status + " with id = " + id, e);
+            LOGGER.error(e.getClass() + " in method updateBlocked: " + e);
+            throw new DAOException("Cannot change status = " + status + " with id = " + id, e);
         }
     }
 
@@ -230,9 +230,9 @@ public class UserRepositoryImpl implements UserRepository {
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
             LOGGER.info("The method updateRememberUserToken done");
-        } catch (SQLException | DataBaseException e) {
+        } catch (SQLException e) {
             LOGGER.error(String.format("%s in updateRememberUserToken User id: %d, token %s update error", e.getClass(), id, token), e);
-            throw new DataBaseException("Service common Error", e);
+            throw new DAOException("Service common Error", e);
         }
     }
 
@@ -251,9 +251,9 @@ public class UserRepositoryImpl implements UserRepository {
             }
             LOGGER.info("The method findUserByIdAndToken done. User: " + user);
             return user;
-        } catch (SQLException | DataBaseException e) {
+        } catch (SQLException | DAOException e) {
             LOGGER.error(String.format("%s in findUserByIdAndToken. User id: %d, token %s finding error", e.getClass(), userId, token), e);
-            throw new DataBaseException("Service common Error", e);
+            throw new DAOException("Service common Error", e);
         }
     }
 
@@ -267,7 +267,7 @@ public class UserRepositoryImpl implements UserRepository {
             LOGGER.info("The method deleteRememberUserToken done");
         } catch (SQLException e) {
             LOGGER.warn(String.format("%s in deleteRememberUserToken. User id: %d, token delete error", e.getClass(), userId), e);
-            throw new DataBaseException("Service common Error", e);
+            throw new DAOException("Service common Error", e);
         }
     }
 
@@ -287,7 +287,7 @@ public class UserRepositoryImpl implements UserRepository {
             LOGGER.info("The method getUserCount done. Count of users: " + userCount);
         } catch (SQLException e) {
             LOGGER.info(e.getClass() + " in method getUserCount: " + e.getMessage());
-            throw new DataBaseException("Cannot extract number of users", e);
+            throw new DAOException("Cannot extract number of users", e);
         } finally {
             DbUtils.close(resultSet);
         }
