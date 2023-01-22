@@ -12,7 +12,7 @@
     </welcome-file-list>
 
     <error-page>
-        <exception-type>com.epam.redkin.model.exception.ServiceException</exception-type>
+        <exception-type>com.epam.redkin.railway.model.exception.ServiceException</exception-type>
         <location>/errorPage.jsp</location>
     </error-page>
 
@@ -41,7 +41,7 @@
 
     <filter>
         <filter-name>SecurityFilter</filter-name>
-        <filter-class>com.epam.redkin.web.filter.SecurityFilter</filter-class>
+        <filter-class>com.epam.redkin.railway.web.filter.SecurityFilter</filter-class>
     </filter>
 
     <context-param>
@@ -75,7 +75,7 @@
    =============================================================-->
     <servlet>
         <servlet-name>Controller</servlet-name>
-        <servlet-class>com.epam.redkin.web.controller.Controller</servlet-class>
+        <servlet-class>com.epam.redkin.railway.web.controller.Controller</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>

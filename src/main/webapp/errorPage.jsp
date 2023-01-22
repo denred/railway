@@ -1,4 +1,4 @@
-<%@ page import="com.epam.redkin.model.exception.ServiceException" %>
+<%@ page import="com.epam.redkin.railway.model.exception.ServiceException" %>
 <%@ page isErrorPage='true' %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>

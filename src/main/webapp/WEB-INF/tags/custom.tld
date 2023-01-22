@@ -5,7 +5,7 @@
 
     <tag>
         <name>period</name>
-        <tag-class>com.epam.redkin.web.tag.TimePeriodTag</tag-class>
+        <tag-class>com.epam.redkin.railway.web.tag.TimePeriodTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>dateFrom</name>

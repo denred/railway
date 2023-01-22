@@ -19,17 +19,71 @@
 </h3>
 <div class="container mt-4">
     <div class="d-flex justify-content-center">
-        <table class="table table-bordered table-hover caption-top" style="width: 1000px;">
-            <thead class="thead-light text-center">
-            <tr>
-                <th style="width: 1%"><fmt:message key="order"/></th>
-                <th style="width: 15%"><fmt:message key="user.email"/></th>
-                <th style="width: 15%"><fmt:message key="user.first_name"/></th>
-                <th style="width: 15%"><fmt:message key="user.last_name"/></th>
-                <th style="width: 20%"><fmt:message key="user.birth_date"/></th>
-                <th style="width: 15%"><fmt:message key="user.phone"/></th>
-                <th style="width: 15%"><fmt:message key="admin.blockStatus"/></th>
-                <th style="width: 15%"><fmt:message key="admin.block"/></th>
+        <table class="table table-bordered table-hover caption-top" style="width: 100%;">
+            <thead class="text-center">
+            <tr class="text-center">
+
+                <form id="search" action="controller?action=users" method="post">
+                    <th class="align-content-center text-center" style="width: 1%"><fmt:message key="order"/></th>
+                    <th style="width: 15%">
+                        <div class="input-group">
+                            <div class="form-outline">
+                                <input type="search" class="search-focus form-control"
+                                       onchange="this.form.submit()"
+                                       placeholder="<fmt:message key="user.email"/>"
+                                       name="email"
+                                       value="${email}">
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 13%">
+                        <div class="input-group">
+                            <div class="form-outline">
+                                <input type="search" class="search-focus form-control"
+                                       onchange="this.form.submit()"
+                                       placeholder="<fmt:message key="user.first_name"/>"
+                                       name="first_name"
+                                       value="${first_name}">
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 13%">
+                        <div class="input-group">
+                            <div class="form-outline">
+                                <input type="search" class="search-focus form-control"
+                                       onchange="this.form.submit()"
+                                       placeholder="<fmt:message key="user.last_name"/>"
+                                       name="last_name"
+                                       value="${last_name}">
+                            </div>
+                        </div>
+                    </th>
+                    <th style="width: 20%">
+                        <div class="input-group">
+                            <div class="form-outline">
+                                <input type="search" class="search-focus form-control"
+                                       onchange="this.form.submit()"
+                                       placeholder="<fmt:message key="user.birth_date"/>"
+                                       name="birth_date"
+                                       value="${birth_date}">
+                            </div>
+                        </div>
+
+                    <th style="width: 15%">
+                        <div class="input-group">
+                            <div class="form-outline">
+                                <input type="search" class="search-focus form-control"
+                                       onchange="this.form.submit()"
+                                       placeholder="<fmt:message key="user.phone"/>"
+                                       name="phone"
+                                       value="${phone}">
+                            </div>
+                        </div>
+                    </th>
+                    <th class="text-center" style="width: 15%; align-self: center;"><span><fmt:message key="admin.blockStatus"/></span></th>
+                    <th style="width: 18%"></th>
+
+                </form>
             </tr>
             </thead>
             <tbody class="text-center" style="align-content: center">
@@ -42,25 +96,35 @@
                     <td>${user.birthDate}</td>
                     <td>${user.phone}</td>
                     <td><fmt:message key="${user.blocked}"/></td>
-                    <td>
-                        <c:choose>
-                            <c:when test="${user.blocked == false}">
-                                <form action="controller?action=block" method="POST">
-                                    <input type="hidden" name="user_id" value="${user.userId}">
-                                    <input type="hidden" name="block_status" value="true">
-                                    <input type="submit" class="btn btn-warning" name="block"
-                                           value="<fmt:message key="admin.block"/>">
-                                </form>
-                            </c:when>
-                            <c:when test="${user.blocked == true}">
-                                <form action="controller?action=block" method="POST">
-                                    <input type="hidden" name="user_id" value="${user.userId}">
-                                    <input type="hidden" name="block_status" value="false">
-                                    <input type="submit" class="btn btn-warning" name="block"
-                                           value="<fmt:message key="admin.unblock"/>">
-                                </form>
-                            </c:when>
-                        </c:choose>
+                    <td><span>
+                        <div class="row">
+                            <div class="col-sm-6">
+
+                                <c:choose>
+                                    <c:when test="${user.blocked == false}">
+                                        <form action="controller?action=block" method="POST">
+                                            <input type="hidden" name="user_id" value="${user.userId}">
+                                            <input type="hidden" name="block_status" value="true">
+                                            <input type="image" src="../../../img/icons8-denied-50.png" alt=""
+                                                   style="width: 25px">
+                                        </form>
+                                    </c:when>
+                                    <c:when test="${user.blocked == true}">
+                                        <form action="controller?action=block" method="POST">
+                                            <input type="hidden" name="user_id" value="${user.userId}">
+                                            <input type="hidden" name="block_status" value="false">
+                                            <input type="image" src="../../../img/icons8-user-50.png" alt=""
+                                                   style="width: 25px">
+                                        </form>
+                                    </c:when>
+                                </c:choose>
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="#"><img src="../../../img/icons8-delete-user-male-50.png" alt=""
+                                                 style="width: 25px"></a>
+                            </div>
+                        </div>
+                    </span>
                     </td>
                 </tr>
             </c:forEach>
@@ -101,5 +165,6 @@
     </div>
 </div>
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
+<script src="../../../js/xxsProtectionScript.js"></script>
 </body>
 </html>

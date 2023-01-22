@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.epam.redkin.railway.model.repository.impl.OrderRepositoryImplTest
+-------------------------------------------------------------------------------
+Tests run: 23, Failures: 0, Errors: 0, Skipped: 8, Time elapsed: 0.039 s - in com.epam.redkin.railway.model.repository.impl.OrderRepositoryImplTest
