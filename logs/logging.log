@@ -1,0 +1,131 @@
+[INFO ] 2023-01-23 00:10:01,781 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started create() with train= Train(id=0, number=null)
+[INFO ] 2023-01-23 00:10:01,784 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Generated id= 1
+[INFO ] 2023-01-23 00:10:01,812 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started create() with route point= RoutePoint(stationId=0, routeId=0, arrival=2023-01-23T00:10:01.804113, dispatch=2023-01-23T00:10:01.804079, orderId=0)
+[INFO ] 2023-01-23 00:10:01,812 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Transaction started
+[INFO ] 2023-01-23 00:10:01,813 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Transaction done
+[INFO ] 2023-01-23 00:10:01,814 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Connection closed
+[INFO ] 2023-01-23 00:10:01,832 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started create() with carriage= Carriage(carriageId=0, type=FIRST_CLASS, number=null, trainId=0)
+[INFO ] 2023-01-23 00:10:01,832 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Transaction started
+[INFO ] 2023-01-23 00:10:01,832 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Transaction done
+[INFO ] 2023-01-23 00:10:01,833 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Connection closed
+[INFO ] 2023-01-23 00:10:01,833 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Generated id= 1
+[INFO ] 2023-01-23 00:10:01,846 com.epam.redkin.railway.model.repository.impl.UserRepositoryImpl - Started the method create. User: User{userId=0, email='null', password='null', firstName='null', lastName='null', phone='null', birthDate=null, role=null, blocked=false}
+[INFO ] 2023-01-23 00:10:01,847 com.epam.redkin.railway.model.repository.impl.UserRepositoryImpl - Transaction started
+[ERROR] 2023-01-23 00:10:01,847 com.epam.redkin.railway.model.repository.impl.UserRepositoryImpl - class java.lang.NullPointerException in method create: java.lang.NullPointerException: Cannot invoke "com.epam.redkin.railway.model.entity.Role.getName()" because the return value of "com.epam.redkin.railway.model.entity.User.getRole()" is null
+[INFO ] 2023-01-23 00:10:01,854 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method getById with id= 1
+[INFO ] 2023-01-23 00:10:01,876 com.epam.redkin.railway.model.repository.impl.UserRepositoryImpl - Started the method create. User: User{userId=0, email='test@mail.com', password='123', firstName='John', lastName='Smith', phone='+380441233344', birthDate=2023-01-23, role=USER, blocked=true}
+[INFO ] 2023-01-23 00:10:01,877 com.epam.redkin.railway.model.repository.impl.UserRepositoryImpl - Transaction started
+[INFO ] 2023-01-23 00:10:01,877 com.epam.redkin.railway.model.repository.impl.UserRepositoryImpl - Transaction done
+[INFO ] 2023-01-23 00:10:01,884 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method updateOrderStatus() with orderId= 123 and OrderStatus= DECLINED
+[INFO ] 2023-01-23 00:10:01,884 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Transaction started
+[INFO ] 2023-01-23 00:10:01,884 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Transaction done with status: true
+[INFO ] 2023-01-23 00:10:01,884 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Connection closed
+[INFO ] 2023-01-23 00:10:01,887 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method getById with id= 1
+[INFO ] 2023-01-23 00:10:01,890 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method getOrderByUserId() with userId= 123
+[INFO ] 2023-01-23 00:10:01,893 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method getOrderByUserId() with userId= 1
+[ERROR] 2023-01-23 00:10:01,893 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - class java.sql.SQLException in getOrderByUserId(): java.sql.SQLException
+[INFO ] 2023-01-23 00:10:01,895 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method getPriceOfSuccessfulOrders() with userId= 123
+[ERROR] 2023-01-23 00:10:01,896 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - class java.sql.SQLException in getPriceOfSuccessfulOrders(): java.sql.SQLException
+[INFO ] 2023-01-23 00:10:01,898 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method getPriceOfSuccessfulOrders() with userId= 123
+[INFO ] 2023-01-23 00:10:01,900 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method getPriceOfSuccessfulOrders() with userId= 1
+[ERROR] 2023-01-23 00:10:01,900 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - class java.sql.SQLException in getPriceOfSuccessfulOrders(): java.sql.SQLException
+[INFO ] 2023-01-23 00:10:01,912 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method create. Order: Order{id=1, trainNumber='42', carrType=FIRST_CLASS, price=10.0, arrivalDate=0001-01-01T01:01, dispatchDate=0001-01-01T01:01, user=User{userId=0, email='null', password='null', firstName='null', lastName='null', phone='null', birthDate=null, role=null, blocked=false}, orderDate=0001-01-01T01:01, orderStatus=DECLINED, countOfSeats=3, arrivalStation='Arrival Station', dispatchStation='Dispatch Station', travelTime='Travel Time', routeId=123, carriageNumber='42', seatNumber='42', seatsId='42'}
+[INFO ] 2023-01-23 00:10:01,913 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Transaction started
+[INFO ] 2023-01-23 00:10:01,914 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Transaction done
+[INFO ] 2023-01-23 00:10:01,914 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Generated id= 1
+[INFO ] 2023-01-23 00:10:01,914 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Connection closed
+[INFO ] 2023-01-23 00:10:01,917 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method create. Order: Order{id=1, trainNumber='42', carrType=FIRST_CLASS, price=10.0, arrivalDate=0001-01-01T01:01, dispatchDate=0001-01-01T01:01, user=User{userId=0, email='null', password='null', firstName='null', lastName='null', phone='null', birthDate=null, role=null, blocked=false}, orderDate=0001-01-01T01:01, orderStatus=DECLINED, countOfSeats=3, arrivalStation='Arrival Station', dispatchStation='Dispatch Station', travelTime='Travel Time', routeId=123, carriageNumber='42', seatNumber='42', seatsId='42'}
+[INFO ] 2023-01-23 00:10:01,918 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Transaction started
+[INFO ] 2023-01-23 00:10:01,918 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Transaction done
+[INFO ] 2023-01-23 00:10:01,919 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Transaction rollback
+[ERROR] 2023-01-23 00:10:01,919 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - class java.sql.SQLException in method create: java.sql.SQLException
+[INFO ] 2023-01-23 00:10:01,919 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Connection closed
+[INFO ] 2023-01-23 00:10:01,922 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method create. Order: Order{id=1, trainNumber='42', carrType=FIRST_CLASS, price=10.0, arrivalDate=0001-01-01T01:01, dispatchDate=0001-01-01T01:01, user=User{userId=0, email='null', password='null', firstName='null', lastName='null', phone='null', birthDate=null, role=null, blocked=false}, orderDate=0001-01-01T01:01, orderStatus=DECLINED, countOfSeats=3, arrivalStation='Arrival Station', dispatchStation='Dispatch Station', travelTime='Travel Time', routeId=123, carriageNumber='42', seatNumber='42', seatsId='42'}
+[INFO ] 2023-01-23 00:10:01,922 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Transaction started
+[INFO ] 2023-01-23 00:10:01,923 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Transaction done
+[INFO ] 2023-01-23 00:10:01,923 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Connection closed
+[INFO ] 2023-01-23 00:10:01,927 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method getPriceOfSuccessfulOrders() with userId= 123
+[INFO ] 2023-01-23 00:10:01,927 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - The method getPriceOfSuccessfulOrders() done, price: 10.0
+[INFO ] 2023-01-23 00:10:01,929 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method create. Order: Order{id=0, trainNumber='null', carrType=null, price=0.0, arrivalDate=null, dispatchDate=null, user=null, orderDate=null, orderStatus=null, countOfSeats=0, arrivalStation='null', dispatchStation='null', travelTime='null', routeId=0, carriageNumber='null', seatNumber='null', seatsId='null'}
+[INFO ] 2023-01-23 00:10:01,930 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Transaction started
+[INFO ] 2023-01-23 00:10:01,930 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Transaction rollback
+[ERROR] 2023-01-23 00:10:01,930 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - class java.lang.NullPointerException in method create: java.lang.NullPointerException: Cannot invoke "java.sql.PreparedStatement.setObject(int, Object)" because "statement" is null
+[INFO ] 2023-01-23 00:10:01,930 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Connection closed
+[ERROR] 2023-01-23 00:10:01,937 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Unsupported operation exception
+[ERROR] 2023-01-23 00:10:01,938 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Unsupported operation exception
+[INFO ] 2023-01-23 00:10:01,939 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method getAllOrders()
+[INFO ] 2023-01-23 00:10:01,955 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method delete() with id= 1
+[INFO ] 2023-01-23 00:10:01,955 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method delete() done, with row count= 1
+[INFO ] 2023-01-23 00:10:01,961 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method update() with seat= Seat(id=0, carriageId=0, seatNumber=11, busy=false)
+[INFO ] 2023-01-23 00:10:01,962 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method update() done with status= true
+[INFO ] 2023-01-23 00:10:01,965 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started create() with seat= Seat(id=0, carriageId=0, seatNumber=01, busy=false)
+[INFO ] 2023-01-23 00:10:01,965 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Transaction started
+[INFO ] 2023-01-23 00:10:01,965 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Transaction done
+[INFO ] 2023-01-23 00:10:01,965 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Connection closed
+[INFO ] 2023-01-23 00:10:01,965 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Generated id= 1
+[INFO ] 2023-01-23 00:10:01,969 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getListSeatsByCarriageId(int carriageId) with carriageId= 1
+[ERROR] 2023-01-23 00:10:01,969 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Cannot extract seats: java.sql.SQLException
+[INFO ] 2023-01-23 00:10:01,972 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getBusySeatsCountByCarriageId() with carriageId= 1
+[INFO ] 2023-01-23 00:10:01,972 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats count= 10
+[INFO ] 2023-01-23 00:10:01,974 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getBusySeatsCountByCarriageId() with carriageId= 1
+[INFO ] 2023-01-23 00:10:01,974 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats count= 0
+[INFO ] 2023-01-23 00:10:01,976 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getSeatsCountByCarriageId() with carriageId= 1
+[INFO ] 2023-01-23 00:10:01,976 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats count= 10
+[INFO ] 2023-01-23 00:10:01,978 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method reservedSeat(int seatId) with seatId= 1
+[INFO ] 2023-01-23 00:10:01,978 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method done. Reserved count seat: 1
+[INFO ] 2023-01-23 00:10:01,980 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getSeatsCountByCarriageId() with carriageId= 1
+[INFO ] 2023-01-23 00:10:01,980 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats count= 0
+[INFO ] 2023-01-23 00:10:01,983 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getListSeatsByIdBatch(List<String> seatsId) with
+ seatsId= [1, 2, 3]
+[ERROR] 2023-01-23 00:10:01,983 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Cannot get seats by id batch: java.sql.SQLException
+[INFO ] 2023-01-23 00:10:01,985 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getSeatsCountByTrainIdAndByTypes() with trainId= 1 and Carriage type= null
+[ERROR] 2023-01-23 00:10:01,985 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Cannot extract seats: java.lang.NullPointerException: Cannot invoke "com.epam.redkin.railway.model.entity.CarriageType.toString()" because "type" is null
+[INFO ] 2023-01-23 00:10:01,987 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method with clearSeat(int seatId) with seatId= 1
+[INFO ] 2023-01-23 00:10:01,987 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Clear count seats: 1
+[INFO ] 2023-01-23 00:10:01,989 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method reservedSeat(int seatId) with seatId= 1
+[INFO ] 2023-01-23 00:10:01,989 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method done. Reserved count seat: 0
+[INFO ] 2023-01-23 00:10:01,991 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method with clearSeat(int seatId) with seatId= 1
+[INFO ] 2023-01-23 00:10:01,991 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Clear count seats: 0
+[INFO ] 2023-01-23 00:10:01,993 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getSeatsCountByTrainIdAndByTypes() with trainId= 1 and Carriage type= FIRST_CLASS
+[INFO ] 2023-01-23 00:10:01,993 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats count= 10
+[INFO ] 2023-01-23 00:10:01,996 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getSeatsCountByTrainIdAndByTypes() with trainId= 1 and Carriage type= FIRST_CLASS
+[INFO ] 2023-01-23 00:10:01,996 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats count= 0
+[INFO ] 2023-01-23 00:10:01,998 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getListSeatsByCarriageId(int carriageId) with carriageId= 1
+[INFO ] 2023-01-23 00:10:01,998 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Extracted seats: [Seat(id=10, carriageId=10, seatNumber=04, busy=false), Seat(id=10, carriageId=10, seatNumber=04, busy=false)]
+[INFO ] 2023-01-23 00:10:02,000 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started getById() with id= 1
+[INFO ] 2023-01-23 00:10:02,001 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method getById() done with seat= null
+[INFO ] 2023-01-23 00:10:02,003 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getListSeatsByCarriageId(int carriageId) with carriageId= 1
+[INFO ] 2023-01-23 00:10:02,003 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Extracted seats: []
+[INFO ] 2023-01-23 00:10:02,005 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method deleteAllSeatsByCarriageId() with carriageId= 1
+[INFO ] 2023-01-23 00:10:02,005 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method deleteAllSeatsByCarriageId() done with row count= 0
+[INFO ] 2023-01-23 00:10:02,007 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getListSeatsByIdBatch(List<String> seatsId) with
+ seatsId= [1, 2, 3]
+[INFO ] 2023-01-23 00:10:02,007 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats: [Seat(id=10, carriageId=10, seatNumber=04, busy=false), Seat(id=10, carriageId=10, seatNumber=04, busy=false)]
+[INFO ] 2023-01-23 00:10:02,009 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getListSeatsByIdBatch(List<String> seatsId) with
+ seatsId= [1, 2, 3]
+[INFO ] 2023-01-23 00:10:02,009 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats: []
+[INFO ] 2023-01-23 00:10:02,011 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method delete() with id= 1
+[INFO ] 2023-01-23 00:10:02,011 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method delete() done, with row count= 0
+[INFO ] 2023-01-23 00:10:02,012 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method update() with seat= Seat(id=0, carriageId=0, seatNumber=11, busy=false)
+[INFO ] 2023-01-23 00:10:02,013 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method update() done with status= false
+[INFO ] 2023-01-23 00:10:02,015 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method update() with seat= Seat(id=0, carriageId=0, seatNumber=11, busy=false)
+[ERROR] 2023-01-23 00:10:02,015 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Cannot update the seat java.sql.SQLException
+[INFO ] 2023-01-23 00:10:02,017 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started create() with seat= Seat(id=0, carriageId=0, seatNumber=, busy=false)
+[INFO ] 2023-01-23 00:10:02,018 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Transaction started
+[ERROR] 2023-01-23 00:10:02,018 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - class java.sql.SQLException in method create: java.sql.SQLException
+[INFO ] 2023-01-23 00:10:02,018 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Connection closed
+[INFO ] 2023-01-23 00:10:02,021 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method reservedSeat(int seatId) with seatId= 1
+[ERROR] 2023-01-23 00:10:02,021 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Can't reserved seat: java.sql.SQLException
+[INFO ] 2023-01-23 00:10:02,023 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started getById() with id= 10
+[INFO ] 2023-01-23 00:10:02,023 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method getById() done with seat= Seat(id=10, carriageId=10, seatNumber=07, busy=true)
+[INFO ] 2023-01-23 00:10:02,024 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method deleteAllSeatsByCarriageId() with carriageId= 1
+[INFO ] 2023-01-23 00:10:02,025 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method deleteAllSeatsByCarriageId() done with row count= 1
+[INFO ] 2023-01-23 00:10:02,026 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method with clearSeat(int seatId) with seatId= 1
+[ERROR] 2023-01-23 00:10:02,026 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Can't clear seat: java.sql.SQLException
+[INFO ] 2023-01-23 00:10:02,035 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started create() with station= Station(id=0, station=null, orderId=0)
+[INFO ] 2023-01-23 00:10:02,036 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Generated id= 1
+[INFO ] 2023-01-23 00:10:02,046 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started create() with route= Route(routeId=0, trainId=0, routeNumber=0, routeName=Route, stationList=null, firstClassFreeSeatsCount=0, secondClassFreeSeatsCount=0)
+[INFO ] 2023-01-23 00:10:02,046 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Transaction started
+[INFO ] 2023-01-23 00:10:02,046 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Transaction done
+[INFO ] 2023-01-23 00:10:02,047 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Connection closed
+[INFO ] 2023-01-23 00:10:02,047 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Generated id= 1
