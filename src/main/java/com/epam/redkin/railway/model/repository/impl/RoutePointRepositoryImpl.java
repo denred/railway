@@ -2,7 +2,7 @@ package com.epam.redkin.railway.model.repository.impl;
 
 import com.epam.redkin.railway.model.dto.MappingInfoDTO;
 import com.epam.redkin.railway.model.entity.RoutePoint;
-import com.epam.redkin.railway.model.exception.DAOException;
+import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.repository.RoutePointRepository;
 import org.apache.commons.dbutils.DbUtils;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Can't get all route list to station mapping.", e);
+            throw new DataBaseException("Can't get all route list to station mapping.", e);
         }
         return routePoints;
     }
@@ -67,10 +67,10 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
                 connection.rollback();
             } catch (SQLException ex) {
                 LOGGER.error("Connection error: " + ex);
-                throw new DAOException("Connection error: ", ex);
+                throw new DataBaseException("Connection error: ", ex);
             }
             LOGGER.error("Can`t create route to station mapping " + e);
-            throw new DAOException("Can`t create route to station mapping.", e);
+            throw new DataBaseException("Can`t create route to station mapping.", e);
         } finally {
             try {
                 assert connection != null;
@@ -81,7 +81,7 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
                 LOGGER.info("Connection closed");
             } catch (SQLException e) {
                 LOGGER.error("Connection closing error: " + e);
-                throw new DAOException("Connection closing error: ", e);
+                throw new DataBaseException("Connection closing error: ", e);
             }
         }
     }
@@ -98,7 +98,7 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Can't read route in route to station mapping. ID = " + id, e);
+            throw new DataBaseException("Can't read route in route to station mapping. ID = " + id, e);
         }
         return routePoints;
     }
@@ -116,7 +116,7 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Can't update route to station mapping. ID = " + entity.getStationId(), e);
+            throw new DataBaseException("Can't update route to station mapping. ID = " + entity.getStationId(), e);
         }
     }
 
@@ -129,7 +129,7 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Can`t delete station in route to station mapping. ID route = " + routeId + " ID station = " + stationId, e);
+            throw new DataBaseException("Can`t delete station in route to station mapping. ID route = " + routeId + " ID station = " + stationId, e);
         }
     }
 
@@ -145,7 +145,7 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Can`t get all route list to station mapping by ID. ID = " + routeId, e);
+            throw new DataBaseException("Can`t get all route list to station mapping by ID. ID = " + routeId, e);
         }
         return mappingInfoDTOS;
     }
@@ -163,7 +163,7 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Can`t get mapping information. route ID = " + routeId + " station ID = " + stationId, e);
+            throw new DataBaseException("Can`t get mapping information. route ID = " + routeId + " station ID = " + stationId, e);
         }
         return mapping;
     }

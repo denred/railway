@@ -2,7 +2,7 @@ package com.epam.redkin.railway.model.repository.impl;
 
 import com.epam.redkin.railway.model.entity.CarriageType;
 import com.epam.redkin.railway.model.entity.Seat;
-import com.epam.redkin.railway.model.exception.DAOException;
+import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.repository.SeatRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -77,7 +77,7 @@ class SeatRepositoryImplTest {
         doNothing().when(mockStatement).setString(anyInt(), anyString());
         when(mockStatement.executeUpdate()).thenThrow(SQLException.class);
 
-        assertThrows(DAOException.class, () -> seatRepository.create(Seat.builder().seatNumber("").build()));
+        assertThrows(DataBaseException.class, () -> seatRepository.create(Seat.builder().seatNumber("").build()));
         verify(mockConnection).prepareStatement(anyString(), anyInt());
         verify(mockStatement, times(1)).setString(anyInt(), anyString());
         verify(mockStatement, times(1)).setBoolean(anyInt(), anyBoolean());
@@ -168,7 +168,7 @@ class SeatRepositoryImplTest {
         doNothing().when(mockStatement).setBoolean(anyInt(), anyBoolean());
         when(mockStatement.executeUpdate()).thenThrow(SQLException.class);
 
-        assertThrows(DAOException.class, () -> seatRepository.update(Seat.builder().seatNumber("11").build()));
+        assertThrows(DataBaseException.class, () -> seatRepository.update(Seat.builder().seatNumber("11").build()));
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement, times(2)).setInt(anyInt(), anyInt());
         verify(mockStatement).setString(anyInt(), anyString());
@@ -324,7 +324,7 @@ class SeatRepositoryImplTest {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
         doNothing().when(mockStatement).setInt(anyInt(), anyInt());
 
-        assertThrows(DAOException.class, () -> seatRepository.getSeatsCountByTrainIdAndByTypes(1, null));
+        assertThrows(DataBaseException.class, () -> seatRepository.getSeatsCountByTrainIdAndByTypes(1, null));
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement).setInt(anyInt(), anyInt());
         verify(mockStatement, times(0)).executeQuery();
@@ -375,7 +375,7 @@ class SeatRepositoryImplTest {
         doNothing().when(mockStatement).setInt(anyInt(), anyInt());
         when(mockStatement.executeQuery()).thenThrow(SQLException.class);
 
-        assertThrows(DAOException.class, () -> seatRepository.getListSeatsByCarriageId(1));
+        assertThrows(DataBaseException.class, () -> seatRepository.getListSeatsByCarriageId(1));
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement).setInt(anyInt(), anyInt());
         verify(mockStatement).executeQuery();
@@ -421,7 +421,7 @@ class SeatRepositoryImplTest {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
         when(mockStatement.executeQuery()).thenThrow(SQLException.class);
 
-        assertThrows(DAOException.class, () -> seatRepository.getListSeatsByIdBatch(List.of("1", "2", "3")));
+        assertThrows(DataBaseException.class, () -> seatRepository.getListSeatsByIdBatch(List.of("1", "2", "3")));
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement).executeQuery();
     }
@@ -456,7 +456,7 @@ class SeatRepositoryImplTest {
         doNothing().when(mockStatement).setInt(anyInt(), anyInt());
         when(mockStatement.executeUpdate()).thenThrow(SQLException.class);
 
-        assertThrows(DAOException.class, () -> seatRepository.reservedSeat(1));
+        assertThrows(DataBaseException.class, () -> seatRepository.reservedSeat(1));
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement).setInt(anyInt(), anyInt());
         verify(mockStatement).executeUpdate();
@@ -492,7 +492,7 @@ class SeatRepositoryImplTest {
         doNothing().when(mockStatement).setInt(anyInt(), anyInt());
         when(mockStatement.executeUpdate()).thenThrow(SQLException.class);
 
-        assertThrows(DAOException.class, () -> seatRepository.clearSeat(1));
+        assertThrows(DataBaseException.class, () -> seatRepository.clearSeat(1));
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement).setInt(anyInt(), anyInt());
         verify(mockStatement).executeUpdate();

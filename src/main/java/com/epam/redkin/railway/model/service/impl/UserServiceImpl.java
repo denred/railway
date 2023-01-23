@@ -2,7 +2,7 @@ package com.epam.redkin.railway.model.service.impl;
 
 import com.epam.redkin.railway.model.entity.Role;
 import com.epam.redkin.railway.model.entity.User;
-import com.epam.redkin.railway.model.exception.DAOException;
+import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.exception.ServiceException;
 import com.epam.redkin.railway.model.exception.UnauthorizedException;
 import com.epam.redkin.railway.model.exception.UserAlreadyExistException;
@@ -182,8 +182,8 @@ public class UserServiceImpl implements UserService {
     public void deleteRememberUserToken(int userId) {
         try {
             userRepository.deleteRememberUserToken(userId);
-        } catch (DAOException e) {
-            throw new DAOException(e.getMessage(), e);
+        } catch (DataBaseException e) {
+            throw new DataBaseException(e.getMessage(), e);
         }
     }
 
@@ -197,7 +197,7 @@ public class UserServiceImpl implements UserService {
         int userId = Integer.parseInt(tokenComponents[USER_ID_COOKIE_INDEX]);
         try {
             userRepository.updateBlocked(userId, false);
-        } catch (DAOException e) {
+        } catch (DataBaseException e) {
             throw new ServiceException(e.getMessage());
         }
     }
@@ -210,7 +210,7 @@ public class UserServiceImpl implements UserService {
             userCount = userRepository.getUserCount(search);
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Cannot close the ResultSet", e);
+            throw new DataBaseException("Cannot close the ResultSet", e);
         }
         LOGGER.info("The method getUserCount done, count of users: " + userCount);
         return userCount;

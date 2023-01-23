@@ -1,7 +1,7 @@
 package com.epam.redkin.railway.model.repository.impl;
 
 import com.epam.redkin.railway.model.dto.CarriageDTO;
-import com.epam.redkin.railway.model.exception.DAOException;
+import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.entity.Carriage;
 import com.epam.redkin.railway.model.entity.CarriageType;
 import com.epam.redkin.railway.model.repository.CarriageRepository;
@@ -51,10 +51,10 @@ public class CarriageRepositoryImpl implements CarriageRepository {
                 connection.rollback();
             } catch (SQLException ex) {
                 LOGGER.error("Connection error: " + ex);
-                throw new DAOException("Connection error: ", ex);
+                throw new DataBaseException("Connection error: ", ex);
             }
             LOGGER.error(e.getClass() + " in method create: " + e);
-            throw new DAOException("Cannot add carriage ", e);
+            throw new DataBaseException("Cannot add carriage ", e);
         } finally {
             try {
                 assert connection != null;
@@ -65,7 +65,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
                 LOGGER.info("Connection closed");
             } catch (SQLException e) {
                 LOGGER.error("Connection closing error: " + e);
-                throw new DAOException("Connection closing error: ", e);
+                throw new DataBaseException("Connection closing error: ", e);
             }
         }
         LOGGER.info("Generated id= " + key);
@@ -84,7 +84,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
             }
         } catch (SQLException | NullPointerException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Cannot read carriage from database with carriage_id = " + id);
+            throw new DataBaseException("Cannot read carriage from database with carriage_id = " + id);
         }
         return carriage;
     }
@@ -100,7 +100,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Cannot update carriage  = " + (carriage == null ? null : carriage.toString()));
+            throw new DataBaseException("Cannot update carriage  = " + (carriage == null ? null : carriage.toString()));
         }
     }
 
@@ -112,7 +112,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Cannot delete carriage from database with carriage_id = " + id);
+            throw new DataBaseException("Cannot delete carriage from database with carriage_id = " + id);
         }
     }
 
@@ -128,7 +128,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Cannot read list of carriages from database with train_id = " + trainId);
+            throw new DataBaseException("Cannot read list of carriages from database with train_id = " + trainId);
         }
         return carriages;
     }
@@ -146,7 +146,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Cannot read list of carriages from database with train_id = " + trainId
+            throw new DataBaseException("Cannot read list of carriages from database with train_id = " + trainId
                     + " and type = " + type);
         }
         return carriages;
@@ -163,7 +163,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Cannot extract carriage transfer object list.", e);
+            throw new DataBaseException("Cannot extract carriage transfer object list.", e);
         }
         return carriageDTOList;
     }

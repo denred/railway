@@ -3,7 +3,7 @@ package com.epam.redkin.railway.model.repository.impl;
 import com.epam.redkin.railway.model.builder.UserBuilder;
 import com.epam.redkin.railway.model.entity.Role;
 import com.epam.redkin.railway.model.entity.User;
-import com.epam.redkin.railway.model.exception.DAOException;
+import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,7 +64,7 @@ class UserRepositoryImplTest {
     @Test
     public void testCreateWithException() throws SQLException {
         userRepository = new UserRepositoryImpl(mockDataSource);
-        assertThrows(DAOException.class, () -> userRepository.create(new User()));
+        assertThrows(DataBaseException.class, () -> userRepository.create(new User()));
         //verify and assert
         verify(mockConnection, times(1)).prepareStatement(anyString(), anyInt());
         verify(mockStatement, times(0)).setString(anyInt(), anyString());
@@ -77,7 +77,7 @@ class UserRepositoryImplTest {
 
     @Test
     void testGetByIdUser() throws SQLException {
-        when(mockResultSet.getString(anyString())).thenThrow(new DAOException());
+        when(mockResultSet.getString(anyString())).thenThrow(new DataBaseException());
         when(mockResultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
         doNothing().when(mockStatement).close();
@@ -85,7 +85,7 @@ class UserRepositoryImplTest {
         doNothing().when(mockConnection).close();
         when(mockDataSource.getConnection()).thenReturn(mockConnection);
         //verify and assert
-        assertThrows(DAOException.class, () -> (new OrderRepositoryImpl(mockDataSource)).getById(1));
+        assertThrows(DataBaseException.class, () -> (new OrderRepositoryImpl(mockDataSource)).getById(1));
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
         verify(mockConnection).close();

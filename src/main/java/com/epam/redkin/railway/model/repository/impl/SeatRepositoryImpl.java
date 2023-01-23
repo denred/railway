@@ -2,7 +2,7 @@ package com.epam.redkin.railway.model.repository.impl;
 
 import com.epam.redkin.railway.model.entity.CarriageType;
 import com.epam.redkin.railway.model.entity.Seat;
-import com.epam.redkin.railway.model.exception.DAOException;
+import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.repository.SeatRepository;
 import org.apache.commons.dbutils.DbUtils;
 import org.slf4j.Logger;
@@ -49,10 +49,10 @@ public class SeatRepositoryImpl implements SeatRepository {
                 connection.rollback();
             } catch (SQLException ex) {
                 LOGGER.error("Connection error: " + ex);
-                throw new DAOException("Connection error: " + seat, ex);
+                throw new DataBaseException("Connection error: " + seat, ex);
             }
             LOGGER.error(e.getClass() + " in method create: " + e);
-            throw new DAOException("Cannot add seat into database ", e);
+            throw new DataBaseException("Cannot add seat into database ", e);
         } finally {
             try {
                 if (connection != null) {
@@ -64,7 +64,7 @@ public class SeatRepositoryImpl implements SeatRepository {
                 }
             } catch (SQLException e) {
                 LOGGER.error("Connection closing error: " + e);
-                throw new DAOException("Connection closing error: ", e);
+                throw new DataBaseException("Connection closing error: ", e);
             }
         }
         LOGGER.info("Generated id= " + key);
@@ -84,7 +84,7 @@ public class SeatRepositoryImpl implements SeatRepository {
             }
         } catch (SQLException | NullPointerException e) {
             LOGGER.error("Cannot get seat by id: " + e);
-            throw new DAOException("Cannot read seat from database, seat_id = " + id, e);
+            throw new DataBaseException("Cannot read seat from database, seat_id = " + id, e);
         }
         LOGGER.info("The method getById() done with seat= " + seat);
         return seat;
@@ -114,7 +114,7 @@ public class SeatRepositoryImpl implements SeatRepository {
             return stateUpdate;
         } catch (SQLException e) {
             LOGGER.error("Cannot update the seat " + e);
-            throw new DAOException("Cannot update seat from database, seat = " + seat, e);
+            throw new DataBaseException("Cannot update seat from database, seat = " + seat, e);
         }
     }
 
@@ -127,7 +127,7 @@ public class SeatRepositoryImpl implements SeatRepository {
             LOGGER.info("The method delete() done, with row count= " + statement.executeUpdate());
         } catch (SQLException e) {
             LOGGER.error("Cannot delete seat: " + e);
-            throw new DAOException("Cannot delete seat from database, id = " + id, e);
+            throw new DataBaseException("Cannot delete seat from database, id = " + id, e);
         }
     }
 
@@ -142,7 +142,7 @@ public class SeatRepositoryImpl implements SeatRepository {
             return state > 0;
         } catch (SQLException e) {
             LOGGER.error("Cannot delete seats= " + e);
-            throw new DAOException("Cannot delete seats from database, carriage_id = " + carriageId, e);
+            throw new DataBaseException("Cannot delete seats from database, carriage_id = " + carriageId, e);
         }
     }
 
@@ -170,7 +170,7 @@ public class SeatRepositoryImpl implements SeatRepository {
             LOGGER.info("Seats count= " + count);
         } catch (SQLException e) {
             LOGGER.error("Cannot extract seats: " + e);
-            throw new DAOException("Cannot extract seats count from database, carriage_id = " + carriageId, e);
+            throw new DataBaseException("Cannot extract seats count from database, carriage_id = " + carriageId, e);
         }
         return count;
     }
@@ -191,7 +191,7 @@ public class SeatRepositoryImpl implements SeatRepository {
             LOGGER.info("Seats count= " + count);
         } catch (SQLException | NullPointerException e) {
             LOGGER.error("Cannot extract seats: " + e);
-            throw new DAOException("Cannot extract seats count from database", e);
+            throw new DataBaseException("Cannot extract seats count from database", e);
         }
         return count;
     }
@@ -210,7 +210,7 @@ public class SeatRepositoryImpl implements SeatRepository {
             LOGGER.info("Extracted seats: " + seats);
         } catch (SQLException e) {
             LOGGER.error("Cannot extract seats: " + e);
-            throw new DAOException("Cannot extract list of seats from database", e);
+            throw new DataBaseException("Cannot extract list of seats from database", e);
         }
         return seats;
     }
@@ -230,7 +230,7 @@ public class SeatRepositoryImpl implements SeatRepository {
             LOGGER.info("Seats: " + seats);
         } catch (SQLException e) {
             LOGGER.error("Cannot get seats by id batch: " + e);
-            throw new DAOException("Can't get seat by ID batch ", e);
+            throw new DataBaseException("Can't get seat by ID batch ", e);
         }
         return seats;
     }
@@ -244,7 +244,7 @@ public class SeatRepositoryImpl implements SeatRepository {
             LOGGER.info("The method done. Reserved count seat: " + statement.executeUpdate());
         } catch (SQLException e) {
             LOGGER.error("Can't reserved seat: " + e);
-            throw new DAOException("Can't reserved seat. seat_id = " + seatId, e);
+            throw new DataBaseException("Can't reserved seat. seat_id = " + seatId, e);
         }
     }
 
@@ -257,7 +257,7 @@ public class SeatRepositoryImpl implements SeatRepository {
             LOGGER.info("Clear count seats: " + statement.executeUpdate());
         } catch (SQLException e) {
             LOGGER.error("Can't clear seat: " + e);
-            throw new DAOException("Can't clear seat. seat_id = " + seatId, e);
+            throw new DataBaseException("Can't clear seat. seat_id = " + seatId, e);
         }
     }
 }

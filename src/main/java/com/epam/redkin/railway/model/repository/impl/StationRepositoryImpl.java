@@ -1,7 +1,7 @@
 package com.epam.redkin.railway.model.repository.impl;
 
 import com.epam.redkin.railway.model.entity.Station;
-import com.epam.redkin.railway.model.exception.DAOException;
+import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.repository.StationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ public class StationRepositoryImpl implements StationRepository {
             }
         } catch (SQLException e) {
             LOGGER.error("Cannot add station into database " + e);
-            throw new DAOException("Cannot add station into database", e);
+            throw new DataBaseException("Cannot add station into database", e);
         }
         LOGGER.info("Generated id= " + key);
         return key;
@@ -51,7 +51,7 @@ public class StationRepositoryImpl implements StationRepository {
             }
         } catch (SQLException | NullPointerException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Cannot read station from database, station_id = " + id);
+            throw new DataBaseException("Cannot read station from database, station_id = " + id);
         }
         return station;
     }
@@ -72,7 +72,7 @@ public class StationRepositoryImpl implements StationRepository {
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Cannot update station, station = " + station);
+            throw new DataBaseException("Cannot update station, station = " + station);
         }
     }
 
@@ -84,7 +84,7 @@ public class StationRepositoryImpl implements StationRepository {
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Cannot delete station, station_id = " + id);
+            throw new DataBaseException("Cannot delete station, station_id = " + id);
         }
     }
 
@@ -99,7 +99,7 @@ public class StationRepositoryImpl implements StationRepository {
             }
         } catch (SQLException | NullPointerException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Cannot get list of stations");
+            throw new DataBaseException("Cannot get list of stations");
         }
         return stations;
     }

@@ -11,7 +11,7 @@ import com.epam.redkin.railway.model.entity.CarriageType;
 import com.epam.redkin.railway.model.entity.Order;
 import com.epam.redkin.railway.model.entity.OrderStatus;
 import com.epam.redkin.railway.model.entity.User;
-import com.epam.redkin.railway.model.exception.DAOException;
+import com.epam.redkin.railway.model.exception.DataBaseException;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
 class OrderRepositoryImplTest {
 
     @Test
-    void testCreate() throws DAOException, SQLException {
+    void testCreate() throws DataBaseException, SQLException {
         DataSource dataSource = mock(DataSource.class);
         when(dataSource.getConnection()).thenReturn(mock(Connection.class));
         Connection mockConnection = dataSource.getConnection();
@@ -32,7 +32,7 @@ class OrderRepositoryImplTest {
         PreparedStatement mockStatement = mockConnection.prepareStatement(anyString(),anyInt());
         ResultSet mockResultSet = mock(ResultSet.class);
         OrderRepositoryImpl orderRepositoryImpl = new OrderRepositoryImpl(dataSource);
-        assertThrows(DAOException.class, () -> orderRepositoryImpl.create(new Order()));
+        assertThrows(DataBaseException.class, () -> orderRepositoryImpl.create(new Order()));
         //verify and assert
         verify(dataSource.getConnection(), times(2)).prepareStatement(anyString(), anyInt());
         verify(mockStatement, times(0)).setString(anyInt(), anyString());
@@ -47,7 +47,7 @@ class OrderRepositoryImplTest {
      */
     @Test
     @Disabled("TODO: Complete this test")
-    void testCreate2() throws DAOException, SQLException {
+    void testCreate2() throws DataBaseException, SQLException {
         // TODO: Complete this test.
         //   Reason: R013 No inputs found that don't throw a trivial exception.
         //   Diffblue Cover tried to run the arrange/act section, but the method under
@@ -72,7 +72,7 @@ class OrderRepositoryImplTest {
      */
     @Test
     @Disabled("TODO: Complete this test")
-    void testCreate3() throws DAOException, SQLException {
+    void testCreate3() throws DataBaseException, SQLException {
         // TODO: Complete this test.
         //   Reason: R013 No inputs found that don't throw a trivial exception.
         //   Diffblue Cover tried to run the arrange/act section, but the method under
@@ -96,7 +96,7 @@ class OrderRepositoryImplTest {
      * Method under test: {@link OrderRepositoryImpl#create(Order)}
      */
     @Test
-    void testCreate4() throws DAOException, SQLException {
+    void testCreate4() throws DataBaseException, SQLException {
         ResultSet resultSet = mock(ResultSet.class);
         when(resultSet.getInt(anyInt())).thenReturn(1);
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
@@ -148,7 +148,7 @@ class OrderRepositoryImplTest {
      * Method under test: {@link OrderRepositoryImpl#create(Order)}
      */
     @Test
-    void testCreate5() throws DAOException, SQLException {
+    void testCreate5() throws DataBaseException, SQLException {
         ResultSet resultSet = mock(ResultSet.class);
         when(resultSet.getInt(anyInt())).thenThrow(new SQLException());
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
@@ -178,7 +178,7 @@ class OrderRepositoryImplTest {
                 LocalDateTime.of(1, 1, 1, 1, 1), OrderStatus.DECLINED, 3, "Arrival Station", "Dispatch Station",
                 "Travel Time", 123, "42", "42", "42");
         order.setCarriageType(CarriageType.FIRST_CLASS);
-        assertThrows(DAOException.class, () -> orderRepositoryImpl.create(order));
+        assertThrows(DataBaseException.class, () -> orderRepositoryImpl.create(order));
         verify(dataSource).getConnection();
         verify(connection).prepareStatement((String) any(), anyInt());
         verify(connection).close();
@@ -201,9 +201,9 @@ class OrderRepositoryImplTest {
      * Method under test: {@link OrderRepositoryImpl#create(Order)}
      */
     @Test
-    void testCreate6() throws DAOException, SQLException {
+    void testCreate6() throws DataBaseException, SQLException {
         ResultSet resultSet = mock(ResultSet.class);
-        when(resultSet.getInt(anyInt())).thenThrow(new DAOException("An error occurred"));
+        when(resultSet.getInt(anyInt())).thenThrow(new DataBaseException("An error occurred"));
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         doNothing().when(resultSet).close();
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
@@ -231,7 +231,7 @@ class OrderRepositoryImplTest {
                 LocalDateTime.of(1, 1, 1, 1, 1), OrderStatus.DECLINED, 3, "Arrival Station", "Dispatch Station",
                 "Travel Time", 123, "42", "42", "42");
         order.setCarriageType(CarriageType.FIRST_CLASS);
-        assertThrows(DAOException.class, () -> orderRepositoryImpl.create(order));
+        assertThrows(DataBaseException.class, () -> orderRepositoryImpl.create(order));
         verify(dataSource).getConnection();
         verify(connection).prepareStatement((String) any(), anyInt());
         verify(connection).close();
@@ -254,7 +254,7 @@ class OrderRepositoryImplTest {
      */
     @Test
     @Disabled("TODO: Complete this test")
-    void testCreate7() throws DAOException, SQLException {
+    void testCreate7() throws DataBaseException, SQLException {
         // TODO: Complete this test.
         //   Reason: R013 No inputs found that don't throw a trivial exception.
         //   Diffblue Cover tried to run the arrange/act section, but the method under
@@ -281,7 +281,7 @@ class OrderRepositoryImplTest {
     }
 
     @Test
-    void testGetById() throws DAOException, SQLException {
+    void testGetById() throws DataBaseException, SQLException {
         DataSource dataSource = mock(DataSource.class);
         PreparedStatement mockStatement = mock(PreparedStatement.class);
         when(dataSource.getConnection()).thenReturn(mock(Connection.class));
@@ -291,7 +291,7 @@ class OrderRepositoryImplTest {
      * Method under test: {@link OrderRepositoryImpl#getById(int)}
      */
     @Test
-    void testGetById2() throws DAOException, SQLException {
+    void testGetById2() throws DataBaseException, SQLException {
         ResultSet resultSet = mock(ResultSet.class);
         when(resultSet.getInt((String) any())).thenThrow(new RuntimeException());
         when(resultSet.getString((String) any())).thenThrow(new RuntimeException());
@@ -339,7 +339,7 @@ class OrderRepositoryImplTest {
      */
     @Test
     @Disabled("TODO: Complete this test")
-    void testGetAllOrders() throws DAOException, SQLException {
+    void testGetAllOrders() throws DataBaseException, SQLException {
         // TODO: Complete this test.
         //   Reason: R013 No inputs found that don't throw a trivial exception.
         //   Diffblue Cover tried to run the arrange/act section, but the method under
@@ -361,7 +361,7 @@ class OrderRepositoryImplTest {
      * Method under test: {@link OrderRepositoryImpl#getAllOrders()}
      */
     @Test
-    void testGetAllOrders2() throws DAOException, SQLException {
+    void testGetAllOrders2() throws DataBaseException, SQLException {
         ResultSet resultSet = mock(ResultSet.class);
         when(resultSet.getInt((String) any())).thenThrow(new RuntimeException());
         when(resultSet.getString((String) any())).thenThrow(new RuntimeException());
@@ -390,7 +390,7 @@ class OrderRepositoryImplTest {
      * Method under test: {@link OrderRepositoryImpl#updateOrderStatus(int, OrderStatus)}
      */
     @Test
-    void testUpdateOrderStatus() throws DAOException, SQLException {
+    void testUpdateOrderStatus() throws DataBaseException, SQLException {
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
         when(preparedStatement.executeUpdate()).thenReturn(1);
         doNothing().when(preparedStatement).setInt(anyInt(), anyInt());
@@ -418,7 +418,7 @@ class OrderRepositoryImplTest {
      */
     @Test
     @Disabled("TODO: Complete this test")
-    void testUpdateOrderStatus2() throws DAOException, SQLException {
+    void testUpdateOrderStatus2() throws DataBaseException, SQLException {
         // TODO: Complete this test.
         //   Reason: R013 No inputs found that don't throw a trivial exception.
         //   Diffblue Cover tried to run the arrange/act section, but the method under
@@ -442,7 +442,7 @@ class OrderRepositoryImplTest {
      */
     @Test
     @Disabled("TODO: Complete this test")
-    void testGetOrderByUserId() throws DAOException, SQLException {
+    void testGetOrderByUserId() throws DataBaseException, SQLException {
         // TODO: Complete this test.
         //   Reason: R013 No inputs found that don't throw a trivial exception.
         //   Diffblue Cover tried to run the arrange/act section, but the method under
@@ -464,7 +464,7 @@ class OrderRepositoryImplTest {
      * Method under test: {@link OrderRepositoryImpl#getOrderByUserId(int)}
      */
     @Test
-    void testGetOrderByUserId2() throws DAOException, SQLException {
+    void testGetOrderByUserId2() throws DataBaseException, SQLException {
         ResultSet resultSet = mock(ResultSet.class);
         when(resultSet.getInt((String) any())).thenThrow(new RuntimeException());
         when(resultSet.getString((String) any())).thenThrow(new RuntimeException());
@@ -493,7 +493,7 @@ class OrderRepositoryImplTest {
      * Method under test: {@link OrderRepositoryImpl#getOrderByUserId(int)}
      */
     @Test
-    void testGetOrderByUserId3() throws DAOException, SQLException {
+    void testGetOrderByUserId3() throws DataBaseException, SQLException {
         ResultSet resultSet = mock(ResultSet.class);
         when(resultSet.next()).thenThrow(new SQLException());
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
@@ -505,7 +505,7 @@ class OrderRepositoryImplTest {
         doNothing().when(connection).close();
         DataSource dataSource = mock(DataSource.class);
         when(dataSource.getConnection()).thenReturn(connection);
-        assertThrows(DAOException.class, () -> (new OrderRepositoryImpl(dataSource)).getOrderByUserId(1));
+        assertThrows(DataBaseException.class, () -> (new OrderRepositoryImpl(dataSource)).getOrderByUserId(1));
         verify(dataSource).getConnection();
         verify(connection).prepareStatement((String) any());
         verify(connection).close();
@@ -519,7 +519,7 @@ class OrderRepositoryImplTest {
      * Method under test: {@link OrderRepositoryImpl#getPriceOfSuccessfulOrders(int)}
      */
     @Test
-    void testGetPriceOfSuccessfulOrders() throws DAOException, SQLException {
+    void testGetPriceOfSuccessfulOrders() throws DataBaseException, SQLException {
         ResultSet resultSet = mock(ResultSet.class);
         when(resultSet.getDouble((String) any())).thenReturn(10.0d);
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
@@ -547,7 +547,7 @@ class OrderRepositoryImplTest {
      * Method under test: {@link OrderRepositoryImpl#getPriceOfSuccessfulOrders(int)}
      */
     @Test
-    void testGetPriceOfSuccessfulOrders2() throws DAOException, SQLException {
+    void testGetPriceOfSuccessfulOrders2() throws DataBaseException, SQLException {
         ResultSet resultSet = mock(ResultSet.class);
         when(resultSet.getDouble((String) any())).thenThrow(new SQLException());
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
@@ -560,7 +560,7 @@ class OrderRepositoryImplTest {
         doNothing().when(connection).close();
         DataSource dataSource = mock(DataSource.class);
         when(dataSource.getConnection()).thenReturn(connection);
-        assertThrows(DAOException.class, () -> (new OrderRepositoryImpl(dataSource)).getPriceOfSuccessfulOrders(123));
+        assertThrows(DataBaseException.class, () -> (new OrderRepositoryImpl(dataSource)).getPriceOfSuccessfulOrders(123));
         verify(dataSource).getConnection();
         verify(connection).prepareStatement((String) any());
         verify(connection).close();
@@ -575,9 +575,9 @@ class OrderRepositoryImplTest {
      * Method under test: {@link OrderRepositoryImpl#getPriceOfSuccessfulOrders(int)}
      */
     @Test
-    void testGetPriceOfSuccessfulOrders3() throws DAOException, SQLException {
+    void testGetPriceOfSuccessfulOrders3() throws DataBaseException, SQLException {
         ResultSet resultSet = mock(ResultSet.class);
-        when(resultSet.getDouble((String) any())).thenThrow(new DAOException("An error occurred"));
+        when(resultSet.getDouble((String) any())).thenThrow(new DataBaseException("An error occurred"));
         when(resultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
@@ -588,7 +588,7 @@ class OrderRepositoryImplTest {
         doNothing().when(connection).close();
         DataSource dataSource = mock(DataSource.class);
         when(dataSource.getConnection()).thenReturn(connection);
-        assertThrows(DAOException.class, () -> (new OrderRepositoryImpl(dataSource)).getPriceOfSuccessfulOrders(123));
+        assertThrows(DataBaseException.class, () -> (new OrderRepositoryImpl(dataSource)).getPriceOfSuccessfulOrders(123));
         verify(dataSource).getConnection();
         verify(connection).prepareStatement((String) any());
         verify(connection).close();
@@ -603,7 +603,7 @@ class OrderRepositoryImplTest {
      * Method under test: {@link OrderRepositoryImpl#getPriceOfSuccessfulOrders(int)}
      */
     @Test
-    void testGetPriceOfSuccessfulOrders4() throws DAOException, SQLException {
+    void testGetPriceOfSuccessfulOrders4() throws DataBaseException, SQLException {
         ResultSet resultSet = mock(ResultSet.class);
         when(resultSet.next()).thenThrow(new SQLException());
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
@@ -615,7 +615,7 @@ class OrderRepositoryImplTest {
         doNothing().when(connection).close();
         DataSource dataSource = mock(DataSource.class);
         when(dataSource.getConnection()).thenReturn(connection);
-        assertThrows(DAOException.class, () -> (new OrderRepositoryImpl(dataSource)).getPriceOfSuccessfulOrders(1));
+        assertThrows(DataBaseException.class, () -> (new OrderRepositoryImpl(dataSource)).getPriceOfSuccessfulOrders(1));
         verify(dataSource).getConnection();
         verify(connection).prepareStatement((String) any());
         verify(connection).close();

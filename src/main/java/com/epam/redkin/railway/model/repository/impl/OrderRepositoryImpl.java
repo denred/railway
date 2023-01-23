@@ -3,7 +3,7 @@ package com.epam.redkin.railway.model.repository.impl;
 import com.epam.redkin.railway.model.builder.OrderBuilder;
 import com.epam.redkin.railway.model.builder.UserBuilder;
 import com.epam.redkin.railway.model.entity.*;
-import com.epam.redkin.railway.model.exception.DAOException;
+import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.repository.OrderRepository;
 import org.apache.commons.dbutils.DbUtils;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
     }
 
     @Override
-    public int create(Order order) throws DAOException {
+    public int create(Order order) throws DataBaseException {
         LOGGER.info("Started the method create. Order: " + order);
         int key = -1;
         Connection connection = null;
@@ -67,10 +67,10 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
                 LOGGER.info("Transaction rollback");
             } catch (SQLException ex) {
                 LOGGER.error("Connection rollback error: " + ex);
-                throw new DAOException("Connection rollback error: ", ex);
+                throw new DataBaseException("Connection rollback error: ", ex);
             }
             LOGGER.error(e.getClass() + " in method create: " + e);
-            throw new DAOException("cannot create order = " + order, e);
+            throw new DataBaseException("cannot create order = " + order, e);
         } finally {
             try {
                 assert connection != null;
@@ -81,7 +81,7 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
                 LOGGER.info("Connection closed");
             } catch (SQLException e) {
                 LOGGER.error("Connection closing error: " + e);
-                throw new DAOException("Connection closing error: ", e);
+                throw new DataBaseException("Connection closing error: ", e);
             }
         }
         return key;
@@ -89,7 +89,7 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
 
 
     @Override
-    public Order getById(int id) throws DAOException {
+    public Order getById(int id) throws DataBaseException {
         LOGGER.info("Started the method getById with id= " + id);
         Order order = null;
         try (Connection connection = dataSource.getConnection();
@@ -102,7 +102,7 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
             LOGGER.info("The method getById done, order= " + order);
         } catch (SQLException | NullPointerException e) {
             LOGGER.error(e.getClass() + " in the method getById: " + e.getMessage());
-            throw new DAOException("Cannot read order, order_id = " + id, e);
+            throw new DataBaseException("Cannot read order, order_id = " + id, e);
         }
         return order;
     }
@@ -156,7 +156,7 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
     }
 
     @Override
-    public List<Order> getAllOrders() throws DAOException {
+    public List<Order> getAllOrders() throws DataBaseException {
         LOGGER.info("Started the method getAllOrders()");
         List<Order> orders = new ArrayList<>();
         ResultSet resultSet = null;
@@ -169,13 +169,13 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
             }
         } catch (SQLException | NullPointerException e) {
             LOGGER.error(e.getClass() + " in getAllOrders " + e);
-            throw new DAOException("Can't get all order list.", e);
+            throw new DataBaseException("Can't get all order list.", e);
         } finally {
             try {
                 DbUtils.close(resultSet);
             } catch (SQLException e) {
                 LOGGER.error("Cannot close ResultSet " + e);
-                throw new DAOException("Cannot close ResultSet.", e);
+                throw new DataBaseException("Cannot close ResultSet.", e);
             }
         }
         LOGGER.info("\nExtracted orders: " + orders);
@@ -183,7 +183,7 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
     }
 
     @Override
-    public boolean updateOrderStatus(int orderId, OrderStatus status) throws DAOException {
+    public boolean updateOrderStatus(int orderId, OrderStatus status) throws DataBaseException {
         LOGGER.info("Started the method updateOrderStatus() with orderId= " + orderId
                 + " and OrderStatus= " + status.name());
         Connection connection = null;
@@ -200,7 +200,7 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
             LOGGER.info("Transaction done with status: " + statusUpdate);
         } catch (SQLException e) {
             LOGGER.error(e.getClass() + " in updateOrderStatus(): " + e);
-            throw new DAOException("Can`t update order. Order id = " + orderId + " status: " + status.name(), e);
+            throw new DataBaseException("Can`t update order. Order id = " + orderId + " status: " + status.name(), e);
         } finally {
             try {
                 assert connection != null;
@@ -210,7 +210,7 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
                 LOGGER.info("Connection closed");
             } catch (SQLException e) {
                 LOGGER.error("Connection closing error: " + e);
-                throw new DAOException("Connection closing error: ", e);
+                throw new DataBaseException("Connection closing error: ", e);
             }
 
         }
@@ -218,7 +218,7 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
     }
 
     @Override
-    public List<Order> getOrderByUserId(int userId) throws DAOException {
+    public List<Order> getOrderByUserId(int userId) throws DataBaseException {
         LOGGER.info("Started the method getOrderByUserId() with userId= " + userId);
         List<Order> orders = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
@@ -230,14 +230,14 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
             }
         } catch (SQLException e) {
             LOGGER.error(e.getClass() + " in getOrderByUserId(): " + e);
-            throw new DAOException("Can't get order list by user ID. ID = " + userId, e);
+            throw new DataBaseException("Can't get order list by user ID. ID = " + userId, e);
         }
         LOGGER.info("The method getOrderByUserId() done, orders:\n" + orders);
         return orders;
     }
 
     @Override
-    public Double getPriceOfSuccessfulOrders(int userId) throws DAOException {
+    public Double getPriceOfSuccessfulOrders(int userId) throws DataBaseException {
         LOGGER.info("Started the method getPriceOfSuccessfulOrders() with userId= " + userId);
         double price = 0.0;
         try (Connection connection = dataSource.getConnection();
@@ -249,7 +249,7 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
             }
         } catch (SQLException e) {
             LOGGER.error(e.getClass() + " in getPriceOfSuccessfulOrders(): " + e);
-            throw new DAOException("Can`t get price. user ID = " + userId, e);
+            throw new DataBaseException("Can`t get price. user ID = " + userId, e);
         }
         LOGGER.info("The method getPriceOfSuccessfulOrders() done, price: " + price);
         return price;

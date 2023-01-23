@@ -3,7 +3,7 @@ package com.epam.redkin.railway.model.repository.impl;
 import com.epam.redkin.railway.model.dto.RouteInfoDTO;
 import com.epam.redkin.railway.model.dto.StationDTO;
 import com.epam.redkin.railway.model.entity.Route;
-import com.epam.redkin.railway.model.exception.DAOException;
+import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.repository.RouteRepository;
 import org.apache.commons.dbutils.DbUtils;
 import org.slf4j.Logger;
@@ -51,10 +51,10 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
                 connection.rollback();
             } catch (SQLException ex) {
                 LOGGER.error("Connection error: " + ex);
-                throw new DAOException("Connection error: ", ex);
+                throw new DataBaseException("Connection error: ", ex);
             }
             LOGGER.error(e.getClass() + " in method create: " + e);
-            throw new DAOException("Cannot add route into database", e);
+            throw new DataBaseException("Cannot add route into database", e);
         } finally {
             try {
                 assert connection != null;
@@ -65,7 +65,7 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
                 LOGGER.info("Connection closed");
             } catch (SQLException e) {
                 LOGGER.error("Connection closing error: " + e);
-                throw new DAOException("Connection closing error: ", e);
+                throw new DataBaseException("Connection closing error: ", e);
             }
         }
         LOGGER.info("Generated id= " + key);
@@ -84,7 +84,7 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Can`t read route. ID = " + id, e);
+            throw new DataBaseException("Can`t read route. ID = " + id, e);
         }
         return route;
     }
@@ -110,7 +110,7 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Can`t update route. route = " + entity);
+            throw new DataBaseException("Can`t update route. route = " + entity);
         }
     }
 
@@ -122,7 +122,7 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Can`t delete route. id = " + id);
+            throw new DataBaseException("Can`t delete route. id = " + id);
         }
     }
 
@@ -137,7 +137,7 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Can't get all rout info list.", e);
+            throw new DataBaseException("Can't get all rout info list.", e);
         }
         return routes;
     }
@@ -155,7 +155,7 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Can't get route by id = " + routeId, e);
+            throw new DataBaseException("Can't get route by id = " + routeId, e);
         }
         return routeInfoDto;
     }
@@ -173,7 +173,7 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Can't get station " + departureStation + " and station " + arrivalStation + " in rout list", e);
+            throw new DataBaseException("Can't get station " + departureStation + " and station " + arrivalStation + " in rout list", e);
         }
         return routes;
     }
@@ -194,7 +194,7 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
             return result;
         } catch (SQLException | NumberFormatException e) {
             LOGGER.error(e.getMessage());
-            throw new DAOException("Can`t extract StationDto.", e);
+            throw new DataBaseException("Can`t extract StationDto.", e);
         }
 
     }
