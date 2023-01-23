@@ -64,8 +64,8 @@ public interface Constants {
     String GET_COUNT_OF_USERS = "SELECT count(*) as count FROM user WHERE role = 'user' %s";
 
     /* ROUTES */
-    String GET_ROUTE_LIST_WITH_PARAMETERS = "SELECT r.name, r.number, r.id, station, " +
-            "s.id, t.number, r.train_id, station_arrival, station_dispatch, station_order " +
+    String GET_ROUTE_LIST_WITH_PARAMETERS = "SELECT r.name as route_name, r.number as route_number, r.id as route_id, station, " +
+            "s.id as station_id, t.number as train_number, r.train_id, station_arrival, station_dispatch, station_order " +
             "FROM route as r " +
             "JOIN train as t on r.train_id = t.id " +
             "JOIN station_has_route as shr on shr.route_id = r.id " +
@@ -85,7 +85,7 @@ public interface Constants {
     String ADD_ROUTE = "INSERT INTO route (name, number, train_id) VALUES (?,?,?)";
     String UPDATE_ROUTE = "UPDATE route SET name = ?, number = ?, train_id = ? WHERE id = ?";
     String DELETE_ROUTE = "DELETE FROM route WHERE id = ?";
-    String GET_ALL_ROUTES = "SELECT r.id, r.train_id, r.name, r.number, t.number " +
+    String GET_ALL_ROUTES = "SELECT r.id as route_id, r.train_id as train_id, r.name as route_name, r.number as route_number, t.number as train_number " +
             "FROM route as r " +
             "JOIN train as t on r.train_id = t.id " +
             "ORDER BY t.number, r.name";

@@ -7,7 +7,7 @@ import com.epam.redkin.railway.model.entity.Route;
 import java.util.List;
 
 public interface RouteRepository extends EntityDAO<Route> {
-    List<RouteInfoDTO> getAllRouteInfoDTOList();
+    List<RouteInfoDTO> getRouteInfoDTOList();
     RouteInfoDTO getRouteInfoDTOByRouteId(int routsId);
     List<StationDTO> getStationDTOListWithParameters(String departureStation, String arrivalStation);
 }

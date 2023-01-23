@@ -123,7 +123,7 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public List<RouteInfoDTO> getAllRouteList() {
-        return routeRepository.getAllRouteInfoDTOList();
+        return routeRepository.getRouteInfoDTOList();
     }
 
     @Override
@@ -132,20 +132,20 @@ public class RouteServiceImpl implements RouteService {
 
         if(StringUtils.isNoneBlank(filter, filterValue)) {
             switch (filter) {
-                case FILTER_TRAIN -> allRecords = routeRepository.getAllRouteInfoDTOList().stream()
+                case FILTER_TRAIN -> allRecords = routeRepository.getRouteInfoDTOList().stream()
                         .filter(routeDto -> routeDto.getTrainNumber().toLowerCase().contains(filterValue.toLowerCase()))
                         .collect(Collectors.toList());
-                case FILTER_ROUTE_NUMBER -> allRecords = routeRepository.getAllRouteInfoDTOList().stream()
+                case FILTER_ROUTE_NUMBER -> allRecords = routeRepository.getRouteInfoDTOList().stream()
                         .filter(routeDto -> routeDto.getRoutNumber().toLowerCase().contains(filterValue.toLowerCase()))
                         .collect(Collectors.toList());
-                case FILTER_ROUTE_NAME -> allRecords = routeRepository.getAllRouteInfoDTOList().stream()
+                case FILTER_ROUTE_NAME -> allRecords = routeRepository.getRouteInfoDTOList().stream()
                         .filter(routeDto -> routeDto.getRoutName().toLowerCase().contains(filterValue.toLowerCase()))
                         .collect(Collectors.toList());
-                default -> allRecords = routeRepository.getAllRouteInfoDTOList();
+                default -> allRecords = routeRepository.getRouteInfoDTOList();
             }
             return allRecords;
         }else{
-            allRecords = routeRepository.getAllRouteInfoDTOList();
+            allRecords = routeRepository.getRouteInfoDTOList();
         }
 
         return allRecords.subList(currentPage, Math.min(recordsPerPage, allRecords.size()));
@@ -153,7 +153,7 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public int getRouteListSize() {
-        return routeRepository.getAllRouteInfoDTOList().size();
+        return routeRepository.getRouteInfoDTOList().size();
     }
 
     private RoutsOrderDTO toRoutsOrderDto(List<StationDTO> stationDTOS) {

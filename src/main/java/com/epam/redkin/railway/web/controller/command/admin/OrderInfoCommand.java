@@ -43,7 +43,7 @@ public class OrderInfoCommand implements Command {
         request.setAttribute("currentPage", page);
         request.setAttribute("order_list", orderList);
         HttpSession session = request.getSession();
-        request.setAttribute("language", session.getAttribute(AppContextConstant.LOCALE));
+        request.setAttribute("lang", session.getAttribute(AppContextConstant.LOCALE));
         LOGGER.info("done");
         return Path.PAGE_ADMIN_INFO_ORDER;
     }

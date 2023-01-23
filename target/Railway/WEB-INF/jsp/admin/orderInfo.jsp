@@ -75,7 +75,7 @@
                         </div>
                     </td>
                     <td><period:period dateFrom="${order.arrivalDate}" dateTo="${order.dispatchDate}"
-                                       locale="${language}"/>
+                                       locale="${lang}"/>
                     </td>
 
                     <td><span>${order.orderDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}</span></td>

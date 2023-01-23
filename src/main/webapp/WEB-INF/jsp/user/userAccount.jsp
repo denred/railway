@@ -51,7 +51,7 @@
                     <td>${order.user.firstName}<br> ${order.user.lastName}</td>
                     <td>${order.trainNumber}</td>
                     <td>${order.routeName}</td>
-                    <td><fmt:message key="${order.carrType}"/></td>
+                    <td><fmt:message key="${order.carriageType}"/></td>
                     <td>${order.carriageNumber}</td>
                     <td>${order.countOfSeats}</td>
                     <td>${order.seatNumber}</td>

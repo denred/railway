@@ -25,7 +25,7 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
 
     @Override
     public int create(Route route) {
-        LOGGER.info("Started create() with route= " + route);
+        LOGGER.info("Started method create(Route route) with route= " + route);
         int key = -1;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -45,11 +45,10 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
             if (resultSet.next()) {
                 key = resultSet.getInt(1);
             }
-        } catch (SQLException e) {
-            assert connection != null;
+        } catch (SQLException | NullPointerException e) {
             try {
                 connection.rollback();
-            } catch (SQLException ex) {
+            } catch (SQLException | NullPointerException ex) {
                 LOGGER.error("Connection error: " + ex);
                 throw new DataBaseException("Connection error: ", ex);
             }
@@ -57,13 +56,12 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
             throw new DataBaseException("Cannot add route into database", e);
         } finally {
             try {
-                assert connection != null;
                 connection.setAutoCommit(true);
                 DbUtils.close(resultSet);
                 DbUtils.close(statement);
                 DbUtils.close(connection);
                 LOGGER.info("Connection closed");
-            } catch (SQLException e) {
+            } catch (SQLException | NullPointerException e) {
                 LOGGER.error("Connection closing error: " + e);
                 throw new DataBaseException("Connection closing error: ", e);
             }
@@ -74,70 +72,78 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
 
     @Override
     public Route getById(int id) {
+        LOGGER.info("Started method getById(int id) with id= " + id);
         Route route = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ROUTE_INFO_BY_ID)) {
             statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                route = extractRoute(rs);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                route = extractRoute(resultSet);
             }
+            LOGGER.info("Extracted route: " + route);
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Can`t read route. ID = " + id, e);
+            LOGGER.error("Cannot extract route: " + e);
+            throw new DataBaseException("Can`t extract route", e);
         }
         return route;
     }
 
 
-    private Route extractRoute(ResultSet rs) throws SQLException {
+    private Route extractRoute(ResultSet resultSet) throws SQLException {
         return Route.builder()
-                .routeId(rs.getInt(Constants.ROUTE_ID))
-                .trainId(rs.getInt(Constants.TRAIN_ID))
-                .routeName(rs.getString(Constants.ROUTE_NAME))
-                .routeNumber(rs.getInt(Constants.ROUTE_NUMBER))
+                .routeId(resultSet.getInt(Constants.ROUTE_ID))
+                .trainId(resultSet.getInt(Constants.TRAIN_ID))
+                .routeName(resultSet.getString(Constants.ROUTE_NAME))
+                .routeNumber(resultSet.getInt(Constants.ROUTE_NUMBER))
                 .build();
     }
 
     @Override
-    public boolean update(Route entity) {
+    public boolean update(Route route) {
+        LOGGER.info("Started method update(Route route) with route: " + route);
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_ROUTE)) {
-            statement.setString(1, entity.getRouteName());
-            statement.setInt(2, entity.getRouteNumber());
-            statement.setInt(3, entity.getTrainId());
-            statement.setInt(4, entity.getRouteId());
-            return statement.executeUpdate() > 0;
+            statement.setString(1, route.getRouteName());
+            statement.setInt(2, route.getRouteNumber());
+            statement.setInt(3, route.getTrainId());
+            statement.setInt(4, route.getRouteId());
+            boolean state = statement.executeUpdate() > 0;
+            LOGGER.info("Route updated: " + state);
+            return state;
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Can`t update route. route = " + entity);
+            LOGGER.error("Can`t update route: " + e);
+            throw new DataBaseException("Can`t update route", e);
         }
     }
 
     @Override
     public void delete(int id) {
+        LOGGER.info("Started method delete(int id) with id= " + id);
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_ROUTE)) {
             statement.setInt(1, id);
-            statement.executeUpdate();
+            LOGGER.info("Route deleted: " + (statement.executeUpdate() > 0));
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Can`t delete route. id = " + id);
+            LOGGER.error("Cannot delete route: " + e);
+            throw new DataBaseException("Can`t delete route. id = " + id, e);
         }
     }
 
     @Override
-    public List<RouteInfoDTO> getAllRouteInfoDTOList() {
+    public List<RouteInfoDTO> getRouteInfoDTOList() {
+        LOGGER.info("Started method getRouteInfoDTOList()");
         List<RouteInfoDTO> routes = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_ROUTES)) {
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                routes.add(extractRouteInfoDTO(rs));
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                routes.add(extractRouteInfoDTO(resultSet));
             }
+            LOGGER.info("\nExtracted List of RouteInfoDTO: " + routes);
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Can't get all rout info list.", e);
+            LOGGER.error("Cannot extract RouteInfoDTO list: " + e);
+            throw new DataBaseException("Cannot extract RouteInfoDTO list", e);
         }
         return routes;
     }
@@ -149,54 +155,52 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ROUTE_INFO_BY_ID)) {
             statement.setInt(1, routeId);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                routeInfoDto = extractRouteInfoDTO(rs);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                routeInfoDto = extractRouteInfoDTO(resultSet);
             }
+            LOGGER.info("Extracted RouteInfoDTO: " + routeInfoDto);
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Can't get route by id = " + routeId, e);
+            LOGGER.error("Cannot extract RouteInfoDTO: " + e);
+            throw new DataBaseException("Cannot extract RouteInfoDTO", e);
         }
         return routeInfoDto;
     }
 
     @Override
     public List<StationDTO> getStationDTOListWithParameters(String departureStation, String arrivalStation) {
+        LOGGER.info("\nStarted method getStationDTOListWithParameters(String departureStation, String arrivalStation)\n" +
+                "with departureStation= " + departureStation + " and arrivalStation= " + arrivalStation);
         List<StationDTO> routes = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ROUTE_LIST_WITH_PARAMETERS)) {
             statement.setString(1, departureStation);
             statement.setString(2, arrivalStation);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                routes.add(extractStationDto(rs));
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                routes.add(extractStationDto(resultSet));
             }
+            LOGGER.info("\nExtracted StationDTO List: " + routes);
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Can't get station " + departureStation + " and station " + arrivalStation + " in rout list", e);
+            LOGGER.error("Cannot extract StationDTO list: " + e);
+            throw new DataBaseException("Cannot extract StationDTO list", e);
         }
         return routes;
     }
 
-    private StationDTO extractStationDto(ResultSet resultSet) {
-        StationDTO result = new StationDTO();
-        try {
-            result.setStationId(resultSet.getInt("s.id"));
-            result.setStation(resultSet.getString("station"));
-            result.setOrder(resultSet.getInt("station_order"));
-            result.setStationArrivalDateTime(resultSet.getObject("station_arrival", LocalDateTime.class));
-            result.setStationDispatchDateTime(resultSet.getObject("station_dispatch", LocalDateTime.class));
-            result.setRoutName(resultSet.getString("r.name"));
-            result.setRoutNumber(resultSet.getInt("r.number"));
-            result.setRoutsId(resultSet.getInt("r.id"));
-            result.setTrainId(resultSet.getInt("train_id"));
-            result.setTrainNumber(resultSet.getString("t.number"));
-            return result;
-        } catch (SQLException | NumberFormatException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Can`t extract StationDto.", e);
-        }
-
+    private StationDTO extractStationDto(ResultSet resultSet) throws SQLException {
+        return StationDTO.builder()
+                .stationId(resultSet.getInt(Constants.STATION_ID))
+                .station(resultSet.getString(Constants.STATION))
+                .order(resultSet.getInt(Constants.STATION_ORDER))
+                .stationArrivalDateTime(resultSet.getObject(Constants.STATION_ARRIVAL_DATE,LocalDateTime.class))
+                .stationDispatchDateTime(resultSet.getObject(Constants.STATION_DISPATCH_DATE, LocalDateTime.class))
+                .routName(resultSet.getString(Constants.ROUTE_NAME))
+                .routNumber(resultSet.getInt(Constants.ROUTE_NUMBER))
+                .routsId(resultSet.getInt(Constants.ROUTE_ID))
+                .trainId(resultSet.getInt(Constants.TRAIN_ID))
+                .trainNumber(resultSet.getString(Constants.TRAIN_NUMBER))
+                .build();
     }
 
     private RouteInfoDTO extractRouteInfoDTO(ResultSet resultSet) throws SQLException {
