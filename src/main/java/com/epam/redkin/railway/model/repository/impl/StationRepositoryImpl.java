@@ -21,7 +21,7 @@ public class StationRepositoryImpl implements StationRepository {
 
     @Override
     public int create(Station station) {
-        LOGGER.info("Started create() with station= " + station);
+        LOGGER.info("Started create(Station station) with station= " + station);
         int key = -1;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.ADD_STATION, Statement.RETURN_GENERATED_KEYS)) {
@@ -41,17 +41,19 @@ public class StationRepositoryImpl implements StationRepository {
 
     @Override
     public Station getById(int id) {
+        LOGGER.info("Started method getById(int id) with id= " + id);
         Station station = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.GET_STATION_BY_ID)) {
             statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                station = extractStation(rs);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                station = extractStation(resultSet);
             }
+            LOGGER.info("Extracted station: " + station);
         } catch (SQLException | NullPointerException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot read station from database, station_id = " + id);
+            LOGGER.error("Cannot extract station: " + e);
+            throw new DataBaseException("Cannot extract station from database, station_id = " + id, e);
         }
         return station;
     }
@@ -65,41 +67,47 @@ public class StationRepositoryImpl implements StationRepository {
 
     @Override
     public boolean update(Station station) {
+        LOGGER.info("Started method update(Station station) with station: " + station);
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.UPDATE_STATION)) {
             statement.setString(1, station.getStation());
             statement.setInt(2, station.getId());
-            return statement.executeUpdate() > 0;
+            boolean state = statement.executeUpdate() > 0;
+            LOGGER.info("Station updated: " + state);
+            return state;
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot update station, station = " + station);
+            LOGGER.error("Cannot update station: " + e);
+            throw new DataBaseException("Cannot update station, station= " + station, e);
         }
     }
 
     @Override
     public void delete(int id) {
+        LOGGER.info("Started method delete(int id) with id= " + id);
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.DELETE_STATION)) {
             statement.setInt(1, id);
-            statement.executeUpdate();
+            LOGGER.info("Station deleted: " + statement.executeUpdate());
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot delete station, station_id = " + id);
+            LOGGER.error("Cannot delete station: " + e);
+            throw new DataBaseException("Cannot delete station, station_id = " + id, e);
         }
     }
 
     @Override
     public List<Station> getAllStations() {
+        LOGGER.info("Started method getAllStations()");
         List<Station> stations = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.GET_ALL_STATIONS)) {
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                stations.add(extractStation(rs));
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                stations.add(extractStation(resultSet));
             }
+            LOGGER.info("Extracted stations: " + stations);
         } catch (SQLException | NullPointerException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot get list of stations");
+            LOGGER.error("Cannot get list of stations: " + e);
+            throw new DataBaseException("Cannot get list of stations", e);
         }
         return stations;
     }

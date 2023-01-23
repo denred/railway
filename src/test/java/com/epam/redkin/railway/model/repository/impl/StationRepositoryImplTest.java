@@ -1,24 +1,24 @@
 package com.epam.redkin.railway.model.repository.impl;
 
 import com.epam.redkin.railway.model.entity.Station;
-import com.epam.redkin.railway.model.entity.Train;
+import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.repository.StationRepository;
-import com.epam.redkin.railway.model.repository.TrainRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.sql.DataSource;
 import java.sql.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
 class StationRepositoryImplTest {
     @Mock
     private DataSource mockDataSource;
@@ -28,54 +28,234 @@ class StationRepositoryImplTest {
     private PreparedStatement mockStatement;
     @Mock
     private ResultSet mockResultSet;
+    private StationRepository stationRepository;
 
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws SQLException {
         mockDataSource = mock(DataSource.class);
         mockConnection = mock(Connection.class);
         mockStatement = mock(PreparedStatement.class);
         mockResultSet = mock(ResultSet.class);
+        stationRepository = new StationRepositoryImpl(mockDataSource);
+        when(mockDataSource.getConnection()).thenReturn(mockConnection);
     }
 
     @Test
-    void createStation() {
-        StationRepository stationRepository = new StationRepositoryImpl(mockDataSource);
-        try {
-            when(mockDataSource.getConnection()).thenReturn(mockConnection);
-            when(mockConnection.prepareStatement(anyString(), anyInt())).thenReturn(mockStatement);
-            when(mockStatement.executeUpdate()).thenReturn(1);
-            when(mockStatement.getGeneratedKeys()).thenReturn(mockResultSet);
-            when(mockResultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
-            doNothing().when(mockStatement).setString(anyInt(), anyString());
-            when(mockStatement.executeUpdate()).thenReturn(1);
-            when(mockResultSet.getInt(Statement.RETURN_GENERATED_KEYS)).thenReturn(1);
+    void createStationPositive() throws SQLException {
+        when(mockConnection.prepareStatement(anyString(), anyInt())).thenReturn(mockStatement);
+        doNothing().when(mockStatement).setString(anyInt(), anyString());
+        when(mockStatement.executeUpdate()).thenReturn(1);
+        when(mockStatement.getGeneratedKeys()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
+        when(mockResultSet.getInt(Statement.RETURN_GENERATED_KEYS)).thenReturn(1);
 
-            assertEquals(1, stationRepository.create(Station.builder().build()));
-            verify(mockConnection).prepareStatement(anyString(), anyInt());
-            verify(mockStatement).setString(anyInt(), any());
-            verify(mockStatement).executeUpdate();
-            verify(mockResultSet).next();
-            verify(mockResultSet).getInt(Statement.RETURN_GENERATED_KEYS);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        assertEquals(1, stationRepository.create(Station.builder().station("StationA").build()));
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString(), anyInt());
+        verify(mockStatement).setString(anyInt(), anyString());
+        verify(mockStatement).executeUpdate();
+        verify(mockResultSet).next();
+        verify(mockResultSet).getInt(Statement.RETURN_GENERATED_KEYS);
     }
 
     @Test
-    void getById() {
+    void createStationNegative() throws SQLException {
+        when(mockConnection.prepareStatement(anyString(), anyInt())).thenReturn(mockStatement);
+        doNothing().when(mockStatement).setString(anyInt(), anyString());
+        when(mockStatement.executeUpdate()).thenReturn(0);
+        when(mockStatement.getGeneratedKeys()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(Boolean.FALSE);
+
+        assertEquals(-1, stationRepository.create(Station.builder().station("StationA").build()));
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString(), anyInt());
+        verify(mockStatement).setString(anyInt(), anyString());
+        verify(mockStatement).executeUpdate();
+        verify(mockResultSet).next();
+        verify(mockResultSet, times(0)).getInt(Statement.RETURN_GENERATED_KEYS);
     }
 
     @Test
-    void update() {
+    void createStationThrowException() throws SQLException {
+        when(mockConnection.prepareStatement(anyString(), anyInt())).thenThrow(SQLException.class);
+
+        assertThrows(DataBaseException.class, () -> stationRepository.create(Station.builder().station("StationA").build()));
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString(), anyInt());
+        verify(mockStatement, times(0)).setString(anyInt(), anyString());
+        verify(mockStatement, times(0)).executeUpdate();
+        verify(mockResultSet, times(0)).next();
+        verify(mockResultSet, times(0)).getInt(Statement.RETURN_GENERATED_KEYS);
     }
 
     @Test
-    void delete() {
+    void getByIdPositive() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        doNothing().when(mockStatement).setInt(anyInt(), anyInt());
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
+        when(mockResultSet.getInt(anyString())).thenReturn(1);
+        when(mockResultSet.getString(anyString())).thenReturn("StationA");
+
+        assertEquals(Station.builder().station("StationA").id(1).build(), stationRepository.getById(1));
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement).setInt(anyInt(), anyInt());
+        verify(mockStatement).executeQuery();
+        verify(mockResultSet).next();
+        verify(mockResultSet).getInt(anyString());
+        verify(mockResultSet).getString(anyString());
     }
 
     @Test
-    void getAllStations() {
+    void getByIdNegative() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        doNothing().when(mockStatement).setInt(anyInt(), anyInt());
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(Boolean.FALSE);
+
+        assertNull(stationRepository.getById(1));
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement).setInt(anyInt(), anyInt());
+        verify(mockStatement).executeQuery();
+        verify(mockResultSet).next();
+    }
+
+    @Test
+    void getByIdThrowException() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenThrow(SQLException.class);
+
+        assertThrows(DataBaseException.class, () -> stationRepository.getById(1));
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement, times(0)).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(0)).executeQuery();
+        verify(mockResultSet, times(0)).next();
+    }
+
+    @Test
+    void updatePositive() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        doNothing().when(mockStatement).setInt(anyInt(), anyInt());
+        doNothing().when(mockStatement).setString(anyInt(), anyString());
+        when(mockStatement.executeUpdate()).thenReturn(1);
+
+        assertTrue(stationRepository.update(Station.builder().station("StationA").id(1).build()));
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement).setInt(anyInt(), anyInt());
+        verify(mockStatement).setString(anyInt(), anyString());
+        verify(mockStatement).executeUpdate();
+    }
+
+    @Test
+    void updateNegative() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        doNothing().when(mockStatement).setInt(anyInt(), anyInt());
+        doNothing().when(mockStatement).setString(anyInt(), anyString());
+        when(mockStatement.executeUpdate()).thenReturn(0);
+
+        assertFalse(stationRepository.update(Station.builder().station("StationA").id(1).build()));
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement).setInt(anyInt(), anyInt());
+        verify(mockStatement).setString(anyInt(), anyString());
+        verify(mockStatement).executeUpdate();
+    }
+
+    @Test
+    void updateThrowException() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenThrow(SQLException.class);
+
+        assertThrows(DataBaseException.class, () -> stationRepository.update(Station.builder().station("StationA").id(1).build()));
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement, times(0)).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(0)).setString(anyInt(), anyString());
+        verify(mockStatement, times(0)).executeUpdate();
+    }
+
+    @Test
+    void deletePositive() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        doNothing().when(mockStatement).setInt(anyInt(), anyInt());
+        when(mockStatement.executeUpdate()).thenReturn(1);
+
+        stationRepository.delete(1);
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement).setInt(anyInt(), anyInt());
+        verify(mockStatement).executeUpdate();
+    }
+
+    @Test
+    void deleteNegative() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        doNothing().when(mockStatement).setInt(anyInt(), anyInt());
+        when(mockStatement.executeUpdate()).thenReturn(0);
+
+        stationRepository.delete(1);
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement).setInt(anyInt(), anyInt());
+        verify(mockStatement).executeUpdate();
+    }
+
+    @Test
+    void deleteThrowException() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenThrow(SQLException.class);
+
+        assertThrows(DataBaseException.class, () -> stationRepository.delete(1));
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement, times(0)).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(0)).executeUpdate();
+    }
+
+    @Test
+    void getAllStationsPositive() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
+        when(mockResultSet.getInt(anyString())).thenReturn(1);
+        when(mockResultSet.getString(anyString())).thenReturn("StationB");
+
+        assertEquals(2, stationRepository.getAllStations().size());
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement).executeQuery();
+        verify(mockResultSet, times(3)).next();
+        verify(mockResultSet, times(2)).getInt(anyString());
+        verify(mockResultSet, times(2)).getString(anyString());
+    }
+
+    @Test
+    void getAllStationsNegative() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(Boolean.FALSE);
+
+        assertEquals(0, stationRepository.getAllStations().size());
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement).executeQuery();
+        verify(mockResultSet, times(1)).next();
+        verify(mockResultSet, times(0)).getInt(anyString());
+        verify(mockResultSet, times(0)).getString(anyString());
+    }
+
+    @Test
+    void getAllStationsThrowException() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenThrow(SQLException.class);
+
+        assertThrows(DataBaseException.class, () -> stationRepository.getAllStations());
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement, times(0)).executeQuery();
+        verify(mockResultSet, times(0)).next();
+        verify(mockResultSet, times(0)).getInt(anyString());
+        verify(mockResultSet, times(0)).getString(anyString());
     }
 }
