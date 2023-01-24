@@ -35,10 +35,6 @@ class RouteRepositoryImplTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        mockDataSource = mock(DataSource.class);
-        mockConnection = mock(Connection.class);
-        mockStatement = mock(PreparedStatement.class);
-        mockResultSet = mock(ResultSet.class);
         routeRepository = new RouteRepositoryImpl(mockDataSource);
         when(mockDataSource.getConnection()).thenReturn(mockConnection);
     }

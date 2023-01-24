@@ -8,5 +8,5 @@ import java.util.List;
 public interface CarriageRepository extends EntityDAO<Carriage> {
     List<Carriage> getCarriagesByTrainId(int trainId);
     List<Carriage> getCarriagesByTrainIdAndType(int trainId, String type);
-    List<CarriageDTO> getAllCarriageDTOList();
+    List<CarriageDTO> getCarriageDTOList();
 }

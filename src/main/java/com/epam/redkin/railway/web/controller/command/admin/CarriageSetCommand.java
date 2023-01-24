@@ -34,7 +34,7 @@ public class CarriageSetCommand implements Command {
         CarriageService carriageService = AppContext.getInstance().getCarriageService();
         SeatService seatService = AppContext.getInstance().getSeatService();
         CarriageValidator carriageValidator = new CarriageValidator();
-        CarriageDTO carriageDTO = new CarriageDTO();
+        CarriageDTO carriageDTO = CarriageDTO.builder().build();
 
         String carriageId = request.getParameter(AppContextConstant.CARRIAGE_ID);
         String carriageNumber = request.getParameter(AppContextConstant.CARRIAGE_NUMBER);

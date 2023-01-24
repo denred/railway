@@ -119,7 +119,7 @@ public class CarriageServiceImpl implements CarriageService {
 
     @Override
     public int getRouteListSize() {
-        return carriageRepository.getAllCarriageDTOList().size();
+        return carriageRepository.getCarriageDTOList().size();
     }
 
     @Override
@@ -130,7 +130,7 @@ public class CarriageServiceImpl implements CarriageService {
 
     @Override
     public List<CarriageDTO> getAllCarriageDTOList() {
-        List<CarriageDTO> result = carriageRepository.getAllCarriageDTOList();
+        List<CarriageDTO> result = carriageRepository.getCarriageDTOList();
         for (CarriageDTO car : result) {
             int seat = seatRepository.getSeatsCountByCarriageId(car.getCarId());
             car.setSeats(seat);

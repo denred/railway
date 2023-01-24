@@ -24,7 +24,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
 
     @Override
     public int create(Carriage carriage) {
-        LOGGER.info("Started create() with carriage= " + carriage);
+        LOGGER.info("Started public int create(Carriage carriage), carriage= " + carriage);
         int key = -1;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -46,24 +46,22 @@ public class CarriageRepositoryImpl implements CarriageRepository {
                 carriage.setCarriageId(key);
             }
         } catch (SQLException | NullPointerException e) {
-            assert connection != null;
             try {
                 connection.rollback();
-            } catch (SQLException ex) {
+            } catch (SQLException | NullPointerException ex) {
                 LOGGER.error("Connection error: " + ex);
                 throw new DataBaseException("Connection error: ", ex);
             }
-            LOGGER.error(e.getClass() + " in method create: " + e);
+            LOGGER.error("Cannot add carriage: " + e);
             throw new DataBaseException("Cannot add carriage ", e);
         } finally {
             try {
-                assert connection != null;
                 connection.setAutoCommit(true);
                 DbUtils.close(resultSet);
                 DbUtils.close(statement);
                 DbUtils.close(connection);
                 LOGGER.info("Connection closed");
-            } catch (SQLException e) {
+            } catch (SQLException | NullPointerException e) {
                 LOGGER.error("Connection closing error: " + e);
                 throw new DataBaseException("Connection closing error: ", e);
             }
@@ -74,96 +72,109 @@ public class CarriageRepositoryImpl implements CarriageRepository {
 
     @Override
     public Carriage getById(int id) {
+        LOGGER.info("Started public Carriage getById(int id), id= " + id);
         Carriage carriage = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.GET_CARRIAGE_BY_ID)) {
             statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                carriage = getCarriage(rs);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                carriage = getCarriage(resultSet);
             }
+            LOGGER.info("Extracted Carriage: " + carriage);
         } catch (SQLException | NullPointerException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot read carriage from database with carriage_id = " + id);
+            LOGGER.error("Cannot extract carriage: " + e);
+            throw new DataBaseException("Cannot extracte carriage with carriageId= " + id);
         }
         return carriage;
     }
 
     @Override
     public boolean update(Carriage carriage) {
+        LOGGER.info("Started public boolean update(Carriage carriage), carriage: " + carriage);
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.UPDATE_CARRIAGE)) {
             statement.setString(1, carriage.getType().toString());
             statement.setString(2, carriage.getNumber());
             statement.setInt(3, carriage.getTrainId());
             statement.setInt(4, carriage.getCarriageId());
-            return statement.executeUpdate() > 0;
+            boolean state = statement.executeUpdate() > 0;
+            LOGGER.info("Carriage updated: " + state);
+            return state;
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot update carriage  = " + (carriage == null ? null : carriage.toString()));
+            LOGGER.error("Cannot update carriage: " + e);
+            throw new DataBaseException("Cannot update carriage", e);
         }
     }
 
     @Override
     public void delete(int id) {
+        LOGGER.info("Started public void delete(int id), id= " + id);
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.DELETE_CARRIAGE)) {
             statement.setInt(1, id);
-            statement.executeUpdate();
+            LOGGER.info("Carriage deleted: " + (statement.executeUpdate() > 0));
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot delete carriage from database with carriage_id = " + id);
+            LOGGER.error("Cannot delete carriage: " + e);
+            throw new DataBaseException("Cannot delete carriage from database with carriage_id = " + id, e);
         }
     }
 
     @Override
     public List<Carriage> getCarriagesByTrainId(int trainId) {
+        LOGGER.info("Started public List<Carriage> getCarriagesByTrainId(int trainId), trainId= " + trainId);
         List<Carriage> carriages = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.GET_CARRIAGES_BY_TRAIN_ID)) {
             statement.setInt(1, trainId);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                carriages.add(getCarriage(rs));
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                carriages.add(getCarriage(resultSet));
             }
+            LOGGER.info("Extracted List<Carriage>: " + carriages);
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot read list of carriages from database with train_id = " + trainId);
+            LOGGER.error("Cannot extract List<Carriage>: " + e);
+            throw new DataBaseException("Cannot read list of carriages from database with train_id = " + trainId, e);
         }
         return carriages;
     }
 
     @Override
     public List<Carriage> getCarriagesByTrainIdAndType(int trainId, String type) {
+        LOGGER.info("Started public List<Carriage> getCarriagesByTrainIdAndType(int trainId, String type), " +
+                "trainId= " + trainId + " type= " + type);
         List<Carriage> carriages = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.GET_CARRIAGES_BY_TRAIN_ID_AND_TYPE)) {
             statement.setInt(1, trainId);
             statement.setString(2, type);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                carriages.add(getCarriage(rs));
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                carriages.add(getCarriage(resultSet));
             }
+            LOGGER.info("Extracted List<Carriage>: " + carriages);
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot read list of carriages from database with train_id = " + trainId
-                    + " and type = " + type);
+            LOGGER.error("Cannot extract List<Carriage>: " + e);
+            throw new DataBaseException("Cannot extract list of carriages, train_id= " + trainId
+                    + " and type= " + type, e);
         }
         return carriages;
     }
 
     @Override
-    public List<CarriageDTO> getAllCarriageDTOList() {
+    public List<CarriageDTO> getCarriageDTOList() {
+        LOGGER.info("Started public List<CarriageDTO> getAllCarriageDTOList()");
         List<CarriageDTO> carriageDTOList = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.GET_ALL_CARRIAGE)) {
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                carriageDTOList.add(extractCarriageDTO(rs));
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                carriageDTOList.add(extractCarriageDTO(resultSet));
             }
+            LOGGER.info("Extracted List<CarriageDTO>: " + carriageDTOList);
         } catch (SQLException e) {
-            LOGGER.error(e.getMessage());
-            throw new DataBaseException("Cannot extract carriage transfer object list.", e);
+            LOGGER.error("Cannot extract List<CarriageDTO>: " + e);
+            throw new DataBaseException("Cannot extract List<CarriageDTO>", e);
         }
         return carriageDTOList;
     }
@@ -179,14 +190,12 @@ public class CarriageRepositoryImpl implements CarriageRepository {
 
 
     private CarriageDTO extractCarriageDTO(ResultSet rs) throws SQLException {
-        CarriageDTO dto = new CarriageDTO();
-
-        dto.setCarId(rs.getInt("c.id"));
-        dto.setCarriageType(CarriageType.valueOf(rs.getString("type")));
-        dto.setCarNumber(rs.getString("c.number"));
-        dto.setTrainId(rs.getInt("train_id"));
-        dto.setTrainNumber(rs.getString("t.number"));
-
-        return dto;
+        return CarriageDTO.builder()
+                .carId(rs.getInt(Constants.CARRIAGE_ID))
+                .carriageType(CarriageType.valueOf(rs.getString(Constants.TYPE)))
+                .carNumber(rs.getString(Constants.CARRIAGE_NUMBER))
+                .trainId(rs.getInt(Constants.TRAIN_ID))
+                .trainNumber(rs.getString(Constants.TRAIN_NUMBER))
+                .build();
     }
 }
