@@ -130,6 +130,7 @@ public interface Constants {
     // Constants
 
     String ID = "id";
+    String TOTAL = "sum";
     String BUSY = "busy";
     String TRAIN_NUMBER = "train_number";
     String TRAIN_ID = "train_id";

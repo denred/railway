@@ -1,6 +1,5 @@
 package com.epam.redkin.railway.model.repository.impl;
 
-import com.epam.redkin.railway.model.builder.UserBuilder;
 import com.epam.redkin.railway.model.entity.Role;
 import com.epam.redkin.railway.model.entity.User;
 import com.epam.redkin.railway.model.exception.DataBaseException;
@@ -64,7 +63,7 @@ class UserRepositoryImplTest {
     @Test
     public void testCreateWithException() throws SQLException {
         userRepository = new UserRepositoryImpl(mockDataSource);
-        assertThrows(DataBaseException.class, () -> userRepository.create(new User()));
+        assertThrows(DataBaseException.class, () -> userRepository.create(User.builder().build()));
         //verify and assert
         verify(mockConnection, times(1)).prepareStatement(anyString(), anyInt());
         verify(mockStatement, times(0)).setString(anyInt(), anyString());
@@ -137,16 +136,16 @@ class UserRepositoryImplTest {
     }
 
     private User createTestUser() {
-        return new UserBuilder()
-                .setEmail("test@mail.com")
-                .setFirstName("John")
-                .setLastName("Smith")
-                .setPassword("123")
-                .setPhone("+380441233344")
-                .setBirthDate(LocalDate.now())
-                .setBlocked(true)
-                .setRole(Role.USER)
-                .setLogInToken("qwerty")
+        return User.builder()
+                .email("test@mail.com")
+                .firstName("John")
+                .lastName("Smith")
+                .password("123")
+                .phone("+380441233344")
+                .birthDate(LocalDate.now())
+                .blocked(true)
+                .role(Role.USER)
+                .token("qwerty")
                 .build();
     }
 }

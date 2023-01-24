@@ -1,6 +1,5 @@
 package com.epam.redkin.railway.model.repository.impl;
 
-import com.epam.redkin.railway.model.builder.UserBuilder;
 import com.epam.redkin.railway.model.entity.Role;
 import com.epam.redkin.railway.model.entity.User;
 import com.epam.redkin.railway.model.exception.DataBaseException;
@@ -294,16 +293,18 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     private User extractUser(ResultSet rs) throws SQLException {
-        return new UserBuilder().setUserId(rs.getInt(AppContextConstant.ID))
-                .setEmail(rs.getString(AppContextConstant.EMAIL))
-                .setPassword(rs.getString(AppContextConstant.PASSWORD))
-                .setFirstName(rs.getString(AppContextConstant.FIRST_NAME))
-                .setLastName(rs.getString(AppContextConstant.LAST_NAME))
-                .setPhone(rs.getString(AppContextConstant.PHONE_NUMBER))
-                .setBirthDate(rs.getObject(AppContextConstant.BIRTH_DATE, LocalDate.class))
-                .setRole(Role.valueOf(rs.getString(AppContextConstant.ROLE).toUpperCase()))
-                .setBlocked(rs.getBoolean(AppContextConstant.BLOCKED))
-                .setLogInToken(rs.getString(AppContextConstant.LOGIN_TOKEN)).build();
+        return User.builder()
+                .userId(rs.getInt(AppContextConstant.ID))
+                .email(rs.getString(AppContextConstant.EMAIL))
+                .password(rs.getString(AppContextConstant.PASSWORD))
+                .firstName(rs.getString(AppContextConstant.FIRST_NAME))
+                .lastName(rs.getString(AppContextConstant.LAST_NAME))
+                .phone(rs.getString(AppContextConstant.PHONE_NUMBER))
+                .birthDate(rs.getObject(AppContextConstant.BIRTH_DATE, LocalDate.class))
+                .role(Role.valueOf(rs.getString(AppContextConstant.ROLE).toUpperCase()))
+                .blocked(rs.getBoolean(AppContextConstant.BLOCKED))
+                .token(rs.getString(AppContextConstant.LOGIN_TOKEN))
+                .build();
     }
 
 

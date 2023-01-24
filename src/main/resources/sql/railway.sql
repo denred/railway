@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `railway`.`booking` (
                                                CONSTRAINT `fk_booking_user`
                                                    FOREIGN KEY (`user_id`)
                                                        REFERENCES `railway`.`user` (`id`)
-                                                       ON DELETE NO ACTION
+                                                       ON DELETE CASCADE
                                                        ON UPDATE NO ACTION);
 
 

@@ -1,6 +1,5 @@
 package com.epam.redkin.railway.web.controller.command.common;
 
-import com.epam.redkin.railway.model.builder.UserBuilder;
 import com.epam.redkin.railway.model.entity.Role;
 import com.epam.redkin.railway.model.entity.User;
 import com.epam.redkin.railway.model.service.UserService;
@@ -54,15 +53,15 @@ public class RegistrationCommand implements Command {
         String phoneNumber = request.getParameter(AppContextConstant.PHONE_NUMBER).trim();
         String birthDate = request.getParameter(AppContextConstant.BIRTH_DATE).trim();
 
-        return new UserBuilder()
-                .setEmail(email)
-                .setPassword(password)
-                .setFirstName(firstName)
-                .setLastName(lastName)
-                .setBirthDate(LocalDate.parse(birthDate))
-                .setPhone(phoneNumber)
-                .setRole(Role.USER)
-                .setBlocked(true)
+        return User.builder()
+                .email(email)
+                .password(password)
+                .firstName(firstName)
+                .lastName(lastName)
+                .birthDate(LocalDate.parse(birthDate))
+                .phone(phoneNumber)
+                .role(Role.USER)
+                .blocked(true)
                 .build();
     }
 }

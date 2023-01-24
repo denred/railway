@@ -1,9 +1,9 @@
 package com.epam.redkin.railway.model.repository.impl;
 
-import com.epam.redkin.railway.model.builder.UserBuilder;
 import com.epam.redkin.railway.model.entity.*;
 import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.repository.OrderRepository;
+import com.epam.redkin.railway.util.constants.AppContextConstant;
 import org.apache.commons.dbutils.DbUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,56 +87,57 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
 
     @Override
     public Order getById(int id) throws DataBaseException {
-        LOGGER.info("Started the method getById with id= " + id);
+        LOGGER.info("Started public Order getById(int id), id= " + id);
         Order order = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(READ_ORDER_BY_ORDER_ID)) {
             statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                order = extractOrder(rs);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                order = extractOrder(resultSet);
             }
-            LOGGER.info("The method getById done, order= " + order);
+            LOGGER.info("Extracted Order= " + order);
         } catch (SQLException | NullPointerException e) {
-            LOGGER.error(e.getClass() + " in the method getById: " + e.getMessage());
-            throw new DataBaseException("Cannot read order, order_id = " + id, e);
+            LOGGER.error("Cannot extract order: " + e);
+            throw new DataBaseException("Cannot extract order, order_id = " + id, e);
         }
         return order;
     }
 
-    private Order extractOrder(ResultSet rs) throws SQLException {
+    private Order extractOrder(ResultSet resultSet) throws SQLException {
         return Order.builder()
-                .id(rs.getInt(ID))
-                .trainNumber(rs.getString(TRAIN_NUMBER))
-                .carriageType(CarriageType.valueOf(rs.getString(CARRIAGE_TYPE)))
-                .price(rs.getDouble(PRICE))
-                .arrivalDate(rs.getObject(ARRIVAL_DATE, LocalDateTime.class))
-                .dispatchDate(rs.getObject(DISPATCH_DATE, LocalDateTime.class))
-                .user(extractUser(rs))
-                .orderDate(rs.getObject(BOOKING_DATE, LocalDateTime.class))
-                .orderStatus(OrderStatus.valueOf(rs.getString(STATUS)))
-                .countOfSeats(rs.getInt(SEATS_COUNT))
-                .arrivalStation(rs.getString(ARRIVAL_STATION))
-                .dispatchStation(rs.getString(DISPATCH_STATION))
-                .travelTime(rs.getString(TRAVEL_TIME))
-                .routeId(rs.getInt(ROUTE_ID))
-                .carriageNumber(rs.getString(CARRIAGE_NUMBER))
-                .seatNumber(rs.getString(SEAT_NUMBER))
-                .seatsId(rs.getString(SEATS_ID))
+                .id(resultSet.getInt(ID))
+                .trainNumber(resultSet.getString(TRAIN_NUMBER))
+                .carriageType(CarriageType.valueOf(resultSet.getString(CARRIAGE_TYPE)))
+                .price(resultSet.getDouble(PRICE))
+                .arrivalDate(resultSet.getObject(ARRIVAL_DATE, LocalDateTime.class))
+                .dispatchDate(resultSet.getObject(DISPATCH_DATE, LocalDateTime.class))
+                .user(extractUser(resultSet))
+                .orderDate(resultSet.getObject(BOOKING_DATE, LocalDateTime.class))
+                .orderStatus(OrderStatus.valueOf(resultSet.getString(STATUS)))
+                .countOfSeats(resultSet.getInt(SEATS_COUNT))
+                .arrivalStation(resultSet.getString(ARRIVAL_STATION))
+                .dispatchStation(resultSet.getString(DISPATCH_STATION))
+                .travelTime(resultSet.getString(TRAVEL_TIME))
+                .routeId(resultSet.getInt(ROUTE_ID))
+                .carriageNumber(resultSet.getString(CARRIAGE_NUMBER))
+                .seatNumber(resultSet.getString(SEAT_NUMBER))
+                .seatsId(resultSet.getString(SEATS_ID))
                 .build();
     }
 
-    private User extractUser(ResultSet rs) throws SQLException {
-        return new UserBuilder()
-                .setUserId(rs.getInt(ID))
-                .setEmail(rs.getString(EMAIL))
-                .setPassword(rs.getString(PASSWORD))
-                .setFirstName(rs.getString(FIRST_NAME))
-                .setLastName(rs.getString(LAST_NAME))
-                .setPhone(rs.getString(PHONE))
-                .setBirthDate(rs.getObject(BIRTH_DATE, LocalDate.class))
-                .setRole(Role.valueOf(rs.getString(ROLE).toUpperCase()))
-                .setBlocked(rs.getBoolean(BLOCKED))
+    private User extractUser(ResultSet resultSet) throws SQLException {
+        return User.builder()
+                .userId(resultSet.getInt(AppContextConstant.ID))
+                .email(resultSet.getString(AppContextConstant.EMAIL))
+                .password(resultSet.getString(AppContextConstant.PASSWORD))
+                .firstName(resultSet.getString(AppContextConstant.FIRST_NAME))
+                .lastName(resultSet.getString(AppContextConstant.LAST_NAME))
+                .phone(resultSet.getString(AppContextConstant.PHONE_NUMBER))
+                .birthDate(resultSet.getObject(AppContextConstant.BIRTH_DATE, LocalDate.class))
+                .role(Role.valueOf(resultSet.getString(AppContextConstant.ROLE).toUpperCase()))
+                .blocked(resultSet.getBoolean(AppContextConstant.BLOCKED))
+                .token(resultSet.getString(AppContextConstant.LOGIN_TOKEN))
                 .build();
     }
 
@@ -153,20 +154,19 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
     }
 
     @Override
-    public List<Order> getAllOrders() throws DataBaseException {
-        LOGGER.info("Started the method getAllOrders()");
+    public List<Order> getOrders() throws DataBaseException {
+        LOGGER.info("Started public List<Order> getOrders()");
         List<Order> orders = new ArrayList<>();
         ResultSet resultSet = null;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_ORDER)) {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Order order = extractOrder(resultSet);
-                orders.add(order);
+                orders.add(extractOrder(resultSet));
             }
         } catch (SQLException | NullPointerException e) {
-            LOGGER.error(e.getClass() + " in getAllOrders " + e);
-            throw new DataBaseException("Can't get all order list.", e);
+            LOGGER.error("Cannot extract List<Order>: " + e);
+            throw new DataBaseException("Cannot extract List<Order>", e);
         } finally {
             try {
                 DbUtils.close(resultSet);
@@ -181,7 +181,7 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
 
     @Override
     public boolean updateOrderStatus(int orderId, OrderStatus status) throws DataBaseException {
-        LOGGER.info("Started the method updateOrderStatus() with orderId= " + orderId
+        LOGGER.info("Started  public boolean updateOrderStatus(int orderId, OrderStatus status) with orderId= " + orderId
                 + " and OrderStatus= " + status.name());
         Connection connection = null;
         PreparedStatement statement = null;
@@ -194,61 +194,66 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
             statement.setString(1, status.name());
             statement.setInt(2, orderId);
             statusUpdate = statement.executeUpdate() > 0;
+            connection.commit();
             LOGGER.info("Transaction done with status: " + statusUpdate);
-        } catch (SQLException e) {
-            LOGGER.error(e.getClass() + " in updateOrderStatus(): " + e);
-            throw new DataBaseException("Can`t update order. Order id = " + orderId + " status: " + status.name(), e);
+        } catch (SQLException | NullPointerException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException | NullPointerException ex) {
+                LOGGER.error("Connection rollback error:", e);
+                throw new DataBaseException("Connection rollback error", ex);
+            }
+            LOGGER.error("Cannot update order status: " + e);
+            throw new DataBaseException("Can`t update order status. Order id = " + orderId + " status: " + status.name(), e);
         } finally {
             try {
-                assert connection != null;
                 connection.setAutoCommit(true);
                 DbUtils.close(statement);
                 DbUtils.close(connection);
                 LOGGER.info("Connection closed");
-            } catch (SQLException e) {
+            } catch (SQLException | NullPointerException e) {
                 LOGGER.error("Connection closing error: " + e);
                 throw new DataBaseException("Connection closing error: ", e);
             }
-
         }
         return statusUpdate;
     }
 
     @Override
     public List<Order> getOrderByUserId(int userId) throws DataBaseException {
-        LOGGER.info("Started the method getOrderByUserId() with userId= " + userId);
+        LOGGER.info("Started --> getOrderByUserId() --> userId= " + userId);
         List<Order> orders = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ORDER_BY_USER_ID)) {
             statement.setInt(1, userId);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                orders.add(extractOrder(rs));
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                orders.add(extractOrder(resultSet));
             }
         } catch (SQLException e) {
-            LOGGER.error(e.getClass() + " in getOrderByUserId(): " + e);
-            throw new DataBaseException("Can't get order list by user ID. ID = " + userId, e);
+            LOGGER.error("Cannot get List<Order>: ", e);
+            throw new DataBaseException("Can't get order list by user id | ID= " + userId, e);
         }
-        LOGGER.info("The method getOrderByUserId() done, orders:\n" + orders);
+        LOGGER.info("\nThe method getOrderByUserId() done, orders: " + orders);
         return orders;
     }
 
     @Override
     public Double getPriceOfSuccessfulOrders(int userId) throws DataBaseException {
-        LOGGER.info("Started the method getPriceOfSuccessfulOrders() with userId= " + userId);
+        LOGGER.info("Started --> getPriceOfSuccessfulOrders() --> userId= " + userId);
         double price = 0.0;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_THE_PRICE_OF_SUCCESSFUL_ORDERS)) {
             statement.setInt(1, userId);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                price = rs.getDouble("sum");
+                price = rs.getDouble(Constants.TOTAL);
             }
         } catch (SQLException e) {
-            LOGGER.error(e.getClass() + " in getPriceOfSuccessfulOrders(): " + e);
-            throw new DataBaseException("Can`t get price. user ID = " + userId, e);
+            LOGGER.error("Cannot get price: " + e);
+            throw new DataBaseException("Can`t get price. user id= " + userId, e);
         }
-        LOGGER.info("The method getPriceOfSuccessfulOrders() done, price: " + price);
+        LOGGER.info("Total order price: " + price);
         return price;
     }
 }

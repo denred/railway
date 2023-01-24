@@ -95,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getAllOrderList() {
-        return orderRepository.getAllOrders();
+        return orderRepository.getOrders();
     }
 
     @Override
@@ -110,13 +110,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getOrderListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage) {
-        List<Order> allRecords = orderRepository.getAllOrders();
+        List<Order> allRecords = orderRepository.getOrders();
         return allRecords.subList(currentPage, Math.min(recordsPerPage, allRecords.size()));
     }
 
     @Override
     public int getOrderListSize() {
-        return orderRepository.getAllOrders().size();
+        return orderRepository.getOrders().size();
     }
 
     @Override
