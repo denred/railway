@@ -84,7 +84,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
             LOGGER.info("Extracted Carriage: " + carriage);
         } catch (SQLException | NullPointerException e) {
             LOGGER.error("Cannot extract carriage: " + e);
-            throw new DataBaseException("Cannot extracte carriage with carriageId= " + id);
+            throw new DataBaseException("Cannot extract carriage with carriageId= " + id);
         }
         return carriage;
     }

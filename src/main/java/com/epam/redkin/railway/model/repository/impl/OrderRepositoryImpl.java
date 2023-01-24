@@ -1,6 +1,5 @@
 package com.epam.redkin.railway.model.repository.impl;
 
-import com.epam.redkin.railway.model.builder.OrderBuilder;
 import com.epam.redkin.railway.model.builder.UserBuilder;
 import com.epam.redkin.railway.model.entity.*;
 import com.epam.redkin.railway.model.exception.DataBaseException;
@@ -62,24 +61,22 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
             LOGGER.info("Generated id= " + key);
         } catch (SQLException | NullPointerException e) {
             try {
-                assert connection != null;
                 connection.rollback();
                 LOGGER.info("Transaction rollback");
-            } catch (SQLException ex) {
+            } catch (SQLException | NullPointerException ex) {
                 LOGGER.error("Connection rollback error: " + ex);
                 throw new DataBaseException("Connection rollback error: ", ex);
             }
-            LOGGER.error(e.getClass() + " in method create: " + e);
-            throw new DataBaseException("cannot create order = " + order, e);
+            LOGGER.error("Cannot create order: " + e);
+            throw new DataBaseException("Cannot create order = " + order, e);
         } finally {
             try {
-                assert connection != null;
                 connection.setAutoCommit(true);
                 DbUtils.close(resultSet);
                 DbUtils.close(statement);
                 DbUtils.close(connection);
                 LOGGER.info("Connection closed");
-            } catch (SQLException e) {
+            } catch (SQLException | NullPointerException e) {
                 LOGGER.error("Connection closing error: " + e);
                 throw new DataBaseException("Connection closing error: ", e);
             }
@@ -108,24 +105,24 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
     }
 
     private Order extractOrder(ResultSet rs) throws SQLException {
-        return new OrderBuilder()
-                .setId(rs.getInt(ID))
-                .setTrainNumber(rs.getString(TRAIN_NUMBER))
-                .setCarriageType(rs.getString(CARRIAGE_TYPE))
-                .setPrice(rs.getDouble(PRICE))
-                .setArrivalDate(rs.getObject(ARRIVAL_DATE, LocalDateTime.class))
-                .setDispatchDate(rs.getObject(DISPATCH_DATE, LocalDateTime.class))
-                .setUser(extractUser(rs))
-                .setOrderDate(rs.getObject(BOOKING_DATE, LocalDateTime.class))
-                .setOrderStatus(rs.getString(STATUS))
-                .setCountOfSeats(rs.getInt(SEATS_COUNT))
-                .setArrivalStation(rs.getString(ARRIVAL_STATION))
-                .setDispatchStation(rs.getString(DISPATCH_STATION))
-                .setTravelTime(rs.getString(TRAVEL_TIME))
-                .setRouteId(rs.getInt(ROUTE_ID))
-                .setCarriageNumber(rs.getString(CARRIAGE_NUMBER))
-                .setSeatNumber(rs.getString(SEAT_NUMBER))
-                .setSeatsId(rs.getString(SEATS_ID))
+        return Order.builder()
+                .id(rs.getInt(ID))
+                .trainNumber(rs.getString(TRAIN_NUMBER))
+                .carriageType(CarriageType.valueOf(rs.getString(CARRIAGE_TYPE)))
+                .price(rs.getDouble(PRICE))
+                .arrivalDate(rs.getObject(ARRIVAL_DATE, LocalDateTime.class))
+                .dispatchDate(rs.getObject(DISPATCH_DATE, LocalDateTime.class))
+                .user(extractUser(rs))
+                .orderDate(rs.getObject(BOOKING_DATE, LocalDateTime.class))
+                .orderStatus(OrderStatus.valueOf(rs.getString(STATUS)))
+                .countOfSeats(rs.getInt(SEATS_COUNT))
+                .arrivalStation(rs.getString(ARRIVAL_STATION))
+                .dispatchStation(rs.getString(DISPATCH_STATION))
+                .travelTime(rs.getString(TRAVEL_TIME))
+                .routeId(rs.getInt(ROUTE_ID))
+                .carriageNumber(rs.getString(CARRIAGE_NUMBER))
+                .seatNumber(rs.getString(SEAT_NUMBER))
+                .seatsId(rs.getString(SEATS_ID))
                 .build();
     }
 
@@ -254,6 +251,4 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
         LOGGER.info("The method getPriceOfSuccessfulOrders() done, price: " + price);
         return price;
     }
-
-
 }

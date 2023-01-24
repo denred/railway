@@ -4471,3 +4471,284 @@ Extracted List of RouteInfoDTO: []
 [ERROR] 2023-01-24 13:14:39,777 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Unsupported operation exception
 [ERROR] 2023-01-24 13:14:39,778 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Unsupported operation exception
 [INFO ] 2023-01-24 13:14:39,780 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method getAllOrders()
+[INFO ] 2023-01-24 13:34:09,465 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started public boolean deleteRoutePointByStationId(int routeId, int stationId), routeId= 1 stationId= 1
+[ERROR] 2023-01-24 13:34:09,468 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Can`t delete station in route to station mapping: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,478 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started public boolean deleteRoutePointByStationId(int routeId, int stationId), routeId= 1 stationId= 1
+[INFO ] 2023-01-24 13:34:09,479 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Deleted RoutePoint: true
+[INFO ] 2023-01-24 13:34:09,483 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started public boolean deleteRoutePointByStationId(int routeId, int stationId), routeId= 1 stationId= 1
+[INFO ] 2023-01-24 13:34:09,484 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Deleted RoutePoint: false
+[INFO ] 2023-01-24 13:34:09,495 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started --> public boolean updateRoutePointByStationId(RoutePoint entity, int stationId) --> with routePoint= RoutePoint(stationId=0, routeId=0, arrival=null, dispatch=null, orderId=0), stationId= 1
+[ERROR] 2023-01-24 13:34:09,496 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Cannot update RoutePoint by Station id: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,501 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started --> public List<RoutePoint> getRoutePointList()
+[ERROR] 2023-01-24 13:34:09,502 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Cannot extract List<RoutePoint>: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,506 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started --> public List<RoutePoint> getRoutePointList()
+[INFO ] 2023-01-24 13:34:09,508 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - List<RoutePoint>: [RoutePoint(stationId=1, routeId=2, arrival=2022-12-31T23:33, dispatch=2022-12-30T23:33, orderId=3), RoutePoint(stationId=4, routeId=5, arrival=2022-12-29T23:33, dispatch=2022-12-28T23:33, orderId=6)]
+[INFO ] 2023-01-24 13:34:09,511 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started public List<MappingInfoDTO> getMappingInfoListByRouteId(int routeId), routeId= 1
+[ERROR] 2023-01-24 13:34:09,512 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Can`t get all route list to station mapping by id: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,515 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started --> public List<RoutePoint> getRoutePointList()
+[INFO ] 2023-01-24 13:34:09,515 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - List<RoutePoint>: []
+[INFO ] 2023-01-24 13:34:09,518 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started --> public List<RoutePoint> getRoutePointListByRouteId(int id) --> with id= 1
+[INFO ] 2023-01-24 13:34:09,519 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - List<RoutePoint>: [RoutePoint(stationId=1, routeId=2, arrival=2022-12-31T23:33, dispatch=2022-12-30T23:33, orderId=3), RoutePoint(stationId=4, routeId=5, arrival=2022-12-29T23:33, dispatch=2022-12-28T23:33, orderId=6)]
+[INFO ] 2023-01-24 13:34:09,523 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started --> public List<RoutePoint> getRoutePointListByRouteId(int id) --> with id= 1
+[INFO ] 2023-01-24 13:34:09,523 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - List<RoutePoint>: []
+[INFO ] 2023-01-24 13:34:09,526 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started public List<MappingInfoDTO> getMappingInfoListByRouteId(int routeId), routeId= 1
+[INFO ] 2023-01-24 13:34:09,530 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Extracted List<MappingInfoDTO>: [MappingInfoDTO(stationId=1, station=A, order=3, routsId=2, stationArrivalDate=2022-12-31T23:33, stationDispatchData=2022-12-30T23:33), MappingInfoDTO(stationId=4, station=B, order=4, routsId=4, stationArrivalDate=2022-12-29T23:33, stationDispatchData=2022-12-28T23:33)]
+[INFO ] 2023-01-24 13:34:09,533 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started --> public boolean updateRoutePointByStationId(RoutePoint entity, int stationId) --> with routePoint= RoutePoint(stationId=0, routeId=0, arrival=null, dispatch=null, orderId=0), stationId= 1
+[INFO ] 2023-01-24 13:34:09,534 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - update status: true
+[INFO ] 2023-01-24 13:34:09,536 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started public List<MappingInfoDTO> getMappingInfoListByRouteId(int routeId), routeId= 1
+[INFO ] 2023-01-24 13:34:09,536 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Extracted List<MappingInfoDTO>: []
+[INFO ] 2023-01-24 13:34:09,539 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started --> public boolean updateRoutePointByStationId(RoutePoint entity, int stationId) --> with routePoint= RoutePoint(stationId=0, routeId=0, arrival=null, dispatch=null, orderId=0), stationId= 1
+[INFO ] 2023-01-24 13:34:09,539 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - update status: false
+[INFO ] 2023-01-24 13:34:09,542 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started public MappingInfoDTO getMappingInfo(int routeId, int stationId), routeId= 1 stationId= 1
+[INFO ] 2023-01-24 13:34:09,543 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Extracted MappingInfoDTO: MappingInfoDTO(stationId=1, station=A, order=3, routsId=2, stationArrivalDate=2022-12-31T23:33, stationDispatchData=2022-12-30T23:33)
+[INFO ] 2023-01-24 13:34:09,546 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started public MappingInfoDTO getMappingInfo(int routeId, int stationId), routeId= 1 stationId= 1
+[ERROR] 2023-01-24 13:34:09,547 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Can`t get mapping information: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,550 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started create() with route point= RoutePoint(stationId=0, routeId=0, arrival=2023-01-24T13:34:09.550520, dispatch=2023-01-24T13:34:09.550491, orderId=0)
+[INFO ] 2023-01-24 13:34:09,550 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Transaction started
+[INFO ] 2023-01-24 13:34:09,551 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Route point created: true
+[INFO ] 2023-01-24 13:34:09,551 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Transaction done
+[INFO ] 2023-01-24 13:34:09,552 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Connection closed
+[INFO ] 2023-01-24 13:34:09,554 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started public MappingInfoDTO getMappingInfo(int routeId, int stationId), routeId= 1 stationId= 1
+[INFO ] 2023-01-24 13:34:09,555 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Extracted MappingInfoDTO: null
+[INFO ] 2023-01-24 13:34:09,558 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started create() with route point= RoutePoint(stationId=0, routeId=0, arrival=2023-01-24T13:34:09.558767, dispatch=2023-01-24T13:34:09.558750, orderId=0)
+[INFO ] 2023-01-24 13:34:09,559 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Transaction started
+[ERROR] 2023-01-24 13:34:09,559 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Can`t create route to station mapping java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,559 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Connection closed
+[INFO ] 2023-01-24 13:34:09,562 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Started --> public List<RoutePoint> getRoutePointListByRouteId(int id) --> with id= 1
+[ERROR] 2023-01-24 13:34:09,562 com.epam.redkin.railway.model.repository.impl.RoutePointRepositoryImpl - Cannot extract List<RoutePoint>: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,574 com.epam.redkin.railway.model.repository.impl.UserRepositoryImpl - Started the method create. User: User{userId=0, email='null', password='null', firstName='null', lastName='null', phone='null', birthDate=null, role=null, blocked=false}
+[INFO ] 2023-01-24 13:34:09,574 com.epam.redkin.railway.model.repository.impl.UserRepositoryImpl - Transaction started
+[ERROR] 2023-01-24 13:34:09,575 com.epam.redkin.railway.model.repository.impl.UserRepositoryImpl - class java.lang.NullPointerException in method create: java.lang.NullPointerException: Cannot invoke "com.epam.redkin.railway.model.entity.Role.getName()" because the return value of "com.epam.redkin.railway.model.entity.User.getRole()" is null
+[INFO ] 2023-01-24 13:34:09,578 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method getById with id= 1
+[INFO ] 2023-01-24 13:34:09,606 com.epam.redkin.railway.model.repository.impl.UserRepositoryImpl - Started the method create. User: User{userId=0, email='test@mail.com', password='123', firstName='John', lastName='Smith', phone='+380441233344', birthDate=2023-01-24, role=USER, blocked=true}
+[INFO ] 2023-01-24 13:34:09,606 com.epam.redkin.railway.model.repository.impl.UserRepositoryImpl - Transaction started
+[INFO ] 2023-01-24 13:34:09,607 com.epam.redkin.railway.model.repository.impl.UserRepositoryImpl - Transaction done
+[INFO ] 2023-01-24 13:34:09,615 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method getById(int id) with id= 1
+[INFO ] 2023-01-24 13:34:09,616 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Extracted route: null
+[INFO ] 2023-01-24 13:34:09,619 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method delete(int id) with id= 1
+[INFO ] 2023-01-24 13:34:09,619 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Route deleted: true
+[INFO ] 2023-01-24 13:34:09,622 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method getRouteInfoDTOList()
+[ERROR] 2023-01-24 13:34:09,622 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Cannot extract RouteInfoDTO list: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,626 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method delete(int id) with id= 1
+[INFO ] 2023-01-24 13:34:09,627 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Route deleted: false
+[INFO ] 2023-01-24 13:34:09,632 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method getRouteInfoDTOByRouteId(int routsId) with routeId= 1
+[ERROR] 2023-01-24 13:34:09,632 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Cannot extract RouteInfoDTO: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,636 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method getRouteInfoDTOByRouteId(int routsId) with routeId= 1
+[INFO ] 2023-01-24 13:34:09,641 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Extracted RouteInfoDTO: RouteInfoDTO(routsId=1, trainId=1, trainNumber=B, routName=A, routNumber=C)
+[INFO ] 2023-01-24 13:34:09,644 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method getRouteInfoDTOByRouteId(int routsId) with routeId= 1
+[INFO ] 2023-01-24 13:34:09,645 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Extracted RouteInfoDTO: null
+[INFO ] 2023-01-24 13:34:09,649 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - 
+Started method getStationDTOListWithParameters(String departureStation, String arrivalStation)
+with departureStation= A and arrivalStation= B
+[INFO ] 2023-01-24 13:34:09,657 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - 
+Extracted StationDTO List: [StationDTO(stationId=1, station=A, order=2, stationArrivalDateTime=2023-01-24T13:34:09.649307, stationArrivalDate=null, stationArrivalTime=null, stationDispatchDateTime=2023-01-24T13:34:09.649307, stationDispatchDate=null, stationDispatchTime=null, routName=B, routNumber=3, routsId=4, trainId=5, trainNumber=C), StationDTO(stationId=5, station=C, order=5, stationArrivalDateTime=2023-01-24T13:34:09.649307, stationArrivalDate=null, stationArrivalTime=null, stationDispatchDateTime=2023-01-24T13:34:09.649307, stationDispatchDate=null, stationDispatchTime=null, routName=C, routNumber=5, routsId=5, trainId=5, trainNumber=C)]
+[INFO ] 2023-01-24 13:34:09,660 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - 
+Started method getStationDTOListWithParameters(String departureStation, String arrivalStation)
+with departureStation= A and arrivalStation= B
+[ERROR] 2023-01-24 13:34:09,660 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Cannot extract StationDTO list: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,662 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - 
+Started method getStationDTOListWithParameters(String departureStation, String arrivalStation)
+with departureStation= A and arrivalStation= B
+[INFO ] 2023-01-24 13:34:09,663 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - 
+Extracted StationDTO List: []
+[INFO ] 2023-01-24 13:34:09,668 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method update(Route route) with route: Route(routeId=0, trainId=0, routeNumber=0, routeName=RouteA, stationList=null, firstClassFreeSeatsCount=0, secondClassFreeSeatsCount=0)
+[ERROR] 2023-01-24 13:34:09,668 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Can`t update route: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,671 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method getById(int id) with id= 1
+[ERROR] 2023-01-24 13:34:09,671 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Cannot extract route: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,674 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method create(Route route) with route= Route(routeId=0, trainId=0, routeNumber=0, routeName=Central Route, stationList=null, firstClassFreeSeatsCount=0, secondClassFreeSeatsCount=0)
+[INFO ] 2023-01-24 13:34:09,674 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Transaction started
+[INFO ] 2023-01-24 13:34:09,674 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Transaction done
+[INFO ] 2023-01-24 13:34:09,675 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Connection closed
+[INFO ] 2023-01-24 13:34:09,675 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Generated id= 1
+[INFO ] 2023-01-24 13:34:09,677 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method getRouteInfoDTOList()
+[INFO ] 2023-01-24 13:34:09,677 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - 
+Extracted List of RouteInfoDTO: [RouteInfoDTO(routsId=1, trainId=1, trainNumber=RouteName, routName=RouteName, routNumber=RouteName), RouteInfoDTO(routsId=1, trainId=1, trainNumber=RouteName, routName=RouteName, routNumber=RouteName)]
+[INFO ] 2023-01-24 13:34:09,679 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method update(Route route) with route: Route(routeId=0, trainId=0, routeNumber=0, routeName=RouteA, stationList=null, firstClassFreeSeatsCount=0, secondClassFreeSeatsCount=0)
+[INFO ] 2023-01-24 13:34:09,679 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Route updated: true
+[INFO ] 2023-01-24 13:34:09,682 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method delete(int id) with id= 1
+[ERROR] 2023-01-24 13:34:09,682 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Cannot delete route: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,684 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method getRouteInfoDTOList()
+[INFO ] 2023-01-24 13:34:09,684 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - 
+Extracted List of RouteInfoDTO: []
+[INFO ] 2023-01-24 13:34:09,688 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method create(Route route) with route= Route(routeId=0, trainId=0, routeNumber=0, routeName=Central Route, stationList=null, firstClassFreeSeatsCount=0, secondClassFreeSeatsCount=0)
+[INFO ] 2023-01-24 13:34:09,688 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Transaction started
+[ERROR] 2023-01-24 13:34:09,688 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - class java.sql.SQLException in method create: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,688 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Connection closed
+[INFO ] 2023-01-24 13:34:09,692 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method update(Route route) with route: Route(routeId=0, trainId=0, routeNumber=0, routeName=RouteA, stationList=null, firstClassFreeSeatsCount=0, secondClassFreeSeatsCount=0)
+[INFO ] 2023-01-24 13:34:09,692 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Route updated: false
+[INFO ] 2023-01-24 13:34:09,694 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Started method getById(int id) with id= 1
+[INFO ] 2023-01-24 13:34:09,694 com.epam.redkin.railway.model.repository.impl.RouteRepositoryImpl - Extracted route: Route(routeId=1, trainId=1, routeNumber=1, routeName=RouteA, stationList=null, firstClassFreeSeatsCount=0, secondClassFreeSeatsCount=0)
+[INFO ] 2023-01-24 13:34:09,698 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method delete() with id= 1
+[INFO ] 2023-01-24 13:34:09,699 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method delete() done, with row count= 1
+[INFO ] 2023-01-24 13:34:09,703 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method update() with seat= Seat(id=0, carriageId=0, seatNumber=11, busy=false)
+[INFO ] 2023-01-24 13:34:09,704 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method update() done with status= true
+[INFO ] 2023-01-24 13:34:09,708 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started create() with seat= Seat(id=0, carriageId=0, seatNumber=01, busy=false)
+[INFO ] 2023-01-24 13:34:09,708 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Transaction started
+[INFO ] 2023-01-24 13:34:09,708 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Transaction done
+[INFO ] 2023-01-24 13:34:09,708 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Connection closed
+[INFO ] 2023-01-24 13:34:09,708 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Generated id= 1
+[INFO ] 2023-01-24 13:34:09,712 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getListSeatsByCarriageId(int carriageId) with carriageId= 1
+[ERROR] 2023-01-24 13:34:09,713 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Cannot extract seats: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,717 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getBusySeatsCountByCarriageId() with carriageId= 1
+[INFO ] 2023-01-24 13:34:09,720 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats count= 10
+[INFO ] 2023-01-24 13:34:09,724 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getBusySeatsCountByCarriageId() with carriageId= 1
+[INFO ] 2023-01-24 13:34:09,725 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats count= 0
+[INFO ] 2023-01-24 13:34:09,732 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getSeatsCountByCarriageId() with carriageId= 1
+[INFO ] 2023-01-24 13:34:09,733 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats count= 10
+[INFO ] 2023-01-24 13:34:09,739 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method reservedSeat(int seatId) with seatId= 1
+[INFO ] 2023-01-24 13:34:09,739 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method done. Reserved count seat: 1
+[INFO ] 2023-01-24 13:34:09,744 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getSeatsCountByCarriageId() with carriageId= 1
+[INFO ] 2023-01-24 13:34:09,744 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats count= 0
+[INFO ] 2023-01-24 13:34:09,749 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getListSeatsByIdBatch(List<String> seatsId) with
+ seatsId= [1, 2, 3]
+[ERROR] 2023-01-24 13:34:09,750 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Cannot get seats by id batch: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,756 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getSeatsCountByTrainIdAndByTypes() with trainId= 1 and Carriage type= null
+[ERROR] 2023-01-24 13:34:09,756 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Cannot extract seats: java.lang.NullPointerException: Cannot invoke "com.epam.redkin.railway.model.entity.CarriageType.toString()" because "type" is null
+[INFO ] 2023-01-24 13:34:09,759 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method with clearSeat(int seatId) with seatId= 1
+[INFO ] 2023-01-24 13:34:09,760 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Clear count seats: 1
+[INFO ] 2023-01-24 13:34:09,763 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method reservedSeat(int seatId) with seatId= 1
+[INFO ] 2023-01-24 13:34:09,763 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method done. Reserved count seat: 0
+[INFO ] 2023-01-24 13:34:09,766 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method with clearSeat(int seatId) with seatId= 1
+[INFO ] 2023-01-24 13:34:09,766 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Clear count seats: 0
+[INFO ] 2023-01-24 13:34:09,772 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getSeatsCountByTrainIdAndByTypes() with trainId= 1 and Carriage type= FIRST_CLASS
+[INFO ] 2023-01-24 13:34:09,772 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats count= 10
+[INFO ] 2023-01-24 13:34:09,776 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getSeatsCountByTrainIdAndByTypes() with trainId= 1 and Carriage type= FIRST_CLASS
+[INFO ] 2023-01-24 13:34:09,776 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats count= 0
+[INFO ] 2023-01-24 13:34:09,779 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getListSeatsByCarriageId(int carriageId) with carriageId= 1
+[INFO ] 2023-01-24 13:34:09,780 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Extracted seats: [Seat(id=10, carriageId=10, seatNumber=04, busy=false), Seat(id=10, carriageId=10, seatNumber=04, busy=false)]
+[INFO ] 2023-01-24 13:34:09,785 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started getById() with id= 1
+[INFO ] 2023-01-24 13:34:09,785 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method getById() done with seat= null
+[INFO ] 2023-01-24 13:34:09,788 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getListSeatsByCarriageId(int carriageId) with carriageId= 1
+[INFO ] 2023-01-24 13:34:09,788 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Extracted seats: []
+[INFO ] 2023-01-24 13:34:09,791 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method deleteAllSeatsByCarriageId() with carriageId= 1
+[INFO ] 2023-01-24 13:34:09,792 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method deleteAllSeatsByCarriageId() done with row count= 0
+[INFO ] 2023-01-24 13:34:09,795 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getListSeatsByIdBatch(List<String> seatsId) with
+ seatsId= [1, 2, 3]
+[INFO ] 2023-01-24 13:34:09,796 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats: [Seat(id=10, carriageId=10, seatNumber=04, busy=false), Seat(id=10, carriageId=10, seatNumber=04, busy=false)]
+[INFO ] 2023-01-24 13:34:09,799 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method getListSeatsByIdBatch(List<String> seatsId) with
+ seatsId= [1, 2, 3]
+[INFO ] 2023-01-24 13:34:09,799 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Seats: []
+[INFO ] 2023-01-24 13:34:09,803 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method delete() with id= 1
+[INFO ] 2023-01-24 13:34:09,803 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method delete() done, with row count= 0
+[INFO ] 2023-01-24 13:34:09,806 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method update() with seat= Seat(id=0, carriageId=0, seatNumber=11, busy=false)
+[INFO ] 2023-01-24 13:34:09,807 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method update() done with status= false
+[INFO ] 2023-01-24 13:34:09,811 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method update() with seat= Seat(id=0, carriageId=0, seatNumber=11, busy=false)
+[ERROR] 2023-01-24 13:34:09,811 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Cannot update the seat java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,815 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started create() with seat= Seat(id=0, carriageId=0, seatNumber=, busy=false)
+[INFO ] 2023-01-24 13:34:09,815 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Transaction started
+[ERROR] 2023-01-24 13:34:09,816 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - class java.sql.SQLException in method create: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,816 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Connection closed
+[INFO ] 2023-01-24 13:34:09,820 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method reservedSeat(int seatId) with seatId= 1
+[ERROR] 2023-01-24 13:34:09,820 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Can't reserved seat: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,824 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started getById() with id= 10
+[INFO ] 2023-01-24 13:34:09,825 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method getById() done with seat= Seat(id=10, carriageId=10, seatNumber=07, busy=true)
+[INFO ] 2023-01-24 13:34:09,831 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started the method deleteAllSeatsByCarriageId() with carriageId= 1
+[INFO ] 2023-01-24 13:34:09,831 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - The method deleteAllSeatsByCarriageId() done with row count= 1
+[INFO ] 2023-01-24 13:34:09,836 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Started method with clearSeat(int seatId) with seatId= 1
+[ERROR] 2023-01-24 13:34:09,836 com.epam.redkin.railway.model.repository.impl.SeatRepositoryImpl - Can't clear seat: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,843 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public Carriage getById(int id), id= 1
+[INFO ] 2023-01-24 13:34:09,843 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Extracted Carriage: null
+[INFO ] 2023-01-24 13:34:09,847 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public List<Carriage> getCarriagesByTrainIdAndType(int trainId, String type), trainId= 2 type= FIRST_CLASS
+[INFO ] 2023-01-24 13:34:09,851 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Extracted List<Carriage>: [Carriage(carriageId=1, type=FIRST_CLASS, number=08, trainId=2), Carriage(carriageId=2, type=FIRST_CLASS, number=08, trainId=2)]
+[INFO ] 2023-01-24 13:34:09,856 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public List<Carriage> getCarriagesByTrainIdAndType(int trainId, String type), trainId= 2 type= FIRST_CLASS
+[INFO ] 2023-01-24 13:34:09,856 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Extracted List<Carriage>: []
+[INFO ] 2023-01-24 13:34:09,861 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public List<CarriageDTO> getAllCarriageDTOList()
+[INFO ] 2023-01-24 13:34:09,871 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Extracted List<CarriageDTO>: [CarriageDTO(carId=1, carriageType=FIRST_CLASS, carNumber=08, trainId=2, seats=null, price=0.0, trainNumber=122), CarriageDTO(carId=2, carriageType=FIRST_CLASS, carNumber=09, trainId=2, seats=null, price=0.0, trainNumber=122)]
+[INFO ] 2023-01-24 13:34:09,875 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public List<CarriageDTO> getAllCarriageDTOList()
+[INFO ] 2023-01-24 13:34:09,875 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Extracted List<CarriageDTO>: []
+[INFO ] 2023-01-24 13:34:09,878 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public void delete(int id), id= 1
+[INFO ] 2023-01-24 13:34:09,878 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Carriage deleted: true
+[INFO ] 2023-01-24 13:34:09,882 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public List<Carriage> getCarriagesByTrainId(int trainId), trainId= 1
+[INFO ] 2023-01-24 13:34:09,883 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Extracted List<Carriage>: [Carriage(carriageId=1, type=FIRST_CLASS, number=08, trainId=2), Carriage(carriageId=2, type=FIRST_CLASS, number=08, trainId=2)]
+[INFO ] 2023-01-24 13:34:09,888 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public List<Carriage> getCarriagesByTrainId(int trainId), trainId= 1
+[INFO ] 2023-01-24 13:34:09,888 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Extracted List<Carriage>: []
+[INFO ] 2023-01-24 13:34:09,898 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public List<CarriageDTO> getAllCarriageDTOList()
+[ERROR] 2023-01-24 13:34:09,899 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Cannot extract List<CarriageDTO>: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,902 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public boolean update(Carriage carriage), carriage: Carriage(carriageId=0, type=FIRST_CLASS, number=null, trainId=0)
+[ERROR] 2023-01-24 13:34:09,903 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Cannot update carriage: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,906 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public Carriage getById(int id), id= 1
+[ERROR] 2023-01-24 13:34:09,906 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Cannot extract carriage: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,912 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public int create(Carriage carriage), carriage= Carriage(carriageId=0, type=FIRST_CLASS, number=null, trainId=0)
+[INFO ] 2023-01-24 13:34:09,912 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Transaction started
+[INFO ] 2023-01-24 13:34:09,912 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Transaction done
+[INFO ] 2023-01-24 13:34:09,913 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Connection closed
+[INFO ] 2023-01-24 13:34:09,913 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Generated id= 1
+[INFO ] 2023-01-24 13:34:09,917 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public List<Carriage> getCarriagesByTrainId(int trainId), trainId= 1
+[ERROR] 2023-01-24 13:34:09,918 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Cannot extract List<Carriage>: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,921 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public List<Carriage> getCarriagesByTrainIdAndType(int trainId, String type), trainId= 2 type= FIRST_CLASS
+[ERROR] 2023-01-24 13:34:09,922 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Cannot extract List<Carriage>: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,927 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public boolean update(Carriage carriage), carriage: Carriage(carriageId=0, type=FIRST_CLASS, number=null, trainId=0)
+[INFO ] 2023-01-24 13:34:09,927 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Carriage updated: true
+[INFO ] 2023-01-24 13:34:09,931 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public void delete(int id), id= 1
+[ERROR] 2023-01-24 13:34:09,932 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Cannot delete carriage: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,936 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public int create(Carriage carriage), carriage= Carriage(carriageId=0, type=FIRST_CLASS, number=null, trainId=0)
+[INFO ] 2023-01-24 13:34:09,936 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Transaction started
+[ERROR] 2023-01-24 13:34:09,937 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Cannot add carriage: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,937 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Connection closed
+[INFO ] 2023-01-24 13:34:09,941 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public boolean update(Carriage carriage), carriage: Carriage(carriageId=0, type=FIRST_CLASS, number=null, trainId=0)
+[INFO ] 2023-01-24 13:34:09,942 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Carriage updated: false
+[INFO ] 2023-01-24 13:34:09,946 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Started public Carriage getById(int id), id= 1
+[INFO ] 2023-01-24 13:34:09,946 com.epam.redkin.railway.model.repository.impl.CarriageRepositoryImpl - Extracted Carriage: Carriage(carriageId=1, type=FIRST_CLASS, number=08, trainId=2)
+[INFO ] 2023-01-24 13:34:09,952 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started method getById(int id) with id= 1
+[INFO ] 2023-01-24 13:34:09,953 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Extracted station: null
+[INFO ] 2023-01-24 13:34:09,956 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started method delete(int id) with id= 1
+[INFO ] 2023-01-24 13:34:09,956 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Station deleted: 1
+[INFO ] 2023-01-24 13:34:09,959 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started method delete(int id) with id= 1
+[INFO ] 2023-01-24 13:34:09,959 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Station deleted: 0
+[INFO ] 2023-01-24 13:34:09,962 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started method getAllStations()
+[ERROR] 2023-01-24 13:34:09,962 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Cannot get list of stations: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,970 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started method update(Station station) with station: Station(id=1, station=StationA, orderId=0)
+[ERROR] 2023-01-24 13:34:09,970 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Cannot update station: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,973 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started method getAllStations()
+[INFO ] 2023-01-24 13:34:09,974 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Extracted stations: [Station(id=1, station=StationB, orderId=0), Station(id=1, station=StationB, orderId=0)]
+[INFO ] 2023-01-24 13:34:09,977 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started create(Station station) with station= Station(id=0, station=StationA, orderId=0)
+[ERROR] 2023-01-24 13:34:09,977 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Cannot add station into database java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,980 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started method getById(int id) with id= 1
+[ERROR] 2023-01-24 13:34:09,980 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Cannot extract station: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,983 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started method getAllStations()
+[INFO ] 2023-01-24 13:34:09,983 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Extracted stations: []
+[INFO ] 2023-01-24 13:34:09,986 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started method update(Station station) with station: Station(id=1, station=StationA, orderId=0)
+[INFO ] 2023-01-24 13:34:09,986 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Station updated: true
+[INFO ] 2023-01-24 13:34:09,990 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started method delete(int id) with id= 1
+[ERROR] 2023-01-24 13:34:09,991 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Cannot delete station: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:09,995 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started create(Station station) with station= Station(id=0, station=StationA, orderId=0)
+[INFO ] 2023-01-24 13:34:09,996 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Generated id= 1
+[INFO ] 2023-01-24 13:34:10,000 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started method update(Station station) with station: Station(id=1, station=StationA, orderId=0)
+[INFO ] 2023-01-24 13:34:10,000 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Station updated: false
+[INFO ] 2023-01-24 13:34:10,004 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started create(Station station) with station= Station(id=0, station=StationA, orderId=0)
+[INFO ] 2023-01-24 13:34:10,005 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Generated id= -1
+[INFO ] 2023-01-24 13:34:10,009 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Started method getById(int id) with id= 1
+[INFO ] 2023-01-24 13:34:10,010 com.epam.redkin.railway.model.repository.impl.StationRepositoryImpl - Extracted station: Station(id=1, station=StationA, orderId=0)
+[INFO ] 2023-01-24 13:34:10,028 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started method getById(int id) with id= 1
+[INFO ] 2023-01-24 13:34:10,028 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Extracted train: null
+[INFO ] 2023-01-24 13:34:10,032 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started method delete(int id) with id= 1
+[INFO ] 2023-01-24 13:34:10,032 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Method done with status= 1
+[INFO ] 2023-01-24 13:34:10,035 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started method delete(int id) with id= 1
+[INFO ] 2023-01-24 13:34:10,035 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Method done with status= 0
+[INFO ] 2023-01-24 13:34:10,047 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started method  getAllTrains()
+[ERROR] 2023-01-24 13:34:10,047 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Cannot extract list of train from database: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:10,051 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started create() with train= Train(id=0, number=01)
+[ERROR] 2023-01-24 13:34:10,051 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Cannot add train into database java.sql.SQLException
+[INFO ] 2023-01-24 13:34:10,054 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started method  getAllTrains()
+[INFO ] 2023-01-24 13:34:10,055 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Extracted trains: [Train(id=1, number=01), Train(id=2, number=02)]
+[INFO ] 2023-01-24 13:34:10,057 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started method  getAllTrains()
+[INFO ] 2023-01-24 13:34:10,057 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Extracted trains: []
+[INFO ] 2023-01-24 13:34:10,059 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started method update(Train train) with train: Train(id=1, number=77)
+[ERROR] 2023-01-24 13:34:10,060 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Cannot update train: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:10,062 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started method update(Train train) with train: Train(id=1, number=77)
+[INFO ] 2023-01-24 13:34:10,062 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Train updated: true
+[INFO ] 2023-01-24 13:34:10,064 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started create() with train= Train(id=0, number=01)
+[INFO ] 2023-01-24 13:34:10,065 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Generated id= 1
+[INFO ] 2023-01-24 13:34:10,067 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started method delete(int id) with id= 1
+[ERROR] 2023-01-24 13:34:10,068 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Cannot delete train from database: java.sql.SQLException
+[INFO ] 2023-01-24 13:34:10,070 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started method getById(int id) with id= 1
+[ERROR] 2023-01-24 13:34:10,070 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Cannot read train from databasejava.sql.SQLException
+[INFO ] 2023-01-24 13:34:10,072 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started method update(Train train) with train: Train(id=1, number=77)
+[INFO ] 2023-01-24 13:34:10,072 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Train updated: false
+[INFO ] 2023-01-24 13:34:10,074 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started create() with train= Train(id=0, number=01)
+[INFO ] 2023-01-24 13:34:10,075 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Generated id= -1
+[INFO ] 2023-01-24 13:34:10,077 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Started method getById(int id) with id= 1
+[INFO ] 2023-01-24 13:34:10,077 com.epam.redkin.railway.model.repository.impl.TrainRepositoryImpl - Extracted train: Train(id=1, number=77)
+[INFO ] 2023-01-24 13:34:10,093 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Started the method create. Order: Order(id=0, orderDate=null, routeId=0, routeName=null, dispatchStation=null, dispatchDate=null, arrivalStation=null, arrivalDate=null, travelTime=null, trainNumber=null, carriageNumber=null, carriageType=null, countOfSeats=0, seatNumber=null, seatsId=null, user=null, price=0.0, orderStatus=null)
+[INFO ] 2023-01-24 13:34:10,093 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Transaction started
+[INFO ] 2023-01-24 13:34:10,102 com.epam.redkin.railway.model.repository.impl.OrderRepositoryImpl - Connection closed

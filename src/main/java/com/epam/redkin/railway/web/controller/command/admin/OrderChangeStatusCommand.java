@@ -30,7 +30,7 @@ public class OrderChangeStatusCommand implements Command {
         if (StringUtils.isNoneBlank(orderId, orderStatus)) {
             OrderService orderService = AppContext.getInstance().getOrderService();
             OrderValidator orderValidator = new OrderValidator();
-            Order order = new Order();
+            Order order = Order.builder().build();
             OrderStatus status;
             try {
                 status = OrderStatus.valueOf(orderStatus);

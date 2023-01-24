@@ -34,7 +34,7 @@ public class ConfirmOrderCommand implements Command {
         OrderService orderService = AppContext.getInstance().getOrderService();
 
         OrderValidator orderValidator = new OrderValidator();
-        Order order = new Order();
+        Order order = Order.builder().build();
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(AppContextConstant.SESSION_USER);
         String routeId = request.getParameter(AppContextConstant.ROUTE_ID);
