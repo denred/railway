@@ -7,6 +7,7 @@ import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -525,18 +526,19 @@ class UserRepositoryImplTest {
         verify(mockStatement).executeUpdate();
     }
 
+    @Disabled
     @Test
     void updateRememberUserToken() {
     }
-
+    @Disabled
     @Test
     void findUserByIdAndToken() {
     }
-
+    @Disabled
     @Test
     void deleteRememberUserToken() {
     }
-
+    @Disabled
     @Test
     void getUserCount() {
     }
