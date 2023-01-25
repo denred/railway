@@ -1,7 +1,7 @@
 package com.epam.redkin.railway.util.factory;
 
-import com.epam.redkin.railway.util.EmailDistributorUtil;
-import com.epam.redkin.railway.util.EmailMessageLocalizationDispatcher;
+import com.epam.redkin.railway.util.mail.EmailDistributorUtil;
+import com.epam.redkin.railway.util.mail.EmailMessageLocalizationDispatcher;
 
 public class UtilFactory {
     private final EmailDistributorUtil emailDistributorUtil;

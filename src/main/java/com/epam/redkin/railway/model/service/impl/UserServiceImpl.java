@@ -10,9 +10,9 @@ import com.epam.redkin.railway.model.service.UserService;
 import com.epam.redkin.railway.util.constants.AppContextConstant;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.model.repository.UserRepository;
-import com.epam.redkin.railway.util.EmailDistributorUtil;
-import com.epam.redkin.railway.util.EmailMessageLocalizationDispatcher;
-import com.epam.redkin.railway.util.EmailMessageType;
+import com.epam.redkin.railway.util.mail.EmailDistributorUtil;
+import com.epam.redkin.railway.util.mail.EmailMessageLocalizationDispatcher;
+import com.epam.redkin.railway.util.mail.EmailMessageType;
 import com.epam.redkin.railway.util.factory.UtilFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.mindrot.jbcrypt.BCrypt;
@@ -33,11 +33,13 @@ public class UserServiceImpl implements UserService {
     private final EmailDistributorUtil emailDistributorUtil;
     private final EmailMessageLocalizationDispatcher emailLocalizationDispatcher;
 
+    {
+        emailDistributorUtil = UtilFactory.getInstance().getEmailDistributorUtil();
+        emailLocalizationDispatcher = UtilFactory.getInstance().getEmailMessageLocalizationDispatcher();
+    }
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        emailDistributorUtil = UtilFactory.getInstance().getEmailDistributorUtil();
-        emailLocalizationDispatcher = UtilFactory.getInstance().getEmailMessageLocalizationDispatcher();
     }
 
 
@@ -50,8 +52,6 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(e);
         }
         if (user.getEmail() != null && !user.isBlocked()) {
-            System.out.println(user.getPassword());
-            System.out.println(password);
 
             if (BCrypt.checkpw(password, user.getPassword())) {
                 return user;
@@ -90,7 +90,8 @@ public class UserServiceImpl implements UserService {
 
             String userLogInLink = constructLogInLink(pageRootUrl + Path.COMMAND_POST_REGISTRATION_ACCOUNT_APPROVAL, token);
             String messageTitle = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.TITLE_USER_REGISTRATION_LINK);
-            emailDistributorUtil.addEmailToSendingQueue(messageTitle, userLogInLink, user.getEmail());
+            String messageText = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.MESSAGE_USER_REGISTRATION_LINK, userLogInLink);
+            emailDistributorUtil.addEmailToSendingQueue(messageTitle, messageText, user.getEmail());
         } catch (Exception e) {
             LOGGER.warn(e.getMessage(), e);
             throw new ServiceException("service.commonError", e.getMessage());
@@ -129,15 +130,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void sendLogInTokenIfForgetPassword(String email, String pageRootUrl) throws ServiceException {
+        LOGGER.info("Started --> public void sendLogInTokenIfForgetPassword(String email, String pageRootUrl) --> " +
+                "email: " + email + " url:" + pageRootUrl);
         if (StringUtils.isAnyBlank(email, pageRootUrl)) {
-            throw new UnauthorizedException("service.commonError");
+            LOGGER.error("Email or url are empty");
+            throw new UnauthorizedException("Service error: Email or url are empty");
         }
         try {
             User user = userRepository.getUserByEmail(email);
             String token = getUpdatedRememberUserToken(user.getUserId());
             String userLogInLink = constructLogInLink(pageRootUrl + Path.COMMAND_POST_REGISTRATION_ACCOUNT_APPROVAL, token);
             String messageTitle = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.TITLE_FORGET_PASSWORD);
-            emailDistributorUtil.addEmailToSendingQueue(messageTitle, userLogInLink, email);
+            String messageText = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.MESSAGE_FORGET_PASSWORD, userLogInLink);
+            emailDistributorUtil.addEmailToSendingQueue(messageTitle, messageText, email);
         } catch (ServiceException e) {
             throw new ServiceException(e.getMessage());
         } catch (Exception e) {

@@ -1,8 +1,0 @@
-com/epam/redkin/railway/model/repository/impl/RoutePointRepositoryImplTest.class
-com/epam/redkin/railway/model/repository/impl/StationRepositoryImplTest.class
-com/epam/redkin/railway/model/repository/impl/RouteRepositoryImplTest.class
-com/epam/redkin/railway/model/repository/impl/OrderRepositoryImplTest.class
-com/epam/redkin/railway/model/repository/impl/UserRepositoryImplTest.class
-com/epam/redkin/railway/model/repository/impl/TrainRepositoryImplTest.class
-com/epam/redkin/railway/model/repository/impl/CarriageRepositoryImplTest.class
-com/epam/redkin/railway/model/repository/impl/SeatRepositoryImplTest.class

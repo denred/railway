@@ -18,7 +18,7 @@ public enum SupportedLocaleStorage {
     }
 
     public static SupportedLocaleStorage getLocaleFromLanguage(String inputLanguage) {
-        for (SupportedLocaleStorage currentLocale: SupportedLocaleStorage.values()) {
+        for (SupportedLocaleStorage currentLocale : SupportedLocaleStorage.values()) {
             if (currentLocale.locale.getLanguage().equals(inputLanguage)) {
                 return currentLocale;
             }

@@ -3,6 +3,7 @@ package com.epam.redkin.railway.model.service.impl;
 
 import com.epam.redkin.railway.model.entity.CarriageType;
 import com.epam.redkin.railway.model.entity.Seat;
+import com.epam.redkin.railway.model.exception.ForbiddenException;
 import com.epam.redkin.railway.model.service.SeatService;
 import com.epam.redkin.railway.model.repository.SeatRepository;
 import org.slf4j.Logger;
@@ -37,6 +38,15 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     public List<Seat> getSeatsByIdBatch(List<String> seatsNumber) {
+        LOGGER.info("Started --> public List<Seat> getSeatsByIdBatch(List<String> seatsNumber) " +
+                "--> seatsNumber= " + seatsNumber);
+        List<Seat> seats = seatRepository.getListSeatsByIdBatch(seatsNumber);
+        seats.forEach(seat -> {
+            if (seat.isBusy()) {
+                LOGGER.error("Seat " + seat.getSeatNumber() + " is busy");
+                throw new ForbiddenException("Seat is busy: " + seat.getSeatNumber());
+            }
+        });
         return seatRepository.getListSeatsByIdBatch(seatsNumber);
     }
 

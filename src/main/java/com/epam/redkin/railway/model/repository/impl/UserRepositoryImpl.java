@@ -26,8 +26,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public int create(User user) throws SQLException {
-        LOGGER.info("Started the method create. User: " + user);
+    public int create(User user) {
+        LOGGER.info("Started --> public int create(User user) --> User: " + user);
         int key = -1;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -45,17 +45,26 @@ public class UserRepositoryImpl implements UserRepository {
             if (resultSet.next()) {
                 key = resultSet.getInt(1);
             }
+            LOGGER.info("User id: " + key);
         } catch (SQLException | NullPointerException e) {
-            assert connection != null;
-            connection.rollback();
-            LOGGER.error(e.getClass() + " in method create: " + e);
+            try {
+                connection.rollback();
+            } catch (SQLException | NullPointerException ex) {
+                LOGGER.error("Cannot connection rollback: ", e);
+                throw new DataBaseException("Cannot connection rollback: ", e);
+            }
+            LOGGER.error("Cannot create User:", e);
             throw new DataBaseException("Cannot add user into database, user = " + user, e);
         } finally {
-            assert connection != null;
-            connection.setAutoCommit(true);
-            DbUtils.close(resultSet);
-            DbUtils.close(statement);
-            DbUtils.close(connection);
+            try {
+                connection.setAutoCommit(true);
+                DbUtils.close(resultSet);
+                DbUtils.close(statement);
+                DbUtils.close(connection);
+            } catch (SQLException | NullPointerException e) {
+                LOGGER.error("Cannot close connection:", e);
+                throw new DataBaseException("Cannot close connection:", e);
+            }
         }
         return key;
     }
@@ -68,9 +77,9 @@ public class UserRepositoryImpl implements UserRepository {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.GET_USER_BY_ID)) {
             statement.setInt(1, id);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                user = extractUser(rs);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                user = extractUser(resultSet);
             }
             LOGGER.info("User successfully received from database. User: " + user);
         } catch (SQLException | NullPointerException e) {
@@ -81,8 +90,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public boolean update(User user) throws SQLException {
-        LOGGER.info("Started the method update. User: " + user);
+    public boolean update(User user) {
+        LOGGER.info("Started --> public boolean update(User user) --> User: " + user);
         boolean updateUser;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -95,39 +104,45 @@ public class UserRepositoryImpl implements UserRepository {
             statement.setInt(10, user.getUserId());
             updateUser = statement.executeUpdate() > 0;
             connection.commit();
-            LOGGER.info("Transaction done");
-        } catch (SQLException e) {
-            assert connection != null;
-            connection.rollback();
-            LOGGER.error(e.getClass() + " in method update: " + e);
+            LOGGER.info("Transaction done, updateUser: " + updateUser);
+        } catch (SQLException | NullPointerException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                LOGGER.info("Connection rollback error: " + ex);
+                throw new DataBaseException("Connection rollback error", ex);
+            }
+            LOGGER.error("Cannot update User: " + e);
             throw new DataBaseException("Cannot update user, user = " + user, e);
         } finally {
-            assert connection != null;
-            connection.setAutoCommit(true);
-            DbUtils.close(statement);
-            DbUtils.close(connection);
+            try {
+                connection.setAutoCommit(true);
+                DbUtils.close(statement);
+                DbUtils.close(connection);
+            } catch (SQLException | NullPointerException e) {
+                LOGGER.info("Connection closing error: " + e);
+                throw new DataBaseException("Connection closing error", e);
+            }
         }
         return updateUser;
     }
 
     @Override
     public void delete(int id) {
-        LOGGER.info("Started the method delete with User id= " + id);
+        LOGGER.info("Started -->  public void delete(int id) --> userId= " + id);
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.DELETE_USER)) {
             statement.setInt(1, id);
-            statement.executeUpdate();
-            LOGGER.info("Delete method done");
+            LOGGER.info("User removed: " + (statement.executeUpdate() > 0));
         } catch (SQLException e) {
-            LOGGER.error("Cannot delete user with id = " + id, e);
+            LOGGER.error("Cannot delete user: ", e);
             throw new DataBaseException("Cannot delete user with id = " + id, e);
         }
-
     }
 
     @Override
-    public User getUserByEmail(String email) throws SQLException {
-        LOGGER.info("Started the method getUserByEmail with email= " + email);
+    public User getUserByEmail(String email) {
+        LOGGER.info("Started --> public User getUserByEmail(String email) --> email= " + email);
         User user = null;
         ResultSet resultSet = null;
         try (Connection connection = dataSource.getConnection();
@@ -142,7 +157,12 @@ public class UserRepositoryImpl implements UserRepository {
             LOGGER.error(e.getClass() + " in method getUserByEmail: " + e);
             throw new DataBaseException("Cannot extract user with email = " + email, e);
         } finally {
-            DbUtils.close(resultSet);
+            try {
+                DbUtils.close(resultSet);
+            } catch (SQLException e) {
+                LOGGER.error("Connection closing error: " + e);
+                throw new DataBaseException("Connection closing error", e);
+            }
         }
         return user;
     }
@@ -150,25 +170,26 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public boolean checkUserByEmail(String email) {
-        LOGGER.info("Started the method checkUserByEmail with email= " + email);
+        LOGGER.info("Started --> public boolean checkUserByEmail(String email) --> email= " + email);
         boolean userExist;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.GET_USER_BY_EMAIL)) {
             statement.setString(1, email);
             userExist = statement.executeQuery().next();
         } catch (SQLException | NullPointerException e) {
-            LOGGER.error(e.getClass() + " in method checkUserByEmail: " + e);
-            throw new DataBaseException("User is not valid with email = " + email, e);
+            LOGGER.error("User isn`t exist: " + e);
+            throw new DataBaseException("User is not exist with email = " + email, e);
         }
-        LOGGER.info("checkUserByEmail method done");
+        LOGGER.info("User exist: " + userExist);
         return userExist;
     }
 
     @Override
-    public List<User> getUsersByRole(String role, int offset, int limit, Map<String, String> search) throws SQLException {
-        LOGGER.info("Started the method getUsersByRole with role: " + role + " offset: " + offset + " limit: " + limit
+    public List<User> getUsersByRole(String role, int offset, int limit, Map<String, String> search) {
+        LOGGER.info("Started --> public List<User> getUsersByRole(String role, int offset, int limit, Map<String, String> search) --> role: " + role + " offset: " + offset + " limit: " + limit
                 + "\nsearch: " + search.toString());
         String searchQuery = search.isEmpty() ? "" : buildSearchQuery(search);
+        LOGGER.info("Search query: " + String.format(Constants.GET_USERS_BY_ROLE, searchQuery));
         ResultSet resultSet = null;
         List<User> users = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
@@ -181,12 +202,17 @@ public class UserRepositoryImpl implements UserRepository {
                 users.add(extractUser(resultSet));
             }
         } catch (SQLException | NullPointerException e) {
-            LOGGER.error(e.getClass() + " in method getUsersByRole: " + e);
+            LOGGER.error("Cannot extract List<User>: " + e);
             throw new DataBaseException("Cannot extract list of users by role = " + role, e);
         } finally {
-            DbUtils.close(resultSet);
+            try {
+                DbUtils.close(resultSet);
+            } catch (SQLException e) {
+                LOGGER.error("Connection closing error: " + e);
+                throw new DataBaseException("Connection closing error", e);
+            }
         }
-        LOGGER.info("Method getUsersByRole done with users: " + users);
+        LOGGER.info("List<User>: " + users);
         return users;
     }
 
@@ -206,15 +232,15 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void updateBlocked(int id, boolean status) {
-        LOGGER.info("Started the method updateBlocked with id: " + id + " and status: " + status);
+        LOGGER.info("Started --> public void updateBlocked(int id, boolean status) --> " +
+                "id: " + id + " and status: " + status);
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.UPDATE_BLOCKED)) {
             statement.setBoolean(1, status);
             statement.setInt(2, id);
-            statement.executeUpdate();
-            LOGGER.info("The method updateBlocked done");
+            LOGGER.info("Status updated: " + (statement.executeUpdate() > 0));
         } catch (SQLException | NullPointerException e) {
-            LOGGER.error(e.getClass() + " in method updateBlocked: " + e);
+            LOGGER.error("Cannot change status: " + e);
             throw new DataBaseException("Cannot change status = " + status + " with id = " + id, e);
         }
     }

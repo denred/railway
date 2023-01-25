@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Locale;
+
 public class I18NCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(I18NCommand.class);
 
@@ -19,11 +21,14 @@ public class I18NCommand implements Command {
         HttpSession session = request.getSession();
 
         if (request.getParameter(AppContextConstant.LANGUAGE) != null) {
-            LOGGER.info("Set language: " + request.getParameter(AppContextConstant.LANGUAGE));
-            session.setAttribute(AppContextConstant.LOCALE, request.getParameter(AppContextConstant.LANGUAGE));
+            String currentLocale = request.getParameter(AppContextConstant.LANGUAGE);
+            LOGGER.info("Set language: " + currentLocale);
+            session.setAttribute(AppContextConstant.LOCALE, currentLocale);
+            Locale.setDefault(new Locale(currentLocale));
         } else {
-            LOGGER.info("Set default language: " + AppContextConstant.LOCALE_UA);
-            session.setAttribute(AppContextConstant.LOCALE, AppContextConstant.LOCALE_UA);
+            LOGGER.info("Set default language: " + AppContextConstant.LOCALE_EN);
+            session.setAttribute(AppContextConstant.LOCALE, AppContextConstant.LOCALE_EN);
+            Locale.setDefault(new Locale(AppContextConstant.LOCALE_EN));
         }
         String page = getRedirectPage(request);
         LOGGER.info("done");

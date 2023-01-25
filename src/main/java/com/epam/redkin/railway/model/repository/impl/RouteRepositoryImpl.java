@@ -193,7 +193,7 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
                 .stationId(resultSet.getInt(Constants.STATION_ID))
                 .station(resultSet.getString(Constants.STATION))
                 .order(resultSet.getInt(Constants.STATION_ORDER))
-                .stationArrivalDateTime(resultSet.getObject(Constants.STATION_ARRIVAL_DATE,LocalDateTime.class))
+                .stationArrivalDateTime(resultSet.getObject(Constants.STATION_ARRIVAL_DATE, LocalDateTime.class))
                 .stationDispatchDateTime(resultSet.getObject(Constants.STATION_DISPATCH_DATE, LocalDateTime.class))
                 .routName(resultSet.getString(Constants.ROUTE_NAME))
                 .routNumber(resultSet.getInt(Constants.ROUTE_NUMBER))

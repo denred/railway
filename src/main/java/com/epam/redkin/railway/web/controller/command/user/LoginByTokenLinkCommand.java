@@ -20,7 +20,7 @@ public class LoginByTokenLinkCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
         UserService userService = AppContext.getInstance().getUserService();
-        String redirectURL = Path.PAGE_LOGIN;
+        String redirectURL = Path.PAGE_HOME;
         String token = request.getParameter(AppContextConstant.COOKIE_REMEMBER_USER_TOKEN);
         if (StringUtils.isNoneBlank(token)) {
             try {
@@ -30,7 +30,6 @@ public class LoginByTokenLinkCommand implements Command {
                 request.getSession().setAttribute(AppContextConstant.USER_ROLE, user.getRole().name());
                 request.getSession().setAttribute(AppContextConstant.USER_ID, user.getUserId());
                 request.getSession().setAttribute(AppContextConstant.SESSION_USER, user);
-                System.out.println(user.getUserId());
                 userService.deleteRememberUserToken(user.getUserId());
                 redirectURL = Path.PAGE_HOME;
             } catch (ServiceException e) {
