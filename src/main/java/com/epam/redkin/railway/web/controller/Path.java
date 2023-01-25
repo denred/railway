@@ -27,6 +27,8 @@ public class Path {
     public static final String PAGE_ADMIN_SET_TRAIN = "WEB-INF/jsp/admin/trainSet.jsp";
     public static final String PAGE_FORGET_PASSWORD = "WEB-INF/jsp/user/forgetPassword.jsp";
     public static final String PAGE_REGISTRATION = "registration.jsp";
+    public static final String PAGE_ERROR_PAGE = "errorPage.jsp";
+
 
 
     // admin commands

@@ -6,6 +6,10 @@ import com.epam.redkin.railway.model.entity.User;
 import com.epam.redkin.railway.model.exception.ForbiddenException;
 import com.epam.redkin.railway.model.exception.UnauthorizedException;
 import com.epam.redkin.railway.util.constants.AppContextConstant;
+import com.epam.redkin.railway.web.controller.command.admin.*;
+import com.epam.redkin.railway.web.controller.command.common.*;
+import com.epam.redkin.railway.web.controller.command.user.ForgetPasswordEmailSendingCommand;
+import com.epam.redkin.railway.web.controller.command.user.LoginByTokenLinkCommand;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,7 +20,6 @@ import java.io.IOException;
 import java.util.*;
 
 public class SecurityFilter implements Filter {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityFilter.class);
 
     private Set<String> securedUris;
@@ -30,45 +33,42 @@ public class SecurityFilter implements Filter {
         accessMap = new HashMap<>();
 
         Set<String> adminAvailableEndpoints = new HashSet<>();
-        adminAvailableEndpoints.add("/administrator_account");
-        adminAvailableEndpoints.add("/administrator_add_car");
-        adminAvailableEndpoints.add("/administrator_add_rout");
-        adminAvailableEndpoints.add("/administrator_add_station");
-        adminAvailableEndpoints.add("/administrator_add_train");
-        adminAvailableEndpoints.add("/administrator_details_set_rout");
-        adminAvailableEndpoints.add("/administrator_edit_info_car");
-        adminAvailableEndpoints.add("/administrator_edit_info_details_set_rout");
-        adminAvailableEndpoints.add("/administrator_edit_info_order");
-        adminAvailableEndpoints.add("/administrator_edit_info_rout");
-        adminAvailableEndpoints.add("/administrator_edit_info_station");
-        adminAvailableEndpoints.add("/administrator_edit_info_train");
-        adminAvailableEndpoints.add("/administrator_set_rout_mapping");
-        adminAvailableEndpoints.add("/cancel_order");
-        adminAvailableEndpoints.add("/car_delete");
-        adminAvailableEndpoints.add("/detail_rout");
-        adminAvailableEndpoints.add("/home");
-        adminAvailableEndpoints.add("/logout");
-        adminAvailableEndpoints.add("/rout_delete");
-        adminAvailableEndpoints.add("/remove_rout_mapping");
-        adminAvailableEndpoints.add("/search_rout_for_order");
-        adminAvailableEndpoints.add("/select_cars_and_seats_for_order");
-        adminAvailableEndpoints.add("/select_station_and_car_type_for_order");
-        adminAvailableEndpoints.add("/station_delete");
-        adminAvailableEndpoints.add("/train_delete");
-        adminAvailableEndpoints.add("/user_account");
-        adminAvailableEndpoints.add("/user_block");
+        adminAvailableEndpoints.add("routes");
+        adminAvailableEndpoints.add("add_route");
+        adminAvailableEndpoints.add("edit_route");
+        adminAvailableEndpoints.add("delete_route");
+        adminAvailableEndpoints.add("route_mapping");
+        adminAvailableEndpoints.add("route_mapping_set_station");
+        adminAvailableEndpoints.add("route_mapping_remove_station");
+        adminAvailableEndpoints.add("stations");
+        adminAvailableEndpoints.add("set_station");
+        adminAvailableEndpoints.add("delete_station");
+        adminAvailableEndpoints.add("carriages");
+        adminAvailableEndpoints.add("trains");
+        adminAvailableEndpoints.add("admin_orders");
+        adminAvailableEndpoints.add("users");
+        adminAvailableEndpoints.add("block");
+        adminAvailableEndpoints.add("order_status");
+        adminAvailableEndpoints.add("set_train");
+        adminAvailableEndpoints.add("remove_train");
+        adminAvailableEndpoints.add("set_carriage");
+        adminAvailableEndpoints.add("remove_carriage");
 
         accessMap.put(Role.ADMIN, adminAvailableEndpoints);
 
         Set<String> userAvailableEndpoints = new HashSet<>();
-        userAvailableEndpoints.add("/home");
-        userAvailableEndpoints.add("/user_account");
-        userAvailableEndpoints.add("/search_rout_for_order");
-        userAvailableEndpoints.add("/select_cars_and_seats_for_order");
-        userAvailableEndpoints.add("/select_station_and_car_type_for_order");
-        userAvailableEndpoints.add("/detail_rout");
-        userAvailableEndpoints.add("/logout");
-        userAvailableEndpoints.add("/cancel_order");
+        userAvailableEndpoints.add("search_routes");
+        userAvailableEndpoints.add("orders");
+        userAvailableEndpoints.add("route");
+        userAvailableEndpoints.add("select_station_and_carriage_type");
+        userAvailableEndpoints.add("select_carriage_and_count_seats");
+        userAvailableEndpoints.add("select_seats");
+        userAvailableEndpoints.add("confirm_order");
+        userAvailableEndpoints.add("create_order");
+        userAvailableEndpoints.add("cancel_order");
+        userAvailableEndpoints.add("sendForgetPasswordData");
+        userAvailableEndpoints.add("login_by_token_link");
+        userAvailableEndpoints.add("postRegistrationAccountApproval");
 
 
         accessMap.put(Role.USER, userAvailableEndpoints);
@@ -88,14 +88,15 @@ public class SecurityFilter implements Filter {
 
         req.setCharacterEncoding(encoding);
         resp.setCharacterEncoding(encoding);
-        String uri = request.getRequestURI().replace(request.getContextPath(), "");
+        String commandName = request.getParameter("action");
 
-        if (!securedUris.contains(uri)) {
+        if (!securedUris.contains(commandName)) {
             chain.doFilter(request, response);
             return;
         }
 
         User user = (User) request.getSession().getAttribute(AppContextConstant.SESSION_USER);
+        System.out.println(user.toString());
         if (Objects.isNull(user)) {
             String message = "You are not authorized. Please register to enter the site.";
             LOGGER.error(message);
@@ -103,7 +104,7 @@ public class SecurityFilter implements Filter {
         }
 
         Set<String> availableURI = accessMap.get(user.getRole());
-        if (availableURI.contains(uri)) {
+        if (availableURI.contains(commandName)) {
             chain.doFilter(req, resp);
             return;
         }
