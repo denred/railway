@@ -78,7 +78,6 @@ public class SecurityFilter implements Filter {
         for (Set<String> uriSet : accessMap.values()) {
             securedUris.addAll(uriSet);
         }
-
     }
 
     @Override
