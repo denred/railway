@@ -3,6 +3,7 @@ package com.epam.redkin.railway.model.repository.impl;
 import com.epam.redkin.railway.model.entity.CarriageType;
 import com.epam.redkin.railway.model.entity.Seat;
 import com.epam.redkin.railway.model.exception.DataBaseException;
+import com.epam.redkin.railway.model.exception.ForbiddenException;
 import com.epam.redkin.railway.model.repository.SeatRepository;
 import org.apache.commons.dbutils.DbUtils;
 import org.slf4j.Logger;
@@ -45,9 +46,8 @@ public class SeatRepositoryImpl implements SeatRepository {
             }
         } catch (SQLException e) {
             try {
-                assert connection != null;
                 connection.rollback();
-            } catch (SQLException ex) {
+            } catch (SQLException | NullPointerException ex) {
                 LOGGER.error("Connection error: " + ex);
                 throw new DataBaseException("Connection error: " + seat, ex);
             }
@@ -55,14 +55,12 @@ public class SeatRepositoryImpl implements SeatRepository {
             throw new DataBaseException("Cannot add seat into database ", e);
         } finally {
             try {
-                if (connection != null) {
-                    connection.setAutoCommit(true);
-                    DbUtils.close(resultSet);
-                    DbUtils.close(statement);
-                    DbUtils.close(connection);
-                    LOGGER.info("Connection closed");
-                }
-            } catch (SQLException e) {
+                connection.setAutoCommit(true);
+                DbUtils.close(resultSet);
+                DbUtils.close(statement);
+                DbUtils.close(connection);
+                LOGGER.info("Connection closed");
+            } catch (SQLException | NullPointerException e) {
                 LOGGER.error("Connection closing error: " + e);
                 throw new DataBaseException("Connection closing error: ", e);
             }
@@ -238,13 +236,39 @@ public class SeatRepositoryImpl implements SeatRepository {
     @Override
     public void reservedSeat(int seatId) {
         LOGGER.info("Started method reservedSeat(int seatId) with seatId= " + seatId);
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(Constants.TAKE_IN_SEAT)) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(Constants.TAKE_IN_SEAT);
             statement.setInt(1, seatId);
-            LOGGER.info("The method done. Reserved count seat: " + statement.executeUpdate());
-        } catch (SQLException e) {
+            Seat seat = getById(seatId);
+            if (seat.isBusy()) {
+                LOGGER.error("Seat " + seat.getSeatNumber() + " is busy");
+                throw new ForbiddenException("Seat is busy: " + seat.getSeatNumber());
+            }
+            connection.commit();
+            LOGGER.info("The seat: " + seat.getSeatNumber() + " reserved: " + (statement.executeUpdate() > 0));
+        } catch (SQLException | ForbiddenException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                LOGGER.error("Connection rollback error: " + ex);
+                throw new DataBaseException("Connection rollback error", ex);
+            }
             LOGGER.error("Can't reserved seat: " + e);
             throw new DataBaseException("Can't reserved seat. seat_id = " + seatId, e);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+                DbUtils.close(statement);
+                DbUtils.close(connection);
+                LOGGER.info("Connection closed");
+            } catch (SQLException | NullPointerException e) {
+                LOGGER.error("Connection closing error: " + e);
+                throw new DataBaseException("Connection closing error: ", e);
+            }
         }
     }
 

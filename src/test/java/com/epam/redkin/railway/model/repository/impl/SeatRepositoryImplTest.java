@@ -429,37 +429,60 @@ class SeatRepositoryImplTest {
     @Test
     void reservedSeatPositive() throws SQLException {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        doNothing().when(mockConnection).setAutoCommit(true);
+        doNothing().when(mockConnection).setAutoCommit(false);
+        doNothing().when(mockConnection).commit();
         doNothing().when(mockStatement).setInt(anyInt(), anyInt());
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(Boolean.TRUE,Boolean.FALSE);
+        when(mockResultSet.getInt(anyString())).thenReturn(10);
+        when(mockResultSet.getString(anyString())).thenReturn("07");
+        when(mockResultSet.getBoolean(anyString())).thenReturn(false);
         when(mockStatement.executeUpdate()).thenReturn(1);
 
         seatRepository.reservedSeat(1);
-        verify(mockConnection).prepareStatement(anyString());
-        verify(mockStatement).setInt(anyInt(), anyInt());
+        verify(mockConnection, times(2)).prepareStatement(anyString());
+        verify(mockStatement, times(2)).setInt(anyInt(), anyInt());
+        verify(mockConnection).setAutoCommit(false);
+        verify(mockConnection).setAutoCommit(true);
+        verify(mockConnection).commit();
+        verify(mockConnection, times(2)).close();
+        verify(mockStatement, times(2)).close();
         verify(mockStatement).executeUpdate();
-    }
-
-    @Test
-    void reservedSeatNegative() throws SQLException {
-        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
-        doNothing().when(mockStatement).setInt(anyInt(), anyInt());
-        when(mockStatement.executeUpdate()).thenReturn(0);
-
-        seatRepository.reservedSeat(1);
-        verify(mockConnection).prepareStatement(anyString());
-        verify(mockStatement).setInt(anyInt(), anyInt());
-        verify(mockStatement).executeUpdate();
+        verify(mockStatement).executeQuery();
+        verify(mockResultSet).next();
+        verify(mockResultSet).getString(anyString());
+        verify(mockResultSet, times(2)).getInt(anyString());
+        verify(mockResultSet).getBoolean(anyString());
     }
 
     @Test
     void reservedSeatWithException() throws SQLException {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        doNothing().when(mockConnection).setAutoCommit(true);
+        doNothing().when(mockConnection).setAutoCommit(false);
+        doNothing().when(mockConnection).rollback();
         doNothing().when(mockStatement).setInt(anyInt(), anyInt());
-        when(mockStatement.executeUpdate()).thenThrow(SQLException.class);
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(Boolean.TRUE,Boolean.FALSE);
+        when(mockResultSet.getInt(anyString())).thenReturn(10);
+        when(mockResultSet.getString(anyString())).thenReturn("07");
+        when(mockResultSet.getBoolean(anyString())).thenReturn(true);
 
         assertThrows(DataBaseException.class, () -> seatRepository.reservedSeat(1));
-        verify(mockConnection).prepareStatement(anyString());
-        verify(mockStatement).setInt(anyInt(), anyInt());
-        verify(mockStatement).executeUpdate();
+        verify(mockConnection, times(2)).prepareStatement(anyString());
+        verify(mockStatement, times(2)).setInt(anyInt(), anyInt());
+        verify(mockConnection).setAutoCommit(false);
+        verify(mockConnection).setAutoCommit(true);
+        verify(mockConnection).rollback();
+        verify(mockConnection, times(2)).close();
+        verify(mockStatement, times(2)).close();
+        verify(mockStatement, times(0)).executeUpdate();
+        verify(mockStatement).executeQuery();
+        verify(mockResultSet).next();
+        verify(mockResultSet).getString(anyString());
+        verify(mockResultSet, times(2)).getInt(anyString());
+        verify(mockResultSet).getBoolean(anyString());
     }
 
     @Test
@@ -497,5 +520,4 @@ class SeatRepositoryImplTest {
         verify(mockStatement).setInt(anyInt(), anyInt());
         verify(mockStatement).executeUpdate();
     }
-
 }
