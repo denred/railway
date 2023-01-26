@@ -19,18 +19,13 @@
         <p><fmt:message key="app.description"/></p>
     </div>
     <div class="d-flex justify-content-end m-5">
-        <div class="dropdown">
-            <button class="btn btn-outline-primary btn-sm" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="material-icons">lang</span>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <form class="form-inline" method="post" action="controller?action=i18n">
-                    <button type="submit" name="lang" value="ua" class="dropdown-item">UA</button>
-                    <button type="submit" name="lang" value="en" class="dropdown-item">EN</button>
-                </form>
-            </div>
-        </div>
+        <%-- Change language --%>
+        <form class="d-flex mx-2" method="POST" action="controller?action=i18n">
+            <select class="form-select" id="locale" name="lang" onchange="submit()" aria-label="Change language">
+                <option value="en" ${sessionScope.locale == 'en' ? 'selected' : ''}>eng</option>
+                <option value="ua" ${sessionScope.locale == 'ua' ? 'selected' : ''}><fmt:message key="lang.ua"/></option>
+            </select>
+        </form>
     </div>
 </header>
 
