@@ -62,10 +62,7 @@ public class SecurityFilter implements Filter {
         userAvailableEndpoints.add("confirm_order");
         userAvailableEndpoints.add("create_order");
         userAvailableEndpoints.add("cancel_order");
-        userAvailableEndpoints.add("sendForgetPasswordData");
         userAvailableEndpoints.add("login_by_token_link");
-        userAvailableEndpoints.add("postRegistrationAccountApproval");
-
 
         accessMap.put(Role.USER, userAvailableEndpoints);
 

@@ -2,11 +2,8 @@ package com.epam.redkin.railway.model.entity;
 
 import lombok.Builder;
 import lombok.Data;
-import org.mindrot.jbcrypt.BCrypt;
 
-import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 @Data
 @Builder
 public class User {
@@ -18,6 +15,7 @@ public class User {
     private String lastName;
     private String phone;
     private LocalDate birthDate;
+    private LocalDate registrationDate;
     private Role role;
     private int roleId;
     private boolean blocked;

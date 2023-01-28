@@ -28,4 +28,6 @@ public interface UserService {
     void postRegistrationApprovalByToken(String token);
 
     int getUserCount(Map<String, String> search);
+
+    boolean updateUser(User newUser);
 }

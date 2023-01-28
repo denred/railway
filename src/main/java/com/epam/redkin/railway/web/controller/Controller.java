@@ -1,6 +1,6 @@
 package com.epam.redkin.railway.web.controller;
 
-import com.epam.redkin.railway.web.controller.command.CommandFactory;
+import com.epam.redkin.railway.web.controller.command.ActionFactory;
 import com.epam.redkin.railway.web.controller.command.Command;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -21,15 +21,16 @@ public class Controller extends HttpServlet {
         processRequest(req, resp);
     }
 
-    private void processRequest(HttpServletRequest req, HttpServletResponse resp)
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CommandFactory commandFactory = CommandFactory.commandFactory();
-        Command command = commandFactory.getCommand(req);
-        String page = command.execute(req, resp);
-        RequestDispatcher dispatcher = req.getRequestDispatcher(page);
-        if (!page.equals("redirect")) {
-            dispatcher.forward(req, resp);
+        //define command from jsp
+        ActionFactory client = ActionFactory.getInstance();
+        Command command = client.defineCommand(request);
+        //call to the execute method and return response page
+        String page = command.execute(request, response);
+        if (page != null) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+            dispatcher.forward(request, response);
         }
-
     }
 }

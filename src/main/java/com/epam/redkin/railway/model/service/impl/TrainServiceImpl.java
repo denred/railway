@@ -35,11 +35,7 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public void updateTrain(Train train) {
-        try {
-            trainRepository.update(train);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        trainRepository.update(train);
     }
 
     @Override

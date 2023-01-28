@@ -18,6 +18,7 @@ public class AppContextConstant {
     public static final String COOKIE_REMEMBER_USER_TOKEN = "rememberToken";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
+    public static final String PASSWORD_CONFIRMATION = "password_confirm";
     public static final String USER_LOGIN = "login";
     public static final String USER_ROLE = "user";
     public static final String ERROR_MESSAGE = "Login or password can't be empty";

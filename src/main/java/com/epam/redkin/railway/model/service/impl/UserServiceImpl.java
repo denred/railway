@@ -221,6 +221,13 @@ public class UserServiceImpl implements UserService {
         return userCount;
     }
 
+    @Override
+    public boolean updateUser(User newUser) {
+        LOGGER.info("Started --> updateUser(User newUser) --> newUser= " + newUser);
+        userRepository.update(newUser);
+        return false;
+    }
+
     private String constructLogInLink(String pageRootUrl, String token) {
         return pageRootUrl + '&' + AppContextConstant.COOKIE_REMEMBER_USER_TOKEN + '=' + token;
     }

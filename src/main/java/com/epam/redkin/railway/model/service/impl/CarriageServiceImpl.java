@@ -31,11 +31,9 @@ public class CarriageServiceImpl implements CarriageService {
     @Override
     public void updateCar(CarriageDTO carriageDTO) {
         Carriage car = getCarFromCarDto(carriageDTO);
-        try {
+
             carriageRepository.update(car);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
         int countSeatBusy = seatRepository.getBusySeatsCountByCarriageId(carriageDTO.getCarId());
         int countSeat = seatRepository.getSeatsCountByCarriageId(carriageDTO.getCarId());
         if (countSeatBusy == 0) {

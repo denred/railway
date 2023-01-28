@@ -61,6 +61,7 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
             LOGGER.info("Generated id= " + key);
         } catch (SQLException | NullPointerException e) {
             try {
+                assert connection != null;
                 connection.rollback();
                 LOGGER.info("Transaction rollback");
             } catch (SQLException | NullPointerException ex) {
@@ -71,6 +72,7 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
             throw new DataBaseException("Cannot create order = " + order, e);
         } finally {
             try {
+                assert connection != null;
                 connection.setAutoCommit(true);
                 DbUtils.close(resultSet);
                 DbUtils.close(statement);
@@ -78,7 +80,6 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
                 LOGGER.info("Connection closed");
             } catch (SQLException | NullPointerException e) {
                 LOGGER.error("Connection closing error: " + e);
-                throw new DataBaseException("Connection closing error: ", e);
             }
         }
         return key;
@@ -172,7 +173,6 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
                 DbUtils.close(resultSet);
             } catch (SQLException e) {
                 LOGGER.error("Cannot close ResultSet " + e);
-                throw new DataBaseException("Cannot close ResultSet.", e);
             }
         }
         LOGGER.info("\nExtracted orders: " + orders);
@@ -198,6 +198,7 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
             LOGGER.info("Transaction done with status: " + statusUpdate);
         } catch (SQLException | NullPointerException e) {
             try {
+                assert connection != null;
                 connection.rollback();
             } catch (SQLException | NullPointerException ex) {
                 LOGGER.error("Connection rollback error:", e);
@@ -207,13 +208,13 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
             throw new DataBaseException("Can`t update order status. Order id = " + orderId + " status: " + status.name(), e);
         } finally {
             try {
+                assert connection != null;
                 connection.setAutoCommit(true);
                 DbUtils.close(statement);
                 DbUtils.close(connection);
                 LOGGER.info("Connection closed");
             } catch (SQLException | NullPointerException e) {
                 LOGGER.error("Connection closing error: " + e);
-                throw new DataBaseException("Connection closing error: ", e);
             }
         }
         return statusUpdate;

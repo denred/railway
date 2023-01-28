@@ -40,7 +40,6 @@
                 <h1 class="h3 mb-3 font-weight-normal"><fmt:message key="user.signin"/></h1>
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                    <label for="form3Example3"><fmt:message key="user.email"/></label>
                     <input name="login" type="email" id="form3Example3" class="form-control form-control-lg"
                            placeholder="<fmt:message key="user.email"/>" required autofocus>
                 </div>

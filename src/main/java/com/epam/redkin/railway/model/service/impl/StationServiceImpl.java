@@ -36,11 +36,9 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public void updateStation(Station station) {
-        try {
+
             stationRepository.update(station);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     @Override

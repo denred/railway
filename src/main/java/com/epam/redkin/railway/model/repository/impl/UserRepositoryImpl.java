@@ -48,6 +48,7 @@ public class UserRepositoryImpl implements UserRepository {
             LOGGER.info("User id: " + key);
         } catch (SQLException | NullPointerException e) {
             try {
+                assert connection != null;
                 connection.rollback();
             } catch (SQLException | NullPointerException ex) {
                 LOGGER.error("Cannot connection rollback: ", e);
@@ -57,13 +58,13 @@ public class UserRepositoryImpl implements UserRepository {
             throw new DataBaseException("Cannot add user into database, user = " + user, e);
         } finally {
             try {
+                assert connection != null;
                 connection.setAutoCommit(true);
                 DbUtils.close(resultSet);
                 DbUtils.close(statement);
                 DbUtils.close(connection);
             } catch (SQLException | NullPointerException e) {
                 LOGGER.error("Cannot close connection:", e);
-                throw new DataBaseException("Cannot close connection:", e);
             }
         }
         return key;
@@ -107,6 +108,7 @@ public class UserRepositoryImpl implements UserRepository {
             LOGGER.info("Transaction done, updateUser: " + updateUser);
         } catch (SQLException | NullPointerException e) {
             try {
+                assert connection != null;
                 connection.rollback();
             } catch (SQLException ex) {
                 LOGGER.info("Connection rollback error: " + ex);
@@ -116,12 +118,12 @@ public class UserRepositoryImpl implements UserRepository {
             throw new DataBaseException("Cannot update user, user = " + user, e);
         } finally {
             try {
+                assert connection != null;
                 connection.setAutoCommit(true);
                 DbUtils.close(statement);
                 DbUtils.close(connection);
             } catch (SQLException | NullPointerException e) {
                 LOGGER.info("Connection closing error: " + e);
-                throw new DataBaseException("Connection closing error", e);
             }
         }
         return updateUser;
@@ -161,7 +163,6 @@ public class UserRepositoryImpl implements UserRepository {
                 DbUtils.close(resultSet);
             } catch (SQLException e) {
                 LOGGER.error("Connection closing error: " + e);
-                throw new DataBaseException("Connection closing error", e);
             }
         }
         return user;
@@ -209,7 +210,6 @@ public class UserRepositoryImpl implements UserRepository {
                 DbUtils.close(resultSet);
             } catch (SQLException e) {
                 LOGGER.error("Connection closing error: " + e);
-                throw new DataBaseException("Connection closing error", e);
             }
         }
         LOGGER.info("List<User>: " + users);

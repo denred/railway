@@ -10,16 +10,21 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CommandFactory {
-    private static CommandFactory factory = new CommandFactory();
+/**
+ * Factory method for executing from request commands
+ * The method extracts the value of the command parameter from the request and, based on it,
+ * extracts the command object corresponding to the request.
+ */
+public class ActionFactory {
+    private static ActionFactory factory = new ActionFactory();
     private static final Map<String, Command> commands = new HashMap<>();
 
-    private CommandFactory() {
+    private ActionFactory() {
     }
-
-    public static CommandFactory commandFactory() {
+    // Singleton
+    public static ActionFactory getInstance() {
         if (factory == null) {
-            factory = new CommandFactory();
+            factory = new ActionFactory();
         }
         return factory;
     }
@@ -31,7 +36,7 @@ public class CommandFactory {
         commands.put("register", new RegistrationCommand());
         commands.put("home", new HomeCommand());
         commands.put("i18n", new I18NCommand());
-
+        commands.put("profile", new ProfileCommand());
         commands.put("redirect", null);
 
         // admin commands
@@ -56,7 +61,6 @@ public class CommandFactory {
         commands.put("set_carriage", new CarriageSetCommand());
         commands.put("remove_carriage", new CarriageRemoveCommand());
 
-
         // user commands
         commands.put("search_routes", new SearchRoutesCommand());
         commands.put("orders", new GetUserOrdersCommand());
@@ -73,7 +77,7 @@ public class CommandFactory {
     }
 
 
-    public Command getCommand(HttpServletRequest request) {
+    public Command defineCommand(HttpServletRequest request) {
         String action = request.getParameter("action");
         return commands.get(action);
     }

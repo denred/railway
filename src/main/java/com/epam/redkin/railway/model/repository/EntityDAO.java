@@ -30,7 +30,7 @@ public interface EntityDAO<T> {
      * @param entity entity which necessary update
      * @return true if update successful and false otherwise
      */
-    boolean update(T entity) throws SQLException;
+    boolean update(T entity);
 
     /**
      * Delete entity in database by id

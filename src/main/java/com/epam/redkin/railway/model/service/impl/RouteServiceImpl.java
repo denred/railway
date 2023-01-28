@@ -109,11 +109,9 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public void updateRoute(Route route) {
-        try {
+
             routeRepository.update(route);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     @Override
