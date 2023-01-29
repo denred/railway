@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Locale;
 
 import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
 
@@ -40,7 +41,8 @@ public class LoginCommand implements Command {
         forward = Path.COMMAND_HOME;
         session.setAttribute(SESSION_USER, user);
         session.setAttribute(CURRENT_DATE_TIME, LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
-        session.setAttribute(LOCALE, LOCALE_UA);
+        session.setAttribute(LOCALE, Locale.getDefault().getLanguage());
+        LOGGER.info("Current locale: " + Locale.getDefault().getLanguage());
         LOGGER.info("done");
         return forward;
     }

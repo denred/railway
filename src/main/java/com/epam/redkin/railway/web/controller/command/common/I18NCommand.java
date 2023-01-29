@@ -19,10 +19,10 @@ public class I18NCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
         HttpSession session = request.getSession();
+        String currentLocale = request.getParameter(AppContextConstant.LANGUAGE);
 
         if (request.getParameter(AppContextConstant.LANGUAGE) != null) {
-            String currentLocale = request.getParameter(AppContextConstant.LANGUAGE);
-            LOGGER.info("Set language: " + currentLocale);
+            LOGGER.info("Current locale: " + currentLocale);
             session.setAttribute(AppContextConstant.LOCALE, currentLocale);
             Locale.setDefault(new Locale(currentLocale));
         } else {

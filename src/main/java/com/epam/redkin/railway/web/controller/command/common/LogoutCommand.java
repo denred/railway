@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Locale;
+
 public class LogoutCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(LogoutCommand.class);
     @Override
@@ -16,6 +18,7 @@ public class LogoutCommand implements Command {
         LOGGER.info("started");
         LogoutService logoutService = AppContext.getInstance().getLogoutService();
         logoutService.logout(request);
+        Locale.setDefault(Locale.forLanguageTag("en"));
         LOGGER.info("done");
         return Path.PAGE_LOGIN;
     }
