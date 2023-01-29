@@ -13,6 +13,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
+
 import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
 import static com.epam.redkin.railway.web.controller.Path.PAGE_PROFILE;
 
@@ -29,6 +31,7 @@ public class ProfileCommand implements Command {
 
         String firstName = request.getParameter(FIRST_NAME);
         String lastName = request.getParameter(LAST_NAME);
+        String birthDate = request.getParameter(BIRTH_DATE);
         String phoneNumber = request.getParameter(PHONE_NUMBER);
         String password = request.getParameter(PASSWORD);
         String passwordConfirmation = request.getParameter(PASSWORD_CONFIRMATION);
@@ -38,7 +41,7 @@ public class ProfileCommand implements Command {
                     .userId(user.getUserId())
                     .firstName(firstName)
                     .lastName(lastName)
-                    .birthDate(user.getBirthDate())
+                    .birthDate(LocalDate.parse(birthDate))
                     .phone(phoneNumber)
                     .role(user.getRole())
                     .email(user.getEmail())
@@ -63,6 +66,7 @@ public class ProfileCommand implements Command {
         request.setAttribute(LAST_NAME, user.getLastName());
         request.setAttribute(PHONE_NUMBER, user.getPhone());
         request.setAttribute(EMAIL, user.getEmail());
+        request.setAttribute(BIRTH_DATE, user.getBirthDate());
 
         return PAGE_PROFILE;
     }

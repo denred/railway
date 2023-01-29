@@ -21,8 +21,8 @@
             <div class="author-card p-3">
                 <div class="author-card-profile">
                     <div class="author-card-details">
-                        <h5 class="author-card-name text-lg">${first_name} ${last_name}</h5><span
-                            class="author-card-position">Joined February 06, 2017</span>
+                        <h5 class="author-card-name text-lg">${first_name} ${last_name}</h5>
+                        <span class="">${email}</span>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                         <label for="account-fn"><fmt:message key="user.first_name"/></label>
                         <input class="form-control" name="first_name" type="text" id="account-fn"
                                value=${first_name} required
-                               pattern="[\w-]{1,60}">
+                               pattern="[a-zA-Zа-яА-яёЁ\u0400-\u052F\u2DE0-\u2DFF\uA640-\uA69F']{1,60}">
                         <div class="invalid-feedback"><fmt:message bundle="${excMsg}" key="validation.user.name"/></div>
                     </div>
                 </div>
@@ -50,17 +50,18 @@
                         <label for="account-ln"><fmt:message key="user.last_name"/></label>
                         <input class="form-control" name="last_name" type="text" id="account-ln"
                                value=${last_name} required
-                               pattern="[\w-]{1,60}">
+                               pattern="[a-zA-Zа-яА-яёЁ\u0400-\u052F\u2DE0-\u2DFF\uA640-\uA69F']{1,60}">
                         <div class="invalid-feedback"><fmt:message bundle="${excMsg}" key="validation.user.name"/></div>
                     </div>
                 </div>
 
-                <%-- Email --%>
+                <%-- Birth Date --%>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="account-email"><fmt:message key="user.email"/></label>
-                        <input class="form-control" type="email" id="account-email" value=${email}
-                                disabled="">
+                        <label for="account-birth"><fmt:message key="user.birth_date"/></label>
+                        <input name="birth_date" class="form-control" type="date" id="account-birth"
+                               value=${birth_date} required>
+                        <div class="invalid-feedback"><fmt:message bundle="${excMsg}" key="validation.user.empty"/></div>
                     </div>
                 </div>
 
