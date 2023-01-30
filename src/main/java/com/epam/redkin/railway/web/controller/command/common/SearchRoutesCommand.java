@@ -27,11 +27,9 @@ public class SearchRoutesCommand implements Command {
         LOGGER.info("started");
         RouteService routeService = AppContext.getInstance().getRouteService();
         SearchValidator searchValidator = new SearchValidator();
-        HttpSession session = request.getSession();
 
         String departureStation = request.getParameter(DEPARTURE_STATION);
         String arrivalStation = request.getParameter(ARRIVAL_STATION);
-        String userId = request.getParameter(USER_ID);
         String startDate = request.getParameter(DEPARTURE_DATE);
         LocalDateTime departureDate;
         try {
@@ -46,11 +44,9 @@ public class SearchRoutesCommand implements Command {
         routeService.fillAvailableSeats(routeOrderDTOList);
 
         request.setAttribute(ROUTE_ORDER_DTO_LIST, routeOrderDTOList);
-        request.setAttribute(USER_ID, userId);
         request.setAttribute(DEPARTURE_STATION, departureStation);
         request.setAttribute(ARRIVAL_STATION, arrivalStation);
         request.setAttribute(DEPARTURE_DATE, departureDate);
-        request.setAttribute(LANGUAGE, session.getAttribute(LOCALE));
         LOGGER.info("done");
         return PAGE_SEARCH_ROUTES;
     }

@@ -9,8 +9,8 @@ public interface StationService {
 
     List<Station> getAllStationList();
 
-    List<Station> getStationListByCurrentPage(int currentPage, int recordsPerPage);
-    int getStationListSize();
+    List<Station> getStationList(int offset, int limit, String search);
+    int getStationListSize(String search);
 
 
     void addStation(Station station);

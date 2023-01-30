@@ -36,7 +36,6 @@
             <td>
                 <input type="hidden" name="routs_id" value="${routs_id}">
                 <input type="hidden" name="train_id" value="${train_id}">
-                <input type="hidden" name="user_id" value="${user_id}">
                 <input type="hidden" name="departure_station" value="${departure_station}">
                 <input type="hidden" name="arrival_station" value="${arrival_station}">
                 <input type="hidden" name="departure_date" value="${departure_date}">
@@ -62,7 +61,6 @@
     <input type="hidden" name="station2" value="${station2}">
     <input type="hidden" name="routs_id" value="${routs_id}">
     <input type="hidden" name="train_id" value="${train_id}">
-    <input type="hidden" name="user_id" value="${user_id}">
     <input type="hidden" name="departure_station" value="${departure_station}">
     <input type="hidden" name="arrival_station" value="${arrival_station}">
     <input type="hidden" name="departure_date" value="${departure_date}">

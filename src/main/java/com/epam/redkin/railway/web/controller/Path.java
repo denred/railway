@@ -2,15 +2,15 @@ package com.epam.redkin.railway.web.controller;
 
 public class Path {
     // pages
-    public static final String PAGE_HOME = "WEB-INF/jsp/homePage.jsp";
+    public static final String PAGE_HOME = "WEB-INF/jsp/common/homePage.jsp";
     public static final String PAGE_LOGIN = "/login.jsp";
-    public static final String PAGE_SEARCH_ROUTES = "WEB-INF/jsp/searchRoutForOrder.jsp";
+    public static final String PAGE_SEARCH_ROUTES = "WEB-INF/jsp/common/searchRoutForOrder.jsp";
     public static final String PAGE_ORDERS = "WEB-INF/jsp/user/userAccount.jsp";
-    public static final String PAGE_ROUTE_DETAIL = "WEB-INF/jsp/detailRout.jsp";
-    public static final String PAGE_SELECT_STATION_AND_CARRIAGE_TYPE = "WEB-INF/jsp/selectStationAndCarriageType.jsp";
-    public static final String PAGE_SELECT_CARRIAGE_AND_COUNT_SEATS = "WEB-INF/jsp/selectCarriageAndCountSeats.jsp";
-    public static final String PAGE_SELECT_SEATS_NUMBER = "WEB-INF/jsp/selectSeats.jsp";
-    public static final String PAGE_CONFIRM_ORDER = "WEB-INF/jsp/confirmOrder.jsp";
+    public static final String PAGE_ROUTE_DETAIL = "WEB-INF/jsp/common/detailRout.jsp";
+    public static final String PAGE_SELECT_STATION_AND_CARRIAGE_TYPE = "WEB-INF/jsp/common/selectStationAndCarriageType.jsp";
+    public static final String PAGE_SELECT_CARRIAGE_AND_COUNT_SEATS = "WEB-INF/jsp/common/selectCarriageAndCountSeats.jsp";
+    public static final String PAGE_SELECT_SEATS_NUMBER = "WEB-INF/jsp/common/selectSeats.jsp";
+    public static final String PAGE_CONFIRM_ORDER = "WEB-INF/jsp/common/confirmOrder.jsp";
     public static final String PAGE_INFO_ROUTE = "WEB-INF/jsp/admin/routeInfo.jsp";
     public static final String PAGE_ADD_ROUTE = "WEB-INF/jsp/admin/routeAdd.jsp";
     public static final String PAGE_EDIT_ROUTE = "WEB-INF/jsp/admin/routeEdit.jsp";

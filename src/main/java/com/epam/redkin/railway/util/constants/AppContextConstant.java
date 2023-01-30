@@ -49,6 +49,7 @@ public class AppContextConstant {
     public static final String DEPARTURE_STATION_ID = "departure_station_id";
     public static final String DEPARTURE_STATION = "departure_station";
     public static final String ARRIVAL_STATION = "arrival_station";
+    public static final String STATION_LIST = "station_list";
     public static final String DEPARTURE_DATE = "departure_date";
     public static final String CURRENT_DATE_TIME = "dateTime";
 
@@ -68,7 +69,9 @@ public class AppContextConstant {
 
     //RouteDTO
     public static final String ROUTE_DTO_LIST = "routeDto_list";
+    public static final String ROUTE_DTO = "routeDto";
     public static final String ROUTE_ORDER_DTO_LIST = "rout_order_dto_list";
+    public static final String ROUTE_ORDER_DTO = "rout_order_dto";
 
     //Route mapping
     public static final String ROUTE_MAPPING_LIST = "rout_m_list";
@@ -77,6 +80,7 @@ public class AppContextConstant {
     public static final String PAGE_RECORDS = "recordsPerPage";
     public static final String PAGE_COUNT = "noOfPages";
     public static final String CURRENT_PAGE = "currentPage";
+    public static final String LAST_PAGE = "last_page";
     public static final String SUM = "sum";
     public static final String PAGE = "page";
     public static final String ID = "id";
@@ -91,5 +95,6 @@ public class AppContextConstant {
     public static final String FILTER_ROUTE_NUMBER = "routeFilter";
     public static final String FILTER_ROUTE_NAME = "routeNameFilter";
     public static final String FILTER_TYPE_CARRIAGE = "carriageTypeFilter";
+    public static final String FILTER_STATION = "stationFilter";
 
 }

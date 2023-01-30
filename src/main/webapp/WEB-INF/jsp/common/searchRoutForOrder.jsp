@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
-<%@ taglib prefix="period" uri="/WEB-INF/tags/custom.tld" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ taglib prefix="period" uri="/WEB-INF/tags/custom.tld" %>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="lang"/>
@@ -44,7 +44,6 @@
                         <td>${rout.trainNumber}
                             <form action="controller?action=route" method="POST">
                                 <input type="hidden" name="routs_id" value="${rout.routsId}">
-                                <input type="hidden" name="user_id" value="${user_id}">
                                 <input type="hidden" name="departure_station" value="${departure_station}">
                                 <input type="hidden" name="arrival_station" value="${arrival_station}">
                                 <input type="hidden" name="departure_date" value="${departure_date}">
@@ -68,7 +67,7 @@
                                 ${arrivalDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))}
                         </td>
                         <td><period:period dateFrom="${dispatchDateTime}" dateTo="${arrivalDateTime}"
-                                           locale="${lang}"/></td>
+                                           locale="${sessionScope.locale}"/></td>
 
                         <td>
                             <c:forEach items="${rout.availableSeats}" var="entry">
@@ -91,10 +90,9 @@
                                 <input type="hidden" name="station1"
                                        value="${rout.stations.get(0).station} - ${dispatchDateTime}">
                                 <input type="hidden" name="travel_time"
-                                       value="<period:period dateFrom="${dispatchDateTime}" dateTo="${arrivalDateTime}" locale="${lang}"/>">
+                                       value="<period:period dateFrom="${dispatchDateTime}" dateTo="${arrivalDateTime}" locale="${sessionScope.locale}"/>">
                                 <input type="hidden" name="station2"
                                        value="${rout.stations.get(1).station} - ${arrivalDateTime}">
-                                <input type="hidden" name="user_id" value="${user_id}">
                                 <input type="hidden" name="departure_station" value="${departure_station}">
                                 <input type="hidden" name="arrival_station" value="${arrival_station}">
                                 <input type="hidden" name="departure_date" value="${departure_date}">
@@ -110,7 +108,6 @@
     </c:otherwise>
 </c:choose>
 <form action="controller?action=home" method="POST">
-    <input type="hidden" name="user_id" value="${user_id}">
     <input type="submit" class="btn btn-primary" value="<fmt:message key="back"/>">
 </form>
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>

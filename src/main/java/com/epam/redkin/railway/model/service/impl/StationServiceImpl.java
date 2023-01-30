@@ -24,14 +24,14 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public List<Station> getStationListByCurrentPage(int currentPage, int recordsPerPage) {
-        List<Station> allRecords = stationRepository.getAllStations();
-        return allRecords.subList(currentPage, Math.min(recordsPerPage, allRecords.size()));
+    public List<Station> getStationList(int currentPage, int recordsPerPage, String search) {
+        List<Station> stations = stationRepository.getStationsWithFilter(currentPage, recordsPerPage, search);
+        return stations;
     }
 
     @Override
-    public int getStationListSize() {
-        return getAllStationList().size();
+    public int getStationListSize(String search) {
+        return stationRepository.getCountStationWithSearch(search);
     }
 
     @Override

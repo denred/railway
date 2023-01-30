@@ -99,8 +99,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Double getPrice(String carType, int countOfSeats) {
-        return CarriageType.valueOf(carType).getPrice() * countOfSeats;
+    public Double getPrice(String carriageType, int countOfSeats) {
+        LOGGER.info("Started --> getPrice(String carriageType, int countOfSeats) --> " +
+                "carriageType: " + carriageType + " countOfSeats: " + countOfSeats);
+        double price = CarriageType.valueOf(carriageType).getPrice() * countOfSeats;
+        LOGGER.debug("Price= " + price);
+        return price;
     }
 
     @Override

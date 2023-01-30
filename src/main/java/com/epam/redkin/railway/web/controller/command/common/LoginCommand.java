@@ -5,6 +5,7 @@ import com.epam.redkin.railway.model.service.UserService;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
+import com.epam.redkin.railway.web.controller.command.SupportedLocaleStorage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +27,8 @@ public class LoginCommand implements Command {
         LOGGER.info("started");
         UserService userService = AppContext.getInstance().getUserService();
         HttpSession session = request.getSession();
+        String locale = SupportedLocaleStorage.getLocaleFromLanguage(Locale.getDefault().getLanguage()).getLanguage();
+        LOGGER.info("Current locale: " + locale);
 
         String login = request.getParameter(USER_LOGIN);
         String password = request.getParameter(PASSWORD);
@@ -41,8 +44,7 @@ public class LoginCommand implements Command {
         forward = Path.COMMAND_HOME;
         session.setAttribute(SESSION_USER, user);
         session.setAttribute(CURRENT_DATE_TIME, LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
-        session.setAttribute(LOCALE, Locale.getDefault().getLanguage());
-        LOGGER.info("Current locale: " + Locale.getDefault().getLanguage());
+        session.setAttribute(LOCALE, locale);
         LOGGER.info("done");
         return forward;
     }

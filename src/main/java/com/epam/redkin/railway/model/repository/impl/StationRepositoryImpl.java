@@ -3,6 +3,7 @@ package com.epam.redkin.railway.model.repository.impl;
 import com.epam.redkin.railway.model.entity.Station;
 import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.repository.StationRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -111,4 +112,46 @@ public class StationRepositoryImpl implements StationRepository {
         }
         return stations;
     }
+
+    @Override
+    public List<Station> getStationsWithFilter(int offset, int limit, String search) {
+        LOGGER.info("Started [List<Station> getStationsWithFilter(int offset, int limit, String search)] --> " +
+                "offset: " + offset + " limit: " + limit + " search: " + search);
+        String searchQuery = StringUtils.isBlank(search)  ? "" : "WHERE station REGEXP '" + search + "'";
+        List<Station> stations = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(String.format(Constants.GET_STATIONS_SEARCH, searchQuery))) {
+            statement.setInt(1, offset);
+            statement.setInt(2, limit);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                stations.add(extractStation(resultSet));
+            }
+            LOGGER.info("Extracted stations: " + stations);
+        } catch (SQLException | NullPointerException e) {
+            LOGGER.error("Cannot get list of stations: " + e);
+            throw new DataBaseException("Cannot get list of stations", e);
+        }
+        return stations;
+    }
+
+    @Override
+    public int getCountStationWithSearch(String search) {
+        LOGGER.info("Started [int getCountStationWithSearch(String search)] --> search: " + search);
+        String searchQuery = StringUtils.isBlank(search) ? "" : "WHERE station REGEXP '" + search + "'";
+        int countStation = 0;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(String.format(Constants.GET_COUNT_STATIONS_SEARCH, searchQuery))) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                countStation = resultSet.getInt(Constants.COUNT);
+            }
+            LOGGER.info("Stations count: " + countStation);
+        } catch (SQLException | NullPointerException e) {
+            LOGGER.error("Cannot get count of stations: " + e);
+            throw new DataBaseException("Cannot get count of stations", e);
+        }
+        return countStation;
+    }
+
 }

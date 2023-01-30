@@ -43,6 +43,8 @@ public interface Constants {
     String UPDATE_STATION = "UPDATE station SET station = ? WHERE id = ?";
     String DELETE_STATION = "DELETE FROM station WHERE id = ?";
     String GET_ALL_STATIONS = "SELECT * FROM station";
+    String GET_STATIONS_SEARCH = "SELECT * FROM station %s ORDER BY station LIMIT ? , ?";
+    String GET_COUNT_STATIONS_SEARCH = "SELECT COUNT(station) as count FROM station %s";
 
     /* TRAIN */
     String ADD_TRAIN = "INSERT INTO train (number) VALUES (?)";
@@ -141,6 +143,7 @@ public interface Constants {
     String ID = "id";
     String TOTAL = "sum";
     String BUSY = "busy";
+    String COUNT = "count";
     String TRAIN_NUMBER = "train_number";
     String TRAIN_ID = "train_id";
     String NUMBER = "number";

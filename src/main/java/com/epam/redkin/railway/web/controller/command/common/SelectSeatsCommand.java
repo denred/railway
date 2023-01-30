@@ -16,6 +16,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
+import static com.epam.redkin.railway.util.constants.AppContextConstant.CARRIAGE_TYPE;
+import static com.epam.redkin.railway.util.constants.AppContextConstant.TRAIN_ID;
+
 public class SelectSeatsCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(SelectSeatsCommand.class);
     @Override
@@ -27,8 +30,8 @@ public class SelectSeatsCommand implements Command {
         String arrivalStation = request.getParameter("arrival_station");
         String departureStationId = request.getParameter("departure_station_id");
         String arrivalStationId = request.getParameter("arrival_station_id");
-        String carType = request.getParameter("car_type");
-        String trainId = request.getParameter("train_id");
+        String carType = request.getParameter(CARRIAGE_TYPE);
+        String trainId = request.getParameter(TRAIN_ID);
         String userId = request.getParameter("user_id");
         String carId = request.getParameter("car_id");
         String station1 = request.getParameter("station1");
@@ -56,7 +59,7 @@ public class SelectSeatsCommand implements Command {
         request.setAttribute("arrival_station_id", arrivalStationId);
         request.setAttribute("routs_id", routsId);
         request.setAttribute("car_type", carType);
-        request.setAttribute("train_id", trainId);
+        request.setAttribute(TRAIN_ID, trainId);
         request.setAttribute("user_id", userId);
         request.setAttribute("car_id", carId);
         request.setAttribute("count_of_seats", countOfSeats);

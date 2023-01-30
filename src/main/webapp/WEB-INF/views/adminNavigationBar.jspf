@@ -12,8 +12,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav mx-auto bg-light rounded pe-4 py-3 py-lg-0">
+            <a href="controller?action=home" class="nav-item nav-link"><fmt:message key="menu.route.search"/></a>
             <a href="controller?action=profile" class="nav-item nav-link"><fmt:message key="menu.profile"/></a>
-            <a href="controller?action=home" class="nav-item nav-link"><fmt:message key="homepage"/></a>
             <a href="controller?action=orders" class="nav-item nav-link"><fmt:message key="user.account"/></a>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true"><fmt:message key="admin.account"/></a>

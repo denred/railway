@@ -67,7 +67,8 @@ public class CarriageServiceImpl implements CarriageService {
     }
 
     @Override
-    public Carriage getCarById(int carId) {
+    public Carriage
+    getCarById(int carId) {
         return carriageRepository.getById(carId);
     }
 

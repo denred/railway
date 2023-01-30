@@ -81,7 +81,6 @@
         <input type="hidden" name="arrival_station_id" value="${arrival_station_id}">
         <input type="hidden" name="car_type" value="${car_type}">
         <input type="hidden" name="train_id" value="${train_id}">
-        <input type="hidden" name="user_id" value="${user_id}">
         <input type="hidden" name="car_id" value="${car_id}">
         <input type="hidden" name="station1" value="${station1}">
         <input type="hidden" name="station2" value="${station2}">

@@ -296,7 +296,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public int getUserCount(Map<String, String> search) throws SQLException {
+    public int getUserCount(Map<String, String> search) {
         LOGGER.info("Started the method getUserCount");
         String searchQuery = search.isEmpty() ? "" : buildSearchQuery(search);
         LOGGER.info("searchQuery: " + searchQuery);
@@ -313,7 +313,11 @@ public class UserRepositoryImpl implements UserRepository {
             LOGGER.info(e.getClass() + " in method getUserCount: " + e.getMessage());
             throw new DataBaseException("Cannot extract number of users", e);
         } finally {
-            DbUtils.close(resultSet);
+            try {
+                DbUtils.close(resultSet);
+            } catch (SQLException e) {
+                LOGGER.info("Cannot close connection: " + e.getMessage());
+            }
         }
         return userCount;
     }

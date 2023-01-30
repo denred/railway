@@ -42,6 +42,7 @@ public class ConfirmOrderCommand implements Command {
         String stationIdA = request.getParameter(AppContextConstant.ARRIVAL_STATION_ID);
         String stationIdD = request.getParameter(AppContextConstant.DEPARTURE_STATION_ID);
         String carriageId = request.getParameter(AppContextConstant.CARRIAGE_ID);
+
         Carriage carriage = carriageService.getCarById(Integer.parseInt(carriageId));
         Train train = trainService.getTrainById(Integer.parseInt(trainId));
         Station dispatchStation = stationService.getStationById(Integer.parseInt(stationIdA));
@@ -84,9 +85,6 @@ public class ConfirmOrderCommand implements Command {
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         orderValidator.isValidOrder(order);
-        int userId = user.getUserId();
-        request.setAttribute(AppContextConstant.USER_ID, userId);
-        request.setAttribute(AppContextConstant.LANGUAGE, session.getAttribute(AppContextConstant.LOCALE));
         LOGGER.info("done");
 
         return Path.COMMAND_ORDERS;

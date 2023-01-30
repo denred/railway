@@ -3,6 +3,7 @@ package com.epam.redkin.railway.web.controller.command.common;
 import com.epam.redkin.railway.model.dto.MappingInfoDTO;
 import com.epam.redkin.railway.model.entity.Carriage;
 import com.epam.redkin.railway.model.entity.CarriageType;
+import com.epam.redkin.railway.model.entity.User;
 import com.epam.redkin.railway.model.exception.IncorrectDataException;
 import com.epam.redkin.railway.model.service.CarriageService;
 import com.epam.redkin.railway.model.service.RouteMappingService;
@@ -11,6 +12,7 @@ import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,9 @@ import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.epam.redkin.railway.util.constants.AppContextConstant.SESSION_USER;
+import static com.epam.redkin.railway.util.constants.AppContextConstant.TRAIN_ID;
 
 public class SelectStationAndCarriageTypeCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(SelectStationAndCarriageTypeCommand.class);
@@ -30,8 +35,7 @@ public class SelectStationAndCarriageTypeCommand implements Command {
 
         String departureStation = request.getParameter("departure_station");
         String arrivalStation = request.getParameter("arrival_station");
-        String trainId = request.getParameter("train_id");
-        String userId = request.getParameter("user_id");
+        String trainId = request.getParameter(TRAIN_ID);
         String routesId = request.getParameter("routes_id");
         String station1 = request.getParameter("station1");
         String station2 = request.getParameter("station2");
@@ -53,9 +57,8 @@ public class SelectStationAndCarriageTypeCommand implements Command {
         request.setAttribute("departure_station", departureStation);
         request.setAttribute("arrival_station", arrivalStation);
         request.setAttribute("departure_date", departureDate);
-        request.setAttribute("user_id", userId);
         request.setAttribute("station_list", allRoutToStationMappingListById);
-        request.setAttribute("train_id", trainId);
+        request.setAttribute(TRAIN_ID, trainId);
         request.setAttribute("station1",station1);
         request.setAttribute("station2",station2);
         request.setAttribute("travel_time",travelTime);

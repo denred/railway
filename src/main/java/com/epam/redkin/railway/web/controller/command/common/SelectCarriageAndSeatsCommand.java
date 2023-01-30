@@ -18,8 +18,12 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.epam.redkin.railway.util.constants.AppContextConstant.CARRIAGE_TYPE;
+import static com.epam.redkin.railway.util.constants.AppContextConstant.TRAIN_ID;
+
 public class SelectCarriageAndSeatsCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(SelectCarriageAndSeatsCommand.class);
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
@@ -29,9 +33,9 @@ public class SelectCarriageAndSeatsCommand implements Command {
         String departureStationId = request.getParameter("departure_station_id");
         String arrivalStation = request.getParameter("arrival_station");
         String arrivalStationId = request.getParameter("arrival_station_id");
-        String carType = request.getParameter("car_type");
-        String trainId = request.getParameter("train_id");
-        String userId = request.getParameter("user_id");
+        String carriageType = request.getParameter(CARRIAGE_TYPE);
+        LOGGER.debug("carriageType= " + carriageType);
+        String trainId = request.getParameter(TRAIN_ID);
         String station1 = request.getParameter("station1");
         String station2 = request.getParameter("station2");
         String travelTime = request.getParameter("travel_time");
@@ -45,7 +49,7 @@ public class SelectCarriageAndSeatsCommand implements Command {
         String routsId = request.getParameter("routs_id");
         RouteInfoDTO routeInfoDto = routeService.getRoutById(Integer.parseInt(routsId));
         List<Carriage> carList = carriageService
-                .getCarByTrainIdAndCarType(routeInfoDto.getTrainId(), carType)
+                .getCarByTrainIdAndCarType(routeInfoDto.getTrainId(), carriageType)
                 .stream()
                 .distinct()
                 .collect(Collectors.toList());
@@ -60,9 +64,8 @@ public class SelectCarriageAndSeatsCommand implements Command {
         request.setAttribute("arrival_station_id", arrivalStationId);
         request.setAttribute("departure_date", departureDate);
         request.setAttribute("routs_id", routsId);
-        request.setAttribute("car_type", carType);
-        request.setAttribute("user_id", userId);
-        request.setAttribute("train_id", trainId);
+        request.setAttribute(CARRIAGE_TYPE, carriageType);
+        request.setAttribute(TRAIN_ID, trainId);
         request.setAttribute("car_list", carList);
         return Path.PAGE_SELECT_CARRIAGE_AND_COUNT_SEATS;
     }

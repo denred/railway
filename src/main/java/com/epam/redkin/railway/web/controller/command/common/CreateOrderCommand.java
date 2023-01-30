@@ -20,10 +20,12 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
 import static com.epam.redkin.railway.web.controller.Path.PAGE_CONFIRM_ORDER;
 
 public class CreateOrderCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(CreateOrderCommand.class);
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
@@ -39,10 +41,11 @@ public class CreateOrderCommand implements Command {
         String arrivalStation = request.getParameter("arrival_station");
         String departureStationId = request.getParameter("departure_station_id");
         String arrivalStationId = request.getParameter("arrival_station_id");
-        String carType = request.getParameter("car_type");
-        String trainId = request.getParameter("train_id");
+        String carriageType = request.getParameter(CARRIAGE_TYPE);
+        LOGGER.debug("carriageType= " + carriageType);
+        String trainId = request.getParameter(TRAIN_ID);
         String carId = request.getParameter("car_id");
-        String countOfSeats = request.getParameter("count_of_seats");
+        String countOfSeats = request.getParameter(COUNT_SEATS);
         String userId = request.getParameter("user_id");
         String station1 = request.getParameter("station1");
         String station2 = request.getParameter("station2");
@@ -61,10 +64,12 @@ public class CreateOrderCommand implements Command {
 
         RouteInfoDTO routById = routeService.getRoutById(Integer.parseInt(routsId));
         String routName = routById.getRoutName();
-        Carriage car = carriageService.getCarById(Integer.parseInt(carId));
-        String carNumber = car.getNumber();
-        Double price = orderService.getPrice(carType, Integer.parseInt(countOfSeats));
-        User user = userService.read(Integer.parseInt(userId));
+        LOGGER.debug("Route name: " + routName);
+        Carriage carriage = carriageService.getCarById(Integer.parseInt(carId));
+        String carNumber = carriage.getNumber();
+        Double price = orderService.getPrice(carriageType, Integer.parseInt(countOfSeats));
+
+        User user = (User) request.getSession().getAttribute(SESSION_USER);
         String firstName = user.getFirstName();
         String lastName = user.getLastName();
         Train train = trainService.getTrainById(Integer.parseInt(trainId));
@@ -88,7 +93,7 @@ public class CreateOrderCommand implements Command {
         request.setAttribute("departure_station_id", departureStationId);
         request.setAttribute("arrival_station_id", arrivalStationId);
         request.setAttribute("routs_id", routsId);
-        request.setAttribute("car_type", carType);
+        request.setAttribute("car_type", carriageType);
         request.setAttribute("train_id", trainId);
         request.setAttribute("user_id", userId);
         request.setAttribute("train_number", trainNumber);
