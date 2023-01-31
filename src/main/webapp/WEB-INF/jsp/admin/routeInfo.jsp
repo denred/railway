@@ -40,56 +40,64 @@
             </div>
         </form>
     </div>
+
     <div class="d-flex justify-content-center">
-        <table class="table table-bordered table-hover" style="width: 1000px;">
+        <table class="table table-bordered table-hover" style="width: 85%">
             <thead class="thead-light text-center">
             <tr>
                 <th style="width: 1%"><fmt:message key="order"/></th>
                 <th style="width: 20%"><fmt:message key="rout.name"/></th>
-                <th style="width: 5%"><fmt:message key="rout.number"/></th>
-                <th style="width: 12%"><fmt:message key="train.number"/></th>
-                <th style="width: 10%"><fmt:message key="route"/></th>
+                <th style="width: 10%"><fmt:message key="rout.number"/></th>
+                <th style="width: 10%"><fmt:message key="train.number"/></th>
                 <th style="width: 20%"></th>
-                <th style="width: 10%"></th>
             </tr>
             </thead>
-            <tbody class="text-center">
+            <tbody>
             <jsp:useBean id="routeDto_list" scope="request" type="java.util.List"/>
             <c:forEach var="routeDto" items="${routeDto_list}" varStatus="i">
                 <jsp:useBean id="currentPage" scope="request" type="java.lang.Integer"/>
                 <jsp:useBean id="recordsPerPage" scope="request" type="java.lang.Integer"/>
                 <tr>
-                    <td>${i.index + recordsPerPage * (currentPage - 1) + 1}</td>
+                    <td class="text-center">${i.index + recordsPerPage * (currentPage - 1) + 1}</td>
                     <td>
-                        <form action="controller?action=route_mapping" method="POST">
-                            <input type="hidden" name="routs_id" value="${routeDto.routsId}">
-                            <button type="submit" style="display:none;"></button>
-                            <a href="controller?action=route_mapping"
-                               onclick="event.preventDefault();this.closest('form').submit();">${routeDto.routName}</a>
-                        </form>
+                        <div class="row align-items-center">
+                            <form action="controller?action=route_mapping" method="POST">
+                                <input type="hidden" name="routs_id" value="${routeDto.routsId}">
+                                <button type="submit" style="display:none;"></button>
+                                <a href="controller?action=route_mapping"
+                                   onclick="event.preventDefault();this.closest('form').submit();">${routeDto.routName}</a>
+                            </form>
+                        </div>
                     </td>
-                    <td>${routeDto.routNumber}</td>
-                    <td>${routeDto.trainNumber}</td>
-                    <td>
-                        <form action="controller?action=route_mapping" method="POST">
-                            <input type="hidden" name="routs_id" value="${routeDto.routsId}">
-                            <input type="submit" class="btn btn-info" name="details"
-                                   value="<fmt:message key="admin.details"/>">
-                        </form>
+                    <td class="text-center">
+                        <div class="align-items-center">
+
+                                ${routeDto.routNumber}
+
+                        </div>
                     </td>
-                    <td>
-                        <form action="controller?action=edit_route" method="POST">
-                            <input type="hidden" name="routs_id" value="${routeDto.routsId}">
-                            <input type="submit" class="btn btn-info" name="edit_info_rout"
-                                   value="<fmt:message key="admin.editInformation"/>">
-                        </form>
+                    <td class="text-center">
+                        <div class="row align-items-center">
+                            <div class="col-sm-12">
+                                    ${routeDto.trainNumber}
+                            </div>
+                        </div>
                     </td>
-                    <td>
-                        <form action="controller?action=delete_route" method="POST">
-                            <input type="hidden" name="routs_id" value="${routeDto.routsId}">
-                            <input type="submit" class="btn btn-danger" name="remove_rout"
-                                   value="<fmt:message key="admin.remove"/>">
-                        </form>
+                    <td class="text-center">
+                        <div class="row align-items-center">
+                            <div class="col-sm-6">
+                                <a class="btn btn-link text-dark px-3 mb-0"
+                                   href="controller?action=edit_route&routs_id=${routeDto.routsId}"><i
+                                        class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i><fmt:message
+                                        key="admin.editInformation"/></a>
+                            </div>
+                            <div class="col-sm-6">
+                                <a class="btn btn-link text-danger text-gradient px-3 mb-0"
+                                   href="controller?action=delete_route&routs_id=${routeDto.routsId}"><i
+                                        class="far fa-trash-alt me-2" aria-hidden="true"></i><fmt:message
+                                        key="admin.remove"/></a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>
