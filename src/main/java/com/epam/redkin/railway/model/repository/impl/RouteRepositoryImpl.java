@@ -14,6 +14,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class RouteRepositoryImpl implements RouteRepository, Constants {
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteRepositoryImpl.class);
@@ -188,6 +189,49 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
         return routes;
     }
 
+    @Override
+    public List<RouteInfoDTO> getRouteInfoDTOListWithFilter(int offset, int limit, Map<String, String> search) {
+        LOGGER.info("Started [List<RouteInfoDTO> getRouteInfoDTOListWithFilter(int offset, int limit, Map<String, String> search)] " +
+                "offset: " + offset + " limit: " + limit + " search: " + search);
+        List<RouteInfoDTO> routes = new ArrayList<>();
+        String searchQuery = search.isEmpty() ? "" : buildSearchQuery(search);
+        LOGGER.info("Search query: " + String.format(GET_ROUTES_INFO_WITH_FILTER, searchQuery));
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(String.format(GET_ROUTES_INFO_WITH_FILTER, searchQuery))) {
+            statement.setInt(1, offset);
+            statement.setInt(2, limit);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                routes.add(extractRouteInfoDTO(resultSet));
+            }
+            LOGGER.info("\nExtracted List of RouteInfoDTO: " + routes);
+        } catch (SQLException e) {
+            LOGGER.error("Cannot extract RouteInfoDTO list: " + e);
+            throw new DataBaseException("Cannot extract RouteInfoDTO list", e);
+        }
+        return routes;
+    }
+
+    @Override
+    public int getRouteInfoDTOListCount(Map<String, String> search) {
+        LOGGER.info("Started [int getRouteInfoDTOListCount(Map<String, String> search)] search: " + search);
+        String searchQuery = search.isEmpty() ? "" : buildSearchQuery(search);
+        int count = 0;
+        LOGGER.info("Search query: " + String.format(GET_ROUTES_INFO_COUNT_RECORDS, searchQuery));
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(String.format(GET_ROUTES_INFO_COUNT_RECORDS, searchQuery))) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(COUNT);
+            }
+            LOGGER.info("Number of records: " + count);
+        } catch (SQLException e) {
+            LOGGER.error("Cannot get count of RouteInfoDTO: " + e);
+            throw new DataBaseException("Cannot get count of RouteInfoDTO", e);
+        }
+        return count;
+    }
+
     private StationDTO extractStationDto(ResultSet resultSet) throws SQLException {
         return StationDTO.builder()
                 .stationId(resultSet.getInt(Constants.STATION_ID))
@@ -211,5 +255,19 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
                 .trainNumber(resultSet.getString(Constants.TRAIN_NUMBER))
                 .routNumber(resultSet.getString(Constants.ROUTE_NUMBER))
                 .build();
+    }
+
+    private String buildSearchQuery(Map<String, String> search) {
+        StringBuilder stringBuilder = new StringBuilder("WHERE ");
+        final int[] count = {0};
+        search.forEach((key, value) -> {
+            if (count[0] < 1) {
+                stringBuilder.append(key).append(" REGEXP ").append("'").append(value).append("'");
+                count[0]++;
+            } else {
+                stringBuilder.append(" AND ").append(key).append(" REGEXP ").append("'").append(value).append("'");
+            }
+        });
+        return stringBuilder.toString();
     }
 }

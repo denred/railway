@@ -9,16 +9,12 @@ import com.epam.redkin.railway.model.entity.Route;
 import com.epam.redkin.railway.model.repository.RouteRepository;
 import com.epam.redkin.railway.model.service.RouteService;
 import com.epam.redkin.railway.model.service.SeatService;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class RouteServiceImpl implements RouteService {
@@ -110,7 +106,7 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public void updateRoute(Route route) {
 
-            routeRepository.update(route);
+        routeRepository.update(route);
 
     }
 
@@ -125,34 +121,15 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public List<RouteInfoDTO> getRouteListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage, String filter, String filterValue) {
-        List<RouteInfoDTO> allRecords;
-
-        if(StringUtils.isNoneBlank(filter, filterValue)) {
-            switch (filter) {
-                case FILTER_TRAIN -> allRecords = routeRepository.getRouteInfoDTOList().stream()
-                        .filter(routeDto -> routeDto.getTrainNumber().toLowerCase().contains(filterValue.toLowerCase()))
-                        .collect(Collectors.toList());
-                case FILTER_ROUTE_NUMBER -> allRecords = routeRepository.getRouteInfoDTOList().stream()
-                        .filter(routeDto -> routeDto.getRoutNumber().toLowerCase().contains(filterValue.toLowerCase()))
-                        .collect(Collectors.toList());
-                case FILTER_ROUTE_NAME -> allRecords = routeRepository.getRouteInfoDTOList().stream()
-                        .filter(routeDto -> routeDto.getRoutName().toLowerCase().contains(filterValue.toLowerCase()))
-                        .collect(Collectors.toList());
-                default -> allRecords = routeRepository.getRouteInfoDTOList();
-            }
-            return allRecords;
-        }else{
-            allRecords = routeRepository.getRouteInfoDTOList();
-        }
-
-        return allRecords.subList(currentPage, Math.min(recordsPerPage, allRecords.size()));
+    public List<RouteInfoDTO> getRouteInfoListWithFilter(int offset, int limit, Map<String, String> search) {
+        return routeRepository.getRouteInfoDTOListWithFilter(offset, limit, search);
     }
 
     @Override
-    public int getRouteListSize() {
-        return routeRepository.getRouteInfoDTOList().size();
+    public int getRouteListSize(Map<String, String> search) {
+        return routeRepository.getRouteInfoDTOListCount(search);
     }
+
 
     private RoutsOrderDTO toRoutsOrderDto(List<StationDTO> stationDTOS) {
         RoutsOrderDTO routsOrderDto = new RoutsOrderDTO();

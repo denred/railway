@@ -43,8 +43,8 @@ public class RouteInfoCommand implements Command {
         addSearch(search, AppContextConstant.TRAIN_NUMBER, filterTrainNumber);
 
         List<RouteInfoDTO> routeDtoList = routeService
-                .getRouteListByCurrentRecordAndRecordsPerPage((page - 1) * RECORDS_PER_PAGE,
-                        RECORDS_PER_PAGE * page, search);
+                .getRouteInfoListWithFilter((page - 1) * RECORDS_PER_PAGE,
+                        RECORDS_PER_PAGE, search);
         int recordsCount = routeService.getRouteListSize(search);
 
         int pagesCount = (int) Math.ceil(recordsCount * 1.0 / RECORDS_PER_PAGE);

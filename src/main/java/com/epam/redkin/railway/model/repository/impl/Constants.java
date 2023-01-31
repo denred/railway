@@ -104,6 +104,19 @@ public interface Constants {
             "FROM route as r " +
             "JOIN train as t on r.train_id = t.id " +
             "ORDER BY t.number, r.name";
+    String GET_ROUTES_INFO_WITH_FILTER = "SELECT r.id as route_id, r.train_id as train_id, r.name as route_name, r.number as route_number, t.number as train_number " +
+            "FROM route as r " +
+            "JOIN train as t " +
+            "ON r.train_id = t.id " +
+            "%s " +
+            "ORDER BY t.number, r.name " +
+            "LIMIT ? , ?";
+
+    String GET_ROUTES_INFO_COUNT_RECORDS = "SELECT COUNT(*) as count " +
+            "FROM route as r " +
+            "JOIN train as t " +
+            "ON r.train_id = t.id " +
+            "%s ";
 
     /* ROUTE MAPPING */
     String GET_ALL_ROUTE_MAPPING = "SELECT * FROM station_has_route";
