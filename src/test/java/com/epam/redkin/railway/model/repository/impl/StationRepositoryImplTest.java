@@ -258,4 +258,100 @@ class StationRepositoryImplTest {
         verify(mockResultSet, times(0)).getInt(anyString());
         verify(mockResultSet, times(0)).getString(anyString());
     }
+
+    @Test
+    void getStationsWithFilterPositive() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        doNothing().when(mockStatement).setInt(anyInt(), anyInt());
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
+        when(mockResultSet.getInt(anyString())).thenReturn(1, 2);
+        when(mockResultSet.getString(anyString())).thenReturn("StationA", "StationB");
+
+        assertEquals(2, stationRepository.getStationsWithFilter(0, 5, "anyString").size());
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement, times(2)).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(1)).executeQuery();
+        verify(mockResultSet, times(3)).next();
+        verify(mockResultSet, times(2)).getInt(anyString());
+        verify(mockResultSet, times(2)).getString(anyString());
+    }
+
+    @Test
+    void getStationsWithFilterNegative() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        doNothing().when(mockStatement).setInt(anyInt(), anyInt());
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(Boolean.FALSE);
+
+        assertEquals(0, stationRepository.getStationsWithFilter(0, 5, "anyString").size());
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement, times(2)).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(1)).executeQuery();
+        verify(mockResultSet, times(1)).next();
+        verify(mockResultSet, times(0)).getInt(anyString());
+        verify(mockResultSet, times(0)).getString(anyString());
+    }
+
+    @Test
+    void getStationsWithFilterThrowException() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        doNothing().when(mockStatement).setInt(anyInt(), anyInt());
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenThrow(SQLException.class);
+
+        assertThrows(DataBaseException.class, () -> stationRepository.getStationsWithFilter(0, 5, "anyString").size());
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement, times(2)).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(1)).executeQuery();
+        verify(mockResultSet, times(1)).next();
+        verify(mockResultSet, times(0)).getInt(anyString());
+        verify(mockResultSet, times(0)).getString(anyString());
+    }
+
+    @Test
+    void getCountStationWithSearchPositive() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(Boolean.TRUE, Boolean.TRUE, Boolean.FALSE);
+        when(mockResultSet.getInt(anyString())).thenReturn(15);
+
+        assertEquals(15, stationRepository.getCountStationWithSearch("anyString"));
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement, times(1)).executeQuery();
+        verify(mockResultSet, times(1)).next();
+        verify(mockResultSet, times(1)).getInt(anyString());
+    }
+
+    @Test
+    void getCountStationWithSearchNegative() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(Boolean.FALSE);
+
+        assertEquals(0, stationRepository.getCountStationWithSearch("anyString"));
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement, times(1)).executeQuery();
+        verify(mockResultSet, times(1)).next();
+        verify(mockResultSet, times(0)).getInt(anyString());
+    }
+
+    @Test
+    void getCountStationWithSearchThrowException() throws SQLException {
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenThrow(SQLException.class);
+
+        assertThrows(DataBaseException.class, () -> stationRepository.getCountStationWithSearch("anyString"));
+        verify(mockDataSource).getConnection();
+        verify(mockConnection).prepareStatement(anyString());
+        verify(mockStatement, times(1)).executeQuery();
+        verify(mockResultSet, times(1)).next();
+        verify(mockResultSet, times(0)).getInt(anyString());
+    }
 }
