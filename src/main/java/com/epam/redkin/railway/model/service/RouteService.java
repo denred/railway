@@ -8,6 +8,7 @@ import com.epam.redkin.railway.model.entity.Route;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface RouteService {
 
@@ -20,8 +21,8 @@ public interface RouteService {
     void updateRoute(Route route);
 
     List<RouteInfoDTO> getAllRouteList();
-    List<RouteInfoDTO> getRouteListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage, String filter, String filterValue);
-    int getRouteListSize();
+    List<RouteInfoDTO> getRouteListByCurrentRecordAndRecordsPerPage(int offset, int limit, Map<String, String> search);
+    int getRouteListSize(Map<String, String> search);
 
 
     RouteInfoDTO getRoutById(int routsId);

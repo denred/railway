@@ -38,11 +38,14 @@ public class AppContextConstant {
 
     //Route
     public static final String ROUTE_ID = "routs_id";
+    public static final String ROUTE_NAME = "name";
+    public static final String ROUTE_NUMBER = "number";
 
     //Train
     public static final String TRAIN_ID = "train_id";
     public static final String TRAIN_NOT_SELECTED = "TRAIN_NOT_SELECTED";
     public static final String TRAIN_LIST = "trainList";
+    public static final String TRAIN_NUMBER = "number";
 
     //Station
     public static final String ARRIVAL_STATION_ID = "arrival_station_id";

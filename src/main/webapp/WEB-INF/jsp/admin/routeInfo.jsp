@@ -3,6 +3,7 @@
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="lang"/>
+<fmt:setBundle basename="exceptionMessages" var="excMsg"/>
 
 <html>
 <head>
@@ -19,20 +20,29 @@
 </h3>
 
 <div class="container mt-4">
+    <%-- Search --%>
     <div class="d-flex justify-content-center">
         <form action="controller?action=routes" method="POST">
             <div class="row">
-                <div class="col-5 mr-2">
-                    <select class="btn btn-info dropdown-toggle" name="filter" aria-label="Filter">
-                        <option value="trainFilter"><fmt:message key="filter.train"/></option>
-                        <option value="routeFilter"><fmt:message key="filter.route"/></option>
-                        <option value="routeNameFilter"><fmt:message key="filter.route.name"/></option>
-                    </select>
+                <div class="col-sm-3">
+                    <input class="form-control" name="routeNameFilter" type="text"
+                           placeholder="<fmt:message key="filter.route.name"/>" value="${routeNameFilter}"
+                           pattern="[a-zA-Zа-яА-яёЁ\u0400-\u052F\u2DE0-\u2DFF\uA640-\uA69F']*">
+                    <div class="invalid-feedback"><fmt:message bundle="${excMsg}" key="validation.station.name"/></div>
                 </div>
-                <div class="col-4">
-                    <input class="form-control" name="filter_area">
+                <div class="col-sm-3">
+                    <input class="form-control" name="routeFilter" type="text"
+                           placeholder="<fmt:message key="filter.route"/>" value="${routeFilter}"
+                           pattern="[a-zA-Zа-яА-яёЁ\u0400-\u052F\u2DE0-\u2DFF\uA640-\uA69F']*">
+                    <div class="invalid-feedback"><fmt:message bundle="${excMsg}" key="validation.station.name"/></div>
                 </div>
-                <div class="col-2">
+                <div class="col-sm-3">
+                    <input class="form-control" name="trainFilter" type="text"
+                           placeholder="<fmt:message key="filter.train"/>" value="${trainFilter}"
+                           pattern="[a-zA-Zа-яА-яёЁ\u0400-\u052F\u2DE0-\u2DFF\uA640-\uA69F']*">
+                    <div class="invalid-feedback"><fmt:message bundle="${excMsg}" key="validation.station.name"/></div>
+                </div>
+                <div class="col-sm-3">
                     <input type="hidden" name="routeDto" value="${routeDto}">
                     <input type="submit" class="btn btn-info" name="filter"
                            value="<fmt:message key="route.filter"/>">
@@ -41,15 +51,22 @@
         </form>
     </div>
 
+    <%-- Route info --%>
     <div class="d-flex justify-content-center">
-        <table class="table table-bordered table-hover" style="width: 85%">
+        <table class="table table-hover align-middle" style="width: 85%">
             <thead class="thead-light text-center">
             <tr>
-                <th style="width: 1%"><fmt:message key="order"/></th>
-                <th style="width: 20%"><fmt:message key="rout.name"/></th>
-                <th style="width: 10%"><fmt:message key="rout.number"/></th>
-                <th style="width: 10%"><fmt:message key="train.number"/></th>
-                <th style="width: 20%"></th>
+                <th class="align-middle" style="width: 1%"><fmt:message key="order"/></th>
+                <th class="text-start align-middle" style="width: 20%"><fmt:message key="rout.name"/></th>
+                <th class="align-middle" style="width: 10%"><fmt:message key="rout.number"/></th>
+                <th class="align-middle" style="width: 10%"><fmt:message key="train.number"/></th>
+                <th class="align-middle" style="width: 25%">
+                    <div class="col-12 text-end">
+                        <a class="btn bg-gradient-green text-success mb-0" href="controller?action=add_route"><i
+                                class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;<fmt:message
+                                key="admin.addRout"/></a>
+                    </div>
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -58,32 +75,24 @@
                 <jsp:useBean id="currentPage" scope="request" type="java.lang.Integer"/>
                 <jsp:useBean id="recordsPerPage" scope="request" type="java.lang.Integer"/>
                 <tr>
-                    <td class="text-center">${i.index + recordsPerPage * (currentPage - 1) + 1}</td>
-                    <td>
-                        <div class="row align-items-center">
-                            <form action="controller?action=route_mapping" method="POST">
-                                <input type="hidden" name="routs_id" value="${routeDto.routsId}">
-                                <button type="submit" style="display:none;"></button>
-                                <a href="controller?action=route_mapping"
-                                   onclick="event.preventDefault();this.closest('form').submit();">${routeDto.routName}</a>
-                            </form>
-                        </div>
+                    <td class="text-center align-middle">${i.index + recordsPerPage * (currentPage - 1) + 1}</td>
+                    <td class="align-middle">
+                        <a class="text-decoration-none"
+                           href="controller?action=route_mapping&routs_id=${routeDto.routsId}">
+                                ${routeDto.routName}
+                        </a>
                     </td>
-                    <td class="text-center">
-                        <div class="align-items-center">
-
-                                ${routeDto.routNumber}
-
-                        </div>
+                    <td class="text-center align-middle">
+                            ${routeDto.routNumber}
                     </td>
-                    <td class="text-center">
+                    <td class="text-center align-middle">
                         <div class="row align-items-center">
                             <div class="col-sm-12">
                                     ${routeDto.trainNumber}
                             </div>
                         </div>
                     </td>
-                    <td class="text-center">
+                    <td class="text-center align-middle">
                         <div class="row align-items-center">
                             <div class="col-sm-6">
                                 <a class="btn btn-link text-dark px-3 mb-0"
@@ -105,23 +114,23 @@
         </table>
     </div>
 
+    <%-- Pagination --%>
     <div class="d-flex justify-content-center">
-        <%--For displaying Previous link except for the 1st page --%>
         <nav aria-label="Page navigation">
-            <ul class="pagination">
+            <ul class="pagination ">
                 <li class="page-item">
                     <c:if test="${currentPage != 1}">
                         <a class="page-link" href="controller?action=routes&page=${currentPage - 1}"
                            aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                     </c:if>
                 </li>
-                <%--For displaying Page numbers.
-                The when condition does not display a link for the current page--%>
-                <jsp:useBean id="noOfPages" scope="request" type="java.lang.Integer"/>
+
                 <c:forEach begin="1" end="${noOfPages}" var="i">
                     <c:choose>
                         <c:when test="${currentPage eq i}">
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#">${i}</a></li>
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="#">${i}</a>
+                            </li>
                         </c:when>
                         <c:otherwise>
                             <li class="page-item"><a class="page-link"
@@ -129,10 +138,41 @@
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
-                <%--For displaying Next link --%>
-                <c:if test="${currentPage lt noOfPages}">
+
+
+                <c:if test="${last_page gt noOfPages}">
+                    <li class="page-item disabled"><a class="page-link circle circle-md"
+                                                      href="#"><span>...</span></a></li>
+                    <c:choose>
+                        <c:when test="${currentPage eq last_page}">
+                            <li class="page-item active">
+                                <a class="page-link"
+                                   href="controller?action=routes&page=${last_page}">${last_page}</a>
+                            </li>
+                        </c:when>
+
+                        <c:otherwise>
+                            <c:if test="${currentPage gt noOfPages}">
+                                <li class="page-item active">
+                                    <a class="page-link"
+                                       href="controller?action=routes&page=${currentPage}">${currentPage}</a>
+                                </li>
+                                <li class="page-item disabled">
+                                    <a class="page-link circle circle-md"
+                                       href="#"><span>...</span></a></li>
+                            </c:if>
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="controller?action=routes&page=${last_page}">${last_page}</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
+
+                <c:if test="${currentPage lt last_page}">
                     <li class="page-item">
-                        <a class="page-link" href="controller?action=routes&page=${currentPage + 1}" aria-label="Next">
+                        <a class="page-link" href="controller?action=routes&page=${currentPage + 1}"
+                           aria-label="Next">
                             <span aria-hidden="true">&raquo;</span></a>
                     </li>
                 </c:if>
@@ -140,9 +180,6 @@
         </nav>
     </div>
 </div>
-<form action="controller?action=add_route" method="POST">
-    <input type="submit" class="btn btn-success ml-2" name="add_route" value="<fmt:message key="admin.addRout"/>">
-</form>
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/xxsProtectionScript.js"></script>
 </body>
