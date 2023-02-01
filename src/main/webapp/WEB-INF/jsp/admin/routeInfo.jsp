@@ -22,7 +22,7 @@
 <div class="container mt-4">
     <%-- Search --%>
     <div class="d-flex justify-content-center">
-        <form action="controller?action=routes" method="POST">
+        <form class="was-validated" action="controller?action=routes" method="POST">
             <div class="row">
                 <div class="col-sm-3">
                     <input class="form-control" name="routeNameFilter" type="text"
@@ -33,14 +33,14 @@
                 <div class="col-sm-3">
                     <input class="form-control" name="routeFilter" type="text"
                            placeholder="<fmt:message key="filter.route"/>" value="${routeFilter}"
-                           pattern="[a-zA-Zа-яА-яёЁ\u0400-\u052F\u2DE0-\u2DFF\uA640-\uA69F']*">
-                    <div class="invalid-feedback"><fmt:message bundle="${excMsg}" key="validation.station.name"/></div>
+                           pattern="[0-9]*">
+                    <div class="invalid-feedback"><fmt:message bundle="${excMsg}" key="validation.number"/></div>
                 </div>
                 <div class="col-sm-3">
                     <input class="form-control" name="trainFilter" type="text"
                            placeholder="<fmt:message key="filter.train"/>" value="${trainFilter}"
-                           pattern="[a-zA-Zа-яА-яёЁ\u0400-\u052F\u2DE0-\u2DFF\uA640-\uA69F']*">
-                    <div class="invalid-feedback"><fmt:message bundle="${excMsg}" key="validation.station.name"/></div>
+                           pattern="^\d*\(?\w*[a-zA-Zа-яА-яёЁ\u0400-\u052F\u2DE0-\u2DFF\uA640-\uA69F']*\)?$">
+                    <div class="invalid-feedback"><fmt:message bundle="${excMsg}" key="validation.train.number"/></div>
                 </div>
                 <div class="col-sm-3">
                     <input type="hidden" name="routeDto" value="${routeDto}">
