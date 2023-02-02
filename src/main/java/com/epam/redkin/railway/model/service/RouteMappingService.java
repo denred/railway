@@ -17,9 +17,10 @@ public interface RouteMappingService {
     List<RoutePoint> getAllRoutToStationMappingList();
 
 
-    List<MappingInfoDTO> getAllRoutToStationMappingListById(int routsId);
+    List<MappingInfoDTO> getMappingInfoDtoListByRouteId(int routsId);
 
 
     MappingInfoDTO getMappingInfo(int routsId, int stationId);
 
+    int getLastStation(List<MappingInfoDTO> mappingInfo);
 }

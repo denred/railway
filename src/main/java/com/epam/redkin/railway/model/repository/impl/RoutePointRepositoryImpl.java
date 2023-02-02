@@ -107,7 +107,7 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
 
     @Override
     public boolean updateRoutePointByStationId(RoutePoint routePoint, int stationId) {
-        LOGGER.info("Started --> public boolean updateRoutePointByStationId(RoutePoint entity, int stationId) --> with routePoint= "
+        LOGGER.info("Started --> [updateRoutePointByStationId(RoutePoint entity, int stationId)] --> with routePoint= "
                 + routePoint + ", stationId= " + stationId);
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_ROUTE_MAPPING)) {

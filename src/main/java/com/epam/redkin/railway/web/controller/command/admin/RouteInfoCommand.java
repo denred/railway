@@ -38,9 +38,9 @@ public class RouteInfoCommand implements Command {
         String filterRouteNumber = getParameter(request, FILTER_ROUTE_NUMBER);
         String filterTrainNumber = getParameter(request, FILTER_TRAIN);
 
-        addSearch(search, AppContextConstant.ROUTE_NAME, filterRouteName);
-        addSearch(search, AppContextConstant.ROUTE_NUMBER, filterRouteNumber);
-        addSearch(search, AppContextConstant.TRAIN_NUMBER, filterTrainNumber);
+        addSearch(search, AppContextConstant.ROUTE_NAME_DB, filterRouteName);
+        addSearch(search, AppContextConstant.ROUTE_NUMBER_DB, filterRouteNumber);
+        addSearch(search, AppContextConstant.TRAIN_NUMBER_DB, filterTrainNumber);
 
         List<RouteInfoDTO> routeDtoList = routeService
                 .getRouteInfoListWithFilter((page - 1) * RECORDS_PER_PAGE,

@@ -33,11 +33,11 @@ public class RouteAddCommand implements Command {
             route.setRouteName(routeName);
             route.setRouteNumber(Integer.parseInt(routeNumber));
             route.setTrainId(Integer.parseInt(trainNumber));
-            routeValidator.isValidRout(route);
-            routeService.addRout(route);
+            routeValidator.isValidRoute(route);
+            routeService.addRoute(route);
             forward = Path.COMMAND_INFO_ROUTE;
         }else{
-            List<Train> trainList = trainService.getAllTrainList();
+            List<Train> trainList = trainService.getTrainList();
             request.setAttribute("trainList", trainList);
         }
         LOGGER.info("done");

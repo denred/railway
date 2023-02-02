@@ -14,22 +14,22 @@
 
 <div class="container mt-4">
     <div class="d-flex justify-content-center">
-        <table class="table table-bordered table-hover caption-top" style="width: 1000px;">
-            <thead class="thead-light text-center">
-            <tr>
-                <th><fmt:message key="rout.name"/></th>
-                <th><fmt:message key="rout.number"/></th>
-                <th><fmt:message key="train.number"/></th>
-                <th><fmt:message key="admin.editInformation"/></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <form action="controller?action=edit_route" method="POST">
-                    <input type="hidden" name="routs_id" value="${current_rout.routsId}">
-                    <td><input class="form-control" name="rout_name" value="${current_rout.routName}"></td>
-                    <td><input class="form-control" name="rout_number" value="${current_rout.routNumber}"></td>
-                    <td><select class="btn btn-info dropdown-toggle" name="train_number">
+        <form action="controller?action=edit_route" method="POST">
+            <input type="hidden" name="routs_id" value="${current_rout.routsId}">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label for="routeName"><fmt:message key="rout.name"/></label>
+                    <input id="routeName" class="form-control" name="rout_name"
+                           value="${current_rout.routName}">
+                </div>
+                <div class="col-sm-4">
+                    <label for="routeNumber"><fmt:message key="rout.number"/></label>
+                    <input id="routeNumber" class="form-control" name="rout_number"
+                           value="${current_rout.routNumber}">
+                </div>
+                <div class="col-sm-4">
+                    <label for="trainNumber"><fmt:message key="train.number"/></label>
+                    <select id="trainNumber" class="btn btn-info dropdown-toggle" name="train_number">
                         <c:set var="train_id" value="${current_rout.trainId}"/>
                         <c:forEach items="${trainList}" var="train">
                             <option
@@ -42,20 +42,24 @@
                             </option>
                         </c:forEach>
                     </select>
-                    </td>
-                    <td>
-                        <input type="hidden" name="routs_id" value="${current_rout.routsId}">
-                        <input type="submit" class="btn btn-success" name="save_edit_information"
-                               value="<fmt:message key="admin.saveInformation"/>">
-                    </td>
-                </form>
-            </tr>
-            </tbody>
-        </table>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-lg-2">
+                    <a href="controller?action=routes" class="btn bg-gradient-blue text-primary mb-0">
+                        <i class="far fa-arrow-alt-circle-left" aria-hidden="true"></i>
+                        <fmt:message key="back"/></a>
+                </div>
+                <div class="col-lg-3">
+                    <input type="hidden" name="routs_id" value="${current_rout.routsId}">
+                    <button class="btn bg-gradient-blue text-success" type="submit"><i class="far fa-check-circle"
+                                                                                       aria-hidden="true"></i>
+                        <fmt:message key="admin.saveInformation"/></button>
+                </div>
+            </div>
+        </form>
     </div>
-    <form action="controller?action=routes" method="POST">
-        <input type="submit" class="btn btn-primary" value="<fmt:message key="back"/>">
-    </form>
 </div>
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
 </body>

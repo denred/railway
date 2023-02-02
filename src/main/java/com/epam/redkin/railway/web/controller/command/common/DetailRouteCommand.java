@@ -35,7 +35,7 @@ public class DetailRouteCommand implements Command {
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         List<MappingInfoDTO> allRouteToStationMappingListById = routeMappingService
-                .getAllRoutToStationMappingListById(Integer.parseInt(routsId));
+                .getMappingInfoDtoListByRouteId(Integer.parseInt(routsId));
         request.setAttribute(AppContextConstant.DEPARTURE_STATION, departureStation);
         request.setAttribute(AppContextConstant.ARRIVAL_STATION, arrivalStation);
         request.setAttribute(AppContextConstant.DEPARTURE_DATE, departureDate);

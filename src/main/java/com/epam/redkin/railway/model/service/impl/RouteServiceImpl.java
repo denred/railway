@@ -30,7 +30,7 @@ public class RouteServiceImpl implements RouteService {
 
 
     @Override
-    public void addRout(Route route) {
+    public void addRoute(Route route) {
         try {
             routeRepository.create(route);
         } catch (SQLException e) {
@@ -99,7 +99,7 @@ public class RouteServiceImpl implements RouteService {
 
 
     @Override
-    public RouteInfoDTO getRoutById(int routsId) {
+    public RouteInfoDTO getRouteInfoById(int routsId) {
         return routeRepository.getRouteInfoDTOByRouteId(routsId);
     }
 

@@ -11,10 +11,13 @@ import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+
+import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
 
 public class RouteEditCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteEditCommand.class);
@@ -25,25 +28,39 @@ public class RouteEditCommand implements Command {
         RouteService routeService = AppContext.getInstance().getRouteService();
         TrainService trainService = AppContext.getInstance().getTrainService();
         String forward = Path.PAGE_EDIT_ROUTE;
-        String routeId = request.getParameter("routs_id");
-        String routeName = request.getParameter("rout_name");
-        String routeNumber = request.getParameter("rout_number");
-        String trainNumber = request.getParameter("train_number");
-        if (routeId != null && routeName != null && routeNumber != null && trainNumber != null) {
+        String routeId = request.getParameter(ROUTE_ID);
+        String routeName = request.getParameter(ROUTE_NAME);
+        String routeNumber = request.getParameter(ROUTE_NUMBER);
+        String trainNumber = request.getParameter(TRAIN_NUMBER);
+        if (StringUtils.isNoneBlank(routeId, routeNumber, routeName, trainNumber)) {
             RouteValidator routeValidator = new RouteValidator();
-            Route route = Route.builder().build();
-            route.setRouteId(Integer.parseInt(routeId));
-            route.setRouteName(routeName);
-            route.setRouteNumber(Integer.parseInt(routeNumber));
-            route.setTrainId(Integer.parseInt(trainNumber));
-            routeValidator.isValidRout(route);
+            Route route = Route.builder()
+                    .routeId(Integer.parseInt(routeId))
+                    .routeName(routeName)
+                    .routeNumber(Integer.parseInt(routeNumber))
+                    .trainId(Integer.parseInt(trainNumber))
+                    .build();
+
+            routeValidator.isValidRoute(route);
             routeService.updateRoute(route);
             forward = Path.COMMAND_INFO_ROUTE;
-        }else{
-            RouteInfoDTO rout = routeService.getRoutById(Integer.parseInt(routeId));
-            request.setAttribute("current_rout", rout);
-            List<Train> trainList = trainService.getAllTrainList();
-            request.setAttribute("trainList", trainList);
+        } else if (StringUtils.isNoneBlank(routeNumber, routeName, trainNumber)) {
+            RouteValidator routeValidator = new RouteValidator();
+            Route route = Route.builder()
+                    .routeName(routeName)
+                    .routeNumber(Integer.parseInt(routeNumber))
+                    .trainId(Integer.parseInt(trainNumber))
+                    .build();
+            routeValidator.isValidRoute(route);
+            routeService.addRoute(route);
+            forward = Path.COMMAND_INFO_ROUTE;
+        } else {
+            if (StringUtils.isNoneBlank(routeId)) {
+                RouteInfoDTO routeInfoDTO = routeService.getRouteInfoById(Integer.parseInt(routeId));
+                request.setAttribute(CURRENT_ROUTE, routeInfoDTO);
+            }
+            List<Train> trainList = trainService.getTrainList();
+            request.setAttribute(TRAIN_LIST, trainList);
         }
         LOGGER.info("done");
         return forward;

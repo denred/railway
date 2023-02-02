@@ -13,7 +13,7 @@ import java.util.Map;
 public interface RouteService {
 
 
-    void addRout(Route route);
+    void addRoute(Route route);
 
     void removeRout(int routsId);
 
@@ -25,7 +25,7 @@ public interface RouteService {
     int getRouteListSize(Map<String, String> search);
 
 
-    RouteInfoDTO getRoutById(int routsId);
+    RouteInfoDTO getRouteInfoById(int routsId);
 
     List<RoutsOrderDTO> getRouteListWithParameters(String departureStation, String arrivalStation, LocalDateTime departureDate);
 

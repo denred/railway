@@ -7,6 +7,7 @@ import com.epam.redkin.railway.model.service.RouteMappingService;
 import com.epam.redkin.railway.model.repository.RoutePointRepository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class RouteMappingServiceImpl implements RouteMappingService {
     private RoutePointRepository routMappingRepository;
@@ -24,12 +25,12 @@ public class RouteMappingServiceImpl implements RouteMappingService {
 
     @Override
     public void addRoutToStationMapping(RoutePoint routToStationMapping) {
-            routMappingRepository.create(routToStationMapping);
+        routMappingRepository.create(routToStationMapping);
     }
 
     @Override
     public void removeRoutToStationMapping(int routsId, int stationId) {
-            routMappingRepository.deleteRoutePointByStationId(routsId, stationId);
+        routMappingRepository.deleteRoutePointByStationId(routsId, stationId);
 
     }
 
@@ -39,7 +40,14 @@ public class RouteMappingServiceImpl implements RouteMappingService {
     }
 
     @Override
-    public List<MappingInfoDTO> getAllRoutToStationMappingListById(int routsId) {
+    public int getLastStation(List<MappingInfoDTO> mappingInfo) {
+        return mappingInfo.stream()
+                .mapToInt(MappingInfoDTO::getOrder)
+                .max().orElse(0);
+    }
+
+    @Override
+    public List<MappingInfoDTO> getMappingInfoDtoListByRouteId(int routsId) {
         return routMappingRepository.getMappingInfoListByRouteId(routsId);
     }
 

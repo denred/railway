@@ -13,56 +13,92 @@
 <mrt:navigation/>
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
 <div class="container mt-4">
+    <h3 class="text-center mb-4"><fmt:message key="admin.details.rout"/></h3>
     <div class="d-flex justify-content-center">
-        <table class="table table-bordered table-hover" style="width: 1000px;">
+        <table class="table table-hover table-sm">
             <thead class="thead-light text-center">
             <tr>
                 <th style="width: 1%"><fmt:message key="order"/></th>
-                <th style="width: 10%"><fmt:message key="station.name"/></th>
+                <th class="text-start" style="width: 20%"><fmt:message key="station.name"/></th>
                 <th style="width: 20%"><fmt:message key="arrivalDate"/></th>
                 <th style="width: 20%"><fmt:message key="dispatchDate"/></th>
-                <th style="width: 20%"><fmt:message key="edit"/></th>
-                <th style="width: 10%"><fmt:message key="delete"/></th>
+                <th style="width: 30%"></th>
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${rout_m_list}" var="item">
                 <tr>
-                    <td>${item.order}</td>
-                    <td>${item.station}</td>
-                    <td>${item.stationArrivalDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}</td>
-                    <td>${item.stationDispatchData.format( DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}</td>
-                    <td>
-                        <form action="controller?action=route_mapping_set_station" method="POST">
-                            <input type="hidden" name="station_id" value="${item.stationId}">
-                            <input type="hidden" name="routs_id" value="${item.routsId}">
-                            <input type="submit" class="btn btn-info" name="edit_info_rout_mapping"
-                                   value="<fmt:message key="admin.editInformation"/>">
-                        </form>
+                    <td class="text-center align-middle">${item.order}</td>
+                    <td class="align-middle">${item.station}</td>
+                    <td class="text-center align-middle">
+                        <c:choose>
+                            <c:when test="${item.order eq 1}">
+                                <p>---</p>
+                            </c:when>
+                            <c:otherwise>
+                                ${item.stationArrivalDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td class="text-center align-middle">
+                        <c:choose>
+                            <c:when test="${item.order eq last_station}">
+                                <p>---</p>
+                            </c:when>
+                            <c:otherwise>
+                                ${item.stationDispatchData.format( DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}
+                            </c:otherwise>
+                        </c:choose>
                     </td>
                     <td>
-                        <form action="controller?action=route_mapping_remove_station" method="POST">
-                            <input type="hidden" name="routs_id" value="${item.routsId}">
-                            <input type="hidden" name="station_id" value="${item.stationId}">
-                            <input type="submit" class="btn btn-danger" name="remove_rout_to_station_mapping"
-                                   value="<fmt:message key="admin.remove"/>">
-                        </form>
+                        <div class="form-row text-center align-middle">
+                            <div class="col-sm-6">
+                                <form class="mb-0" action="controller?action=route_mapping_set_station" method="POST">
+                                    <input type="hidden" name="station_id" value="${item.stationId}">
+                                    <input type="hidden" name="routs_id" value="${item.routsId}">
+                                    <input type="hidden" name="operationStatus" value="change">
+                                    <button type="submit" class="btn btn-link text-dark my-0 justify-content-center">
+                                        <i class="fas fa-pencil-alt text-dark" aria-hidden="true"></i>
+                                        <fmt:message key="admin.editInformation"/>
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col-sm-6">
+                                <form class="mb-0" action="controller?action=route_mapping_remove_station"
+                                      method="POST">
+                                    <input type="hidden" name="routs_id" value="${item.routsId}">
+                                    <input type="hidden" name="station_id" value="${item.stationId}">
+                                    <button type="submit" class="btn btn-link text-danger text-gradient my-0">
+                                        <i class="far fa-trash-alt" aria-hidden="true"></i>
+                                        <fmt:message key="admin.remove"/>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
     </div>
-    <form action="controller?action=route_mapping_set_station" method="POST">
-        <input type="hidden" name="routs_id" value="${routs_id}">
-        <input type="submit" class="btn btn-success" name="add_rout_mapping"
-               value="<fmt:message key="admin.addStationMapping"/>">
-    </form>
-    <p>
-    <form action="controller?action=routes" method="POST">
-        <input type="submit" class="btn btn-primary" value="<fmt:message key="back"/>">
-    </form>
-    </p>
+
+    <div class="row mt-1">
+        <%--<div class="col-md-1"></div>--%>
+        <div class="col-md-6">
+            <a href="controller?action=routes" class="btn bg-gradient-blue text-primary mb-0">
+                <i class="fas fa-arrow-alt-circle-left" aria-hidden="true"></i>
+                <fmt:message key="back"/></a>
+        </div>
+        <div class="col-md-6 text-end">
+            <form action="controller?action=route_mapping_set_station" method="POST">
+                <input type="hidden" name="routs_id" value="${routs_id}">
+                <input type="hidden" name="operationStatus" value="add">
+                <button class="btn bg-gradient-blue text-success" type="submit">
+                    <i class="fas fa-plus" aria-hidden="true"></i>
+                    <fmt:message key="admin.addStationMapping"/></button>
+            </form>
+        </div>
+    </div>
 </div>
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
 </body>

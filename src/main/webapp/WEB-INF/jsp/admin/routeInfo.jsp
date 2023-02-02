@@ -62,7 +62,7 @@
                 <th class="align-middle" style="width: 10%"><fmt:message key="train.number"/></th>
                 <th class="align-middle" style="width: 25%">
                     <div class="col-12 text-end">
-                        <a class="btn bg-gradient-green text-success mb-0" href="controller?action=add_route"><i
+                        <a class="btn bg-gradient-green text-success mb-0" href="controller?action=edit_route"><i
                                 class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;<fmt:message
                                 key="admin.addRout"/></a>
                     </div>

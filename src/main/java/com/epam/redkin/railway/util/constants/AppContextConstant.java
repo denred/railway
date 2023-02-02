@@ -38,21 +38,31 @@ public class AppContextConstant {
 
     //Route
     public static final String ROUTE_ID = "routs_id";
-    public static final String ROUTE_NAME = "r.name";
-    public static final String ROUTE_NUMBER = "r.number";
+    public static final String ROUTE_NAME_DB = "r.name";
+    public static final String ROUTE_NAME = "rout_name";
+    public static final String ROUTE_NUMBER_DB = "r.number";
+    public static final String ROUTE_NUMBER = "rout_number";
+    public static final String CURRENT_ROUTE = "current_rout";
+    public static final String OPERATION_STATUS = "operationStatus";
+    public static final String OPERATION_STATUS_ADD = "add";
+    public static final String OPERATION_STATUS_CHANGE = "change";
 
     //Train
     public static final String TRAIN_ID = "train_id";
     public static final String TRAIN_NOT_SELECTED = "TRAIN_NOT_SELECTED";
     public static final String TRAIN_LIST = "trainList";
-    public static final String TRAIN_NUMBER = "t.number";
+    public static final String TRAIN_NUMBER_DB = "t.number";
+    public static final String TRAIN_NUMBER = "train_number";
 
     //Station
     public static final String ARRIVAL_STATION_ID = "arrival_station_id";
     public static final String DEPARTURE_STATION_ID = "departure_station_id";
     public static final String DEPARTURE_STATION = "departure_station";
     public static final String ARRIVAL_STATION = "arrival_station";
+    public static final String LAST_STATION = "last_station";
     public static final String STATION_LIST = "station_list";
+    public static final String STATION_NAME = "station_station";
+    public static final String STATION_ID_BEFORE_UPDATE = "station_current_id";
     public static final String DEPARTURE_DATE = "departure_date";
     public static final String CURRENT_DATE_TIME = "dateTime";
 
