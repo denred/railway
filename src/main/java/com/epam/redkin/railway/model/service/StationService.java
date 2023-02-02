@@ -7,7 +7,7 @@ import java.util.List;
 public interface StationService {
 
 
-    List<Station> getAllStationList();
+    List<Station> getStations();
 
     List<Station> getStationList(int offset, int limit, String search);
     int getStationListSize(String search);

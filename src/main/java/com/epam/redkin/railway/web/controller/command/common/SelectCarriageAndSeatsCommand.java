@@ -47,7 +47,7 @@ public class SelectCarriageAndSeatsCommand implements Command {
             throw new IncorrectDataException("Incorrect data entered", e);
         }
         String routsId = request.getParameter("routs_id");
-        RouteInfoDTO routeInfoDto = routeService.getRoutById(Integer.parseInt(routsId));
+        RouteInfoDTO routeInfoDto = routeService.getRouteInfoById(Integer.parseInt(routsId));
         List<Carriage> carList = carriageService
                 .getCarByTrainIdAndCarType(routeInfoDto.getTrainId(), carriageType)
                 .stream()

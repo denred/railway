@@ -19,7 +19,7 @@ public class StationServiceImpl implements StationService {
 
 
     @Override
-    public List<Station> getAllStationList() {
+    public List<Station> getStations() {
         return stationRepository.getAllStations();
     }
 

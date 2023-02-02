@@ -86,7 +86,7 @@ public class CarriageSetCommand implements Command {
         } else if (StringUtils.isNoneBlank(carriageId)) {
             int carId = Integer.parseInt(carriageId);
             Carriage car = carriageService.getCarById(carId);
-            List<Train> trainList = trainService.getAllTrainList();
+            List<Train> trainList = trainService.getTrainList();
             List<CarriageType> carTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
             request.setAttribute(AppContextConstant.CARRIAGE, car);
             request.setAttribute(AppContextConstant.TRAIN_LIST, trainList);
@@ -94,7 +94,7 @@ public class CarriageSetCommand implements Command {
             int countSeat = seatService.getCountSeat(carId);
             request.setAttribute(AppContextConstant.COUNT_SEATS, countSeat);
         } else {
-            List<Train> trainList = trainService.getAllTrainList();
+            List<Train> trainList = trainService.getTrainList();
             request.setAttribute(AppContextConstant.TRAIN_LIST, trainList);
             List<CarriageType> carTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
             request.setAttribute(AppContextConstant.CARRIAGE_TYPE_LIST, carTypeList);

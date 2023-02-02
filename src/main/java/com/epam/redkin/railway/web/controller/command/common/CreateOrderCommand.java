@@ -62,7 +62,7 @@ public class CreateOrderCommand implements Command {
         List<String> seatsNumber = Arrays.asList(request.getParameterValues("seats_id"));
         String routsId = request.getParameter("routs_id");
 
-        RouteInfoDTO routById = routeService.getRoutById(Integer.parseInt(routsId));
+        RouteInfoDTO routById = routeService.getRouteInfoById(Integer.parseInt(routsId));
         String routName = routById.getRoutName();
         LOGGER.debug("Route name: " + routName);
         Carriage carriage = carriageService.getCarById(Integer.parseInt(carId));

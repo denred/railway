@@ -20,11 +20,9 @@ public class SecurityFilter implements Filter {
 
     private Set<String> securedUris;
     private Map<Role, Set<String>> accessMap;
-    private String encoding;
 
     @Override
     public void init(FilterConfig filterConfig) {
-        encoding = filterConfig.getServletContext().getInitParameter("encoding");
 
         accessMap = new HashMap<>();
 
@@ -78,8 +76,6 @@ public class SecurityFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
-        req.setCharacterEncoding(encoding);
-        resp.setCharacterEncoding(encoding);
         String commandName = request.getParameter("action");
 
         if (!securedUris.contains(commandName)) {

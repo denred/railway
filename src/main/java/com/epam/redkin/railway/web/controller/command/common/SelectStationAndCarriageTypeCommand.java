@@ -3,7 +3,6 @@ package com.epam.redkin.railway.web.controller.command.common;
 import com.epam.redkin.railway.model.dto.MappingInfoDTO;
 import com.epam.redkin.railway.model.entity.Carriage;
 import com.epam.redkin.railway.model.entity.CarriageType;
-import com.epam.redkin.railway.model.entity.User;
 import com.epam.redkin.railway.model.exception.IncorrectDataException;
 import com.epam.redkin.railway.model.service.CarriageService;
 import com.epam.redkin.railway.model.service.RouteMappingService;
@@ -12,7 +11,6 @@ import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +20,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.epam.redkin.railway.util.constants.AppContextConstant.SESSION_USER;
 import static com.epam.redkin.railway.util.constants.AppContextConstant.TRAIN_ID;
 
 public class SelectStationAndCarriageTypeCommand implements Command {
@@ -48,7 +45,7 @@ public class SelectStationAndCarriageTypeCommand implements Command {
             throw new IncorrectDataException("Incorrect date entered", e);
         }
         List<MappingInfoDTO> allRoutToStationMappingListById = routeMappingService
-                .getAllRoutToStationMappingListById(Integer.parseInt(routesId));
+                .getMappingInfoDtoListByRouteId(Integer.parseInt(routesId));
         List<Carriage> allCarList = carriageService.getCarByTrainId(Integer.parseInt(trainId));
         Set<CarriageType> carSet = new HashSet<>();
         for (Carriage car : allCarList) {

@@ -35,7 +35,7 @@ public class OrderInfoCommand implements Command {
                 RECORDS_PER_PAGE * page);
         for (Order order : orderList) {
             order.setRouteName(routeService
-                    .getRoutById(order.getRouteId())
+                    .getRouteInfoById(order.getRouteId())
                     .getRoutName());
         }
         request.setAttribute("recordsPerPage", RECORDS_PER_PAGE);

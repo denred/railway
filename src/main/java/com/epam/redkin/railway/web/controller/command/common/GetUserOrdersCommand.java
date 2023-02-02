@@ -41,7 +41,7 @@ public class GetUserOrdersCommand implements Command {
                 (page - 1) * RECORDS_PER_PAGE,
                 RECORDS_PER_PAGE * page);
         for (Order order : orderList) {
-            order.setRouteName(routeService.getRoutById(order.getRouteId()).getRoutName());
+            order.setRouteName(routeService.getRouteInfoById(order.getRouteId()).getRoutName());
         }
         Double priceOfSuccessfulOrders = orderService.getPriceOfSuccessfulOrders(Integer.parseInt(userId));
         request.setAttribute(PAGE_RECORDS, RECORDS_PER_PAGE);

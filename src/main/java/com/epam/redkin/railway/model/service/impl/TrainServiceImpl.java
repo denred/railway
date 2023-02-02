@@ -48,7 +48,7 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public List<Train> getAllTrainList() {
+    public List<Train> getTrainList() {
         return trainRepository.getAllTrains();
     }
 
