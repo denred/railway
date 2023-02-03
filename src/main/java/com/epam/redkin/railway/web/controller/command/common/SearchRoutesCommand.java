@@ -12,7 +12,9 @@ import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
@@ -31,9 +33,10 @@ public class SearchRoutesCommand implements Command {
         String departureStation = request.getParameter(DEPARTURE_STATION);
         String arrivalStation = request.getParameter(ARRIVAL_STATION);
         String startDate = request.getParameter(DEPARTURE_DATE);
+        String startTime = request.getParameter(DEPARTURE_TIME);
         LocalDateTime departureDate;
         try {
-            departureDate = LocalDateTime.parse(startDate);
+            departureDate = LocalDateTime.of(LocalDate.parse(startDate), LocalTime.parse(startTime));
         } catch (DateTimeParseException e) {
             LOGGER.error("Incorrect data entered. Date or time format");
             throw new IncorrectDataException("Incorrect data entered. Date or time format", e);

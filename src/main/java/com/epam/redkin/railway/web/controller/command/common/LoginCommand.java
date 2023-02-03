@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Locale;
@@ -43,7 +44,7 @@ public class LoginCommand implements Command {
         LOGGER.info("User successfully extracted");
         forward = Path.COMMAND_HOME;
         session.setAttribute(SESSION_USER, user);
-        session.setAttribute(CURRENT_DATE_TIME, LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        session.setAttribute(CURRENT_DATE, LocalDate.now());
         session.setAttribute(LOCALE, locale);
         LOGGER.info("done");
         return forward;

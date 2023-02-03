@@ -1,8 +1,3 @@
-<jsp:useBean id="carriageTypeFilter" scope="request" type="java.lang.String"/>
-<jsp:useBean id="trainFilter" scope="request" type="java.lang.String"/>
-<jsp:useBean id="car_list" scope="request" type="java.util.List"/>
-<jsp:useBean id="count_of_seats" scope="request" type="java.lang.Integer"/>
-<jsp:useBean id="current_car" scope="request" type="com.epam.redkin.railway.model.entity.Carriage"/>
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 

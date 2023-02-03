@@ -64,7 +64,9 @@ public class AppContextConstant {
     public static final String STATION_NAME = "station_station";
     public static final String STATION_ID_BEFORE_UPDATE = "station_current_id";
     public static final String DEPARTURE_DATE = "departure_date";
+    public static final String DEPARTURE_TIME = "departure_time";
     public static final String CURRENT_DATE_TIME = "dateTime";
+    public static final String CURRENT_DATE = "date";
 
 
 
