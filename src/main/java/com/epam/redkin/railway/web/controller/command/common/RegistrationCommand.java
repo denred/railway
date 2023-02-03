@@ -8,6 +8,8 @@ import com.epam.redkin.railway.util.constants.AppContextConstant;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
+import com.epam.redkin.railway.web.controller.command.SupportedLocaleStorage;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -16,6 +18,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
+import java.util.Locale;
+
+import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
 
 public class RegistrationCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationCommand.class);
@@ -23,32 +28,35 @@ public class RegistrationCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
+        HttpSession session = request.getSession();
+        String locale = SupportedLocaleStorage.getLocaleFromLanguage(Locale.getDefault().getLanguage()).getLanguage();
         String forward = Path.PAGE_REGISTRATION;
-        String email = request.getParameter(AppContextConstant.EMAIL);
-        String password = request.getParameter(AppContextConstant.PASSWORD);
-        String firstName = request.getParameter(AppContextConstant.FIRST_NAME);
-        String lastName = request.getParameter(AppContextConstant.LAST_NAME);
-        String phoneNumber = request.getParameter(AppContextConstant.PHONE_NUMBER);
-        String birthDate = request.getParameter(AppContextConstant.BIRTH_DATE);
+        String email = request.getParameter(EMAIL);
+        String password = request.getParameter(PASSWORD);
+        String firstName = request.getParameter(FIRST_NAME);
+        String lastName = request.getParameter(LAST_NAME);
+        String phoneNumber = request.getParameter(PHONE_NUMBER);
+        String birthDate = request.getParameter(BIRTH_DATE);
         if (StringUtils.isNoneBlank(email, password, firstName, lastName, phoneNumber, birthDate)) {
             UserService userService = AppContext.getInstance().getUserService();
             User user = constructUser(request);
             RegistrationValidator registrationValidator = new RegistrationValidator();
             registrationValidator.isValidClientRegister(user);
-            HttpSession session = request.getSession();
             int id = userService.registerUser(user, request.getRequestURL().toString());
             session.setAttribute(AppContextConstant.SESSION_USER, user);
             user.setUserId(id);
             forward = Path.PAGE_LOGIN;
         }
+
+        session.setAttribute(LOCALE, locale);
         LOGGER.info("done");
         return forward;
     }
 
     private User constructUser(HttpServletRequest request) {
-        String email = request.getParameter(AppContextConstant.EMAIL).trim();
-        String password = request.getParameter(AppContextConstant.PASSWORD).trim();
-        String firstName = request.getParameter(AppContextConstant.FIRST_NAME).trim();
+        String email = request.getParameter(EMAIL).trim();
+        String password = request.getParameter(PASSWORD).trim();
+        String firstName = request.getParameter(FIRST_NAME).trim();
         String lastName = request.getParameter(AppContextConstant.LAST_NAME).trim();
         String phoneNumber = request.getParameter(AppContextConstant.PHONE_NUMBER).trim();
         String birthDate = request.getParameter(AppContextConstant.BIRTH_DATE).trim();
