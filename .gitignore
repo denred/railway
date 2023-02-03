@@ -17,6 +17,7 @@ Main.java
 *.bak
 *.mwb
 *.properties
+email.properties
 
 Footer
 
