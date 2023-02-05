@@ -30,5 +30,7 @@ public interface RouteService {
     List<RoutsOrderDTO> getRouteListWithParameters(String departureStation, String arrivalStation, LocalDateTime departureDate);
 
     void fillAvailableSeats(List<RoutsOrderDTO> routeOrderDTOList);
+
+    LocalDateTime getDepartureDate(String startDate, String startTime);
 }
 

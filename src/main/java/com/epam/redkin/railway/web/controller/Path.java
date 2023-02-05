@@ -36,6 +36,7 @@ public class Path {
     public static final String COMMAND_HOME = "controller?action=home";
     public static final String COMMAND_INFO_ROUTE = "controller?action=routes";
     public static final String COMMAND_ROUTE_MAPPING = "controller?action=route_mapping";
+    public static final String COMMAND_SEARCH_ROUTES = "controller?action=search_routes";
     public static final String COMMAND_INFO_STATIONS = "controller?action=stations";
     public static final String COMMAND_INFO_USERS = "controller?action=users";
     public static final String COMMAND_INFO_ORDERS = "controller?action=admin_orders";

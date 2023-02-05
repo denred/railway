@@ -15,7 +15,7 @@
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
 
 <c:choose>
-    <c:when test="${empty rout_order_dto_list}">
+    <c:when test="${empty sessionScope.rout_order_dto_list}">
         <div class="text-xs-center align-middle h3" style="text-align: center;">
             <fmt:message key="rout.no"/></div>
     </c:when>
@@ -35,7 +35,7 @@
                 </tr>
                 </thead>
                 <tbody class="text-center">
-                <c:forEach items="${rout_order_dto_list}" var="rout">
+                <c:forEach items="${sessionScope.rout_order_dto_list}" var="rout">
                     <tr>
                         <c:set var="dispatchDateTime" value="${rout.stations.get(0).stationDispatchDateTime}"/>
                         <c:set var="arrivalDateTime"
@@ -44,9 +44,9 @@
                         <td>${rout.trainNumber}
                             <form action="controller?action=route" method="POST">
                                 <input type="hidden" name="routs_id" value="${rout.routsId}">
-                                <input type="hidden" name="departure_station" value="${departure_station}">
-                                <input type="hidden" name="arrival_station" value="${arrival_station}">
-                                <input type="hidden" name="departure_date" value="${departure_date}">
+                                <input type="hidden" name="departure_station" value="${sessionScope.departure_station}">
+                                <input type="hidden" name="arrival_station" value="${sessionScope.arrival_station}">
+                                <input type="hidden" name="departure_date" value="${sessionScope.departure_date}">
                                 <input type="submit" class="btn btn-link" name="order"
                                        value="<fmt:message key="route"/>">
                             </form>
@@ -93,9 +93,6 @@
                                        value="<period:period dateFrom="${dispatchDateTime}" dateTo="${arrivalDateTime}" locale="${sessionScope.locale}"/>">
                                 <input type="hidden" name="station2"
                                        value="${rout.stations.get(1).station} - ${arrivalDateTime}">
-                                <input type="hidden" name="departure_station" value="${departure_station}">
-                                <input type="hidden" name="arrival_station" value="${arrival_station}">
-                                <input type="hidden" name="departure_date" value="${departure_date}">
                                 <input type="submit" class="btn btn-info" name="order"
                                        value="<fmt:message key="order.make.order"/>">
                             </form>
@@ -107,9 +104,7 @@
         </div>
     </c:otherwise>
 </c:choose>
-<form action="controller?action=home" method="POST">
-    <input type="submit" class="btn btn-primary" value="<fmt:message key="back"/>">
-</form>
+<a class="btn btn-primary" href="controller?action=home"><fmt:message key="back"/></a>
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
 </body>
 </html>

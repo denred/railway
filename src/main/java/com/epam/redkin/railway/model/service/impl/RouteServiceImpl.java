@@ -6,6 +6,7 @@ import com.epam.redkin.railway.model.dto.RoutsOrderDTO;
 import com.epam.redkin.railway.model.dto.StationDTO;
 import com.epam.redkin.railway.model.entity.CarriageType;
 import com.epam.redkin.railway.model.entity.Route;
+import com.epam.redkin.railway.model.exception.IncorrectDataException;
 import com.epam.redkin.railway.model.repository.RouteRepository;
 import com.epam.redkin.railway.model.service.RouteService;
 import com.epam.redkin.railway.model.service.SeatService;
@@ -13,7 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -95,6 +99,18 @@ public class RouteServiceImpl implements RouteService {
             });
             route.setAvailableSeats(availableSeats);
         });
+    }
+
+    @Override
+    public LocalDateTime getDepartureDate(String startDate, String startTime) {
+        LocalDateTime departureDate;
+        try {
+            departureDate = LocalDateTime.of(LocalDate.parse(startDate), LocalTime.parse(startTime));
+        } catch (DateTimeParseException e) {
+            LOGGER.error("Incorrect date entered. Date or time format: " + e);
+            throw new IncorrectDataException("Incorrect data entered. Date or time format", e);
+        }
+        return departureDate;
     }
 
 
