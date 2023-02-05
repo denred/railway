@@ -6,6 +6,7 @@ import com.epam.redkin.railway.util.constants.AppContextConstant;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
+import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -21,8 +22,11 @@ public class UserInfoCommand implements Command {
     private static final int RECORDS_PER_PAGE = 5;
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
+        Router router = new Router();
+        router.setRouteType(Router.RouteType.FORWARD);
+        router.setPagePath(Path.PAGE_ADMIN_INFO_USER);
         UserService userService = AppContext.getInstance().getUserService();
         Map<String, String> search = new HashMap<>();
         int page = 1;
@@ -58,7 +62,7 @@ public class UserInfoCommand implements Command {
         request.setAttribute(AppContextConstant.ROLE, role);
         request.setAttribute(AppContextConstant.BLOCKED, blocked);
         LOGGER.info("done");
-        return Path.PAGE_ADMIN_INFO_USER;
+        return router;
     }
 
     private void addSearch(Map<String, String> search, String key, String value) {

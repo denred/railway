@@ -8,6 +8,7 @@ import com.epam.redkin.railway.model.validator.OrderValidator;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
+import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -18,15 +19,19 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
+
 public class OrderChangeStatusCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderChangeStatusCommand.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
-        String forward = Path.PAGE_ADMIN_SET_ORDER_STATUS;
-        String orderId = request.getParameter("order_id");
-        String orderStatus = request.getParameter("order_status");
+        Router router = new Router();
+        router.setRouteType(Router.RouteType.FORWARD);
+        router.setPagePath(Path.PAGE_ADMIN_SET_ORDER_STATUS);
+        String orderId = request.getParameter(ORDER_ID);
+        String orderStatus = request.getParameter(ORDER_STATUS);
         if (StringUtils.isNoneBlank(orderId, orderStatus)) {
             OrderService orderService = AppContext.getInstance().getOrderService();
             OrderValidator orderValidator = new OrderValidator();
@@ -40,15 +45,16 @@ public class OrderChangeStatusCommand implements Command {
             }
             orderValidator.isValidOrder(order);
             orderService.updateOrderStatus(Integer.parseInt(orderId), status);
-            forward = Path.COMMAND_INFO_ORDERS;
+            router.setPagePath(Path.COMMAND_INFO_ORDERS);
+            router.setRouteType(Router.RouteType.REDIRECT);
         } else {
             OrderService orderService = AppContext.getInstance().getOrderService();
             List<OrderStatus> orderStatusList = new ArrayList<>(EnumSet.allOf(OrderStatus.class));
             Order order = orderService.getOrderById(Integer.parseInt(orderId));
-            request.setAttribute("current_order", order);
-            request.setAttribute("statusList", orderStatusList);
+            request.setAttribute(CURRENT_ORDER, order);
+            request.setAttribute(STATUS_LIST, orderStatusList);
         }
         LOGGER.info("done");
-        return forward;
+        return router;
     }
 }

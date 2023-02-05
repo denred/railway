@@ -5,6 +5,7 @@ import com.epam.redkin.railway.model.service.RouteMappingService;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
+import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -20,8 +21,11 @@ public class RouteMappingCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteMappingCommand.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
+        Router router = new Router();
+        router.setRouteType(Router.RouteType.FORWARD);
+        router.setPagePath(Path.PAGE_ADMIN_ROUTE_DETAIL);
         RouteMappingService routeMappingService = AppContext.getInstance().getRouteMappingService();
         String routeId = request.getParameter(ROUTE_ID);
         String stationId = request.getParameter(STATION_ID);
@@ -35,6 +39,6 @@ public class RouteMappingCommand implements Command {
         request.setAttribute(ROUTE_ID, routeId);
 
         LOGGER.info("done");
-        return Path.PAGE_ADMIN_ROUTE_DETAIL;
+        return router;
     }
 }

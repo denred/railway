@@ -2,6 +2,7 @@ package com.epam.redkin.railway.web.controller;
 
 import com.epam.redkin.railway.web.controller.command.ActionFactory;
 import com.epam.redkin.railway.web.controller.command.Command;
+import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -27,10 +28,13 @@ public class Controller extends HttpServlet {
         ActionFactory client = ActionFactory.getInstance();
         Command command = client.defineCommand(request);
         //call to the execute method and return response page
-        String page = command.execute(request, response);
-        if (page != null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+        Router router = command.execute(request, response);
+        if (router.getRouteType().equals(Router.RouteType.FORWARD)) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(router.getPagePath());
             dispatcher.forward(request, response);
+        } else {
+            response.sendRedirect(router.getPagePath());
         }
+
     }
 }

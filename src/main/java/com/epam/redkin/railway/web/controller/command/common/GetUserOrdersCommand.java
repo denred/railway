@@ -4,8 +4,10 @@ import com.epam.redkin.railway.model.entity.Order;
 import com.epam.redkin.railway.model.entity.User;
 import com.epam.redkin.railway.model.service.OrderService;
 import com.epam.redkin.railway.model.service.RouteService;
+import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
+import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -22,8 +24,11 @@ public class GetUserOrdersCommand implements Command {
     private static final int RECORDS_PER_PAGE = 5;
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
+        Router router = new Router();
+        router.setRouteType(Router.RouteType.FORWARD);
+        router.setPagePath(PAGE_ORDERS);
         RouteService routeService = AppContext.getInstance().getRouteService();
         OrderService orderService = AppContext.getInstance().getOrderService();
         HttpSession session = request.getSession();
@@ -52,6 +57,6 @@ public class GetUserOrdersCommand implements Command {
         request.setAttribute(SUM, priceOfSuccessfulOrders);
         request.setAttribute(LANGUAGE, session.getAttribute(LOCALE));
         LOGGER.info("done");
-        return PAGE_ORDERS;
+        return router;
     }
 }

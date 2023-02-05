@@ -4,7 +4,9 @@ import com.epam.redkin.railway.appcontext.AppContext;
 import com.epam.redkin.railway.model.entity.User;
 import com.epam.redkin.railway.model.service.UserService;
 import com.epam.redkin.railway.model.validator.RegistrationValidator;
+import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
+import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -16,14 +18,16 @@ import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
 
 import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
-import static com.epam.redkin.railway.web.controller.Path.PAGE_PROFILE;
 
 public class ProfileCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProfileCommand.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("Started");
+        Router router = new Router();
+        router.setRouteType(Router.RouteType.FORWARD);
+        router.setPagePath(Path.PAGE_PROFILE);
         UserService userService = AppContext.getInstance().getUserService();
         RegistrationValidator registrationValidator = new RegistrationValidator();
         HttpSession session = request.getSession();
@@ -68,6 +72,6 @@ public class ProfileCommand implements Command {
         request.setAttribute(EMAIL, user.getEmail());
         request.setAttribute(BIRTH_DATE, user.getBirthDate());
 
-        return PAGE_PROFILE;
+        return router;
     }
 }

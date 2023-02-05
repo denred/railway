@@ -10,6 +10,7 @@ import com.epam.redkin.railway.model.service.*;
 import com.epam.redkin.railway.model.validator.SeatValidator;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
+import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -27,8 +28,11 @@ public class CreateOrderCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(CreateOrderCommand.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
+        Router router = new Router();
+        router.setRouteType(Router.RouteType.FORWARD);
+        router.setPagePath(PAGE_CONFIRM_ORDER);
         RouteService routeService = AppContext.getInstance().getRouteService();
         CarriageService carriageService = AppContext.getInstance().getCarriageService();
         OrderService orderService = AppContext.getInstance().getOrderService();
@@ -106,6 +110,6 @@ public class CreateOrderCommand implements Command {
         request.setAttribute("seats", seats);
         request.setAttribute("seats_id", Arrays.deepToString(numbers));
         LOGGER.info("done");
-        return PAGE_CONFIRM_ORDER;
+        return router;
     }
 }

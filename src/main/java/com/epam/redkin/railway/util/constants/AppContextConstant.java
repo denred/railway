@@ -34,6 +34,9 @@ public class AppContextConstant {
 
     //Order
     public static final String ORDER_LIST = "order_list";
+    public static final String ORDER_ID = "order_id";
+    public static final String ORDER_STATUS = "order_status";
+    public static final String CURRENT_ORDER = "current_order";
     public static final String TRAVEL_TIME = "travel_time";
 
     //Route
@@ -53,6 +56,7 @@ public class AppContextConstant {
     public static final String TRAIN_LIST = "trainList";
     public static final String TRAIN_NUMBER_DB = "t.number";
     public static final String TRAIN_NUMBER = "train_number";
+    public static final String CURRENT_TRAIN = "current_train";
 
     //Station
     public static final String ARRIVAL_STATION_ID = "arrival_station_id";
@@ -62,6 +66,7 @@ public class AppContextConstant {
     public static final String LAST_STATION = "last_station";
     public static final String STATION_LIST = "station_list";
     public static final String STATION_NAME = "station_station";
+    public static final String STATION_ID = "station_id";
     public static final String STATION_ID_BEFORE_UPDATE = "station_current_id";
     public static final String DEPARTURE_DATE = "departure_date";
     public static final String DEPARTURE_TIME = "departure_time";
@@ -101,7 +106,11 @@ public class AppContextConstant {
     public static final String ID = "id";
     public static final String ROLE = "role";
     public static final String BLOCKED = "blocked";
+    public static final String BLOCK_STATUS = "block_status";
     public static final String LOGIN_TOKEN = "log_in_token";
+    public static final String FROM_STATION = "from";
+    public static final String TO_STATION = "to";
+    public static final String STATUS_LIST = "statusList";
 
     //filters
     public static final String FILTER = "filter";

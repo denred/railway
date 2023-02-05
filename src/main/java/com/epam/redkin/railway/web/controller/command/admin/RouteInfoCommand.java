@@ -6,6 +6,7 @@ import com.epam.redkin.railway.util.constants.AppContextConstant;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
+import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -25,8 +26,11 @@ public class RouteInfoCommand implements Command {
     private static final int FIRST_VISIBLE_PAGE_LINK = 5;
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
+        Router router = new Router();
+        router.setRouteType(Router.RouteType.FORWARD);
+        router.setPagePath(Path.PAGE_INFO_ROUTE);
         RouteService routeService = AppContext.getInstance().getRouteService();
         HttpSession session = request.getSession();
         Map<String, String> search = new HashMap<>();
@@ -60,7 +64,7 @@ public class RouteInfoCommand implements Command {
         request.setAttribute(FILTER_ROUTE_NUMBER, session.getAttribute(FILTER_ROUTE_NUMBER));
         request.setAttribute(FILTER_TRAIN, session.getAttribute(FILTER_TRAIN));
         LOGGER.info("done");
-        return Path.PAGE_INFO_ROUTE;
+        return router;
     }
 
     private String getParameter(HttpServletRequest request, String param) {

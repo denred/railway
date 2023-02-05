@@ -9,6 +9,7 @@ import com.epam.redkin.railway.model.validator.RouteValidator;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
+import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -23,11 +24,13 @@ public class RouteEditCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteEditCommand.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
+        Router router = new Router();
+        router.setRouteType(Router.RouteType.FORWARD);
+        router.setPagePath(Path.PAGE_EDIT_ROUTE);
         RouteService routeService = AppContext.getInstance().getRouteService();
         TrainService trainService = AppContext.getInstance().getTrainService();
-        String forward = Path.PAGE_EDIT_ROUTE;
         String routeId = request.getParameter(ROUTE_ID);
         String routeName = request.getParameter(ROUTE_NAME);
         String routeNumber = request.getParameter(ROUTE_NUMBER);
@@ -43,7 +46,8 @@ public class RouteEditCommand implements Command {
 
             routeValidator.isValidRoute(route);
             routeService.updateRoute(route);
-            forward = Path.COMMAND_INFO_ROUTE;
+            router.setRouteType(Router.RouteType.REDIRECT);
+            router.setPagePath(Path.COMMAND_INFO_ROUTE);
         } else if (StringUtils.isNoneBlank(routeNumber, routeName, trainNumber)) {
             RouteValidator routeValidator = new RouteValidator();
             Route route = Route.builder()
@@ -53,7 +57,8 @@ public class RouteEditCommand implements Command {
                     .build();
             routeValidator.isValidRoute(route);
             routeService.addRoute(route);
-            forward = Path.COMMAND_INFO_ROUTE;
+            router.setRouteType(Router.RouteType.REDIRECT);
+            router.setPagePath(Path.COMMAND_INFO_ROUTE);
         } else {
             if (StringUtils.isNoneBlank(routeId)) {
                 RouteInfoDTO routeInfoDTO = routeService.getRouteInfoById(Integer.parseInt(routeId));
@@ -63,6 +68,6 @@ public class RouteEditCommand implements Command {
             request.setAttribute(TRAIN_LIST, trainList);
         }
         LOGGER.info("done");
-        return forward;
+        return router;
     }
 }

@@ -13,6 +13,7 @@ import com.epam.redkin.railway.util.constants.AppContextConstant;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
+import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -27,9 +28,11 @@ public class CarriageSetCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(CarriageSetCommand.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
-        String forward = Path.PAGE_ADMIN_SET_CARRIAGE;
+        Router router = new Router();
+        router.setPagePath(Path.PAGE_ADMIN_SET_CARRIAGE);
+        router.setRouteType(Router.RouteType.FORWARD);
         TrainService trainService = AppContext.getInstance().getTrainService();
         CarriageService carriageService = AppContext.getInstance().getCarriageService();
         SeatService seatService = AppContext.getInstance().getSeatService();
@@ -67,7 +70,8 @@ public class CarriageSetCommand implements Command {
             }
             carriageValidator.isValidCar(carriageDTO);
             carriageService.updateCar(carriageDTO);
-            forward = Path.COMMAND_INFO_CARRIAGES;
+            router.setRouteType(Router.RouteType.REDIRECT);
+            router.setPagePath(Path.COMMAND_INFO_CARRIAGES);
         } else if (StringUtils.isNoneBlank(trainId, carriageType, countSeats)) {
             String trainNotSelected = trainId.equals(AppContextConstant.TRAIN_NOT_SELECTED) ? null : trainId;
             assert trainNotSelected != null;
@@ -82,7 +86,8 @@ public class CarriageSetCommand implements Command {
             }
             carriageValidator.isValidCar(carriageDTO);
             carriageService.addCarriage(carriageDTO);
-            forward = Path.COMMAND_INFO_CARRIAGES;
+            router.setPagePath(Path.COMMAND_INFO_CARRIAGES);
+            router.setRouteType(Router.RouteType.REDIRECT);
         } else if (StringUtils.isNoneBlank(carriageId)) {
             int carId = Integer.parseInt(carriageId);
             Carriage car = carriageService.getCarById(carId);
@@ -102,7 +107,7 @@ public class CarriageSetCommand implements Command {
         request.setAttribute(AppContextConstant.FILTER_TRAIN, request.getParameter(AppContextConstant.FILTER_TRAIN));
         request.setAttribute(AppContextConstant.FILTER_TYPE_CARRIAGE, request.getParameter(AppContextConstant.FILTER_TYPE_CARRIAGE));
         LOGGER.info("done");
-        return forward;
+        return router;
     }
 
     public static boolean containsCarWithCarNumber(final List<Carriage> array, final String carNumber) {

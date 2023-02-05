@@ -7,6 +7,7 @@ import com.epam.redkin.railway.model.validator.SeatValidator;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
+import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -22,8 +23,11 @@ import static com.epam.redkin.railway.util.constants.AppContextConstant.TRAIN_ID
 public class SelectSeatsCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(SelectSeatsCommand.class);
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
+        Router router = new Router();
+        router.setRouteType(Router.RouteType.FORWARD);
+        router.setPagePath(Path.PAGE_SELECT_SEATS_NUMBER);
         SeatService seatService = AppContext.getInstance().getSeatService();
         SeatValidator seatValidator = new SeatValidator();
         String departureStation = request.getParameter("departure_station");
@@ -65,6 +69,6 @@ public class SelectSeatsCommand implements Command {
         request.setAttribute("count_of_seats", countOfSeats);
         request.setAttribute("seat_list", seatList);
         LOGGER.info("done");
-        return Path.PAGE_SELECT_SEATS_NUMBER;
+        return router;
     }
 }

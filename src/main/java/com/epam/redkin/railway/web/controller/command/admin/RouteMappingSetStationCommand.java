@@ -10,6 +10,7 @@ import com.epam.redkin.railway.model.validator.RouteMappingValidator;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
+import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -23,14 +24,17 @@ import java.util.List;
 import static com.epam.redkin.railway.model.repository.impl.Constants.*;
 import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
 import static com.epam.redkin.railway.util.constants.AppContextConstant.ROUTE_ID;
+import static com.epam.redkin.railway.util.constants.AppContextConstant.STATION_ID;
 
 public class RouteMappingSetStationCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteMappingSetStationCommand.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
-        String forward = Path.PAGE_ADMIN_SET_STATION_IN_ROUTE;
+        Router router = new Router();
+        router.setRouteType(Router.RouteType.FORWARD);
+        router.setPagePath(Path.PAGE_ADMIN_SET_STATION_IN_ROUTE);
         RouteMappingService routeMappingService = AppContext.getInstance().getRouteMappingService();
         StationService stationService = AppContext.getInstance().getStationService();
         RouteMappingValidator routeMappingValidator = new RouteMappingValidator();
@@ -67,7 +71,8 @@ public class RouteMappingSetStationCommand implements Command {
                 routeMappingValidator.isValidUpdateRoutToStationMapping(routeToStationMapping);
                 routeMappingService.updateRoutToStationMapping(routeToStationMapping, Integer.parseInt(prevStationId));
             }
-            forward = Path.COMMAND_ROUTE_MAPPING;
+            router.setRouteType(Router.RouteType.REDIRECT);
+            router.setPagePath(Path.COMMAND_ROUTE_MAPPING);
         } else if (StringUtils.isNoneBlank(stationId, routeId)) {
             List<Station> stationList = stationService.getStations();
             MappingInfoDTO mappingInfo = routeMappingService
@@ -95,7 +100,7 @@ public class RouteMappingSetStationCommand implements Command {
         }
         request.setAttribute(OPERATION_STATUS, operationStatus);
         LOGGER.info("done");
-        return forward;
+        return router;
     }
 
     public static boolean contains(final List<MappingInfoDTO> array, final int order) {

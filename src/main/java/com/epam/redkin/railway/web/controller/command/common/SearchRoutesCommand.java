@@ -4,11 +4,12 @@ import com.epam.redkin.railway.model.dto.RoutsOrderDTO;
 import com.epam.redkin.railway.model.exception.IncorrectDataException;
 import com.epam.redkin.railway.model.service.RouteService;
 import com.epam.redkin.railway.model.validator.SearchValidator;
+import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
+import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,14 +20,16 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 
 import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
-import static com.epam.redkin.railway.web.controller.Path.*;
 
 public class SearchRoutesCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchRoutesCommand.class);
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
+        Router router = new Router();
+        router.setRouteType(Router.RouteType.FORWARD);
+        router.setPagePath(Path.PAGE_SEARCH_ROUTES);
         RouteService routeService = AppContext.getInstance().getRouteService();
         SearchValidator searchValidator = new SearchValidator();
 
@@ -51,6 +54,6 @@ public class SearchRoutesCommand implements Command {
         request.setAttribute(ARRIVAL_STATION, arrivalStation);
         request.setAttribute(DEPARTURE_DATE, departureDate);
         LOGGER.info("done");
-        return PAGE_SEARCH_ROUTES;
+        return router;
     }
 }

@@ -7,6 +7,7 @@ import com.epam.redkin.railway.util.constants.AppContextConstant;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
+import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -21,8 +22,9 @@ public class CarriageInfoCommand implements Command {
     private static final int RECORDS_PER_PAGE = 5;
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
+        Router router = new Router();
         CarriageService carriageService = AppContext.getInstance().getCarriageService();
         List<CarriageType> carriageTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
         int page = 1;
@@ -44,6 +46,8 @@ public class CarriageInfoCommand implements Command {
         request.setAttribute(AppContextConstant.FILTER_TYPE_CARRIAGE, carriageFilter);
         request.setAttribute(AppContextConstant.CARRIAGE_DTO_LIST, carriageDtoList);
         LOGGER.info("done");
-        return Path.PAGE_ADMIN_INFO_CARRIAGE;
+        router.setPagePath(Path.PAGE_ADMIN_INFO_CARRIAGE);
+        router.setRouteType(Router.RouteType.FORWARD);
+        return router;
     }
 }
