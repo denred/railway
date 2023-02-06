@@ -39,7 +39,7 @@
                     We’re sorry, the page you have looked for does not exist in our
                     website! Maybe go to our home page or try to use a search?
                 </p>
-                <a class="btn btn-primary" href="${pageContext.request.contextPath}action=home"><fmt:message key="back"/></a>
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}controller?action=home"><fmt:message key="back"/></a>
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5" style="top: -100px;">
     <a href="controller?action=home" class="navbar-brand d-flex align-items-center">
         <h3 class="m-0">
-            <img class="img-fluid me-3" src="../../img/train-main.png" alt="train logo" width="96px">
+            <img class="img-fluid me-3" src="../../../img/train-main.png" alt="train logo" width="96px">
             <fmt:message key="app.name"/>
         </h3>
     </a>

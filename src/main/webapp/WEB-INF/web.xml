@@ -11,14 +11,14 @@
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
 
-    <error-page>
+    <!--<error-page>
         <exception-type>com.epam.redkin.railway.model.exception.ServiceException</exception-type>
         <location>/errorPage.jsp</location>
     </error-page>
 
     <error-page>
         <location>/generalErrorPage.jsp</location>
-    </error-page>
+    </error-page>-->
 
     <resource-ref>
         <description>DB Connection</description>

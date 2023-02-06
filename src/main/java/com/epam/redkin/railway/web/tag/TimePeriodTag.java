@@ -18,12 +18,22 @@ public class TimePeriodTag extends SimpleTagSupport {
         Duration between;
         if (locale.equals("en")) {
             between = Duration.between(LocalDateTime.parse(dateFrom), LocalDateTime.parse(dateTo));
-            getJspContext().getOut().print(String.format("%s h :%02d min", between.toHours() % 24, between.toMinutes() % 60));
+            getJspContext().getOut().print(builder(between, "%s day ", "%s h :%02d min"));
         }
         if (locale.equals("ua")) {
             between = Duration.between(LocalDateTime.parse(dateFrom), LocalDateTime.parse(dateTo));
-            getJspContext().getOut().print(String.format("%s год %02d хв", between.toHours() % 24, between.toMinutes() % 60));
+            getJspContext().getOut().print(builder(between, "%s день ", "%s год %02d хв"));
         }
+    }
+
+    private String builder(Duration between, String dayFormat, String hourMinuteFormat) {
+        StringBuilder builder = new StringBuilder();
+        long days = between.toDays();
+        if (days > 0) {
+            builder.append(String.format(dayFormat, days));
+        }
+        builder.append(String.format(hourMinuteFormat, between.toHours() % 24, between.toMinutes() % 60));
+        return builder.toString();
     }
 
     public void setDateFrom(String dateFrom) {

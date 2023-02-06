@@ -13,13 +13,6 @@
 <body>
 <mrt:navigation/>
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
-<div class="d-flex justify-content-end">
-    <div class="h5 p-2">
-        <fmt:message key="enterRole"/>
-        <jsp:useBean id="user" scope="session" type="com.epam.redkin.railway.model.entity.User"/>
-        <mrt:role role="${user.role}"/>
-    </div>
-</div>
 
 <%-- Content --%>
 <div class="container mt-4">
