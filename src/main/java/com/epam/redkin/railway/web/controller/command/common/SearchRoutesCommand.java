@@ -3,6 +3,7 @@ package com.epam.redkin.railway.web.controller.command.common;
 import com.epam.redkin.railway.model.dto.RoutsOrderDTO;
 import com.epam.redkin.railway.model.service.RouteService;
 import com.epam.redkin.railway.model.validator.SearchValidator;
+import com.epam.redkin.railway.model.validator.ValidatorUtils;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
@@ -39,11 +40,18 @@ public class SearchRoutesCommand implements Command {
 
         if (StringUtils.isNoneBlank(departureStation, arrivalStation, startDate, startTime)) {
             LocalDateTime departureDate = routeService.getDepartureDate(startDate, startTime);
-            searchValidator.isValidSearch(departureStation, arrivalStation);
+            String errorMessage = searchValidator.isValidSearch(departureStation, arrivalStation);
+            HttpSession session = request.getSession();
+            if (StringUtils.isNoneBlank(errorMessage)) {
+                router.setRouteType(Router.RouteType.REDIRECT);
+                router.setPagePath(Path.COMMAND_HOME);
+                session.setAttribute(ERROR_MESSAGE, errorMessage);
+                return router;
+            }
             List<RoutsOrderDTO> routeOrderDTOList = routeService
                     .getRouteListWithParameters(departureStation, arrivalStation, departureDate);
             routeService.fillAvailableSeats(routeOrderDTOList);
-            HttpSession session = request.getSession();
+            session.removeAttribute(ERROR_MESSAGE);
             session.setAttribute(ROUTE_ORDER_DTO_LIST, routeOrderDTOList);
             session.setAttribute(DEPARTURE_STATION, departureStation);
             session.setAttribute(ARRIVAL_STATION, arrivalStation);

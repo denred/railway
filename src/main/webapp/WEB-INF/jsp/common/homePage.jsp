@@ -90,6 +90,9 @@
             </div>
         </div>
         <div class="row">
+            <div class="col d-flex justify-content-center text-danger">${errorMessage}</div>
+        </div>
+        <div class="row">
             <div class="col d-flex justify-content-center mt-4">
                 <div class="input-group w-25 mr-2">
                     <span class="input-group-text"><fmt:message key="date"/></span>

@@ -2,7 +2,7 @@ package com.epam.redkin.railway.model.exception;
 
 public class ServiceException extends RuntimeException{
 
-    private String httpStatusCode;
+    private final String httpStatusCode;
 
     public ServiceException(String httpStatusCode) {
         this.httpStatusCode = httpStatusCode;

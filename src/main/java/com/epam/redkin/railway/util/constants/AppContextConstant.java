@@ -21,7 +21,7 @@ public class AppContextConstant {
     public static final String PASSWORD_CONFIRMATION = "password_confirm";
     public static final String USER_LOGIN = "login";
     public static final String USER_ROLE = "user";
-    public static final String ERROR_MESSAGE = "Login or password can't be empty";
+    public static final String ERROR_MESSAGE_LOGIN = "Login or password can't be empty";
     public static final String COUNT = "count";
     public static final String LIST_OF_USERS = "user_list";
 
@@ -111,6 +111,11 @@ public class AppContextConstant {
     public static final String FROM_STATION = "from";
     public static final String TO_STATION = "to";
     public static final String STATUS_LIST = "statusList";
+    public static final String ERROR_MESSAGE  = "errorMessage";
+
+    //error messages
+
+
 
     //filters
     public static final String FILTER = "filter";

@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
 
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 
 import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
@@ -37,7 +35,7 @@ public class LoginCommand implements Command {
         currentRouter.setRouteType(Router.RouteType.FORWARD);
 
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
-            request.setAttribute(ERROR_MESSAGE, "Login or password can't be empty");
+            request.setAttribute(ERROR_MESSAGE_LOGIN, "Login or password can't be empty");
             LOGGER.info("Login or password is empty");
             return currentRouter;
         }

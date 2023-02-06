@@ -29,8 +29,6 @@ public class EmailMessageLocalizationDispatcher {
         String[] localizedArgs = getLocalizedMessageArgs(resourceBundle, messageArgs);
         String formattedMessageFragment = String.format(resourceBundle.getString(key), String.join("\n", localizedArgs));
         message.append(formattedMessageFragment).append('\n');
-
-        LOGGER.info("\nSending message:\n" + message.toString());
         return message.toString();
     }
 

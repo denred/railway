@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isErrorPage='true' %>
 
@@ -40,11 +39,7 @@
                     We’re sorry, the page you have looked for does not exist in our
                     website! Maybe go to our home page or try to use a search?
                 </p>
-                <form action="controller?action=login" method="POST">
-                    <input type="hidden" name="currentPageAbsoluteURL" value="${pageContext.request.requestURL}">
-                    <input type="hidden" name="currentParameters" value="${pageContext.request.getQueryString()}">
-                    <input type="submit" class="btn btn-primary" value="<fmt:message key="back"/>">
-                </form>
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}action=home"><fmt:message key="back"/></a>
             </div>
         </div>
     </div>
