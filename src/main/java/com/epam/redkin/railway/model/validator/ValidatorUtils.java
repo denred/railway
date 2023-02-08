@@ -21,8 +21,8 @@ public final class ValidatorUtils {
                 builder.append(entry.getKey())
                         .append("<br/>");
             }
+            logger.error("Incorrect input: " + builder);
         }
-        logger.error("Incorrect input: " + builder);
         return builder.toString();
     }
 }

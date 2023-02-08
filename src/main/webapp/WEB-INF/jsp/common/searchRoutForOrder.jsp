@@ -84,14 +84,14 @@
 
                             <td>
                                 <form action="controller?action=select_station_and_carriage_type" method="POST">
-                                    <input type="hidden" name="routes_id" value="${rout.routsId}">
+                                    <input type="hidden" name="routs_id" value="${rout.routsId}">
                                     <input type="hidden" name="train_id" value="${rout.trainId}">
                                     <input type="hidden" name="station1"
-                                           value="${rout.stations.get(0).station} - ${dispatchDateTime}">
+                                           value="${rout.stations.get(0).station}">
                                     <input type="hidden" name="travel_time"
                                            value="<period:period dateFrom="${dispatchDateTime}" dateTo="${arrivalDateTime}" locale="${sessionScope.locale}"/>">
                                     <input type="hidden" name="station2"
-                                           value="${rout.stations.get(1).station} - ${arrivalDateTime}">
+                                           value="${rout.stations.get(1).station}">
                                     <input type="submit" class="btn btn-info" name="order"
                                            value="<fmt:message key="order.make.order"/>">
                                 </form>

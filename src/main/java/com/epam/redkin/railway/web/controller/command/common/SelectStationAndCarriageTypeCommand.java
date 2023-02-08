@@ -12,6 +12,8 @@ import com.epam.redkin.railway.appcontext.AppContext;
 import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,10 +23,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.epam.redkin.railway.util.constants.AppContextConstant.TRAIN_ID;
+import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
 
 public class SelectStationAndCarriageTypeCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(SelectStationAndCarriageTypeCommand.class);
+
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
@@ -33,38 +36,24 @@ public class SelectStationAndCarriageTypeCommand implements Command {
         router.setPagePath(Path.PAGE_SELECT_STATION_AND_CARRIAGE_TYPE);
         RouteMappingService routeMappingService = AppContext.getInstance().getRouteMappingService();
         CarriageService carriageService = AppContext.getInstance().getCarriageService();
-
-        String departureStation = request.getParameter("departure_station");
-        String arrivalStation = request.getParameter("arrival_station");
+        HttpSession session = request.getSession();
         String trainId = request.getParameter(TRAIN_ID);
-        String routesId = request.getParameter("routes_id");
-        String station1 = request.getParameter("station1");
-        String station2 = request.getParameter("station2");
-        String travelTime = request.getParameter("travel_time");
-        LocalDateTime departureDate;
-        try {
-            departureDate = LocalDateTime.parse(request.getParameter("departure_date"));
-        } catch (DateTimeParseException e) {
-            LOGGER.error("Incorrect date entered");
-            throw new IncorrectDataException("Incorrect date entered", e);
+        String routeId = request.getParameter(ROUTE_ID);
+        if (StringUtils.isNoneBlank(trainId, routeId)) {
+            List<MappingInfoDTO> routeMappingInfoList = routeMappingService
+                    .getMappingInfoDtoListByRouteId(Integer.parseInt(routeId));
+            List<Carriage> carriageList = carriageService.getCarByTrainId(Integer.parseInt(trainId));
+            Set<CarriageType> carriageTypes = new HashSet<>();
+            for (Carriage carriage : carriageList) {
+                carriageTypes.add(carriage.getType());
+            }
+            session.setAttribute(STATION_LIST, routeMappingInfoList);
+            session.setAttribute(CARRIAGE_TYPE_LIST, carriageTypes);
+            session.setAttribute(ROUTE_ID, routeId);
+            router.setRouteType(Router.RouteType.REDIRECT);
+            router.setPagePath(Path.COMMAND_SELECT_STATION_AND_CARRIAGE_TYPE);
         }
-        List<MappingInfoDTO> allRoutToStationMappingListById = routeMappingService
-                .getMappingInfoDtoListByRouteId(Integer.parseInt(routesId));
-        List<Carriage> allCarList = carriageService.getCarByTrainId(Integer.parseInt(trainId));
-        Set<CarriageType> carSet = new HashSet<>();
-        for (Carriage car : allCarList) {
-            carSet.add(car.getType());
-        }
-        request.setAttribute("departure_station", departureStation);
-        request.setAttribute("arrival_station", arrivalStation);
-        request.setAttribute("departure_date", departureDate);
-        request.setAttribute("station_list", allRoutToStationMappingListById);
-        request.setAttribute(TRAIN_ID, trainId);
-        request.setAttribute("station1",station1);
-        request.setAttribute("station2",station2);
-        request.setAttribute("travel_time",travelTime);
-        request.setAttribute("carTypeList", carSet);
-        request.setAttribute("routs_id", routesId);
+
         return router;
     }
 }

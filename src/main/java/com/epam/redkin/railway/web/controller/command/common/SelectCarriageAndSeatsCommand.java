@@ -2,7 +2,6 @@ package com.epam.redkin.railway.web.controller.command.common;
 
 import com.epam.redkin.railway.model.dto.RouteInfoDTO;
 import com.epam.redkin.railway.model.entity.Carriage;
-import com.epam.redkin.railway.model.exception.IncorrectDataException;
 import com.epam.redkin.railway.model.service.CarriageService;
 import com.epam.redkin.railway.model.service.RouteService;
 import com.epam.redkin.railway.web.controller.Path;
@@ -11,16 +10,15 @@ import com.epam.redkin.railway.appcontext.AppContext;
 import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.epam.redkin.railway.util.constants.AppContextConstant.CARRIAGE_TYPE;
-import static com.epam.redkin.railway.util.constants.AppContextConstant.TRAIN_ID;
+import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
 
 public class SelectCarriageAndSeatsCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(SelectCarriageAndSeatsCommand.class);
@@ -33,44 +31,26 @@ public class SelectCarriageAndSeatsCommand implements Command {
         router.setPagePath(Path.PAGE_SELECT_CARRIAGE_AND_COUNT_SEATS);
         RouteService routeService = AppContext.getInstance().getRouteService();
         CarriageService carriageService = AppContext.getInstance().getCarriageService();
-        String departureStation = request.getParameter("departure_station");
-        String departureStationId = request.getParameter("departure_station_id");
-        String arrivalStation = request.getParameter("arrival_station");
-        String arrivalStationId = request.getParameter("arrival_station_id");
+        HttpSession session = request.getSession();
         String carriageType = request.getParameter(CARRIAGE_TYPE);
-        LOGGER.debug("carriageType= " + carriageType);
-        String trainId = request.getParameter(TRAIN_ID);
-        String station1 = request.getParameter("station1");
-        String station2 = request.getParameter("station2");
-        String travelTime = request.getParameter("travel_time");
-        LocalDateTime departureDate;
-        try {
-            departureDate = LocalDateTime.parse(request.getParameter("departure_date"));
-        } catch (DateTimeParseException e) {
-            LOGGER.error("Incorrect data entered");
-            throw new IncorrectDataException("Incorrect data entered", e);
+        String departure_station_id = request.getParameter(DEPARTURE_STATION_ID);
+        String arrival_station_id = request.getParameter(ARRIVAL_STATION_ID);
+        String routeId = (String) session.getAttribute(ROUTE_ID);
+        if (StringUtils.isNoneBlank(carriageType, routeId, departure_station_id, arrival_station_id)) {
+            RouteInfoDTO routeInfoDto = routeService.getRouteInfoById(Integer.parseInt(routeId));
+            List<Carriage> carriageList = carriageService
+                    .getCarByTrainIdAndCarType(routeInfoDto.getTrainId(), carriageType)
+                    .stream()
+                    .distinct()
+                    .collect(Collectors.toList());
+            session.setAttribute(CARRIAGE_TYPE, carriageType);
+            session.setAttribute(CARRIAGE_DTO_LIST, carriageList);
+            session.setAttribute(TRAIN_ID, routeInfoDto.getTrainId());
+            session.setAttribute(DEPARTURE_STATION_ID, departure_station_id);
+            session.setAttribute(ARRIVAL_STATION_ID, arrival_station_id);
+            router.setRouteType(Router.RouteType.REDIRECT);
+            router.setPagePath(Path.COMMAND_SELECT_CARRIAGE_AND_COUNT_SEATS);
         }
-        String routsId = request.getParameter("routs_id");
-        RouteInfoDTO routeInfoDto = routeService.getRouteInfoById(Integer.parseInt(routsId));
-        List<Carriage> carList = carriageService
-                .getCarByTrainIdAndCarType(routeInfoDto.getTrainId(), carriageType)
-                .stream()
-                .distinct()
-                .collect(Collectors.toList());
-        request.setAttribute("station1", station1);
-        request.setAttribute("station2", station2);
-        request.setAttribute("travel_time", travelTime);
-        //request.setAttribute("departure_station", departureStation);
-        request.setAttribute("departure_station", departureStationId);
-        request.setAttribute("departure_station_id", departureStationId);
-        request.setAttribute("arrival_station", arrivalStationId);
-        //request.setAttribute("arrival_station", arrivalStation);
-        request.setAttribute("arrival_station_id", arrivalStationId);
-        request.setAttribute("departure_date", departureDate);
-        request.setAttribute("routs_id", routsId);
-        request.setAttribute(CARRIAGE_TYPE, carriageType);
-        request.setAttribute(TRAIN_ID, trainId);
-        request.setAttribute("car_list", carList);
         return router;
     }
 }

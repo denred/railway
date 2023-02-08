@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ taglib prefix="period" uri="/WEB-INF/tags/custom.tld" %>
 
 
@@ -19,7 +20,7 @@
 
 <div class="container mt-4">
     <div class="d-flex justify-content-center">
-        <table class="table table-bordered table-hover caption-top" style="width: 1400px;">
+        <table class="table table-bordered table-hover caption-top">
             <thead class="thead-light text-center">
             <tr>
                 <th><fmt:message key="order.user.information"/></th>
@@ -39,17 +40,37 @@
             </thead>
             <tbody>
             <tr>
-                <td>${first_name} ${last_name}</td>
+                <td>${user.firstName} ${user.lastName}</td>
                 <td>${rout_name}</td>
                 <td>${train_number}</td>
                 <td><fmt:message key="${car_type}"/></td>
                 <td>${car_number}</td>
                 <td>${count_of_seats}</td>
-                <td><c:forEach items="${seats}" var="seat">${seat.seatNumber} </c:forEach></td>
+                <td><c:forEach items="${seat_list}" var="seat">${seat.seatNumber} </c:forEach></td>
                 <td>${price}</td>
-                <td>${station1}</td>
-                <td>${travel_time}</td>
-                <td>${station2}</td>
+                <c:forEach items="${sessionScope.rout_order_dto_list}" var="rout">
+                    <c:forEach items="${rout.stations}" var="station">
+                        <c:if test="${station.station eq departure_station}">
+                            <c:set var="dispatchDateTime"
+                                   value="${station.stationDispatchDateTime}"/>
+                        </c:if>
+                        <c:if test="${station.station eq arrival_station}">
+                            <c:set var="arrivalDateTime" value="${station.stationArrivalDateTime}"/>
+                        </c:if>
+                    </c:forEach>
+                </c:forEach>
+                <td>
+                    ${departure_station}
+                    <br> ${dispatchDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}
+                </td>
+                <td>
+                    <period:period dateFrom="${dispatchDateTime}" dateTo="${arrivalDateTime}"
+                                   locale="${sessionScope.locale}"/>
+                </td>
+                <td>
+                    ${arrival_station} <br> ${arrivalDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}
+                </td>
+
                 <td>
                     <form action="controller?action=confirm_order" method="POST">
                         <input type="hidden" name="routs_id" value="${routs_id}">
@@ -74,22 +95,7 @@
             </tbody>
         </table>
     </div>
-    <form action="controller?action=select_seats" method="POST">
-        <input type="hidden" name="departure_station" value="${departure_station}">
-        <input type="hidden" name="arrival_station" value="${arrival_station}">
-        <input type="hidden" name="departure_station_id" value="${departure_station_id}">
-        <input type="hidden" name="arrival_station_id" value="${arrival_station_id}">
-        <input type="hidden" name="car_type" value="${car_type}">
-        <input type="hidden" name="train_id" value="${train_id}">
-        <input type="hidden" name="car_id" value="${car_id}">
-        <input type="hidden" name="station1" value="${station1}">
-        <input type="hidden" name="station2" value="${station2}">
-        <input type="hidden" name="travel_time" value="${travel_time}">
-        <input type="hidden" name="count_of_seats" value="${count_of_seats}">
-        <input type="hidden" name="departure_date" value="${departure_date}">
-        <input type="hidden" name="routs_id" value="${routs_id}">
-        <input type="submit" class="btn btn-primary" value="<fmt:message key="back"/>">
-    </form>
+    <a href="controller?action=select_seats" class="btn btn-primary"><fmt:message key="back"/></a>
 </div>
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
 </body>

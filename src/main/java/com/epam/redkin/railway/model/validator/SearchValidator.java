@@ -14,8 +14,8 @@ import java.util.ResourceBundle;
 
 public class SearchValidator {
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchValidator.class);
-    private static final String DEPARTURE_STATION = "[a-zA-Zа-яА-яёЁ]*\\w*[\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F']*-?[a-zA-Zа-яА-яёЁ]*\\w*[\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F']*";
-    private static final String ARRIVAL_STATION = "[a-zA-Zа-яА-яёЁ]*\\w*[\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F']*-?[a-zA-Zа-яА-яёЁ]*\\w*[\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F']*";
+    private static final String DEPARTURE_STATION = "[a-zA-Zа-яА-яёЁ]*\\w*[\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F'ʼ`]*-?[a-zA-Zа-яА-яёЁ]*\\w*[\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F'ʼ`]*";
+    private static final String ARRIVAL_STATION = "[a-zA-Zа-яА-яёЁ]*\\w*[\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F'ʼ`]*-?[a-zA-Zа-яА-яёЁ]*\\w*[\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F'ʼ`]*";
     private static final String RESOURCE_NAME = "exceptionMessages";
     private static final String VALIDATION_DEPARTURE_STATION = "validation.departure.station";
     private static final String VALIDATION_ARRIVAL_STATION = "validation.arrival.station";

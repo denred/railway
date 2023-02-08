@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class SeatValidator {
     private static final Logger LOGGER = LoggerFactory.getLogger(SeatValidator.class);
-    private static final String SEAT = "(?<![-\\d])(?<!\\d[.,])\\d*[0-9](?![.,]?\\d){1,2}";
+    private static final String SEAT = "[0-9]+";
 
     public static boolean hasDuplicates(List<Seat> seats) {
         Set<Seat> distinctSeatNumbers = new HashSet<>(seats);
@@ -28,7 +28,6 @@ public class SeatValidator {
         if ((hasDuplicates(seats)) || (seats.isEmpty()) || (Integer.parseInt(countOfSeats) != size)) {
             errors.put("Incorrect format, choose different places", countOfSeats);
         }
-
         ValidatorUtils.errorBuilder(errors, LOGGER);
 
     }
@@ -39,7 +38,6 @@ public class SeatValidator {
         if (StringUtils.isBlank(countOfSeats) || (!ValidatorUtils.isMatch(SEAT, countOfSeats)) || (Integer.parseInt(countOfSeats) == 0)) {
             errors.put("Incorrect format, choose different places", countOfSeats);
         }
-
         ValidatorUtils.errorBuilder(errors, LOGGER);
     }
 

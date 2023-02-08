@@ -3,7 +3,6 @@ package com.epam.redkin.railway.web.controller.command.common;
 import com.epam.redkin.railway.model.dto.RoutsOrderDTO;
 import com.epam.redkin.railway.model.service.RouteService;
 import com.epam.redkin.railway.model.validator.SearchValidator;
-import com.epam.redkin.railway.model.validator.ValidatorUtils;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
@@ -48,8 +47,7 @@ public class SearchRoutesCommand implements Command {
                 session.setAttribute(ERROR_MESSAGE, errorMessage);
                 return router;
             }
-            List<RoutsOrderDTO> routeOrderDTOList = routeService
-                    .getRouteListWithParameters(departureStation, arrivalStation, departureDate);
+            List<RoutsOrderDTO> routeOrderDTOList = routeService.getRouteOrderDtoList(departureStation, arrivalStation, departureDate);
             routeService.fillAvailableSeats(routeOrderDTOList);
             session.removeAttribute(ERROR_MESSAGE);
             session.setAttribute(ROUTE_ORDER_DTO_LIST, routeOrderDTOList);

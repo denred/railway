@@ -34,7 +34,6 @@
                 </select></td>
             </c:forEach>
             <td>
-                <input type="hidden" name="routs_id" value="${routs_id}">
                 <input type="hidden" name="train_id" value="${train_id}">
                 <input type="hidden" name="departure_station" value="${departure_station}">
                 <input type="hidden" name="arrival_station" value="${arrival_station}">

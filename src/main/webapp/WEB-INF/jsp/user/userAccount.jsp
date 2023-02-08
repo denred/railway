@@ -114,7 +114,8 @@
                         </c:when>
                         <c:otherwise>
                             <li class="page-item"><a class="page-link"
-                                                     href="controller?action=orders&user_id=${user_id}&page=${i}">${i}</a></li>
+                                                     href="controller?action=orders&user_id=${user_id}&page=${i}">${i}</a>
+                            </li>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>

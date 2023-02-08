@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class StationValidator {
     private static final Logger LOGGER = LoggerFactory.getLogger(StationValidator.class);
-    private static final String STATION_NAME = "^[a-zA-Zа-яА-яёЁ\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F']{4,25}+$";
+    private static final String STATION_NAME = "^[a-zA-Zа-яА-яёЁ\\u0400-\\u052F\\u2DE0-\\u2DFF\\uA640-\\uA69F'ʼ`]{4,25}+$";
 
     public void isValidStation(Station station) {
         Map<String, String> errors = new HashMap<>();

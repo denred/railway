@@ -73,8 +73,8 @@ public class ConfirmOrderCommand implements Command {
             order.setCarriageNumber(carriage.getNumber());
             order.setOrderDate(LocalDateTime.now());
             order.setOrderStatus(OrderStatus.PROCESSING);
-            order.setArrivalStation(dispatchStation.getStation());
-            order.setDispatchStation(arrivalStation.getStation());
+            order.setArrivalStation(arrivalStation.getStation());
+            order.setDispatchStation(dispatchStation.getStation());
             order.setSeatNumber(number);
 
             sb = new StringBuilder();
