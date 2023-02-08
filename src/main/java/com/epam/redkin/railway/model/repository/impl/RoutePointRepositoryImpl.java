@@ -163,6 +163,46 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
     }
 
     @Override
+    public List<MappingInfoDTO> getMappingInfoListByRouteIdAndPagination(int routeId, int offset, int limit) {
+        LOGGER.info(String.format("Started --> getMappingInfoListByRouteIdAndPagination(routeId= %s, offset= %s, limit= %s)", routeId, offset, limit));
+        List<MappingInfoDTO> mappingInfoDTOS = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_ROUTE_MAPPING_BY_ROUTE_ID_AND_PAGINATION)) {
+            statement.setInt(1, routeId);
+            statement.setInt(2, offset);
+            statement.setInt(3, limit);
+            ResultSet resultSets = statement.executeQuery();
+            while (resultSets.next()) {
+                mappingInfoDTOS.add(extractStationInfo(resultSets));
+            }
+            LOGGER.info("Extracted List<MappingInfoDTO>: " + mappingInfoDTOS);
+        } catch (SQLException e) {
+            LOGGER.error("Can`t get route list to station mapping by id: " + e);
+            throw new DataBaseException("Can`t get route list to station mapping by id. id= " + routeId, e);
+        }
+        return mappingInfoDTOS;
+    }
+
+    @Override
+    public int getRouteStationCount(int routeId) {
+        LOGGER.info("Started getRouteStationCount()");
+        int count = 0;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_ROUTE_MAPPING_SIZE_BY_ROUTE_ID_AND_PAGINATION)) {
+            statement.setInt(1, routeId);
+            ResultSet resultSets = statement.executeQuery();
+            if (resultSets.next()) {
+                count = resultSets.getInt(COUNT);
+            }
+            LOGGER.info("Stations in route: " + count);
+        } catch (SQLException e) {
+            LOGGER.error("Can`t get count stations in route: " + e);
+            throw new DataBaseException("CCan`t get count stations in route", e);
+        }
+        return count;
+    }
+
+    @Override
     public MappingInfoDTO getMappingInfo(int routeId, int stationId) {
         LOGGER.info("Started public MappingInfoDTO getMappingInfo(int routeId, int stationId), " +
                 "routeId= " + routeId + " stationId= " + stationId);

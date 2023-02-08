@@ -134,6 +134,14 @@ public interface Constants {
     String GET_ROUTE_MAPPING_BY_ROUTE_ID = "SELECT * FROM station_has_route as rm " +
             "JOIN station as s ON rm.station_id = s.id " +
             "WHERE route_id = ? ORDER BY station_order";
+
+    String GET_ROUTE_MAPPING_BY_ROUTE_ID_AND_PAGINATION = "SELECT * FROM station_has_route as rm " +
+            "JOIN station as s ON rm.station_id = s.id " +
+            "WHERE route_id = ? ORDER BY station_order LIMIT ? , ?";
+
+    String GET_ROUTE_MAPPING_SIZE_BY_ROUTE_ID_AND_PAGINATION = "SELECT count(*) as count FROM station_has_route as rm " +
+            "JOIN station as s ON rm.station_id = s.id " +
+            "WHERE route_id = ?";
     String GET_ROUTE_MAPPING_BY_STATION_AND_ROUTE_ID = "SELECT * FROM station_has_route as rm " +
             "JOIN station as s ON rm.station_id = s.id " +
             "WHERE rm.route_id = ? AND rm.station_id = ? ORDER BY station_order";

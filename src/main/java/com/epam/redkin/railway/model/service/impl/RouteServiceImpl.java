@@ -43,8 +43,8 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public List<RoutsOrderDTO> getRouteListWithParameters(String departureStation, String arrivalStation,
-                                                          LocalDateTime departureDate) {
+    public List<RoutsOrderDTO> getRouteOrderDtoList(String departureStation, String arrivalStation,
+                                                    LocalDateTime departureDate) {
         List<StationDTO> stations = routeRepository.getStationDTOListWithParameters(departureStation, arrivalStation);
         Map<Integer, List<StationDTO>> routToStationMap = new HashMap<>();
 

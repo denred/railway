@@ -6,7 +6,7 @@ public class Path {
     public static final String PAGE_LOGIN = "/login.jsp";
     public static final String PAGE_SEARCH_ROUTES = "WEB-INF/jsp/common/searchRoutForOrder.jsp";
     public static final String PAGE_ORDERS = "WEB-INF/jsp/user/userAccount.jsp";
-    public static final String PAGE_ROUTE_DETAIL = "WEB-INF/jsp/common/detailRout.jsp";
+    public static final String PAGE_ROUTE_DETAIL = "WEB-INF/jsp/common/detailRoute.jsp";
     public static final String PAGE_SELECT_STATION_AND_CARRIAGE_TYPE = "WEB-INF/jsp/common/selectStationAndCarriageType.jsp";
     public static final String PAGE_SELECT_CARRIAGE_AND_COUNT_SEATS = "WEB-INF/jsp/common/selectCarriageAndCountSeats.jsp";
     public static final String PAGE_SELECT_SEATS_NUMBER = "WEB-INF/jsp/common/selectSeats.jsp";
@@ -36,13 +36,17 @@ public class Path {
     public static final String COMMAND_HOME = "controller?action=home";
     public static final String COMMAND_INFO_ROUTE = "controller?action=routes";
     public static final String COMMAND_ROUTE_MAPPING = "controller?action=route_mapping";
-    public static final String COMMAND_ROUTE_DETAIL = "controller?action=route";
+    public static final String COMMAND_ROUTE_DETAIL = "controller?action=route_detail";
     public static final String COMMAND_SEARCH_ROUTES = "controller?action=search_routes";
     public static final String COMMAND_INFO_STATIONS = "controller?action=stations";
     public static final String COMMAND_INFO_USERS = "controller?action=users";
     public static final String COMMAND_INFO_ORDERS = "controller?action=admin_orders";
     public static final String COMMAND_INFO_CARRIAGES = "controller?action=carriages";
     public static final String COMMAND_INFO_TRAINS = "controller?action=trains";
+    public static final String COMMAND_SELECT_STATION_AND_CARRIAGE_TYPE = "controller?action=select_station_and_carriage_type";
+    public static final String COMMAND_SELECT_CARRIAGE_AND_COUNT_SEATS = "controller?action=select_carriage_and_count_seats";
+    public static final String COMMAND_SELECT_SEATS_NUMBER = "controller?action=select_seats";
+    public static final String COMMAND_CREATE_ORDER = "controller?action=create_order";
 
     // user commands
     public static final String COMMAND_ORDERS = "controller?action=orders";

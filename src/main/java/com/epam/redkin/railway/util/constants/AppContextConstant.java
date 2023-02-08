@@ -86,6 +86,7 @@ public class AppContextConstant {
     //Seat
     public static final String SEATS_ID = "seats_id";
     public static final String COUNT_SEATS = "count_of_seats";
+    public static final String SEAT_LIST = "seat_list";
 
     //RouteDTO
     public static final String ROUTE_DTO_LIST = "routeDto_list";
@@ -112,6 +113,7 @@ public class AppContextConstant {
     public static final String TO_STATION = "to";
     public static final String STATUS_LIST = "statusList";
     public static final String ERROR_MESSAGE  = "errorMessage";
+    public static final String PRICE  = "price";
 
     //error messages
 

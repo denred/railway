@@ -5,6 +5,10 @@ import com.epam.redkin.railway.model.repository.*;
 import com.epam.redkin.railway.model.repository.impl.*;
 import com.epam.redkin.railway.model.service.impl.*;
 import com.epam.redkin.railway.model.service.*;
+import jakarta.servlet.http.HttpSession;
+
+import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
+import static com.epam.redkin.railway.util.constants.AppContextConstant.CURRENT_PAGE;
 
 public class AppContext {
     private static final AppContext appContext = new AppContext();
@@ -27,6 +31,18 @@ public class AppContext {
     private final TrainService trainService = new TrainServiceImpl(trainRepository);
     private final RouteMappingService routeMappingService = new RouteMappingServiceImpl(routePointRepository);
     private final LogoutService logoutService = new LogoutServiceImpl();
+    private final PaginationService paginationService = (request, currentPage, records, pageRecords, firstVisibleLinks) -> {
+        int pagesCount = (int) Math.ceil(records * 1.0 / pageRecords);
+        int lastPage = pagesCount;
+        pagesCount = Math.min(pagesCount, firstVisibleLinks);
+        HttpSession session = request.getSession();
+
+        session.setAttribute(PAGE_RECORDS, pageRecords);
+        session.setAttribute(PAGE_COUNT, pagesCount);
+        session.setAttribute(LAST_PAGE, lastPage);
+        session.setAttribute(CURRENT_PAGE, currentPage);
+    };
+
 
     public static AppContext getInstance() {
         return appContext;
@@ -55,5 +71,7 @@ public class AppContext {
     public StationService getStationService(){return stationService;}
 
     public LogoutService getLogoutService(){return logoutService;}
+
+    public PaginationService getPaginationService(){return paginationService;}
 
 }

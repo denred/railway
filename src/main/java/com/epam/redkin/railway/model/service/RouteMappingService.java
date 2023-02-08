@@ -14,13 +14,17 @@ public interface RouteMappingService {
     void removeRoutToStationMapping(int routsId, int stationId);
 
 
-    List<RoutePoint> getAllRoutToStationMappingList();
+    List<RoutePoint> getRouteMappingList();
 
 
-    List<MappingInfoDTO> getMappingInfoDtoListByRouteId(int routsId);
+    List<MappingInfoDTO> getMappingInfoDtoListByRouteId(int routeId);
 
 
-    MappingInfoDTO getMappingInfo(int routsId, int stationId);
+    MappingInfoDTO getMappingInfo(int routeId, int stationId);
 
     int getLastStation(List<MappingInfoDTO> mappingInfo);
+
+    List<MappingInfoDTO> getMappingInfoDtoListByRouteIdAndPagination(int routeId, int offset, int limit);
+
+    int getRouteStationsCount(int routeId);
 }

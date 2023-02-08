@@ -27,7 +27,7 @@ public interface RouteService {
 
     RouteInfoDTO getRouteInfoById(int routsId);
 
-    List<RoutsOrderDTO> getRouteListWithParameters(String departureStation, String arrivalStation, LocalDateTime departureDate);
+    List<RoutsOrderDTO> getRouteOrderDtoList(String departureStation, String arrivalStation, LocalDateTime departureDate);
 
     void fillAvailableSeats(List<RoutsOrderDTO> routeOrderDTOList);
 
