@@ -38,15 +38,15 @@
                         </c:if>
                     </td>
                     <td>
-                        <c:set var="endLoop" value="${fn:length(rout_m_list)}"/>
+                        <c:set var="endLoop" value="${last_station}"/>
                         <c:if test="${item.order ne endLoop}">
                             ${item.stationDispatchData.format( DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}
                         </c:if>
                     </td>
                     <td>
-                        <c:if test="${item.order ne 1 and item.order ne last_station}">
+                        <c:if test="${item.order ne 1 and item.order ne endLoop}">
                             <period:period dateFrom="${item.stationArrivalDate}" dateTo="${item.stationDispatchData}"
-                                           locale="${lang}"/>
+                                           locale="${sessionScope.locale}"/>
                         </c:if>
                     </td>
                 </tr>
@@ -119,7 +119,9 @@
             </ul>
         </nav>
     </div>
-    <a href="controller?action=search_routes" class="btn btn-primary"><fmt:message key="back"/></a>
+    <a href="controller?action=search_routes" class="btn bg-gradient-blue text-primary mb-0">
+        <i class="fas fa-arrow-alt-circle-left" aria-hidden="true"></i>
+        <fmt:message key="back"/></a>
 </div>
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
 </body>
