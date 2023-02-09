@@ -1,12 +1,9 @@
 package com.epam.redkin.railway.web.controller.command.common;
 
 import com.epam.redkin.railway.model.dto.RouteInfoDTO;
-import com.epam.redkin.railway.model.dto.RoutsOrderDTO;
+import com.epam.redkin.railway.model.dto.RouteOrderDTO;
 import com.epam.redkin.railway.model.entity.Carriage;
 import com.epam.redkin.railway.model.entity.Seat;
-import com.epam.redkin.railway.model.entity.Train;
-import com.epam.redkin.railway.model.entity.User;
-import com.epam.redkin.railway.model.exception.IncorrectDataException;
 import com.epam.redkin.railway.model.service.*;
 import com.epam.redkin.railway.model.validator.SeatValidator;
 import com.epam.redkin.railway.web.controller.command.Command;
@@ -16,12 +13,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -71,7 +66,7 @@ public class CreateOrderCommand implements Command {
             seatValidator.isValidSeat(seatList, countOfSeats);
             String departure = stationService.getStationById(Integer.parseInt(departureStationId)).getStation();
             String arrival = stationService.getStationById(Integer.parseInt(arrivalStationId)).getStation();
-            List<RoutsOrderDTO> routeOrderDTOList = routeService.getRouteOrderDtoList(departure, arrival, departureDate);
+            List<RouteOrderDTO> routeOrderDTOList = routeService.getRouteOrderDtoList(departure, arrival, departureDate, null);
 
             session.setAttribute(ROUTE_ORDER_DTO_LIST, routeOrderDTOList);
             session.setAttribute(ROUTE_NAME, routName);

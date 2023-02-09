@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class RoutsOrderDTO {
+public class RouteOrderDTO {
 
     private int routsId;
     private int trainId;
@@ -26,7 +26,7 @@ public class RoutsOrderDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RoutsOrderDTO that = (RoutsOrderDTO) o;
+        RouteOrderDTO that = (RouteOrderDTO) o;
         return firstClassFreeSeatsCount == that.firstClassFreeSeatsCount &&
                 secondClassFreeSeatsCount == that.secondClassFreeSeatsCount &&
                 Objects.equals(routsId, that.routsId) &&

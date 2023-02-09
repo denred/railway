@@ -63,6 +63,7 @@ public class ActionFactory {
 
         // user commands
         commands.put("search_routes", new SearchRoutesCommand());
+        commands.put("search_page", new SearchRoutesPage());
         commands.put("orders", new GetUserOrdersCommand());
         commands.put("route", new DetailRouteCommand());
         commands.put("route_detail", new DetailRoutePage());

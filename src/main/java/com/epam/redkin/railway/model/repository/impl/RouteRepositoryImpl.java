@@ -170,8 +170,8 @@ public class RouteRepositoryImpl implements RouteRepository, Constants {
 
     @Override
     public List<StationDTO> getStationDTOListWithParameters(String departureStation, String arrivalStation) {
-        LOGGER.info("\nStarted method getStationDTOListWithParameters(String departureStation, String arrivalStation)\n" +
-                "with departureStation= " + departureStation + " and arrivalStation= " + arrivalStation);
+        LOGGER.info(String.format("Started getStationDTOListWithParameters(String departureStation, String arrivalStation)" +
+                "with departureStation= " + departureStation + " and arrivalStation= " + arrivalStation));
         List<StationDTO> routes = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ROUTE_LIST_WITH_PARAMETERS)) {

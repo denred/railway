@@ -3,7 +3,7 @@ package com.epam.redkin.railway.model.service;
 
 
 import com.epam.redkin.railway.model.dto.RouteInfoDTO;
-import com.epam.redkin.railway.model.dto.RoutsOrderDTO;
+import com.epam.redkin.railway.model.dto.RouteOrderDTO;
 import com.epam.redkin.railway.model.entity.Route;
 
 import java.time.LocalDateTime;
@@ -27,10 +27,12 @@ public interface RouteService {
 
     RouteInfoDTO getRouteInfoById(int routsId);
 
-    List<RoutsOrderDTO> getRouteOrderDtoList(String departureStation, String arrivalStation, LocalDateTime departureDate);
+    List<RouteOrderDTO> getRouteOrderDtoList(String departureStation, String arrivalStation, LocalDateTime departureDate, String onlyFreeSeats);
 
-    void fillAvailableSeats(List<RoutsOrderDTO> routeOrderDTOList);
+    void fillAvailableSeats(List<RouteOrderDTO> routeOrderDTOList);
 
     LocalDateTime getDepartureDate(String startDate, String startTime);
+
+    List<RouteOrderDTO> getSearchRoutePagination(String departureStation, String arrivalStation, LocalDateTime departureDate, int offset, int limit, String onlyFreeSeats);
 }
 

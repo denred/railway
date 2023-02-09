@@ -2,7 +2,7 @@ package com.epam.redkin.railway.model.service.impl;
 
 
 import com.epam.redkin.railway.model.dto.RouteInfoDTO;
-import com.epam.redkin.railway.model.dto.RoutsOrderDTO;
+import com.epam.redkin.railway.model.dto.RouteOrderDTO;
 import com.epam.redkin.railway.model.dto.StationDTO;
 import com.epam.redkin.railway.model.entity.CarriageType;
 import com.epam.redkin.railway.model.entity.Route;
@@ -10,6 +10,7 @@ import com.epam.redkin.railway.model.exception.IncorrectDataException;
 import com.epam.redkin.railway.model.repository.RouteRepository;
 import com.epam.redkin.railway.model.service.RouteService;
 import com.epam.redkin.railway.model.service.SeatService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class RouteServiceImpl implements RouteService {
@@ -43,17 +45,14 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public List<RoutsOrderDTO> getRouteOrderDtoList(String departureStation, String arrivalStation,
-                                                    LocalDateTime departureDate) {
-        List<StationDTO> stations = routeRepository.getStationDTOListWithParameters(departureStation, arrivalStation);
+    public List<RouteOrderDTO> getRouteOrderDtoList(String departureStation, String arrivalStation,
+                                                    LocalDateTime departureDate, String onlyFreeSeats) {
         Map<Integer, List<StationDTO>> routToStationMap = new HashMap<>();
+        List<StationDTO> stations = routeRepository.getStationDTOListWithParameters(departureStation, arrivalStation);
 
-        for (StationDTO stationDto : stations) {
-            List<StationDTO> routStations = routToStationMap.computeIfAbsent(stationDto.getRoutsId(), k -> new ArrayList<>());
-            routStations.add(stationDto);
-        }
+        stations.forEach(stationDTO -> routToStationMap.computeIfAbsent(stationDTO.getRoutsId(), k -> new ArrayList<>()).add(stationDTO));
 
-        List<RoutsOrderDTO> result = new ArrayList<>();
+        List<RouteOrderDTO> result = new ArrayList<>();
 
         for (List<StationDTO> stationDTOS : routToStationMap.values()) {
             StationDTO departure = null;
@@ -79,14 +78,24 @@ public class RouteServiceImpl implements RouteService {
 
             if (departure.getStationDispatchDateTime().isAfter(departureDate) || departure.getStationDispatchDateTime()
                     .isEqual(departureDate)) {
-                result.add(toRoutsOrderDto(stationDTOS));
+                result.add(getOrderDTO(stationDTOS));
             }
+        }
+
+        fillAvailableSeats(result);
+        if (StringUtils.isBlank(onlyFreeSeats)) {
+            result = result.stream()
+                    .filter(routeOrderDTO -> routeOrderDTO
+                            .getAvailableSeats()
+                            .values().stream()
+                            .anyMatch(k -> k > 0))
+                    .collect(Collectors.toList());
         }
         return result;
     }
 
     @Override
-    public void fillAvailableSeats(List<RoutsOrderDTO> routeOrderDTOList) {
+    public void fillAvailableSeats(List<RouteOrderDTO> routeOrderDTOList) {
         LOGGER.info("Started the method fillAvailableSeats");
         List<CarriageType> carriageTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
         routeOrderDTOList.forEach(route -> {
@@ -111,6 +120,12 @@ public class RouteServiceImpl implements RouteService {
             throw new IncorrectDataException("Incorrect data entered. Date or time format", e);
         }
         return departureDate;
+    }
+
+    @Override
+    public List<RouteOrderDTO> getSearchRoutePagination(String departureStation, String arrivalStation, LocalDateTime departureDate, int offset, int limit, String onlyFreeSeats) {
+        List<RouteOrderDTO> routeOrderDTO = getRouteOrderDtoList(departureStation, arrivalStation, departureDate, onlyFreeSeats);
+        return routeOrderDTO.subList(offset, Math.min(limit, routeOrderDTO.size()));
     }
 
 
@@ -147,21 +162,21 @@ public class RouteServiceImpl implements RouteService {
     }
 
 
-    private RoutsOrderDTO toRoutsOrderDto(List<StationDTO> stationDTOS) {
-        RoutsOrderDTO routsOrderDto = new RoutsOrderDTO();
-        routsOrderDto.setStations(stationDTOS);
+    private RouteOrderDTO getOrderDTO(List<StationDTO> stationDTOS) {
+        RouteOrderDTO routeOrderDto = new RouteOrderDTO();
+        routeOrderDto.setStations(stationDTOS);
         StationDTO stationDto = stationDTOS.get(0);
-        routsOrderDto.setRoutName(stationDto.getRoutName());
-        routsOrderDto.setRoutNumber(stationDto.getRoutNumber());
-        routsOrderDto.setRoutsId(stationDto.getRoutsId());
-        routsOrderDto.setTrainId(stationDto.getTrainId());
-        routsOrderDto.setTrainNumber(stationDto.getTrainNumber());
+        routeOrderDto.setRoutName(stationDto.getRoutName());
+        routeOrderDto.setRoutNumber(stationDto.getRoutNumber());
+        routeOrderDto.setRoutsId(stationDto.getRoutsId());
+        routeOrderDto.setTrainId(stationDto.getTrainId());
+        routeOrderDto.setTrainNumber(stationDto.getTrainNumber());
         int countFirstClassSeats = seatService.getCountSeatByCarType(stationDto.getTrainId(), CarriageType.FIRST_CLASS);
         int countSecondClassSeats = seatService.getCountSeatByCarType(stationDto.getTrainId(), CarriageType.SECOND_CLASS);
-        routsOrderDto.setFirstClassFreeSeatsCount(countFirstClassSeats);
-        routsOrderDto.setSecondClassFreeSeatsCount(countSecondClassSeats);
+        routeOrderDto.setFirstClassFreeSeatsCount(countFirstClassSeats);
+        routeOrderDto.setSecondClassFreeSeatsCount(countSecondClassSeats);
 
-        return routsOrderDto;
+        return routeOrderDto;
     }
 }
 
