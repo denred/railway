@@ -91,7 +91,7 @@
                     <span class="input-group-text"><fmt:message key="date"/></span>
                     <label for="date"></label>
                     <input name="departure_date" type="date" class="form-control" id="date"
-                           value="${date}">
+                           value="${date}" min="${date}">
 
                 </div>
                 <div class="input-group w-25 ml-4">

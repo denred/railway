@@ -27,15 +27,18 @@ public class SelectCarriageAndSeatsCommand implements Command {
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
         Router router = new Router();
-        router.setRouteType(Router.RouteType.FORWARD);
-        router.setPagePath(Path.PAGE_SELECT_CARRIAGE_AND_COUNT_SEATS);
+        router.setRouteType(Router.RouteType.REDIRECT);
+        router.setPagePath(Path.COMMAND_SELECT_SEATS_NUMBER);
+
         RouteService routeService = AppContext.getInstance().getRouteService();
         CarriageService carriageService = AppContext.getInstance().getCarriageService();
         HttpSession session = request.getSession();
-        String carriageType = request.getParameter(CARRIAGE_TYPE);
-        String departure_station_id = request.getParameter(DEPARTURE_STATION_ID);
-        String arrival_station_id = request.getParameter(ARRIVAL_STATION_ID);
+
+        String carriageType = (String) session.getAttribute(CARRIAGE_TYPE);
+        String departure_station_id = (String) session.getAttribute(DEPARTURE_STATION_ID);
+        String arrival_station_id = (String) session.getAttribute(ARRIVAL_STATION_ID);
         String routeId = (String) session.getAttribute(ROUTE_ID);
+
         if (StringUtils.isNoneBlank(carriageType, routeId, departure_station_id, arrival_station_id)) {
             RouteInfoDTO routeInfoDto = routeService.getRouteInfoById(Integer.parseInt(routeId));
             List<Carriage> carriageList = carriageService
@@ -43,13 +46,8 @@ public class SelectCarriageAndSeatsCommand implements Command {
                     .stream()
                     .distinct()
                     .collect(Collectors.toList());
-            session.setAttribute(CARRIAGE_TYPE, carriageType);
             session.setAttribute(CARRIAGE_DTO_LIST, carriageList);
-            session.setAttribute(TRAIN_ID, routeInfoDto.getTrainId());
-            session.setAttribute(DEPARTURE_STATION_ID, departure_station_id);
-            session.setAttribute(ARRIVAL_STATION_ID, arrival_station_id);
-            router.setRouteType(Router.RouteType.REDIRECT);
-            router.setPagePath(Path.COMMAND_SELECT_CARRIAGE_AND_COUNT_SEATS);
+            session.setAttribute("notedCarriage", carriageList.get(0).getCarriageId());
         }
         return router;
     }

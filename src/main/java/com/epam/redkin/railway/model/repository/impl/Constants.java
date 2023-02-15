@@ -11,7 +11,7 @@ public interface Constants {
     String GET_CARRIAGES_BY_TRAIN_ID = "SELECT * FROM carriage WHERE train_id = ?";
     String GET_CARRIAGES_BY_TRAIN_ID_AND_TYPE = "SELECT * FROM carriage" +
             " JOIN seat ON carriage.id=seat.carriage_id " +
-            "WHERE carriage.train_id = ? AND type = ? AND busy = false ORDER BY carriage.id";
+            "WHERE carriage.train_id = ? AND type = ? AND busy = false ORDER BY carriage.number";
     String GET_ALL_CARRIAGE = "SELECT c.id as carriage_id, " +
             "type, " +
             "c.number as carriage_number, " +

@@ -69,7 +69,9 @@ public class ActionFactory {
         commands.put("route_detail", new DetailRoutePage());
         commands.put("select_station_and_carriage_type", new SelectStationAndCarriageTypeCommand());
         commands.put("select_carriage_and_count_seats", new SelectCarriageAndSeatsCommand());
+        commands.put("select_carriage_and_seats", new SelectCarriageAndSeatsPage());
         commands.put("select_seats", new SelectSeatsCommand());
+        commands.put("select_seats_page", new SelectSeatsPage());
         commands.put("confirm_order", new ConfirmOrderCommand());
         commands.put("create_order", new CreateOrderCommand());
         commands.put("cancel_order", new CancelOrderCommand());

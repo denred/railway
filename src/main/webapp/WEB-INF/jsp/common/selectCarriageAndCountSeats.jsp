@@ -1,6 +1,7 @@
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 <%@ taglib prefix="period" uri="/WEB-INF/tags/custom.tld" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="lang"/>
@@ -8,6 +9,7 @@
 <head>
     <title><fmt:message key="user.makeOrder"/></title>
     <jsp:include page="/WEB-INF/templates/_head.jsp"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/carriage.css">
 </head>
 <body>
 <mrt:navigation/>
@@ -15,36 +17,60 @@
 
 <div class="container">
     <form action="controller?action=select_seats" method="POST">
-        <div class="d-flex justify-content-center">
-            <table class="table table-bordered table-hover caption-top">
-                <thead class="thead-light text-center">
-                <tr>
-                    <th><fmt:message key="car.number"/></th>
-                    <th><fmt:message key="count.of.seats"/></th>
-                    <th><fmt:message key="order.make.order"/></th>
-                </tr>
-                </thead>
-                <tbody class="text-center">
-                <tr>
-                    <td>
-                        <label for="carriageNumber"></label>
-                        <select id="carriageNumber" class="btn btn-info dropdown-toggle" name="car_id">
-                            <c:forEach var="carriage" items="${car_list}">
-                                <option value="${carriage.carriageId}"><c:out value="${carriage.number}"/></option>
-                            </c:forEach>
-                        </select>
-                    </td>
-                    <td><input class="form-control" name="count_of_seats"></td>
-                    <td>
-                        <input type="submit" class="btn btn-success" name="add_order"
-                               value="<fmt:message key="next"/>">
-                    </td>
-                </tr>
-            </table>
+        <div class="row">
+            <div class="col-md-auto"><fmt:message key="carriage.carriages"/></div>
+            <c:forEach var="carriage" items="${car_list}">
+                <div class="col-md-auto">
+                    <div class="form-check">
+                        <input name="car_id" value="${carriage.carriageId}" class="form-check-input" type="radio"
+                               id="checkFreeSeats" onclick="this.form.submit()"
+                               <c:if test="${notedCarriage eq carriage.carriageId}">checked="checked"</c:if> />
+                        <label class="form-check-label" for="checkFreeSeats">
+                            <span>${carriage.number}</span><span class="fas fa-train ml-1"></span>
+                        </label>
+                    </div>
+                </div>
+            </c:forEach>
         </div>
     </form>
-    <a href="controller?action=select_station_and_carriage_type" class="btn btn-primary"><fmt:message key="back"/></a>
+    <form id="seatsId" action="controller?action=create_order" method="POST">
+        <%-- Carriage choose seat --%>
+        <c:if test="${fn:length(seat_list) gt 0}">
+            <div class="carriage row">
+                <c:forEach begin="1" end="36" varStatus="loop">
+                    <c:set var="state" value="true"/>
+                    <c:forEach var="seat" items="${seat_list}">
+                        <c:if test="${seat.seatNumber eq loop.index}">
+                            <c:set var="state" value="false"/>
+                            <div class="col-auto mx-1">
+                                <div aria-details="${seat.id}"
+                                     class="seat seat-${loop.index} seat-free">${loop.index}</div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${state}">
+                        <div class="col-auto mx-1">
+                            <div class="seat seat-busy seat-${loop.index}">${loop.index}</div>
+                        </div>
+                    </c:if>
+                </c:forEach>
+            </div>
+        </c:if>
+        <div class="row">
+            <div class="col-md-6 text-start">
+                <a href="controller?action=search_routes" class="btn bg-gradient-blue text-primary mb-0">
+                    <i class="fas fa-arrow-alt-circle-left" aria-hidden="true"></i>
+                    <fmt:message key="back"/></a>
+            </div>
+            <div class="col-md-6 text-end">
+                <button type="submit" class="btn bg-gradient-green text-primary mb-0">
+                    <fmt:message key="next"/> <i class="fas fas fa-arrow-alt-circle-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </form>
 </div>
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/chooseSeat.js"></script>
 </body>
 </html>

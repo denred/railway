@@ -32,7 +32,7 @@
         </c:when>
         <c:otherwise>
             <div class="d-flex justify-content-center">
-                <table class="table table-hover caption-top" style="width: 1400px;">
+                <table class="table table-hover caption-top">
                     <thead class="thead-light text-center">
                     <tr>
                         <th><fmt:message key="train.number"/></th>
@@ -45,9 +45,20 @@
                             </div>
                         </th>
                         <th><fmt:message key="order.travel.time"/></th>
-                        <th><fmt:message key="free.seats.count"/><br></th>
-                        <th><fmt:message key="car.price"/></th>
-                        <th></th>
+                        <th>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <fmt:message key="order.car.type"/>
+                                </div>
+                                <div class="col-sm-2">
+                                    <fmt:message key="free.seats.count"/>
+                                </div>
+                                <div class="col-sm-3">
+                                    <fmt:message key="car.price"/>
+                                </div>
+                                <div class="col-sm-4"></div>
+                            </div>
+                        </th>
                     </tr>
                     </thead>
                     <tbody class="text-center">
@@ -84,35 +95,41 @@
                                 <c:set var="checkFreeSeats" value="${false}"/>
                                 <c:forEach items="${rout.availableSeats}" var="entry">
                                     <div class="row">
-                                        <span class="col-md-8 text-start"><fmt:message key="${entry.key}"/></span>
-                                        <span class="col-md-4 text-end">${entry.value}</span>
+                                        <div class="col-md-3 d-flex align-items-center justify-content-center"><fmt:message key="${entry.key}"/></div>
+                                        <div class="col-md-2 d-flex align-items-center justify-content-center">${entry.value}</div>
                                         <c:if test="${entry.value>0}">
                                             <c:set var="checkFreeSeats" value="true"/>
                                         </c:if>
+                                        <div class="col-md-3 d-flex align-items-center justify-content-center">
+                                            <span>${entry.key.price} &#8372;</span>
+                                        </div>
+                                        <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                            <c:if test="${checkFreeSeats}">
+                                                <form class="d-inline m-0" action="controller?action=select_station_and_carriage_type"
+                                                      method="POST">
+                                                    <input type="hidden" name="routs_id"
+                                                           value="${rout.routsId}">
+                                                    <input type="hidden" name="train_id"
+                                                           value="${rout.trainId}">
+                                                    <input type="hidden" name="car_type"
+                                                           value="${entry.key}">
+                                                    <input type="hidden" name="departure_station_id"
+                                                           value="${rout.stations.get(0).stationId}">
+                                                    <input type="hidden" name="travel_time"
+                                                           value="<period:period dateFrom="${dispatchDateTime}" dateTo="${arrivalDateTime}" locale="${sessionScope.locale}"/>">
+                                                    <input type="hidden" name="arrival_station_id"
+                                                           value="${rout.stations.get(1).stationId}">
+
+                                                    <button type="submit"
+                                                            class="btn bg-gradient-green text-primary mb-0">
+                                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                                        <fmt:message key="order.choose"/>
+                                                    </button>
+                                                </form>
+                                            </c:if>
+                                        </div>
                                     </div>
                                 </c:forEach>
-                            </td>
-                            <td>
-                                <c:forEach items="${rout.availableSeats}" var="entry">
-                                    <span>${entry.key.price} &#8372;</span><br>
-                                </c:forEach>
-                            </td>
-
-                            <td>
-                                <c:if test="${checkFreeSeats}">
-                                    <form action="controller?action=select_station_and_carriage_type" method="POST">
-                                        <input type="hidden" name="routs_id" value="${rout.routsId}">
-                                        <input type="hidden" name="train_id" value="${rout.trainId}">
-                                        <input type="hidden" name="station1"
-                                               value="${rout.stations.get(0).station}">
-                                        <input type="hidden" name="travel_time"
-                                               value="<period:period dateFrom="${dispatchDateTime}" dateTo="${arrivalDateTime}" locale="${sessionScope.locale}"/>">
-                                        <input type="hidden" name="station2"
-                                               value="${rout.stations.get(1).station}">
-                                        <input type="submit" class="btn btn-info" name="order"
-                                               value="<fmt:message key="order.make.order"/>">
-                                    </form>
-                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>

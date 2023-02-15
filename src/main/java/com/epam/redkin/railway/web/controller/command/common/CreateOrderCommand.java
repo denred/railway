@@ -5,7 +5,6 @@ import com.epam.redkin.railway.model.dto.RouteOrderDTO;
 import com.epam.redkin.railway.model.entity.Carriage;
 import com.epam.redkin.railway.model.entity.Seat;
 import com.epam.redkin.railway.model.service.*;
-import com.epam.redkin.railway.model.validator.SeatValidator;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
 import com.epam.redkin.railway.web.controller.command.Router;
@@ -41,33 +40,34 @@ public class CreateOrderCommand implements Command {
         SeatService seatService = AppContext.getInstance().getSeatService();
         StationService stationService = AppContext.getInstance().getStationService();
         HttpSession session = request.getSession();
-        SeatValidator seatValidator = new SeatValidator();
 
         String departureStationId = (String) session.getAttribute(DEPARTURE_STATION_ID);
         String arrivalStationId = (String) session.getAttribute(ARRIVAL_STATION_ID);
         String routeId = (String) session.getAttribute(ROUTE_ID);
-        int trainId = (Integer) session.getAttribute(TRAIN_ID);
-        String countOfSeats = (String) session.getAttribute(COUNT_SEATS);
+        String trainId = (String) session.getAttribute(TRAIN_ID);
         String carriageType = (String) session.getAttribute(CARRIAGE_TYPE);
         String carriageId = (String) session.getAttribute(CARRIAGE_ID);
         LocalDateTime departureDate = (LocalDateTime) session.getAttribute(DEPARTURE_DATE);
 
         String[] numbers = request.getParameterValues(SEATS_ID);
 
-        if(ArrayUtils.isNotEmpty(numbers)) {
+        if (ArrayUtils.isNotEmpty(numbers)) {
+            int countOfSeats = numbers.length;
             List<String> seatsNumber = Arrays.asList(numbers);
             RouteInfoDTO routeInfoDTO = routeService.getRouteInfoById(Integer.parseInt(routeId));
             String routName = routeInfoDTO.getRoutName();
             Carriage carriage = carriageService.getCarById(Integer.parseInt(carriageId));
             String carriageNumber = carriage.getNumber();
-            Double price = orderService.getPrice(carriageType, Integer.parseInt(countOfSeats));
+            Double price = orderService.getPrice(carriageType, countOfSeats);
+
             List<Seat> seatList = seatService.getSeatsByIdBatch(seatsNumber);
-            String trainNumber = trainService.getTrainById(trainId).getNumber();
-            seatValidator.isValidSeat(seatList, countOfSeats);
+
+            String trainNumber = trainService.getTrainById(Integer.parseInt(trainId)).getNumber();
             String departure = stationService.getStationById(Integer.parseInt(departureStationId)).getStation();
             String arrival = stationService.getStationById(Integer.parseInt(arrivalStationId)).getStation();
             List<RouteOrderDTO> routeOrderDTOList = routeService.getRouteOrderDtoList(departure, arrival, departureDate, null);
 
+            session.setAttribute(COUNT_SEATS, countOfSeats);
             session.setAttribute(ROUTE_ORDER_DTO_LIST, routeOrderDTOList);
             session.setAttribute(ROUTE_NAME, routName);
             session.setAttribute(CARRIAGE_NUMBER, carriageNumber);
