@@ -42,7 +42,7 @@ public class SelectCarriageAndSeatsCommand implements Command {
         if (StringUtils.isNoneBlank(carriageType, routeId, departure_station_id, arrival_station_id)) {
             RouteInfoDTO routeInfoDto = routeService.getRouteInfoById(Integer.parseInt(routeId));
             List<Carriage> carriageList = carriageService
-                    .getCarByTrainIdAndCarType(routeInfoDto.getTrainId(), carriageType)
+                    .getCarriageByTrainIdAndCarriageType(routeInfoDto.getTrainId(), carriageType)
                     .stream()
                     .distinct()
                     .collect(Collectors.toList());

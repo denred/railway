@@ -8,25 +8,25 @@ import java.util.List;
 
 public interface CarriageService {
 
-    List<CarriageDTO> getAllCarriageDTOList();
+    List<CarriageDTO> getCarriageDTOList();
 
 
-    void removeCar(int carId);
+    void removeCarriage(int carId);
 
 
-    List<Carriage> getCarByTrainId(int trainId);
+    List<Carriage> getCarriageByTrainId(int trainId);
 
 
     void addCarriage(CarriageDTO carriageDTO);
 
 
-    Carriage getCarById(int carId);
+    Carriage getCarriageById(int carriageId);
 
 
-    void updateCar(CarriageDTO carriageDTO);
+    void updateCarriage(CarriageDTO carriageDTO);
 
 
-    List<Carriage> getCarByTrainIdAndCarType(int trainId, String carType);
+    List<Carriage> getCarriageByTrainIdAndCarriageType(int trainId, String carType);
 
     List<CarriageDTO> getCarriageDtoListByCurrentRecordAndRecordsPerPage(int i, int i1, String filter, String filterValue);
 

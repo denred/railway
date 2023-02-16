@@ -56,7 +56,7 @@ public class CreateOrderCommand implements Command {
             List<String> seatsNumber = Arrays.asList(numbers);
             RouteInfoDTO routeInfoDTO = routeService.getRouteInfoById(Integer.parseInt(routeId));
             String routName = routeInfoDTO.getRoutName();
-            Carriage carriage = carriageService.getCarById(Integer.parseInt(carriageId));
+            Carriage carriage = carriageService.getCarriageById(Integer.parseInt(carriageId));
             String carriageNumber = carriage.getNumber();
             Double price = orderService.getPrice(carriageType, countOfSeats);
 
@@ -77,7 +77,7 @@ public class CreateOrderCommand implements Command {
             session.setAttribute(TRAIN_NUMBER, trainNumber);
             session.setAttribute(CARRIAGE_ID, carriageId);
             session.setAttribute(SEAT_LIST, seatList);
-            session.setAttribute(SEATS_ID, Arrays.deepToString(numbers));
+            session.setAttribute(SEATS_ID, Arrays.toString(numbers));
 
             router.setRouteType(Router.RouteType.REDIRECT);
             router.setPagePath(COMMAND_CREATE_ORDER);

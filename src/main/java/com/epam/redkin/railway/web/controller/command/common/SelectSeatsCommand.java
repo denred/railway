@@ -1,5 +1,6 @@
 package com.epam.redkin.railway.web.controller.command.common;
 
+import com.epam.redkin.railway.model.dto.CarriageDTO;
 import com.epam.redkin.railway.model.dto.RouteInfoDTO;
 import com.epam.redkin.railway.model.entity.Carriage;
 import com.epam.redkin.railway.model.entity.Seat;
@@ -42,27 +43,26 @@ public class SelectSeatsCommand implements Command {
         String departure_station_id = (String) session.getAttribute(DEPARTURE_STATION_ID);
         String arrival_station_id = (String) session.getAttribute(ARRIVAL_STATION_ID);
         String routeId = (String) session.getAttribute(ROUTE_ID);
-        List<Carriage> carriageList = new ArrayList<>();
+        List<CarriageDTO> carriageList = new ArrayList<>();
 
         if (StringUtils.isNoneBlank(carriageType, routeId, departure_station_id, arrival_station_id)) {
             RouteInfoDTO routeInfoDto = routeService.getRouteInfoById(Integer.parseInt(routeId));
-            carriageList = carriageService
-                    .getCarByTrainIdAndCarType(routeInfoDto.getTrainId(), carriageType)
+            carriageList = carriageService.getCarriageDTOList()
                     .stream()
-                    .distinct()
+                    .filter(carriageDTO -> carriageDTO.getCarriageType().name().equals(carriageType))
                     .collect(Collectors.toList());
         }
 
 
         String carriageId = request.getParameter(CARRIAGE_ID);
-        if(StringUtils.isBlank(carriageId)){
-            carriageId = String.valueOf(carriageList.get(0).getCarriageId());
+        if (StringUtils.isBlank(carriageId)) {
+            carriageId = String.valueOf(carriageList.get(0).getCarId());
         }
-            List<Seat> seatList = seatService.getSeatByCarId(Integer.parseInt(carriageId));
-            session.setAttribute(CARRIAGE_ID, carriageId);
-            session.setAttribute("notedCarriage", carriageId);
-            session.setAttribute(SEAT_LIST, seatList);
-            session.setAttribute(CARRIAGE_DTO_LIST, carriageList);
+        List<Seat> seatList = seatService.getSeatByCarId(Integer.parseInt(carriageId));
+        session.setAttribute(CARRIAGE_ID, carriageId);
+        session.setAttribute("notedCarriage", carriageId);
+        session.setAttribute(SEAT_LIST, seatList);
+        session.setAttribute(CARRIAGE_DTO_LIST, carriageList);
 
         LOGGER.info("done");
         return router;

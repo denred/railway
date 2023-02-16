@@ -16,21 +16,25 @@
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
 
 <div class="container">
+    <h3 class="text-center my-2"><fmt:message key="seat.selection"/></h3>
     <form action="controller?action=select_seats" method="POST">
         <div class="row">
             <div class="col-md-auto"><fmt:message key="carriage.carriages"/></div>
             <c:forEach var="carriage" items="${car_list}">
                 <div class="col-md-auto">
                     <div class="form-check">
-                        <input name="car_id" value="${carriage.carriageId}" class="form-check-input" type="radio"
+                        <input name="car_id" value="${carriage.carId}" class="form-check-input" type="radio"
                                id="checkFreeSeats" onclick="this.form.submit()"
-                               <c:if test="${notedCarriage eq carriage.carriageId}">checked="checked"</c:if> />
+                               <c:if test="${notedCarriage eq carriage.carId}">checked="checked"</c:if> />
                         <label class="form-check-label" for="checkFreeSeats">
-                            <span>${carriage.number}</span><span class="fas fa-train ml-1"></span>
+                            <span>${carriage.carNumber}</span><span class="fas fa-train ml-1">(${carriage.seats})</span>
                         </label>
                     </div>
                 </div>
             </c:forEach>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12"><fmt:message key="car.type"/>: <fmt:message key="${car_type}"/></div>
         </div>
     </form>
     <form id="seatsId" action="controller?action=create_order" method="POST">
@@ -63,7 +67,7 @@
                     <fmt:message key="back"/></a>
             </div>
             <div class="col-md-6 text-end">
-                <button type="submit" class="btn bg-gradient-green text-primary mb-0">
+                <button disabled id="button_next" type="submit" class="btn bg-gradient-green text-primary mb-0">
                     <fmt:message key="next"/> <i class="fas fas fa-arrow-alt-circle-right" aria-hidden="true"></i>
                 </button>
             </div>

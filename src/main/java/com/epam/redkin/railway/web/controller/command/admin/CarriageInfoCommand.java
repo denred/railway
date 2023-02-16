@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
+
 public class CarriageInfoCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(CarriageInfoCommand.class);
     private static final int RECORDS_PER_PAGE = 5;
@@ -38,13 +40,13 @@ public class CarriageInfoCommand implements Command {
                 trainFilter, carriageFilter);
         int noOfRecords = carriageService.getRouteListSize();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
-        request.setAttribute(AppContextConstant.PAGE_RECORDS, RECORDS_PER_PAGE);
-        request.setAttribute(AppContextConstant.PAGE_COUNT, noOfPages);
-        request.setAttribute(AppContextConstant.CURRENT_PAGE, page);
-        request.setAttribute(AppContextConstant.CARRIAGE_TYPE_LIST, carriageTypeList);
-        request.setAttribute(AppContextConstant.FILTER_TRAIN, trainFilter);
-        request.setAttribute(AppContextConstant.FILTER_TYPE_CARRIAGE, carriageFilter);
-        request.setAttribute(AppContextConstant.CARRIAGE_DTO_LIST, carriageDtoList);
+        request.setAttribute(PAGE_RECORDS, RECORDS_PER_PAGE);
+        request.setAttribute(PAGE_COUNT, noOfPages);
+        request.setAttribute(CURRENT_PAGE, page);
+        request.setAttribute(CARRIAGE_TYPE_LIST, carriageTypeList);
+        request.setAttribute(FILTER_TRAIN, trainFilter);
+        request.setAttribute(FILTER_TYPE_CARRIAGE, carriageFilter);
+        request.setAttribute(CARRIAGE_DTO_LIST, carriageDtoList);
         LOGGER.info("done");
         router.setPagePath(Path.PAGE_ADMIN_INFO_CARRIAGE);
         router.setRouteType(Router.RouteType.FORWARD);

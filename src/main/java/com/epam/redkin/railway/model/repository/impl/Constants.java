@@ -20,6 +20,7 @@ public interface Constants {
             "FROM carriage as c LEFT OUTER JOIN train as t\n" +
             "ON train_id = t.id ORDER BY t.number, c.number";
 
+
     /* SEAT */
     String ADD_SEAT = "INSERT INTO seat (seat_number, busy, carriage_id) VALUES (?,?,?)";
     String GET_SEAT_BY_ID = "SELECT * FROM seat WHERE id = ?";

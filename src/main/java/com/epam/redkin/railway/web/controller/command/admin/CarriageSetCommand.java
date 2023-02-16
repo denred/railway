@@ -51,7 +51,7 @@ public class CarriageSetCommand implements Command {
             assert trainNotSelected != null;
             carriageDTO.setTrainId(Integer.parseInt(trainNotSelected));
             Train train = trainService.getTrainById(Integer.parseInt(trainId));
-            List<Carriage> carriagesByTrainId = carriageService.getCarByTrainId(train.getId());
+            List<Carriage> carriagesByTrainId = carriageService.getCarriageByTrainId(train.getId());
             if (containsCarWithCarId(carriagesByTrainId, Integer.parseInt(carriageId))
                     && containsCarWithCarNumber(carriagesByTrainId, carriageNumber)
                     && Integer.parseInt(trainId) == train.getId()) {
@@ -69,7 +69,7 @@ public class CarriageSetCommand implements Command {
                 throw new IncorrectDataException("Incorrect data entered", e);
             }
             carriageValidator.isValidCar(carriageDTO);
-            carriageService.updateCar(carriageDTO);
+            carriageService.updateCarriage(carriageDTO);
             router.setRouteType(Router.RouteType.REDIRECT);
             router.setPagePath(Path.COMMAND_INFO_CARRIAGES);
         } else if (StringUtils.isNoneBlank(trainId, carriageType, countSeats)) {
@@ -90,7 +90,7 @@ public class CarriageSetCommand implements Command {
             router.setRouteType(Router.RouteType.REDIRECT);
         } else if (StringUtils.isNoneBlank(carriageId)) {
             int carId = Integer.parseInt(carriageId);
-            Carriage car = carriageService.getCarById(carId);
+            Carriage car = carriageService.getCarriageById(carId);
             List<Train> trainList = trainService.getTrainList();
             List<CarriageType> carTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
             request.setAttribute(AppContextConstant.CARRIAGE, car);

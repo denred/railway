@@ -47,7 +47,7 @@ public class ConfirmOrderCommand implements Command {
         String stationIdD = request.getParameter(AppContextConstant.DEPARTURE_STATION_ID);
         String carriageId = request.getParameter(AppContextConstant.CARRIAGE_ID);
 
-        Carriage carriage = carriageService.getCarById(Integer.parseInt(carriageId));
+        Carriage carriage = carriageService.getCarriageById(Integer.parseInt(carriageId));
         Train train = trainService.getTrainById(Integer.parseInt(trainId));
         Station dispatchStation = stationService.getStationById(Integer.parseInt(stationIdA));
         Station arrivalStation = stationService.getStationById(Integer.parseInt(stationIdD));

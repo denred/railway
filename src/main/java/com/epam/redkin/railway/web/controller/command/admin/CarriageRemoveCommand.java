@@ -18,7 +18,7 @@ public class CarriageRemoveCommand implements Command {
         Router router= new Router();
         CarriageService carriageService = AppContext.getInstance().getCarriageService();
         String carriageId = request.getParameter("car_id");
-        carriageService.removeCar(Integer.parseInt(carriageId));
+        carriageService.removeCarriage(Integer.parseInt(carriageId));
         router.setRouteType(Router.RouteType.REDIRECT);
         router.setPagePath(Path.COMMAND_INFO_CARRIAGES);
         LOGGER.info("done");

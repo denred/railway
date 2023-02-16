@@ -45,7 +45,7 @@ public class SelectStationAndCarriageTypeCommand implements Command {
         if (StringUtils.isNoneBlank(trainId, routeId, carriageType, departure_station_id, arrival_station_id)) {
             List<MappingInfoDTO> routeMappingInfoList = routeMappingService
                     .getMappingInfoDtoListByRouteId(Integer.parseInt(routeId));
-            List<Carriage> carriageList = carriageService.getCarByTrainId(Integer.parseInt(trainId));
+            List<Carriage> carriageList = carriageService.getCarriageByTrainId(Integer.parseInt(trainId));
             Set<CarriageType> carriageTypes = new HashSet<>();
             for (Carriage carriage : carriageList) {
                 carriageTypes.add(carriage.getType());

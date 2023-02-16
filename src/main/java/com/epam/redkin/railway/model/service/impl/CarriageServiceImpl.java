@@ -29,7 +29,7 @@ public class CarriageServiceImpl implements CarriageService {
     }
 
     @Override
-    public void updateCar(CarriageDTO carriageDTO) {
+    public void updateCarriage(CarriageDTO carriageDTO) {
         Carriage car = getCarFromCarDto(carriageDTO);
 
             carriageRepository.update(car);
@@ -68,12 +68,12 @@ public class CarriageServiceImpl implements CarriageService {
 
     @Override
     public Carriage
-    getCarById(int carId) {
-        return carriageRepository.getById(carId);
+    getCarriageById(int carriageId) {
+        return carriageRepository.getById(carriageId);
     }
 
     @Override
-    public List<Carriage> getCarByTrainId(int trainId) {
+    public List<Carriage> getCarriageByTrainId(int trainId) {
         return carriageRepository.getCarriagesByTrainId(trainId);
     }
 
@@ -100,15 +100,15 @@ public class CarriageServiceImpl implements CarriageService {
     }
 
     @Override
-    public List<Carriage> getCarByTrainIdAndCarType(int trainId, String carType) {
+    public List<Carriage> getCarriageByTrainIdAndCarriageType(int trainId, String carType) {
         return carriageRepository.getCarriagesByTrainIdAndType(trainId, carType);
     }
 
     @Override
     public List<CarriageDTO> getCarriageDtoListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage, String trainFilter, String carriageTypeFilter) {
-        List<CarriageDTO> allRecords = getAllCarriageDTOList();
+        List<CarriageDTO> allRecords = getCarriageDTOList();
         if (!StringUtils.isAllBlank(trainFilter, carriageTypeFilter)) {
-            allRecords = getAllCarriageDTOList().stream()
+            allRecords = getCarriageDTOList().stream()
                     .filter(dto -> StringUtils.isBlank(trainFilter) ? true : dto.getTrainNumber().toLowerCase().contains(trainFilter.toLowerCase()))
                     .filter(dto -> StringUtils.isBlank(carriageTypeFilter) ? true : dto.getCarriageType().name().toLowerCase().contains(carriageTypeFilter.toLowerCase()))
                     .collect(Collectors.toList());
@@ -122,13 +122,13 @@ public class CarriageServiceImpl implements CarriageService {
     }
 
     @Override
-    public void removeCar(int carId) {
+    public void removeCarriage(int carId) {
         seatRepository.deleteAllSeatsByCarriageId(carId);
         carriageRepository.delete(carId);
     }
 
     @Override
-    public List<CarriageDTO> getAllCarriageDTOList() {
+    public List<CarriageDTO> getCarriageDTOList() {
         List<CarriageDTO> result = carriageRepository.getCarriageDTOList();
         for (CarriageDTO car : result) {
             int seat = seatRepository.getSeatsCountByCarriageId(car.getCarId());
