@@ -3,18 +3,16 @@
 <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5" style="top: -100px;">
     <a href="controller?action=home" class="navbar-brand d-flex align-items-center">
         <h3 class="m-0">
-            <img class="img-fluid me-3" src="../../../img/train-main.png" alt="train logo" width="96px">
+            <img class="img-fluid me-3" src="${pageContext.request.contextPath}/img/train-main.png" alt="train logo" width="96px">
             <fmt:message key="app.name"/>
         </h3>
     </a>
-    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
+    <button type="button" class="navbar-toggle" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggle-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav mx-auto bg-light rounded pe-4 py-3 py-lg-0">
-            <a href="controller?action=home" class="nav-item nav-link"><fmt:message key="menu.route.search"/></a>
             <a href="controller?action=profile" class="nav-item nav-link"><fmt:message key="menu.profile"/></a>
-            <a href="controller?action=orders" class="nav-item nav-link"><fmt:message key="user.account"/></a>
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true"><fmt:message key="admin.account"/></a>
                 <div class="dropdown-menu bg-light border-0 m-0 show" data-bs-popper="none">

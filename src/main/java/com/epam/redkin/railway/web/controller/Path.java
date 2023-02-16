@@ -4,11 +4,11 @@ public class Path {
     // pages
     public static final String PAGE_HOME = "WEB-INF/jsp/common/homePage.jsp";
     public static final String PAGE_LOGIN = "/login.jsp";
-    public static final String PAGE_SEARCH_ROUTES = "WEB-INF/jsp/common/searchRoutForOrder.jsp";
+    public static final String PAGE_SEARCH_ROUTES = "WEB-INF/jsp/common/searchRoutesForOrder.jsp";
     public static final String PAGE_ORDERS = "WEB-INF/jsp/user/userAccount.jsp";
     public static final String PAGE_ROUTE_DETAIL = "WEB-INF/jsp/common/detailRoute.jsp";
     public static final String PAGE_SELECT_STATION_AND_CARRIAGE_TYPE = "WEB-INF/jsp/common/selectStationAndCarriageType.jsp";
-    public static final String PAGE_SELECT_CARRIAGE_AND_COUNT_SEATS = "WEB-INF/jsp/common/selectCarriageAndCountSeats.jsp";
+    public static final String PAGE_SELECT_CARRIAGE_AND_COUNT_SEATS = "WEB-INF/jsp/common/selectCarriageAndSeats.jsp";
     public static final String PAGE_SELECT_SEATS_NUMBER = "WEB-INF/jsp/common/selectSeats.jsp";
     public static final String PAGE_CONFIRM_ORDER = "WEB-INF/jsp/common/confirmOrder.jsp";
     public static final String PAGE_INFO_ROUTE = "WEB-INF/jsp/admin/routeInfo.jsp";
@@ -32,8 +32,9 @@ public class Path {
 
 
 
-    // admin commands
+    // commands
     public static final String COMMAND_HOME = "controller?action=home";
+    public static final String COMMAND_PROFILE = "controller?action=profile";
     public static final String COMMAND_INFO_ROUTE = "controller?action=routes";
     public static final String COMMAND_ROUTE_MAPPING = "controller?action=route_mapping";
     public static final String COMMAND_ROUTE_DETAIL = "controller?action=route_detail";
@@ -49,8 +50,6 @@ public class Path {
     public static final String COMMAND_SELECT_SEATS_NUMBER = "controller?action=select_seats";
     public static final String COMMAND_SELECT_SEATS_PAGE = "controller?action=select_seats_page";
     public static final String COMMAND_CREATE_ORDER = "controller?action=create_order";
-
-    // user commands
     public static final String COMMAND_ORDERS = "controller?action=orders";
     public static final String COMMAND_LOGIN_BY_TOKEN_LINK = "controller?action=login_by_token_link";
     public static final String COMMAND_POST_REGISTRATION_ACCOUNT_APPROVAL = "?action=postRegistrationAccountApproval";

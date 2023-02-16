@@ -41,19 +41,17 @@ public class LoginCommand implements Command {
         }
         User user = userService.isValidUser(login, password);
         LOGGER.info("User successfully extracted");
-        currentRouter.setPagePath(Path.COMMAND_HOME);
-        currentRouter.setRouteType(Router.RouteType.REDIRECT);
+        if (user.getRole().name().equalsIgnoreCase(USER_ROLE)) {
+            currentRouter.setPagePath(Path.COMMAND_HOME);
+            currentRouter.setRouteType(Router.RouteType.REDIRECT);
+            session.setAttribute(CURRENT_DATE, LocalDate.now());
+        } else {
+            currentRouter.setPagePath(Path.COMMAND_PROFILE);
+            currentRouter.setRouteType(Router.RouteType.REDIRECT);
+        }
         session.setAttribute(SESSION_USER, user);
-        session.setAttribute(CURRENT_DATE, LocalDate.now());
         session.setAttribute(LOCALE, locale);
         LOGGER.info("done");
         return currentRouter;
-    }
-
-    public String forward(String to) {
-        return String.format("forward:%s", to);
-    }
-    public String redirect(String to) {
-        return String.format("redirect:%s", to);
     }
 }
