@@ -31,6 +31,7 @@ public class AppContext {
     private final TrainService trainService = new TrainServiceImpl(trainRepository);
     private final RouteMappingService routeMappingService = new RouteMappingServiceImpl(routePointRepository);
     private final LogoutService logoutService = new LogoutServiceImpl();
+    private final SearchService searchService = new SearchServiceImpl();
     private final PaginationService paginationService = (request, currentPage, records, pageRecords, firstVisibleLinks) -> {
         int pagesCount = (int) Math.ceil(records * 1.0 / pageRecords);
         int lastPage = pagesCount;
@@ -48,30 +49,48 @@ public class AppContext {
         return appContext;
     }
 
-    public UserService getUserService(){
+    public UserService getUserService() {
         return userService;
     }
 
-    public RouteService getRouteService(){
+    public RouteService getRouteService() {
         return routeService;
     }
 
-    public SeatService getSeatService(){
+    public SeatService getSeatService() {
         return seatService;
     }
 
-    public OrderService getOrderService(){return orderService;}
+    public OrderService getOrderService() {
+        return orderService;
+    }
 
-    public RouteMappingService getRouteMappingService(){return routeMappingService;}
+    public RouteMappingService getRouteMappingService() {
+        return routeMappingService;
+    }
 
-    public CarriageService getCarriageService(){return carriageService;}
+    public CarriageService getCarriageService() {
+        return carriageService;
+    }
 
-    public TrainService getTrainService(){return trainService;}
+    public TrainService getTrainService() {
+        return trainService;
+    }
 
-    public StationService getStationService(){return stationService;}
+    public StationService getStationService() {
+        return stationService;
+    }
 
-    public LogoutService getLogoutService(){return logoutService;}
+    public LogoutService getLogoutService() {
+        return logoutService;
+    }
 
-    public PaginationService getPaginationService(){return paginationService;}
+    public PaginationService getPaginationService() {
+        return paginationService;
+    }
+
+    public SearchService getSearchService() {
+        return searchService;
+    }
 
 }

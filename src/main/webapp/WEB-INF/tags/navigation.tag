@@ -5,9 +5,9 @@
 <fmt:setBundle basename="lang"/>
 <c:choose>
     <c:when test="${\"USER\" == sessionScope.user.role}">
-        <%@include file="../views/userNavigationBar.jspf" %>
+        <%@include file="/WEB-INF/jspf/views/userNavigationBar.jspf" %>
     </c:when>
     <c:when test="${\"ADMIN\" == sessionScope.user.role}">
-        <%@include file="../views/adminNavigationBar.jspf" %>
+        <%@include file="/WEB-INF/jspf/views/adminNavigationBar.jspf" %>
     </c:when>
 </c:choose>

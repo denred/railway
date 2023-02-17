@@ -37,6 +37,7 @@ public class ActionFactory {
         commands.put("home", new HomeCommand());
         commands.put("i18n", new I18NCommand());
         commands.put("profile", new ProfileCommand());
+        commands.put("profilePage", new ProfilePageCommand());
         commands.put("redirect", null);
 
         // admin commands
@@ -51,6 +52,7 @@ public class ActionFactory {
         commands.put("set_station", new StationSetCommand());
         commands.put("delete_station", new StationRemoveCommand());
         commands.put("carriages", new CarriageInfoCommand());
+        commands.put("carriages_page", new CarriageInfoPageCommand());
         commands.put("trains", new TrainInfoCommand());
         commands.put("admin_orders", new OrderInfoCommand());
         commands.put("users", new UserInfoCommand());
@@ -59,6 +61,8 @@ public class ActionFactory {
         commands.put("set_train", new TrainSetCommand());
         commands.put("remove_train", new TrainRemoveCommand());
         commands.put("set_carriage", new CarriageSetCommand());
+        commands.put("add_carriage", new CarriageAddCommand());
+        commands.put("set_carriage_page", new CarriageSetPageCommand());
         commands.put("remove_carriage", new CarriageRemoveCommand());
 
         // user commands

@@ -6,6 +6,7 @@ public interface Constants {
     /* CARRIAGE */
     String ADD_CARRIAGE = "INSERT INTO carriage (type, number, train_id) VALUES (?,?,?)";
     String GET_CARRIAGE_BY_ID = "SELECT * FROM carriage WHERE id = ?";
+    String GET_CARRIAGE_BY_NUMBER = "SELECT * FROM carriage WHERE number = ?";
     String UPDATE_CARRIAGE = "UPDATE carriage SET type = ?, number = ?, train_id = ? WHERE id = ?";
     String DELETE_CARRIAGE = "DELETE FROM carriage WHERE id = ?";
     String GET_CARRIAGES_BY_TRAIN_ID = "SELECT * FROM carriage WHERE train_id = ?";
@@ -19,6 +20,23 @@ public interface Constants {
             "t.number as train_number " +
             "FROM carriage as c LEFT OUTER JOIN train as t\n" +
             "ON train_id = t.id ORDER BY t.number, c.number";
+
+    String GET_ALL_CARRIAGE_WITH_FILTER_AND_PAGINATION = "SELECT c.id as carriage_id, " +
+            "type, " +
+            "c.number as carriage_number, " +
+            "train_id, " +
+            "t.number as train_number " +
+            "FROM carriage as c LEFT OUTER JOIN train as t\n" +
+            "ON train_id = t.id " +
+            "%s " +
+            "ORDER BY t.number, c.number " +
+            "LIMIT ? , ?";
+
+    String GET_CARRIAGE_COUNT_WITH_FILTER = "SELECT count(*) as count " +
+            "FROM carriage as c LEFT OUTER JOIN train as t\n" +
+            "ON train_id = t.id " +
+            "%s " +
+            "ORDER BY t.number, c.number";
 
 
     /* SEAT */
@@ -167,38 +185,39 @@ public interface Constants {
     String BUSY = "busy";
     String COUNT = "count";
     String TRAIN_NUMBER = "train_number";
+    String TRAIN_NUMBER_TABLE = "t.number";
     String TRAIN_ID = "train_id";
     String NUMBER = "number";
-    String CARRIAGE_TYPE =  "carriage_type";
-    String TYPE =  "type";
-    String PRICE =  "price";
-    String ARRIVAL_DATE =  "arrival_date";
-    String DISPATCH_DATE =  "dispatch_date";
-    String BOOKING_DATE =  "booking_date";
-    String STATUS =  "status";
-    String SEATS_COUNT =  "seat_count";
-    String ARRIVAL_STATION =  "arrival_station";
-    String DISPATCH_STATION =  "dispatch_station";
-    String STATION =  "station";
-    String STATION_ID =  "station_id";
-    String STATION_ARRIVAL_DATE =  "station_arrival";
-    String STATION_DISPATCH_DATE =  "station_dispatch";
-    String STATION_ORDER =  "station_order";
-    String TRAVEL_TIME =  "travel_time";
-    String ROUTE_ID =  "route_id";
-    String ROUTE_NAME =  "route_name";
-    String ROUTE_NUMBER =  "route_number";
-    String CARRIAGE_NUMBER =  "carriage_number";
-    String CARRIAGE_ID =  "carriage_id";
-    String SEAT_NUMBER =  "seat_number";
-    String SEATS_ID =  "seats_id";
-    String EMAIL =  "email";
-    String PASSWORD =  "password";
-    String FIRST_NAME =  "first_name";
-    String LAST_NAME =  "last_name";
-    String PHONE =  "phone";
-    String BIRTH_DATE =  "birth_date";
-    String ROLE =  "role";
-    String BLOCKED =  "blocked";
+    String CARRIAGE_TYPE = "carriage_type";
+    String TYPE = "type";
+    String PRICE = "price";
+    String ARRIVAL_DATE = "arrival_date";
+    String DISPATCH_DATE = "dispatch_date";
+    String BOOKING_DATE = "booking_date";
+    String STATUS = "status";
+    String SEATS_COUNT = "seat_count";
+    String ARRIVAL_STATION = "arrival_station";
+    String DISPATCH_STATION = "dispatch_station";
+    String STATION = "station";
+    String STATION_ID = "station_id";
+    String STATION_ARRIVAL_DATE = "station_arrival";
+    String STATION_DISPATCH_DATE = "station_dispatch";
+    String STATION_ORDER = "station_order";
+    String TRAVEL_TIME = "travel_time";
+    String ROUTE_ID = "route_id";
+    String ROUTE_NAME = "route_name";
+    String ROUTE_NUMBER = "route_number";
+    String CARRIAGE_NUMBER = "carriage_number";
+    String CARRIAGE_ID = "carriage_id";
+    String SEAT_NUMBER = "seat_number";
+    String SEATS_ID = "seats_id";
+    String EMAIL = "email";
+    String PASSWORD = "password";
+    String FIRST_NAME = "first_name";
+    String LAST_NAME = "last_name";
+    String PHONE = "phone";
+    String BIRTH_DATE = "birth_date";
+    String ROLE = "role";
+    String BLOCKED = "blocked";
 
 }

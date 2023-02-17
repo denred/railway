@@ -5,6 +5,7 @@ import com.epam.redkin.railway.model.dto.CarriageDTO;
 import com.epam.redkin.railway.model.entity.Carriage;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CarriageService {
 
@@ -28,7 +29,9 @@ public interface CarriageService {
 
     List<Carriage> getCarriageByTrainIdAndCarriageType(int trainId, String carType);
 
-    List<CarriageDTO> getCarriageDtoListByCurrentRecordAndRecordsPerPage(int i, int i1, String filter, String filterValue);
+    List<CarriageDTO> getCarriageDtoListPagination(int offset, int limit, Map<String, String> search);
 
-    int getRouteListSize();
+    int getRouteListSize(Map<String, String> search);
+
+    Carriage getCarriageByNumber(String carriageNumber);
 }

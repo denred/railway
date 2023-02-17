@@ -8,13 +8,12 @@ import com.epam.redkin.railway.model.exception.IncorrectDataException;
 import com.epam.redkin.railway.model.service.CarriageService;
 import com.epam.redkin.railway.model.repository.CarriageRepository;
 import com.epam.redkin.railway.model.repository.SeatRepository;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 
 @SuppressWarnings({"ALL", "FieldMayBeFinal"})
@@ -105,20 +104,24 @@ public class CarriageServiceImpl implements CarriageService {
     }
 
     @Override
-    public List<CarriageDTO> getCarriageDtoListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage, String trainFilter, String carriageTypeFilter) {
-        List<CarriageDTO> allRecords = getCarriageDTOList();
-        if (!StringUtils.isAllBlank(trainFilter, carriageTypeFilter)) {
-            allRecords = getCarriageDTOList().stream()
-                    .filter(dto -> StringUtils.isBlank(trainFilter) ? true : dto.getTrainNumber().toLowerCase().contains(trainFilter.toLowerCase()))
-                    .filter(dto -> StringUtils.isBlank(carriageTypeFilter) ? true : dto.getCarriageType().name().toLowerCase().contains(carriageTypeFilter.toLowerCase()))
-                    .collect(Collectors.toList());
+    public List<CarriageDTO> getCarriageDtoListPagination(int offset, int limit, Map<String, String> search) {
+        List<CarriageDTO> result = carriageRepository.getCarriageDTOListPagination(offset, limit, search);
+        for (CarriageDTO car : result) {
+            int seat = seatRepository.getSeatsCountByCarriageId(car.getCarId());
+            car.setSeats(seat);
+            calculatePrice(car);
         }
-        return allRecords.subList(currentPage, Math.min(recordsPerPage, allRecords.size()));
+        return result;
     }
 
     @Override
-    public int getRouteListSize() {
-        return carriageRepository.getCarriageDTOList().size();
+    public int getRouteListSize(Map<String, String> search) {
+        return carriageRepository.getCountCarriagesByFilter(search);
+    }
+
+    @Override
+    public Carriage getCarriageByNumber(String carriageNumber) {
+        return carriageRepository.getCarriageByNumber(carriageNumber);
     }
 
     @Override

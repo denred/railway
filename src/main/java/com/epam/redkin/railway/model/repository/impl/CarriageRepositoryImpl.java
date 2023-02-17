@@ -13,6 +13,9 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static com.epam.redkin.railway.model.repository.impl.Constants.COUNT;
 
 public class CarriageRepositoryImpl implements CarriageRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(CarriageRepositoryImpl.class);
@@ -63,7 +66,6 @@ public class CarriageRepositoryImpl implements CarriageRepository {
                 LOGGER.info("Connection closed");
             } catch (SQLException | NullPointerException e) {
                 LOGGER.error("Connection closing error: " + e);
-                throw new DataBaseException("Connection closing error: ", e);
             }
         }
         LOGGER.info("Generated id= " + key);
@@ -163,7 +165,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
 
     @Override
     public List<CarriageDTO> getCarriageDTOList() {
-        LOGGER.info("Started public List<CarriageDTO> getAllCarriageDTOList()");
+        LOGGER.info("Started getCarriageDTOList()");
         List<CarriageDTO> carriageDTOList = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.GET_ALL_CARRIAGE)) {
@@ -177,6 +179,68 @@ public class CarriageRepositoryImpl implements CarriageRepository {
             throw new DataBaseException("Cannot extract List<CarriageDTO>", e);
         }
         return carriageDTOList;
+    }
+
+    @Override
+    public List<CarriageDTO> getCarriageDTOListPagination(int offset, int limit, Map<String, String> search) {
+        LOGGER.info(String.format("Started getCarriageDTOListPagination(offset=%s, limit=%s, search=%s)",
+                offset, limit, search));
+        String searchQuery = search.isEmpty() ? "" : buildSearchQuery(search);
+        LOGGER.info("Search query: " + String.format(Constants.GET_ALL_CARRIAGE_WITH_FILTER_AND_PAGINATION, searchQuery));
+        List<CarriageDTO> carriageDTOList = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(String.format(Constants.GET_ALL_CARRIAGE_WITH_FILTER_AND_PAGINATION, searchQuery))) {
+            statement.setInt(1, offset);
+            statement.setInt(2, limit);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                carriageDTOList.add(extractCarriageDTO(resultSet));
+            }
+            LOGGER.info("Extracted List<CarriageDTO>: " + carriageDTOList);
+        } catch (SQLException e) {
+            LOGGER.error("Cannot extract List<CarriageDTO>: " + e);
+            throw new DataBaseException("Cannot extract List<CarriageDTO>", e);
+        }
+        return carriageDTOList;
+    }
+
+    @Override
+    public int getCountCarriagesByFilter(Map<String, String> search) {
+        LOGGER.info(String.format("Started getCountCarriagesByFilter(search=%s)", search));
+        String searchQuery = buildSearchQuery(search);
+        LOGGER.info("Search query: " + String.format(Constants.GET_CARRIAGE_COUNT_WITH_FILTER, searchQuery));
+        int count = 0;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(String.format(Constants.GET_CARRIAGE_COUNT_WITH_FILTER, searchQuery))) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(COUNT);
+            }
+            LOGGER.info("Number of records: " + count);
+        } catch (SQLException e) {
+            LOGGER.error("Cannot get number of CarriageDTO: " + e);
+            throw new DataBaseException("Cannot get number of CarriageDTO", e);
+        }
+        return count;
+    }
+
+    @Override
+    public Carriage getCarriageByNumber(String carriageNumber) {
+        LOGGER.info(String.format("Started getCarriageByNumber(carriageNumber=%s)", carriageNumber));
+        Carriage carriage = null;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(Constants.GET_CARRIAGE_BY_NUMBER)) {
+            statement.setString(1, carriageNumber);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                carriage = getCarriage(resultSet);
+            }
+            LOGGER.info("Extracted Carriage: " + carriage);
+        } catch (SQLException | NullPointerException e) {
+            LOGGER.error("Cannot extract carriage: " + e);
+            throw new DataBaseException("Cannot extract carriage with carriageNumber= " + carriageNumber);
+        }
+        return carriage;
     }
 
     private Carriage getCarriage(ResultSet rs) throws SQLException {
@@ -197,5 +261,19 @@ public class CarriageRepositoryImpl implements CarriageRepository {
                 .trainId(rs.getInt(Constants.TRAIN_ID))
                 .trainNumber(rs.getString(Constants.TRAIN_NUMBER))
                 .build();
+    }
+
+    private String buildSearchQuery(Map<String, String> search) {
+        StringBuilder stringBuilder = new StringBuilder("WHERE ");
+        final int[] count = {0};
+        search.forEach((key, value) -> {
+            if (count[0] < 1) {
+                stringBuilder.append(key).append(" REGEXP ").append("'").append(value).append("'");
+                count[0]++;
+            } else {
+                stringBuilder.append(" AND ").append(key).append(" REGEXP ").append("'").append(value).append("'");
+            }
+        });
+        return search.isEmpty() ? "" : stringBuilder.toString();
     }
 }

@@ -7,9 +7,6 @@
             <fmt:message key="app.name"/>
         </h3>
     </a>
-    <button type="button" class="navbar-toggle" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span class="navbar-toggle-icon"></span>
-    </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav mx-auto bg-light rounded pe-4 py-3 py-lg-0">
             <a href="controller?action=profile" class="nav-item nav-link"><fmt:message key="menu.profile"/></a>

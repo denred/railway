@@ -11,80 +11,76 @@
 <body>
 <mrt:navigation/>
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
-
 <div class="container mt-4">
     <div class="d-flex justify-content-center">
-        <table class="table table-bordered table-hover caption-top" style="width: 1000px;">
-            <thead class="thead-light text-center">
-            <tr>
-                <th><fmt:message key="train.number"/></th>
-                <th><fmt:message key="car.type"/></th>
-                <th><fmt:message key="car.number"/></th>
-                <th><fmt:message key="car.seats"/></th>
-                <th><fmt:message key="admin.editInformation"/></th>
-            </tr>
-            </thead>
-            <tbody class="text-center">
-            <tr>
-                <form action="controller?action=set_carriage" method="POST">
-                    <input type="hidden" name="car_id" value="${current_car.carriageId}">
-                    <td><label>
-                        <select class="btn btn-info dropdown-toggle" name="train_id">
-                            <option value="TRAIN_NOT_SELECTED"><fmt:message key="in.the.depot"/></option>
-                            <c:set var="train_id" value="${current_car.trainId}"/>
-                            <jsp:useBean id="trainList" scope="request" type="java.util.List"/>
-                            <c:forEach items="${trainList}" var="train">
-                                <option
-                                        <c:choose>
-                                            <c:when test="${train.id eq train_id}">
-                                                selected
-                                            </c:when>
-                                        </c:choose>
-                                        value="${train.id}"><c:out value="${train.number}"/>
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </label>
-                    </td>
-                    <td><label>
-                        <select class="btn btn-info dropdown-toggle" name="car_type">
-                            <c:set var="train_id" value="${current_car.type}"/>
-                            <jsp:useBean id="carTypeList" scope="request" type="java.util.List"/>
-                            <c:forEach items="${carTypeList}" var="car_type">
-                                <option
-                                        <c:choose>
-                                            <c:when test="${car_type eq current_car.type}">
-                                                selected
-                                            </c:when>
-                                        </c:choose>
-                                        value="${car_type}"><fmt:message key="${car_type}"/>
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </label>
-                    </td>
-                    <td><label>
-                        <input name="car_number" class="form-control" value="${current_car.number}">
-                    </label></td>
-                    <td><label>
-                        <input name="count_of_seats" class="form-control" value="${count_of_seats}">
-                    </label></td>
-                    <td>
-                        <input type="hidden" name="car_id" value="${current_car.carriageId}">
-                        <input type="hidden" name="routeDto" value="${car_list}">
-                        <input type="hidden" name="trainFilter" value="${trainFilter}">
-                        <input type="hidden" name="carriageTypeFilter" value="${carriageTypeFilter}">
-                        <input type="submit" class="btn btn-success" name="save_edit_information"
-                               value="<fmt:message key="admin.saveInformation"/>">
-                    </td>
-                </form>
-            </tr>
-            </tbody>
-        </table>
+        <form <c:choose> <c:when
+                test="${commandAdd}"> action="controller?action=add_carriage"</c:when>
+            <c:otherwise>action="controller?action=set_carriage"</c:otherwise>
+        </c:choose> method="POST">
+            <input type="hidden" name="car_id" value="${current_car.carriageId}">
+            <div class="row">
+                <div class="col-sm-3">
+                    <label for="trainNumber"><fmt:message key="train.number"/></label>
+                    <select id="trainNumber" class="btn btn-info dropdown-toggle" name="train_id">
+                        <c:set var="train_id" value="${current_car.trainId}"/>
+                        <jsp:useBean id="trainList" scope="session" type="java.util.List"/>
+                        <c:forEach items="${trainList}" var="train">
+                            <option
+                                    <c:choose>
+                                        <c:when test="${train.id eq train_id}">
+                                            selected
+                                        </c:when>
+                                    </c:choose>
+                                    value="${train.id}"><c:out value="${train.number}"/>
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <div class="col-sm-2">
+                    <label for="carriage-class"><fmt:message key="car.type"/></label>
+                    <select id="carriage-class" class="btn btn-info dropdown-toggle" name="car_type">
+                        <c:set var="train_id" value="${current_car.type}"/>
+                        <jsp:useBean id="carTypeList" scope="session" type="java.util.List"/>
+                        <c:forEach items="${carTypeList}" var="car_type">
+                            <option
+                                    <c:choose>
+                                        <c:when test="${car_type eq current_car.type}">
+                                            selected
+                                        </c:when>
+                                    </c:choose>
+                                    value="${car_type}"><fmt:message key="${car_type}"/>
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <div class="col-sm-2">
+                    <label for="carriage-number"><fmt:message key="car.number"/></label>
+                    <input id="carriage-number" name="car_number" class="form-control" value="${current_car.number}">
+                </div>
+
+                <div class="col-sm-2">
+                    <label for="seats-count"><fmt:message key="count.of.seats"/></label>
+                    <input id="seats-count" name="count_of_seats" class="form-control" value="${count_of_seats}">
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-lg-2">
+                    <a href="controller?action=carriages" class="btn bg-gradient-blue text-primary mb-0">
+                        <i class="far fa-arrow-alt-circle-left" aria-hidden="true"></i>
+                        <fmt:message key="back"/></a>
+                </div>
+                <div class="col-lg-3">
+                    <button class="btn bg-gradient-blue text-success" type="submit"><i class="far fa-check-circle"
+                                                                                       aria-hidden="true"></i>
+                        <fmt:message key="admin.saveInformation"/></button>
+                </div>
+            </div>
+        </form>
     </div>
-    <form action="controller?action=carriages" method="POST">
-        <input type="submit" class="btn btn-primary" value="<fmt:message key="back"/>">
-    </form>
 </div>
+
 </body>
 </html>

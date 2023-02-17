@@ -26,8 +26,8 @@ public class ProfileCommand implements Command {
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("Started");
         Router router = new Router();
-        router.setRouteType(Router.RouteType.FORWARD);
-        router.setPagePath(Path.PAGE_PROFILE);
+        router.setRouteType(Router.RouteType.REDIRECT);
+        router.setPagePath(Path.COMMAND_PROFILE_PAGE);
         UserService userService = AppContext.getInstance().getUserService();
         RegistrationValidator registrationValidator = new RegistrationValidator();
         HttpSession session = request.getSession();
@@ -66,11 +66,11 @@ public class ProfileCommand implements Command {
         }
         user = userService.read(user.getUserId());
 
-        request.setAttribute(FIRST_NAME, user.getFirstName());
-        request.setAttribute(LAST_NAME, user.getLastName());
-        request.setAttribute(PHONE_NUMBER, user.getPhone());
-        request.setAttribute(EMAIL, user.getEmail());
-        request.setAttribute(BIRTH_DATE, user.getBirthDate());
+        session.setAttribute(FIRST_NAME, user.getFirstName());
+        session.setAttribute(LAST_NAME, user.getLastName());
+        session.setAttribute(PHONE_NUMBER, user.getPhone());
+        session.setAttribute(EMAIL, user.getEmail());
+        session.setAttribute(BIRTH_DATE, user.getBirthDate());
 
         return router;
     }

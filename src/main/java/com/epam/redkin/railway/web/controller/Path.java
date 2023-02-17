@@ -35,6 +35,7 @@ public class Path {
     // commands
     public static final String COMMAND_HOME = "controller?action=home";
     public static final String COMMAND_PROFILE = "controller?action=profile";
+    public static final String COMMAND_PROFILE_PAGE = "controller?action=profilePage";
     public static final String COMMAND_INFO_ROUTE = "controller?action=routes";
     public static final String COMMAND_ROUTE_MAPPING = "controller?action=route_mapping";
     public static final String COMMAND_ROUTE_DETAIL = "controller?action=route_detail";
@@ -43,6 +44,7 @@ public class Path {
     public static final String COMMAND_INFO_USERS = "controller?action=users";
     public static final String COMMAND_INFO_ORDERS = "controller?action=admin_orders";
     public static final String COMMAND_INFO_CARRIAGES = "controller?action=carriages";
+    public static final String COMMAND_INFO_CARRIAGES_PAGE = "controller?action=carriages_page";
     public static final String COMMAND_INFO_TRAINS = "controller?action=trains";
     public static final String COMMAND_SELECT_STATION_AND_CARRIAGE_TYPE = "controller?action=select_station_and_carriage_type";
     public static final String COMMAND_SELECT_CARRIAGE_AND_COUNT_SEATS = "controller?action=select_carriage_and_count_seats";
@@ -53,4 +55,5 @@ public class Path {
     public static final String COMMAND_ORDERS = "controller?action=orders";
     public static final String COMMAND_LOGIN_BY_TOKEN_LINK = "controller?action=login_by_token_link";
     public static final String COMMAND_POST_REGISTRATION_ACCOUNT_APPROVAL = "?action=postRegistrationAccountApproval";
+    public static final String COMMAND_CARRIAGE_SET_PAGE = "controller?action=set_carriage_page";
 }

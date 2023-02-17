@@ -82,6 +82,7 @@ public class AppContextConstant {
     public static final String CARRIAGE_DTO_LIST = "car_list";
     public static final String CARRIAGE_NUMBER = "car_number";
     public static final String CARRIAGE = "current_car";
+    public static final String ADD_COMMAND = "commandAdd";
 
     //Seat
     public static final String SEATS_ID = "seats_id";

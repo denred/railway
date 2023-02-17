@@ -44,11 +44,11 @@ public class LoginCommand implements Command {
         if (user.getRole().name().equalsIgnoreCase(USER_ROLE)) {
             currentRouter.setPagePath(Path.COMMAND_HOME);
             currentRouter.setRouteType(Router.RouteType.REDIRECT);
-            session.setAttribute(CURRENT_DATE, LocalDate.now());
         } else {
             currentRouter.setPagePath(Path.COMMAND_PROFILE);
             currentRouter.setRouteType(Router.RouteType.REDIRECT);
         }
+        session.setAttribute(CURRENT_DATE, LocalDate.now());
         session.setAttribute(SESSION_USER, user);
         session.setAttribute(LOCALE, locale);
         LOGGER.info("done");
