@@ -1,26 +1,33 @@
+<%-- Include files --%>
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+
+<%-- Import classes --%>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ taglib prefix="period" uri="/WEB-INF/tags/custom.tld" %>
 
+<%-- Set the page language --%>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="lang"/>
 
 <html>
+<%-- Header components --%>
 <jsp:include page="/WEB-INF/templates/_head.jsp"/>
 <head>
     <title><fmt:message key="rout.search"/></title>
 </head>
 <body>
-<mrt:navigation/>
+<%-- Choose navigation menu --%>
+<tags:navigation/>
+<%-- Roles --%>
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
 <div class="container">
     <h3 class="row d-flex justify-content-center my-2"><fmt:message key="search.result"/></h3>
     <form method="POST" action="controller?action=search_routes">
         <div class="form-check">
-            <input name="stable" value="true" class="form-check-input" type="checkbox"
-                   id="checkFreeSeats" onclick="this.form.submit()" <c:if test="${stable}">checked="checked"</c:if>/>
-            <label class="form-check-label" for="checkFreeSeats">
+            <input id="check-free-seats" class="form-check-input" type="checkbox" name="stable" value="true"
+                    onclick="this.form.submit()" <c:if test="${stable}">checked="checked"</c:if>>
+            <label class="form-check-label" for="check-free-seats">
                 <fmt:message key="train.show.not.available.seats"/>
             </label>
         </div>
@@ -95,7 +102,8 @@
                                 <c:set var="checkFreeSeats" value="${false}"/>
                                 <c:forEach items="${rout.availableSeats}" var="entry">
                                     <div class="row">
-                                        <div class="col-md-3 d-flex align-items-center justify-content-center"><fmt:message key="${entry.key}"/></div>
+                                        <div class="col-md-3 d-flex align-items-center justify-content-center">
+                                            <fmt:message key="${entry.key}"/></div>
                                         <div class="col-md-2 d-flex align-items-center justify-content-center">${entry.value}</div>
                                         <c:if test="${entry.value>0}">
                                             <c:set var="checkFreeSeats" value="true"/>
@@ -105,7 +113,8 @@
                                         </div>
                                         <div class="col-md-4 d-flex align-items-center justify-content-center">
                                             <c:if test="${checkFreeSeats}">
-                                                <form class="d-inline m-0" action="controller?action=select_station_and_carriage_type"
+                                                <form class="d-inline m-0"
+                                                      action="controller?action=select_station_and_carriage_type"
                                                       method="POST">
                                                     <input type="hidden" name="routs_id"
                                                            value="${rout.routsId}">
@@ -138,71 +147,9 @@
             </div>
         </c:otherwise>
     </c:choose>
-    <%-- Pagination --%>
-    <div class="d-flex justify-content-center">
-        <nav aria-label="Page navigation">
-            <ul class="pagination ">
-                <li class="page-item">
-                    <c:if test="${currentPage != 1}">
-                        <a class="page-link" href="controller?action=search_routes&page=${currentPage - 1}"
-                           aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-                    </c:if>
-                </li>
 
-                <c:forEach begin="1" end="${noOfPages}" var="i">
-                    <c:choose>
-                        <c:when test="${currentPage eq i}">
-                            <li class="page-item active" aria-current="page">
-                                <a class="page-link" href="#">${i}</a>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item"><a class="page-link"
-                                                     href="controller?action=search_routes&page=${i}">${i}</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
+    <tags:pagination currentPage="${currentPage}" lastPage="${last_page}" numPages="${noOfPages}" url="controller?action=search_routes&stable=${stable}"/>
 
-
-                <c:if test="${last_page gt noOfPages}">
-                    <li class="page-item disabled"><a class="page-link circle circle-md"
-                                                      href="#"><span>...</span></a></li>
-                    <c:choose>
-                        <c:when test="${currentPage eq last_page}">
-                            <li class="page-item active">
-                                <a class="page-link"
-                                   href="controller?action=search_routes&page=${last_page}">${last_page}</a>
-                            </li>
-                        </c:when>
-
-                        <c:otherwise>
-                            <c:if test="${currentPage gt noOfPages}">
-                                <li class="page-item active">
-                                    <a class="page-link"
-                                       href="controller?action=search_routes&page=${currentPage}">${currentPage}</a>
-                                </li>
-                                <li class="page-item disabled">
-                                    <a class="page-link circle circle-md"
-                                       href="#"><span>...</span></a></li>
-                            </c:if>
-                            <li class="page-item">
-                                <a class="page-link"
-                                   href="controller?action=search_routes&page=${last_page}">${last_page}</a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:if>
-
-                <c:if test="${currentPage lt last_page}">
-                    <li class="page-item">
-                        <a class="page-link" href="controller?action=search_routes&page=${currentPage + 1}"
-                           aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span></a>
-                    </li>
-                </c:if>
-            </ul>
-        </nav>
-    </div>
     <a href="controller?action=home" class="btn bg-gradient-blue text-primary mb-0">
         <i class="fas fa-arrow-alt-circle-left" aria-hidden="true"></i>
         <fmt:message key="back"/></a>

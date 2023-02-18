@@ -22,48 +22,39 @@ import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
 
 public class SearchRoutesCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(SearchRoutesCommand.class);
-    private static final int RECORDS_PER_PAGE = 3;
+    private static final int RECORDS_PER_PAGE = 2;
     private static final int FIRST_VISIBLE_PAGE_LINK = 5;
 
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
-        Router router = new Router();
-        router.setRouteType(Router.RouteType.REDIRECT);
-        router.setPagePath(Path.COMMAND_SEARCH_ROUTES);
 
-        RouteService routeService = AppContext.getInstance().getRouteService();
-        SearchValidator searchValidator = new SearchValidator();
         HttpSession session = request.getSession();
+        RouteService routeService = AppContext.getInstance().getRouteService();
         PaginationService paginationService = AppContext.getInstance().getPaginationService();
+        SearchValidator searchValidator = new SearchValidator();
 
-        String departureStation = request.getParameter(DEPARTURE_STATION);
-        String arrivalStation = request.getParameter(ARRIVAL_STATION);
+        String departureStation = StringUtils.defaultString(request.getParameter(DEPARTURE_STATION),
+                (String) session.getAttribute(DEPARTURE_STATION));
+        String arrivalStation = StringUtils.defaultString(request.getParameter(ARRIVAL_STATION),
+                (String) session.getAttribute(ARRIVAL_STATION));
         String startDate = request.getParameter(DEPARTURE_DATE);
         String startTime = request.getParameter(DEPARTURE_TIME);
-        String onlyFreeSeats = request.getParameter("stable");
-        session.setAttribute("stable", onlyFreeSeats);
-        int page = request.getParameter(PAGE) != null ? Integer.parseInt(request.getParameter(PAGE)) : 1;
+        String onlyFreeSeats = request.getParameter(STABLE);
+        session.setAttribute(STABLE, StringUtils.defaultIfBlank(onlyFreeSeats, "false"));
 
-        if (StringUtils.isBlank(departureStation)) {
-            departureStation = (String) session.getAttribute(DEPARTURE_STATION);
-        }
-        if (StringUtils.isBlank(arrivalStation)) {
-            arrivalStation = (String) session.getAttribute(ARRIVAL_STATION);
-        }
-        LocalDateTime departureDate;
-        if (StringUtils.isAllBlank(startDate, startTime)) {
-            departureDate = (LocalDateTime) session.getAttribute(DEPARTURE_DATE);
-        } else {
-            departureDate = routeService.getDepartureDate(startDate, startTime);
-        }
+        LocalDateTime departureDate = StringUtils.isAllBlank(startDate, startTime) ?
+                (LocalDateTime) session.getAttribute(DEPARTURE_DATE) : routeService.getDepartureDate(startDate, startTime);
+
         String errorMessage = searchValidator.isValidSearch(departureStation, arrivalStation);
-        if (StringUtils.isNoneBlank(errorMessage)) {
-            router.setRouteType(Router.RouteType.REDIRECT);
-            router.setPagePath(Path.COMMAND_HOME);
+        if (StringUtils.isNotBlank(errorMessage)) {
             session.setAttribute(ERROR_MESSAGE, errorMessage);
-            return router;
+            return Router.builder()
+                    .routeType(Router.RouteType.REDIRECT)
+                    .pagePath(Path.COMMAND_HOME).build();
         }
+
+        int page = Integer.parseInt(StringUtils.defaultString(request.getParameter(PAGE), "1"));
         List<RouteOrderDTO> routeOrderDTOSPagination = routeService.getSearchRoutePagination(departureStation, arrivalStation,
                 departureDate, (page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE * page, onlyFreeSeats);
         List<RouteOrderDTO> routeOrderDTOList = routeService.getRouteOrderDtoList(departureStation, arrivalStation, departureDate, onlyFreeSeats);
@@ -77,6 +68,8 @@ public class SearchRoutesCommand implements Command {
         session.setAttribute(DEPARTURE_DATE, departureDate);
 
         LOGGER.info("done");
-        return router;
+        return Router.builder()
+                .routeType(Router.RouteType.REDIRECT)
+                .pagePath(Path.COMMAND_SEARCH_ROUTES).build();
     }
 }

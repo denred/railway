@@ -9,14 +9,39 @@ public class Router {
     private RouteType routeType;
     private String pagePath;
 
+    public static class Builder {
+        private RouteType routeType = RouteType.REDIRECT;
+        private String pagePath;
+
+        public Builder pagePath(String pagePath) {
+            this.pagePath = pagePath;
+            return this;
+        }
+
+        public Builder routeType(RouteType routeType) {
+            if (routeType != null) {
+                this.routeType = routeType;
+            }
+            return this;
+        }
+
+        public Router build() {
+            Router router = new Router();
+            router.setRouteType(routeType);
+            router.setPagePath(pagePath);
+            return router;
+        }
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public RouteType getRouteType() {
         return routeType;
     }
 
     public void setRouteType(RouteType routeType) {
-        if (routeType == null) {
-            routeType = RouteType.REDIRECT;
-        }
         this.routeType = routeType;
     }
 
@@ -28,3 +53,4 @@ public class Router {
         this.pagePath = pagePath;
     }
 }
+

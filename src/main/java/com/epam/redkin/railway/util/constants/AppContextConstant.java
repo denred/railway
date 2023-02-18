@@ -115,6 +115,7 @@ public class AppContextConstant {
     public static final String STATUS_LIST = "statusList";
     public static final String ERROR_MESSAGE  = "errorMessage";
     public static final String PRICE  = "price";
+    public static final String STABLE  = "stable";
 
     //error messages
 
