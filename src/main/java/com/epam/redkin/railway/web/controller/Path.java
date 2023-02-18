@@ -46,6 +46,7 @@ public class Path {
     public static final String COMMAND_INFO_CARRIAGES = "controller?action=carriages";
     public static final String COMMAND_INFO_CARRIAGES_PAGE = "controller?action=carriages_page";
     public static final String COMMAND_INFO_TRAINS = "controller?action=trains";
+    public static final String COMMAND_INFO_TRAINS_PAGE = "controller?action=trains_page";
     public static final String COMMAND_SELECT_STATION_AND_CARRIAGE_TYPE = "controller?action=select_station_and_carriage_type";
     public static final String COMMAND_SELECT_CARRIAGE_AND_COUNT_SEATS = "controller?action=select_carriage_and_count_seats";
     public static final String COMMAND_SELECT_CARRIAGE_AND_SEATS_PAGE = "controller?action=select_carriage_and_seats";

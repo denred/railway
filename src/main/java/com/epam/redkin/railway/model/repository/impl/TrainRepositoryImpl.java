@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class TrainRepositoryImpl implements TrainRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrainRepositoryImpl.class);
@@ -95,7 +96,7 @@ public class TrainRepositoryImpl implements TrainRepository {
     }
 
     @Override
-    public List<Train> getAllTrains() {
+    public List<Train> getTrainList() {
         LOGGER.info("Started method  getAllTrains()");
         List<Train> trains = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
@@ -110,5 +111,61 @@ public class TrainRepositoryImpl implements TrainRepository {
             throw new DataBaseException("Cannot get list of train from database.", e);
         }
         return trains;
+    }
+
+    @Override
+    public List<Train> getTrainListWithPagination(int offset, int limit, Map<String, String> search) {
+        LOGGER.info(String.format("Started getTrainListWithPagination(offset=%s, limit=%s, search=%s)", offset, limit, search));
+        List<Train> trainList = new ArrayList<>();
+        String searchQuery = search.isEmpty() ? "" : buildSearchQuery(search);
+        LOGGER.info("Search query: " + String.format(Constants.GET_ALL_TRAINS_BY_FILTER_AND_PAGINATION, searchQuery));
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(String.format(Constants.GET_ALL_TRAINS_BY_FILTER_AND_PAGINATION, searchQuery))) {
+            statement.setInt(1, offset);
+            statement.setInt(2, limit);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                trainList.add(getTrain(resultSet));
+            }
+            LOGGER.info("Extracted trains: " + trainList);
+        } catch (SQLException | NullPointerException e) {
+            LOGGER.error("Cannot extract list of train from database: " + e);
+            throw new DataBaseException("Cannot get list of train from database.", e);
+        }
+        return trainList;
+    }
+
+    @Override
+    public int getTrainListSize(Map<String, String> search) {
+        LOGGER.info(String.format("Started getTrainListSize(search=%s)", search));
+        int count = 0;
+        String searchQuery = search.isEmpty() ? "" : buildSearchQuery(search);
+        LOGGER.info("Search query: " + String.format(Constants.GET_COUNT_TRAINS_BY_FILTER, searchQuery));
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(String.format(Constants.GET_COUNT_TRAINS_BY_FILTER, searchQuery))) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(Constants.COUNT);
+            }
+            LOGGER.info("Extracted count of trains: " + count);
+        } catch (SQLException | NullPointerException e) {
+            LOGGER.error("Cannot get count of train from database: " + e);
+            throw new DataBaseException("Cannot get count of train from database", e);
+        }
+        return count;
+    }
+
+    private String buildSearchQuery(Map<String, String> search) {
+        StringBuilder stringBuilder = new StringBuilder("WHERE ");
+        final int[] count = {0};
+        search.forEach((key, value) -> {
+            if (count[0] < 1) {
+                stringBuilder.append(key).append(" REGEXP ").append("'").append(value).append("'");
+                count[0]++;
+            } else {
+                stringBuilder.append(" AND ").append(key).append(" REGEXP ").append("'").append(value).append("'");
+            }
+        });
+        return search.isEmpty() ? "" : stringBuilder.toString();
     }
 }

@@ -54,6 +54,7 @@ public class ActionFactory {
         commands.put("carriages", new CarriageInfoCommand());
         commands.put("carriages_page", new CarriageInfoPageCommand());
         commands.put("trains", new TrainInfoCommand());
+        commands.put("trains_page", new TrainInfoPageCommand());
         commands.put("admin_orders", new OrderInfoCommand());
         commands.put("users", new UserInfoCommand());
         commands.put("block", new UserBlockCommand());

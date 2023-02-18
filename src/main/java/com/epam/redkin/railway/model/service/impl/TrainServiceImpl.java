@@ -7,6 +7,7 @@ import com.epam.redkin.railway.model.repository.TrainRepository;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public class TrainServiceImpl implements TrainService {
 
@@ -23,14 +24,13 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public List<Train> getTrainListBySetRecords(int currentPage, int recordsPerPage) {
-        List<Train> allRecords = trainRepository.getAllTrains();
-        return allRecords.subList(currentPage, Math.min(recordsPerPage, allRecords.size()));
+    public List<Train> getTrainListWithPagination(int offset, int limit, Map<String, String> search) {
+        return trainRepository.getTrainListWithPagination(offset, limit, search);
     }
 
     @Override
-    public int getTrainListSize() {
-        return trainRepository.getAllTrains().size();
+    public int getTrainListSize(Map<String, String> search) {
+        return trainRepository.getTrainListSize(search);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public List<Train> getTrainList() {
-        return trainRepository.getAllTrains();
+        return trainRepository.getTrainList();
     }
 
     @Override

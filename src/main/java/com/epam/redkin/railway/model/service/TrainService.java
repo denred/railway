@@ -4,6 +4,7 @@ package com.epam.redkin.railway.model.service;
 import com.epam.redkin.railway.model.entity.Train;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TrainService {
 
@@ -21,8 +22,8 @@ public interface TrainService {
 
     Train getTrainById(int trainId);
 
-    List<Train> getTrainListBySetRecords(int currentPage, int recordsPerPage);
+    List<Train> getTrainListWithPagination(int offset, int limit, Map<String, String> search);
 
-    int getTrainListSize();
+    int getTrainListSize(Map<String, String> search);
 }
 

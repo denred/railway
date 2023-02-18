@@ -218,7 +218,7 @@ class TrainRepositoryImplTest {
         when(mockResultSet.getString(anyString())).thenReturn("01", "02");
 
 
-        assertEquals(2, trainRepository.getAllTrains().size());
+        assertEquals(2, trainRepository.getTrainList().size());
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement).executeQuery();
         verify(mockResultSet, times(3)).next();
@@ -233,7 +233,7 @@ class TrainRepositoryImplTest {
         when(mockResultSet.next()).thenReturn(Boolean.FALSE);
 
 
-        assertEquals(0, trainRepository.getAllTrains().size());
+        assertEquals(0, trainRepository.getTrainList().size());
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement).executeQuery();
         verify(mockResultSet, times(1)).next();
@@ -245,7 +245,7 @@ class TrainRepositoryImplTest {
     void getAllTrainsThrowException() throws SQLException {
         when(mockConnection.prepareStatement(anyString())).thenThrow(SQLException.class);
 
-        assertThrows(DataBaseException.class, () -> trainRepository.getAllTrains());
+        assertThrows(DataBaseException.class, () -> trainRepository.getTrainList());
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement, times(0)).executeQuery();
         verify(mockResultSet, times(0)).next();
