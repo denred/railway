@@ -71,7 +71,7 @@ public interface Constants {
     String UPDATE_TRAIN = "UPDATE train SET number = ? WHERE id = ?";
     String DELETE_TRAIN = "DELETE FROM train WHERE id = ?";
     String GET_ALL_TRAINS = "SELECT * FROM train";
-    String GET_ALL_TRAINS_BY_FILTER_AND_PAGINATION = "SELECT * FROM train LIMIT ?, ?";
+    String GET_ALL_TRAINS_BY_FILTER_AND_PAGINATION = "SELECT * FROM train %s LIMIT ?, ?";
     String GET_COUNT_TRAINS_BY_FILTER = "SELECT count(*) as count FROM train %s";
 
     /* USER */

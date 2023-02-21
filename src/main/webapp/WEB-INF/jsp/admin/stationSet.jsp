@@ -12,33 +12,34 @@
 <mrt:navigation/>
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
 
+<%-- start --%>
 <div class="container mt-4">
     <div class="d-flex justify-content-center">
-        <table class="table table-bordered table-hover caption-top" style="width: 400px;">
-            <thead class="thead-light text-center">
-            <tr>
-                <th><fmt:message key="station.name"/></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <form action="controller?action=set_station" method="POST">
-                    <input type="hidden" name="station_id" value="${station_id}">
-                    <td><input name="station" class="form-control" value="${station}"></td>
-                    <td>
-                        <input type="submit" class="btn btn-success" name="save_edit_information"
-                               value="<fmt:message key="admin.saveInformation"/>">
-                    </td>
-                </form>
-            </tr>
-            </tbody>
-        </table>
+        <form action="controller?action=set_station" method="POST">
+            <input type="hidden" name="station_id" value="${station_id}">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="station-name"><fmt:message key="station.name"/></label>
+                    <input id="station-name" name="station" class="form-control" value="${station}">
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-lg-2">
+                    <a href="controller?action=stations" class="btn bg-gradient-blue text-primary mb-0">
+                        <i class="far fa-arrow-alt-circle-left" aria-hidden="true"></i>
+                        <fmt:message key="back"/></a>
+                </div>
+                <div class="col-lg-3">
+                    <button class="btn bg-gradient-blue text-success" type="submit">
+                        <i class="far fa-check-circle" aria-hidden="true"></i>
+                        <fmt:message key="admin.saveInformation"/></button>
+                </div>
+            </div>
+        </form>
     </div>
-    <form action="controller?action=stations" method="POST">
-        <input type="submit" class="btn btn-primary" value="<fmt:message key="back"/>">
-    </form>
 </div>
+<%-- end --%>
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
 </body>
 </html>

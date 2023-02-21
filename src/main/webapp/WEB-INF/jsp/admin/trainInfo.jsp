@@ -1,10 +1,10 @@
+<%-- Include files --%>
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
-
+<%-- Set the page language --%>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="lang"/>
 <fmt:setBundle basename="exceptionMessages" var="excMsg"/>
-
 <html>
 <head>
     <title><fmt:message key="admin.train.information"/></title>
@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<mrt:navigation/>
+<tags:navigation/>
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
 
 <h3 style="text-align: center;">
@@ -20,17 +20,18 @@
 </h3>
 <div class="container mt-4">
     <div class="d-flex justify-content-center">
-        <form class="was-validated" action="controller?action=trains" method="POST" novalidate>
+        <form class="was-validated" action="controller?action=trains" method="POST">
             <div class="row">
                 <div class="col-sm-8">
-                    <label>
-                        <input class="form-control" name="trainFilter" type="text"
-                               placeholder="<fmt:message key="filter.train"/>" value="${trainFilter}"
-                               pattern="^\d+\(?\w*[\u0400-\u052F\u2DE0-\u2DFF\uA640-\uA69F']*\)?$">
-                    </label>
-                    <div class="invalid-feedback"><fmt:message bundle="${excMsg}" key="validation.train.number"/></div>
+                    <label for="filter-train-number"><fmt:message key="filter.train"/></label>
+                        <input id="filter-train-number" class="form-control" name="trainFilter" value="${trainFilter}"
+                               pattern="^[A-Za-z0-9А-Яа-яЁёІіЇїҐґ']+$"
+                               data-error="<fmt:message bundle="${excMsg}" key="validation.train.filter.number"/>"
+                               oninvalid="this.setCustomValidity(this.getAttribute('data-error'))"
+                               oninput="this.setCustomValidity('')">
+                        <div class="invalid-feedback d-block">${errorMessage}</div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 d-flex justify-content-center align-items-end mb-1">
                     <input type="submit" class="btn btn-info" name="filter"
                            value="<fmt:message key="route.filter"/>">
                 </div>
@@ -38,10 +39,25 @@
         </form>
     </div>
     <div class="d-flex justify-content-center">
-        <table class="table table-bordered table-hover caption-top">
-            <thead class="thead-light text-center">
+        <table class="table table-bordered table-hover" style="width: 58%">
+            <thead>
             <tr>
-                <th style="width: 10%"><fmt:message key="order"/><fmt:message key="train.number"/></th>
+                <th>
+                    <div class="row">
+                        <div class="col-md-2 d-flex justify-content-center align-items-center">
+                            <fmt:message key="order"/>
+                        </div>
+                        <div class="col-md-3 d-flex justify-content-center align-items-center">
+                            <fmt:message key="train.number"/>
+                        </div>
+                        <div class="col-md-7 text-end">
+                            <a class="btn bg-gradient-green text-success mb-0" href="controller?action=set_train"><i
+                                    class="fas fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;
+                                <fmt:message key="admin.addTrain"/>
+                            </a>
+                        </div>
+                    </div>
+                </th>
             </tr>
             </thead>
             <tbody class="text-center">
@@ -49,23 +65,23 @@
                 <tr>
                     <td>
                         <div class="row">
-                            <div class="col-md-3 d-flex justify-content-center">
+                            <div class="col-md-2 d-flex justify-content-center align-items-center">
                                     ${i.index + recordsPerPage * (currentPage - 1) + 1}
                             </div>
-                            <div class="col-md-3 d-flex justify-content-center">
+                            <div class="col-md-3 d-flex justify-content-center align-items-center">
                                     ${train.number}
                             </div>
                             <div class="col-md-3 d-flex justify-content-center">
                                 <a class="btn btn-link text-dark px-3 mb-0"
-                                   href="controller?action=set_train&train_id=${train.id}"><i
-                                        class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i><fmt:message
-                                        key="admin.editInformation"/></a>
+                                   href="controller?action=set_train&train_id=${train.id}">
+                                    <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>
+                                    <fmt:message key="admin.editInformation"/></a>
                             </div>
                             <div class="col-md-3 d-flex justify-content-center">
                                 <a class="btn btn-link text-danger text-gradient px-3 mb-0"
-                                   href="controller?action=remove_train&train_id=${train.id}"><i
-                                        class="far fa-trash-alt me-2" aria-hidden="true"></i><fmt:message
-                                        key="admin.remove"/></a>
+                                   href="controller?action=remove_train&train_id=${train.id}">
+                                    <i class="far fa-trash-alt me-2" aria-hidden="true"></i>
+                                    <fmt:message key="admin.remove"/></a>
                             </div>
                         </div>
                     </td>
@@ -74,45 +90,9 @@
             </tbody>
         </table>
     </div>
-    <div class="d-flex justify-content-center">
-        <%--For displaying Previous link except for the 1st page --%>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item">
-                    <c:if test="${currentPage != 1}">
-                        <a class="page-link" href="controller?action=trains&page=${currentPage - 1}"
-                           aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-                    </c:if>
-                </li>
-                <%--For displaying Page numbers.
-                The when condition does not display a link for the current page--%>
-                <c:forEach begin="1" end="${noOfPages}" var="i">
-                    <c:choose>
-                        <c:when test="${currentPage eq i}">
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#">${i}</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item"><a class="page-link"
-                                                     href="controller?action=trains&page=${i}">${i}</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-
-                <%--For displaying Next link --%>
-                <c:if test="${currentPage lt noOfPages}">
-                    <li class="page-item">
-                        <a class="page-link" href="controller?action=trains&page=${currentPage + 1}"
-                           aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span></a>
-                    </li>
-                </c:if>
-            </ul>
-        </nav>
-    </div>
-    <form action="controller?action=set_train" method="POST">
-        <input type="submit" class="btn btn-success" name="add_train" value="<fmt:message key="admin.addTrain"/>">
-    </form>
+    <tags:pagination currentPage="${currentPage}" lastPage="${last_page}" numPages="${noOfPages}"
+                     url="controller?action=trains"/>
 </div>
-<jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/validation-train.js"></script>
 </body>
 </html>

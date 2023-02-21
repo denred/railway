@@ -11,7 +11,7 @@
     <jsp:include page="/WEB-INF/templates/_head.jsp"/>
 </head>
 <body>
-<mrt:navigation/>
+<tags:navigation/>
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
 
 
@@ -21,10 +21,12 @@
             <form class="was-validated" action="controller?action=stations" method="POST" novalidate>
                 <div class="row">
                     <div class="col-sm-8">
-                        <input class="form-control" name="stationFilter" type="text"
+                        <label for="station-filter"></label>
+                        <input id="station-filter" class="form-control" name="stationFilter" type="text"
                                placeholder="<fmt:message key="filter.station"/>" value="${stationFilter}"
                                pattern="[a-zA-Zа-яА-яёЁ\u0400-\u052F\u2DE0-\u2DFF\uA640-\uA69F']*">
-                        <div class="invalid-feedback"><fmt:message bundle="${excMsg}" key="validation.station.name"/></div>
+                        <div class="invalid-feedback"><fmt:message bundle="${excMsg}"
+                                                                   key="validation.station.name"/></div>
                     </div>
                     <div class="col-sm-4">
                         <input type="submit" class="btn btn-info" name="filter"
@@ -82,73 +84,8 @@
                 </tbody>
             </table>
         </div>
-
-
-        <%-- Pagination --%>
-        <div class="d-flex justify-content-center">
-            <nav aria-label="Page navigation">
-                <ul class="pagination ">
-                    <li class="page-item">
-                        <c:if test="${currentPage != 1}">
-                            <a class="page-link" href="controller?action=stations&page=${currentPage - 1}"
-                               aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-                        </c:if>
-                    </li>
-
-                    <c:forEach begin="1" end="${noOfPages}" var="i">
-                        <c:choose>
-                            <c:when test="${currentPage eq i}">
-                                <li class="page-item active" aria-current="page">
-                                    <a class="page-link" href="#">${i}</a>
-                                </li>
-                            </c:when>
-                            <c:otherwise>
-                                <li class="page-item"><a class="page-link"
-                                                         href="controller?action=stations&page=${i}">${i}</a></li>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-
-
-                    <c:if test="${last_page gt noOfPages}">
-                        <li class="page-item disabled"><a class="page-link circle circle-md"
-                                                          href="#"><span>...</span></a></li>
-                        <c:choose>
-                            <c:when test="${currentPage eq last_page}">
-                                <li class="page-item active">
-                                    <a class="page-link"
-                                       href="controller?action=stations&page=${last_page}">${last_page}</a>
-                                </li>
-                            </c:when>
-
-                            <c:otherwise>
-                                <c:if test="${currentPage gt noOfPages}">
-                                    <li class="page-item active">
-                                        <a class="page-link"
-                                           href="controller?action=stations&page=${currentPage}">${currentPage}</a>
-                                    </li>
-                                    <li class="page-item disabled">
-                                        <a class="page-link circle circle-md"
-                                           href="#"><span>...</span></a></li>
-                                </c:if>
-                                <li class="page-item">
-                                    <a class="page-link"
-                                       href="controller?action=stations&page=${last_page}">${last_page}</a>
-                                </li>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:if>
-
-                    <c:if test="${currentPage lt last_page}">
-                        <li class="page-item">
-                            <a class="page-link" href="controller?action=stations&page=${currentPage + 1}"
-                               aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span></a>
-                        </li>
-                    </c:if>
-                </ul>
-            </nav>
-        </div>
+        <tags:pagination currentPage="${currentPage}" lastPage="${last_page}" numPages="${noOfPages}"
+                         url="controller?action=stations"/>
     </div>
 </div>
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>

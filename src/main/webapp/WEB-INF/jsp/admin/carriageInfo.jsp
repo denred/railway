@@ -10,7 +10,7 @@
     <jsp:include page="/WEB-INF/templates/_head.jsp"/>
 </head>
 <body>
-<mrt:navigation/>
+<tags:navigation/>
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
 
 <h3 style="text-align: center;">
@@ -101,41 +101,9 @@
         </table>
     </div>
 
-    <div class="d-flex justify-content-center">
-        <%--For displaying Previous link except for the 1st page --%>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item">
-                    <c:if test="${currentPage != 1}">
-                        <a class="page-link" href="controller?action=carriages&page=${currentPage - 1}"
-                           aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-                    </c:if>
-                </li>
-                <%--For displaying Page numbers.
-                The when condition does not display a link for the current page--%>
-                <c:forEach begin="1" end="${noOfPages}" var="i">
-                    <c:choose>
-                        <c:when test="${currentPage eq i}">
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#">${i}</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item"><a class="page-link"
-                                                     href="controller?action=carriages&page=${i}">${i}</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
+    <tags:pagination currentPage="${currentPage}" lastPage="${last_page}" numPages="${noOfPages}"
+                     url="controller?action=carriages"/>
 
-                <%--For displaying Next link --%>
-                <c:if test="${currentPage lt noOfPages}">
-                    <li class="page-item">
-                        <a class="page-link" href="controller?action=carriages&page=${currentPage + 1}"
-                           aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span></a>
-                    </li>
-                </c:if>
-            </ul>
-        </nav>
-    </div>
 </div>
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
 </body>
