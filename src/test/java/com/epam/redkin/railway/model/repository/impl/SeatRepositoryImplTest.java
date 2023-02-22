@@ -4,10 +4,12 @@ import com.epam.redkin.railway.model.entity.CarriageType;
 import com.epam.redkin.railway.model.entity.Seat;
 import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.repository.SeatRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.sql.DataSource;
@@ -16,8 +18,8 @@ import java.sql.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 class SeatRepositoryImplTest {
     @Mock
@@ -29,22 +31,25 @@ class SeatRepositoryImplTest {
     @Mock
     private ResultSet mockResultSet;
     private SeatRepository seatRepository;
+    private AutoCloseable closeable;
 
 
     @BeforeEach
     void setUp() throws SQLException {
-        mockDataSource = mock(DataSource.class);
-        mockConnection = mock(Connection.class);
-        mockStatement = mock(PreparedStatement.class);
-        mockResultSet = mock(ResultSet.class);
+        closeable = MockitoAnnotations.openMocks(this);
         seatRepository = new SeatRepositoryImpl(mockDataSource);
         when(mockDataSource.getConnection()).thenReturn(mockConnection);
+    }
+
+    @AfterEach
+    void tearDown() throws Exception {
+        closeable.close();
     }
 
     @Test
     void createSeatPositiveScenario() throws SQLException {
         doNothing().when(mockConnection).commit();
-        when(mockConnection.prepareStatement(anyString(), anyInt())).thenReturn(mockStatement);
+        when(mockConnection.prepareStatement(anyString(), eq(Statement.RETURN_GENERATED_KEYS))).thenReturn(mockStatement);
         doNothing().when(mockConnection).setAutoCommit(true);
         doNothing().when(mockConnection).setAutoCommit(false);
         when(mockStatement.executeUpdate()).thenReturn(1);
@@ -56,7 +61,7 @@ class SeatRepositoryImplTest {
         doNothing().when(mockStatement).setString(anyInt(), anyString());
 
         assertEquals(1, seatRepository.create(Seat.builder().seatNumber("01").build()));
-        verify(mockConnection).prepareStatement(anyString(), anyInt());
+        verify(mockConnection).prepareStatement(anyString(), eq(Statement.RETURN_GENERATED_KEYS));
         verify(mockStatement).setString(anyInt(), anyString());
         verify(mockStatement).setBoolean(anyInt(), anyBoolean());
         verify(mockStatement).setInt(anyInt(), anyInt());
@@ -85,7 +90,7 @@ class SeatRepositoryImplTest {
         verify(mockStatement, times(1)).executeUpdate();
         verify(mockConnection, times(0)).commit();
         verify(mockResultSet, times(0)).next();
-        verify(mockResultSet, times(0)).getInt(Statement.RETURN_GENERATED_KEYS);
+        verify(mockResultSet, times(0)).getInt(anyInt());
         verify(mockConnection).rollback();
         verify(mockConnection).close();
     }
@@ -434,7 +439,7 @@ class SeatRepositoryImplTest {
         doNothing().when(mockConnection).commit();
         doNothing().when(mockStatement).setInt(anyInt(), anyInt());
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
-        when(mockResultSet.next()).thenReturn(Boolean.TRUE,Boolean.FALSE);
+        when(mockResultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
         when(mockResultSet.getInt(anyString())).thenReturn(10);
         when(mockResultSet.getString(anyString())).thenReturn("07");
         when(mockResultSet.getBoolean(anyString())).thenReturn(false);
@@ -464,7 +469,7 @@ class SeatRepositoryImplTest {
         doNothing().when(mockConnection).rollback();
         doNothing().when(mockStatement).setInt(anyInt(), anyInt());
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
-        when(mockResultSet.next()).thenReturn(Boolean.TRUE,Boolean.FALSE);
+        when(mockResultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
         when(mockResultSet.getInt(anyString())).thenReturn(10);
         when(mockResultSet.getString(anyString())).thenReturn("07");
         when(mockResultSet.getBoolean(anyString())).thenReturn(true);

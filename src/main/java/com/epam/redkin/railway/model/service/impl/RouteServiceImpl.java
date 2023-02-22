@@ -6,7 +6,9 @@ import com.epam.redkin.railway.model.dto.RouteOrderDTO;
 import com.epam.redkin.railway.model.dto.StationDTO;
 import com.epam.redkin.railway.model.entity.CarriageType;
 import com.epam.redkin.railway.model.entity.Route;
+import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.exception.IncorrectDataException;
+import com.epam.redkin.railway.model.exception.ServiceException;
 import com.epam.redkin.railway.model.repository.RouteRepository;
 import com.epam.redkin.railway.model.service.RouteService;
 import com.epam.redkin.railway.model.service.SeatService;
@@ -14,7 +16,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -39,8 +40,8 @@ public class RouteServiceImpl implements RouteService {
     public void addRoute(Route route) {
         try {
             routeRepository.create(route);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (DataBaseException e) {
+            throw new ServiceException("Failed to store route into database", e.getMessage());
         }
     }
 

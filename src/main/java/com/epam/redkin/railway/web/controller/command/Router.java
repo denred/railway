@@ -1,6 +1,7 @@
 package com.epam.redkin.railway.web.controller.command;
 
 public class Router {
+
     public enum RouteType {
         FORWARD,
         REDIRECT
@@ -52,5 +53,18 @@ public class Router {
     public void setPagePath(String pagePath) {
         this.pagePath = pagePath;
     }
+
+    public static Router redirect(String command) {
+        return Router.builder()
+                .routeType(RouteType.REDIRECT)
+                .pagePath(command).build();
+    }
+
+    public static Router forward(String page) {
+        return Router.builder()
+                .routeType(RouteType.FORWARD)
+                .pagePath(page).build();
+    }
+
 }
 

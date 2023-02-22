@@ -4,14 +4,15 @@ package com.epam.redkin.railway.model.service.impl;
 import com.epam.redkin.railway.model.dto.CarriageDTO;
 import com.epam.redkin.railway.model.entity.Carriage;
 import com.epam.redkin.railway.model.entity.Seat;
+import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.exception.IncorrectDataException;
+import com.epam.redkin.railway.model.exception.ServiceException;
 import com.epam.redkin.railway.model.service.CarriageService;
 import com.epam.redkin.railway.model.repository.CarriageRepository;
 import com.epam.redkin.railway.model.repository.SeatRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ public class CarriageServiceImpl implements CarriageService {
     public void updateCarriage(CarriageDTO carriageDTO) {
         Carriage car = getCarFromCarDto(carriageDTO);
 
-            carriageRepository.update(car);
+        carriageRepository.update(car);
 
         int countSeatBusy = seatRepository.getBusySeatsCountByCarriageId(carriageDTO.getCarId());
         int countSeat = seatRepository.getSeatsCountByCarriageId(carriageDTO.getCarId());
@@ -42,8 +43,8 @@ public class CarriageServiceImpl implements CarriageService {
                     Seat seat = getSeatFromCarDto(carriageDTO, String.valueOf(i));
                     try {
                         seatRepository.create(seat);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                    } catch (DataBaseException e) {
+                        throw new ServiceException("Failed to store seat into database", e.getMessage());
                     }
                 }
             }
@@ -53,8 +54,8 @@ public class CarriageServiceImpl implements CarriageService {
                     LOGGER.debug("1" + seat.getSeatNumber() + " - " + seat.getCarriageId());
                     try {
                         seatRepository.create(seat);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                    } catch (DataBaseException e) {
+                        throw new ServiceException("Failed to store seat into database", e.getMessage());
                     }
                 }
             }
@@ -83,8 +84,8 @@ public class CarriageServiceImpl implements CarriageService {
         if (carriageRepository.getById(carriageId) == null) {
             try {
                 carriageId = carriageRepository.create(carriage);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            } catch (DataBaseException e) {
+                throw new ServiceException("Failed to store seat into database", e.getMessage());
             }
         }
         carriageDTO.setCarId(carriageId);
@@ -92,8 +93,8 @@ public class CarriageServiceImpl implements CarriageService {
             Seat seat = getSeatFromCarDto(carriageDTO, String.valueOf(i));
             try {
                 seatRepository.create(seat);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            } catch (DataBaseException e) {
+                throw new ServiceException("Failed to store seat into database", e.getMessage());
             }
         }
     }

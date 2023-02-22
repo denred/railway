@@ -5,6 +5,7 @@ import com.epam.redkin.railway.model.repository.*;
 import com.epam.redkin.railway.model.repository.impl.*;
 import com.epam.redkin.railway.model.service.impl.*;
 import com.epam.redkin.railway.model.service.*;
+import com.epam.redkin.railway.model.validator.TrainValidator;
 import jakarta.servlet.http.HttpSession;
 
 import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
@@ -32,17 +33,8 @@ public class AppContext {
     private final RouteMappingService routeMappingService = new RouteMappingServiceImpl(routePointRepository);
     private final LogoutService logoutService = new LogoutServiceImpl();
     private final SearchService searchService = new SearchServiceImpl();
-    private final PaginationService paginationService = (request, currentPage, records, pageRecords, firstVisibleLinks) -> {
-        int pagesCount = (int) Math.ceil(records * 1.0 / pageRecords);
-        int lastPage = pagesCount;
-        pagesCount = Math.min(pagesCount, firstVisibleLinks);
-        HttpSession session = request.getSession();
-
-        session.setAttribute(PAGE_RECORDS, pageRecords);
-        session.setAttribute(PAGE_COUNT, pagesCount);
-        session.setAttribute(LAST_PAGE, lastPage);
-        session.setAttribute(CURRENT_PAGE, currentPage);
-    };
+    private final PaginationService paginationService = new PaginationServiceImpl();
+    private final TrainValidator trainValidator = new TrainValidator();
 
 
     public static AppContext getInstance() {
@@ -93,4 +85,7 @@ public class AppContext {
         return searchService;
     }
 
+    public TrainValidator getTrainValidator() {
+        return trainValidator;
+    }
 }

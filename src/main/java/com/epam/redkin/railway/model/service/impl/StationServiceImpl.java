@@ -2,10 +2,11 @@ package com.epam.redkin.railway.model.service.impl;
 
 
 import com.epam.redkin.railway.model.entity.Station;
+import com.epam.redkin.railway.model.exception.DataBaseException;
+import com.epam.redkin.railway.model.exception.ServiceException;
 import com.epam.redkin.railway.model.repository.StationRepository;
 import com.epam.redkin.railway.model.service.StationService;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class StationServiceImpl implements StationService {
@@ -25,8 +26,7 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public List<Station> getStationList(int currentPage, int recordsPerPage, String search) {
-        List<Station> stations = stationRepository.getStationsWithFilter(currentPage, recordsPerPage, search);
-        return stations;
+        return stationRepository.getStationsWithFilter(currentPage, recordsPerPage, search);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class StationServiceImpl implements StationService {
     public void addStation(Station station) {
         try {
             stationRepository.create(station);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (DataBaseException e) {
+            throw new ServiceException("Failed to store station into database", e.getMessage());
         }
     }
 }

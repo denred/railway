@@ -18,13 +18,10 @@ public class TrainRemoveCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
-        Router router = new Router();
-        router.setRouteType(Router.RouteType.REDIRECT);
-        router.setPagePath(Path.COMMAND_INFO_TRAINS);
         TrainService trainService = AppContext.getInstance().getTrainService();
         String trainId = request.getParameter(TRAIN_ID);
         trainService.removeTrain(Integer.parseInt(trainId));
         LOGGER.info("done");
-        return router;
+        return Router.redirect(Path.COMMAND_INFO_TRAINS);
     }
 }

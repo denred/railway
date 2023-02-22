@@ -1,5 +1,6 @@
 package com.epam.redkin.railway.web.controller.command;
 
+import com.epam.redkin.railway.appcontext.AppContext;
 import com.epam.redkin.railway.web.controller.command.admin.*;
 import com.epam.redkin.railway.web.controller.command.common.*;
 import com.epam.redkin.railway.web.controller.command.user.ForgetPasswordEmailSendingCommand;
@@ -53,7 +54,7 @@ public class ActionFactory {
         commands.put("delete_station", new StationRemoveCommand());
         commands.put("carriages", new CarriageInfoCommand());
         commands.put("carriages_page", new CarriageInfoPageCommand());
-        commands.put("trains", new TrainInfoCommand());
+        commands.put("trains", new TrainInfoCommand(AppContext.getInstance()));
         commands.put("trains_page", new TrainInfoPageCommand());
         commands.put("admin_orders", new OrderInfoCommand());
         commands.put("users", new UserInfoCommand());

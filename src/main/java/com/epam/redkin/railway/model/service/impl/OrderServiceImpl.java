@@ -4,7 +4,9 @@ import com.epam.redkin.railway.model.entity.CarriageType;
 import com.epam.redkin.railway.model.entity.Order;
 import com.epam.redkin.railway.model.entity.OrderStatus;
 import com.epam.redkin.railway.model.entity.Seat;
+import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.exception.IncorrectDataException;
+import com.epam.redkin.railway.model.exception.ServiceException;
 import com.epam.redkin.railway.model.repository.OrderRepository;
 import com.epam.redkin.railway.model.repository.SeatRepository;
 import com.epam.redkin.railway.model.service.OrderService;
@@ -20,9 +22,9 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderServiceImpl.class);
 
-    private OrderRepository orderRepository;
-    private SeatRepository seatRepository;
-    private SeatService seatService;
+    private final OrderRepository orderRepository;
+    private final SeatRepository seatRepository;
+    private final SeatService seatService;
 
     public OrderServiceImpl(OrderRepository orderRepository, SeatService seatService, SeatRepository seatRepository) {
         this.orderRepository = orderRepository;
@@ -36,8 +38,8 @@ public class OrderServiceImpl implements OrderService {
         seats.forEach(seat -> seatRepository.reservedSeat(seat.getId()));
         try {
             orderRepository.create(order);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (DataBaseException e) {
+            throw new ServiceException("Failed to store order into database", e.getMessage());
         }
     }
 

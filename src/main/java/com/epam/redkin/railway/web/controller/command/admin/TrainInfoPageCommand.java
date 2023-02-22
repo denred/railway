@@ -15,11 +15,7 @@ public class TrainInfoPageCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.info("started");
-        Router router = new Router();
-        router.setRouteType(Router.RouteType.FORWARD);
-        router.setPagePath(Path.PAGE_ADMIN_INFO_TRAIN);
-        LOGGER.info("done");
-        return router;
+        LOGGER.info("TrainInfoPageCommand execution");
+        return Router.forward(Path.PAGE_ADMIN_INFO_TRAIN);
     }
 }

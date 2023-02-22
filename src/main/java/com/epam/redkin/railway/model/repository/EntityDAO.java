@@ -1,5 +1,7 @@
 package com.epam.redkin.railway.model.repository;
 
+import com.epam.redkin.railway.model.exception.DataBaseException;
+
 import java.sql.SQLException;
 
 /**
@@ -14,7 +16,7 @@ public interface EntityDAO<T> {
      * @param entity which will be created in database
      * @return the id of the created entity
      */
-    int create(T entity) throws RuntimeException, SQLException;
+    int create(T entity) throws DataBaseException;
 
     /**
      * Return entity from database by the id

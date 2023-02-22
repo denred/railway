@@ -26,25 +26,36 @@ public class TrainSetCommand implements Command {
         router.setPagePath(Path.PAGE_ADMIN_SET_TRAIN);
         TrainService trainService = AppContext.getInstance().getTrainService();
         TrainValidator trainValidator = new TrainValidator();
-        String trainId = request.getParameter(TRAIN_ID);
-        String trainNumber = request.getParameter(TRAIN_NUMBER);
-        Train train = Train.builder().build();
-        if (StringUtils.isNoneBlank(trainId, trainNumber)) {
-            train.setId(Integer.parseInt(trainId));
-            train.setNumber(trainNumber);
-            trainValidator.isValidTrain(train);
-            trainService.updateTrain(train);
-            router.setRouteType(Router.RouteType.REDIRECT);
-            router.setPagePath(Path.COMMAND_INFO_TRAINS);
-        } else if (StringUtils.isNoneBlank(trainNumber)) {
-            train.setNumber(trainNumber);
+
+        String trainIdParam = request.getParameter(TRAIN_ID);
+        String trainNumberParam = request.getParameter(TRAIN_NUMBER);
+        if (StringUtils.isNoneBlank(trainIdParam)) {
+            int trainId = Integer.parseInt(trainIdParam);
+            Train train = trainService.getTrainById(trainId);
+            if (train != null) {
+                request.setAttribute(CURRENT_TRAIN, train);
+            }
+        } else if (trainNumberParam != null) {
+            Train train = Train.builder()
+                    .number(trainNumberParam)
+                    .build();
             trainValidator.isValidTrain(train);
             trainService.addTrain(train);
             router.setRouteType(Router.RouteType.REDIRECT);
             router.setPagePath(Path.COMMAND_INFO_TRAINS);
-        } else if (StringUtils.isNoneBlank(trainId)) {
-            train = trainService.getTrainById(Integer.parseInt(trainId));
-            request.setAttribute(CURRENT_TRAIN, train);
+        }else {
+            LOGGER.warn("Both train id and train number are empty");
+        }
+
+        if (StringUtils.isNoneBlank(trainIdParam, trainNumberParam)) {
+            Train train = Train.builder()
+                    .id(Integer.parseInt(trainIdParam))
+                    .number(trainNumberParam)
+                    .build();
+            trainValidator.isValidTrain(train);
+            trainService.updateTrain(train);
+            router.setRouteType(Router.RouteType.REDIRECT);
+            router.setPagePath(Path.COMMAND_INFO_TRAINS);
         }
         LOGGER.info("done");
         return router;
