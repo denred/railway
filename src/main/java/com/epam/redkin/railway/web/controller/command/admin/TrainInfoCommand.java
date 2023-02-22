@@ -41,7 +41,7 @@ public class TrainInfoCommand implements Command {
         TrainValidator trainValidator = appContext.getTrainValidator();
 
         SearchService searchService = appContext.getSearchService();
-        //1
+
         String trainFilter = searchService.getParameter(request, FILTER_TRAIN);
         if (StringUtils.isNotBlank(trainFilter)) {
             String errorMessage = trainValidator.isValidTrain(Train.builder().number(trainFilter).build());

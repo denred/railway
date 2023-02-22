@@ -20,7 +20,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,8 +55,6 @@ class TrainInfoCommandTest {
         closeable = MockitoAnnotations.openMocks(this);
         command = new TrainInfoCommand(appContext);
         when(request.getSession()).thenReturn(session);
-        when(appContext.getPaginationService()).thenReturn(paginationService);
-        when(appContext.getTrainService()).thenReturn(trainService);
         when(appContext.getTrainValidator()).thenReturn(trainValidator);
         when(appContext.getSearchService()).thenReturn(searchService);
     }
@@ -71,13 +68,13 @@ class TrainInfoCommandTest {
     void execute_validTrainFilter_expectRedirectToInfoTrainsPage() {
         // given
         String trainFilter = "1234";
-        Map<String, String> search = new HashMap<>();
-        search.put("number", trainFilter);
         Train train = Train.builder().number(trainFilter).build();
         int records = 1;
         List<Train> trainList = Collections.singletonList(train);
 
         // when
+        when(appContext.getPaginationService()).thenReturn(paginationService);
+        when(appContext.getTrainService()).thenReturn(trainService);
         when(searchService.getParameter(request, FILTER_TRAIN)).thenReturn("1234");
         when(trainService.getTrainListSize(anyMap())).thenReturn(records);
         when(trainService.getTrainListWithPagination(0, 5, new HashMap<>())).thenReturn(trainList);
@@ -95,6 +92,24 @@ class TrainInfoCommandTest {
         verify(session, times(1)).removeAttribute(ERROR_MESSAGE);
         verify(session, times(1)).setAttribute(TRAIN_LIST, trainList);
         verify(paginationService).setPaginationParameter(request, 1, records, 5, 5);
+    }
+
+    @Test
+    void execute_invalidTrainFilter_expectRedirectToInfoTrainsPage() {
+
+        // when
+        when(searchService.getParameter(request, FILTER_TRAIN)).thenReturn("&");
+        when(trainValidator.isValidTrain(Train.builder().number("&").build())).thenReturn("Error");
+
+        Router router = command.execute(request, response);
+
+        assertEquals(Path.COMMAND_INFO_TRAINS_PAGE, router.getPagePath());
+        assertEquals(Router.RouteType.REDIRECT, router.getRouteType());
+
+        verify(request, times(1)).getSession();
+        verify(session, times(1)).setAttribute(ERROR_MESSAGE, "Error");
+        verify(session, times(0)).getAttribute(FILTER_TRAIN);
+        verify(session, times(0)).removeAttribute(ERROR_MESSAGE);
     }
 
 }
