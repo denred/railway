@@ -129,5 +129,11 @@ public class AppContextConstant {
     public static final String FILTER_ROUTE_NAME = "routeNameFilter";
     public static final String FILTER_TYPE_CARRIAGE = "carriageTypeFilter";
     public static final String FILTER_STATION = "stationFilter";
+    public static final String EMAIL_FIELD = "emailField";
+    public static final String FIRST_NAME_FIELD = "firstNameField";
+    public static final String LAST_NAME_FIELD = "lastNameField";
+    public static final String PHONE_NUMBER_FIELD = "phoneField";
+    public static final String BIRTH_DATE_FIELD = "birthDateField";
+
 
 }

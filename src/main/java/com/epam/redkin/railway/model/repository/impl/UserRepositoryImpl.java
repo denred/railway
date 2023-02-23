@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.epam.redkin.railway.model.repository.impl.Constants.COUNT;
+
 public class UserRepositoryImpl implements UserRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserRepositoryImpl.class);
     private final DataSource dataSource;
@@ -189,7 +191,7 @@ public class UserRepositoryImpl implements UserRepository {
     public List<User> getUsersByRole(String role, int offset, int limit, Map<String, String> search) {
         LOGGER.info("Started --> public List<User> getUsersByRole(String role, int offset, int limit, Map<String, String> search) --> role: " + role + " offset: " + offset + " limit: " + limit
                 + "\nsearch: " + search.toString());
-        String searchQuery = search.isEmpty() ? "" : buildSearchQuery(search);
+        String searchQuery = buildSearchQuery(search);
         LOGGER.info("Search query: " + String.format(Constants.GET_USERS_BY_ROLE, searchQuery));
         ResultSet resultSet = null;
         List<User> users = new ArrayList<>();
@@ -217,6 +219,9 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     private String buildSearchQuery(Map<String, String> search) {
+        if (search.isEmpty()) {
+            return "";
+        }
         StringBuilder stringBuilder = new StringBuilder("AND ( ");
         final int[] count = {0};
         search.forEach((key, value) -> {
@@ -298,26 +303,19 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public int getUserCount(Map<String, String> search) {
         LOGGER.info("Started the method getUserCount");
-        String searchQuery = search.isEmpty() ? "" : buildSearchQuery(search);
+        String searchQuery = buildSearchQuery(search);
         LOGGER.info("searchQuery: " + searchQuery);
         int userCount = 0;
-        ResultSet resultSet = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(String.format(Constants.GET_COUNT_OF_USERS, searchQuery))) {
-            resultSet = preparedStatement.executeQuery();
+             PreparedStatement preparedStatement = connection.prepareStatement(Constants.GET_COUNT_OF_USERS + searchQuery);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
             if (resultSet.next()) {
-                userCount = resultSet.getInt(AppContextConstant.COUNT);
+                userCount = resultSet.getInt(COUNT);
             }
             LOGGER.info("The method getUserCount done. Count of users: " + userCount);
         } catch (SQLException e) {
-            LOGGER.info(e.getClass() + " in method getUserCount: " + e.getMessage());
+            LOGGER.error("Error in method getUserCount: " + e.getMessage(), e);
             throw new DataBaseException("Cannot extract number of users", e);
-        } finally {
-            try {
-                DbUtils.close(resultSet);
-            } catch (SQLException e) {
-                LOGGER.info("Cannot close connection: " + e.getMessage());
-            }
         }
         return userCount;
     }

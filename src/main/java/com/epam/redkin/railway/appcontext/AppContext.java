@@ -6,10 +6,6 @@ import com.epam.redkin.railway.model.repository.impl.*;
 import com.epam.redkin.railway.model.service.impl.*;
 import com.epam.redkin.railway.model.service.*;
 import com.epam.redkin.railway.model.validator.TrainValidator;
-import jakarta.servlet.http.HttpSession;
-
-import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
-import static com.epam.redkin.railway.util.constants.AppContextConstant.CURRENT_PAGE;
 
 public class AppContext {
     private static final AppContext appContext = new AppContext();
@@ -88,4 +84,5 @@ public class AppContext {
     public TrainValidator getTrainValidator() {
         return trainValidator;
     }
+
 }

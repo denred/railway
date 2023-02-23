@@ -42,6 +42,7 @@ public class Path {
     public static final String COMMAND_SEARCH_ROUTES = "controller?action=search_page";
     public static final String COMMAND_INFO_STATIONS = "controller?action=stations";
     public static final String COMMAND_INFO_USERS = "controller?action=users";
+    public static final String COMMAND_GET_PAGE_INFO_USERS = "controller?action=users_page";
     public static final String COMMAND_INFO_ORDERS = "controller?action=admin_orders";
     public static final String COMMAND_INFO_CARRIAGES = "controller?action=carriages";
     public static final String COMMAND_INFO_CARRIAGES_PAGE = "controller?action=carriages_page";

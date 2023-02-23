@@ -7,4 +7,5 @@ import java.util.Map;
 public interface SearchService {
     String getParameter(HttpServletRequest request, String parameter);
     void addSearch(Map<String, String> search, String key, String value);
+    boolean isFieldsInvalid(String email, String firstName, String lastName, String phone, String birthDate);
 }

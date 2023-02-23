@@ -56,8 +56,9 @@ public class ActionFactory {
         commands.put("carriages_page", new CarriageInfoPageCommand());
         commands.put("trains", new TrainInfoCommand(AppContext.getInstance()));
         commands.put("trains_page", new TrainInfoPageCommand());
-        commands.put("admin_orders", new OrderInfoCommand());
-        commands.put("users", new UserInfoCommand());
+        commands.put("admin_orders", new OrderInfoCommand(AppContext.getInstance()));
+        commands.put("users", new UserInfoCommand(AppContext.getInstance()));
+        commands.put("users_page", new UserInfoGetPageCommand());
         commands.put("block", new UserBlockCommand());
         commands.put("order_status", new OrderChangeStatusCommand());
         commands.put("set_train", new TrainSetCommand());

@@ -88,7 +88,7 @@ public interface Constants {
     String UPDATE_USER_LOG_IN_TOKEN_BY_ID = "UPDATE user SET user.log_in_token = (?) WHERE user.id = (?)";
     String FIND_USER_BY_ID_AND_TOKEN = "SELECT * FROM user WHERE id = (?) AND log_in_token = (?)";
     String UPDATE_USER_LOG_IN_TOKEN_TO_NULL = "UPDATE user SET log_in_token = NULL WHERE id = (?)";
-    String GET_COUNT_OF_USERS = "SELECT count(*) as count FROM user WHERE role = 'user' %s";
+    String GET_COUNT_OF_USERS = "SELECT count(*) as count FROM user WHERE role = 'user' ";
 
     /* ROUTES */
     String GET_ROUTE_LIST_WITH_PARAMETERS = "SELECT " +
