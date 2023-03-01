@@ -15,7 +15,7 @@ public class LoginValidator {
     private static final String EMAIL = "[a-zA-Z0-9._-][a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}";
     private static final String PASSWORD = "^(?:(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*)[^\\s]{8,}$";
 
-    public void isValid(String email, String password) {
+    public boolean isValid(String email, String password) {
         Map<String, String> errors = new HashMap<>();
         if (!ValidatorUtils.isMatch(EMAIL, email)) {
             errors.put("Incorrect format email entered", email);
@@ -25,6 +25,16 @@ public class LoginValidator {
         }
 
         ValidatorUtils.errorBuilder(errors, LOGGER);
+        return errors.isEmpty();
+    }
+
+    public boolean isValidEmail(String email){
+        Map<String, String> errors = new HashMap<>();
+        if (!ValidatorUtils.isMatch(EMAIL, email)) {
+            errors.put("Incorrect format email entered", email);
+        }
+        ValidatorUtils.errorBuilder(errors, LOGGER);
+        return errors.isEmpty();
     }
 
 }

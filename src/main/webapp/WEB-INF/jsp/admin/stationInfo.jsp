@@ -28,9 +28,10 @@
                         <div class="invalid-feedback"><fmt:message bundle="${excMsg}"
                                                                    key="validation.station.name"/></div>
                     </div>
-                    <div class="col-sm-4">
-                        <input type="submit" class="btn btn-info" name="filter"
-                               value="<fmt:message key="route.filter"/>">
+                    <div class="col-sm-4 d-flex justify-content-center align-items-end">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-filter"></i> <fmt:message key="route.filter"/>
+                        </button>
                     </div>
                 </div>
             </form>

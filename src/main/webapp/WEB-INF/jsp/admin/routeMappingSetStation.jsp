@@ -11,7 +11,6 @@
 <body>
 <mrt:navigation/>
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
-<%--  ================================  --%>
 
 <div class="container mt-4">
     <div class="d-flex justify-content-center">

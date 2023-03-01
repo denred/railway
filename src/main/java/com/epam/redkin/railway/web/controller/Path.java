@@ -29,11 +29,14 @@ public class Path {
     public static final String PAGE_REGISTRATION = "registration.jsp";
     public static final String PAGE_ERROR_PAGE = "errorPage.jsp";
     public static final String PAGE_PROFILE = "WEB-INF/jsp/user/profile.jsp";
+    public static final String PAGE_VIEW_TICKET = "WEB-INF/jsp/user/viewTicket.jsp";
+    public static final String PAGE_ORDER_DETAIL = "WEB-INF/jsp/admin/orderDetail.jsp";
 
 
 
     // commands
     public static final String COMMAND_HOME = "controller?action=home";
+    public static final String COMMAND_GET_LOGIN_PAGE = "controller?action=login_page";
     public static final String COMMAND_PROFILE = "controller?action=profile";
     public static final String COMMAND_PROFILE_PAGE = "controller?action=profilePage";
     public static final String COMMAND_INFO_ROUTE = "controller?action=routes";

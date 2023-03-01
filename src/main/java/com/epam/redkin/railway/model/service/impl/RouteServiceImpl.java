@@ -10,6 +10,7 @@ import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.exception.IncorrectDataException;
 import com.epam.redkin.railway.model.exception.ServiceException;
 import com.epam.redkin.railway.model.repository.RouteRepository;
+import com.epam.redkin.railway.model.service.CarriageService;
 import com.epam.redkin.railway.model.service.RouteService;
 import com.epam.redkin.railway.model.service.SeatService;
 import org.apache.commons.lang3.StringUtils;
@@ -28,11 +29,13 @@ public class RouteServiceImpl implements RouteService {
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteServiceImpl.class);
     private final RouteRepository routeRepository;
     private final SeatService seatService;
+    private final CarriageService carriageService;
 
 
-    public RouteServiceImpl(RouteRepository routsRepository, SeatService seatService) {
+    public RouteServiceImpl(RouteRepository routsRepository, SeatService seatService, CarriageService carriageService) {
         this.routeRepository = routsRepository;
         this.seatService = seatService;
+        this.carriageService = carriageService;
     }
 
 
@@ -99,12 +102,15 @@ public class RouteServiceImpl implements RouteService {
     public void fillAvailableSeats(List<RouteOrderDTO> routeOrderDTOList) {
         LOGGER.info("Started the method fillAvailableSeats");
         List<CarriageType> carriageTypeList = new ArrayList<>(EnumSet.allOf(CarriageType.class));
+
         routeOrderDTOList.forEach(route -> {
             HashMap<CarriageType, Integer> availableSeats = new HashMap<>();
-            carriageTypeList.forEach(type -> {
-                int count = seatService.getCountSeatByCarType(route.getTrainId(), type);
-                if (count > 0) {
-                    availableSeats.put(type, count);
+            carriageTypeList.forEach(carriageType -> {
+                //int totalSeats = carriageService.getSeatCountByCarriageType(route.getTrainId(), carriageType);
+                int freeSeats = seatService.fillReservedSeats(seatService.getSeatsByTrainIdAndCarriageType(route.getTrainId(), carriageType), String.valueOf(route.getRoutsId()), String.valueOf(route.getStations().get(0).getStationId()), String.valueOf(route.getStations().get(1).getStationId()), String.valueOf(route.getTrainId())).size();
+                //int bookedSeats = carriageService.getBookedSeatsCountByCarriageType(route.getRoutsId(), route.getTrainId(), carriageType);
+                if (freeSeats > 0) {
+                    availableSeats.put(carriageType, freeSeats);
                 }
             });
             route.setAvailableSeats(availableSeats);

@@ -1,5 +1,6 @@
 package com.epam.redkin.railway.model.repository.impl;
 
+import com.epam.redkin.railway.model.dto.SeatDTO;
 import com.epam.redkin.railway.model.entity.CarriageType;
 import com.epam.redkin.railway.model.entity.Seat;
 import com.epam.redkin.railway.model.exception.DataBaseException;
@@ -179,7 +180,7 @@ public class SeatRepositoryImpl implements SeatRepository {
                 + " and Carriage type= " + type);
         int count = 0;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(Constants.GET_SEATS_IN_TRAIN_BY_TYPE)) {
+             PreparedStatement statement = connection.prepareStatement(Constants.GET_SEATS_COUNT_IN_TRAIN_BY_TYPE)) {
             statement.setInt(1, trainId);
             statement.setString(2, type.toString());
             ResultSet rs = statement.executeQuery();
@@ -196,7 +197,7 @@ public class SeatRepositoryImpl implements SeatRepository {
 
     @Override
     public List<Seat> getListSeatsByCarriageId(int carriageId) {
-        LOGGER.info("Started the method getListSeatsByCarriageId(int carriageId) with carriageId= " + carriageId);
+        LOGGER.info("Started getListSeatsByCarriageId(carriageId={})", carriageId);
         List<Seat> seats = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.GET_LIST_SEATS_BY_CARRIAGE_ID)) {
@@ -283,5 +284,53 @@ public class SeatRepositoryImpl implements SeatRepository {
             LOGGER.error("Can't clear seat: " + e);
             throw new DataBaseException("Can't clear seat. seat_id = " + seatId, e);
         }
+    }
+
+    @Override
+    public boolean isReservationExists(int seatId, int stationId, int routeId, int trainId) {
+        boolean isExists = false;
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement statement = conn.prepareStatement(Constants.IS_RESERVATION_EXISTS)) {
+            statement.setInt(1, seatId);
+            statement.setInt(2, stationId);
+            statement.setInt(3, routeId);
+            statement.setInt(4, trainId);
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt("count");
+                    isExists = count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return isExists;
+    }
+
+    @Override
+    public List<Seat> getSeatsByTrainIdAndType(int trainId, CarriageType carriageType) {
+        LOGGER.info("Started getSeatsByTrainIdAndType(trainId={},carriageType={})", trainId, carriageType);
+        List<Seat> seats = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(Constants.GET_SEATS_IN_TRAIN_BY_TYPE)) {
+            statement.setInt(1, trainId);
+            statement.setString(2, carriageType.name());
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                seats.add(getSeat(resultSet));
+            }
+            LOGGER.info("Extracted seats: " + seats);
+        } catch (SQLException e) {
+            LOGGER.error("Cannot extract seats: " + e);
+            throw new DataBaseException("Cannot extract list of seats from database", e);
+        }
+        return seats;
+    }
+
+    private SeatDTO extractSeatDTO(ResultSet resultSet) throws SQLException {
+        return SeatDTO.builder()
+                .seatId(resultSet.getInt("seat_id"))
+                .seatNumber(resultSet.getInt("seat_number"))
+                .build();
     }
 }

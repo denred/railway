@@ -2,8 +2,8 @@ package com.epam.redkin.railway.web.controller.command.admin;
 
 import com.epam.redkin.railway.model.entity.Order;
 import com.epam.redkin.railway.model.service.OrderService;
+import com.epam.redkin.railway.model.service.PaginationService;
 import com.epam.redkin.railway.model.service.RouteService;
-import com.epam.redkin.railway.util.constants.AppContextConstant;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
@@ -20,37 +20,39 @@ import static com.epam.redkin.railway.util.constants.AppContextConstant.*;
 
 public class OrderInfoCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderInfoCommand.class);
-    private static final int RECORDS_PER_PAGE = 2;
+    private static final int RECORDS_PER_PAGE = 5;
+    private static final int FIRST_VISIBLE_PAGE_LINK = 5;
+    private final AppContext appContext;
+
+    public OrderInfoCommand(AppContext appContext) {
+        this.appContext = appContext;
+    }
 
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
-        Router router = new Router();
-        router.setRouteType(Router.RouteType.FORWARD);
-        router.setPagePath(Path.PAGE_ADMIN_INFO_ORDER);
-        OrderService orderService = AppContext.getInstance().getOrderService();
-        RouteService routeService = AppContext.getInstance().getRouteService();
-        int page = 1;
-        if (request.getParameter(PAGE) != null) {
-            page = Integer.parseInt(request.getParameter(PAGE));
-        }
-        int noOfRecords = orderService.getOrderListSize();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
+        OrderService orderService = appContext.getOrderService();
+        RouteService routeService = appContext.getRouteService();
+        PaginationService paginationService = appContext.getPaginationService();
+        HttpSession session = request.getSession();
+        int page = paginationService.getPage(request);
+
+        int records = orderService.getOrderListSize();
+
         List<Order> orderList = orderService.getOrderListByCurrentRecordAndRecordsPerPage(
                 (page - 1) * RECORDS_PER_PAGE,
                 RECORDS_PER_PAGE * page);
+
         for (Order order : orderList) {
             order.setRouteName(routeService
                     .getRouteInfoById(order.getRouteId())
                     .getRoutName());
         }
-        request.setAttribute(PAGE_RECORDS, RECORDS_PER_PAGE);
-        request.setAttribute(PAGE_COUNT, noOfPages);
-        request.setAttribute(CURRENT_PAGE, page);
-        request.setAttribute(ORDER_LIST, orderList);
-        HttpSession session = request.getSession();
-        request.setAttribute(LANGUAGE, session.getAttribute(AppContextConstant.LOCALE));
+
+        paginationService.setPaginationParameter(request, page, records, RECORDS_PER_PAGE, FIRST_VISIBLE_PAGE_LINK);
+
+        session.setAttribute(ORDER_LIST, orderList);
         LOGGER.info("done");
-        return router;
+        return Router.forward(Path.PAGE_ADMIN_INFO_ORDER);
     }
 }

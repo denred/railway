@@ -4,10 +4,10 @@ public interface Constants {
     // Query
 
     /* CARRIAGE */
-    String ADD_CARRIAGE = "INSERT INTO carriage (type, number, train_id) VALUES (?,?,?)";
+    String ADD_CARRIAGE = "INSERT INTO carriage (type, number, train_id, num_seats) VALUES (?,?,?,?)";
     String GET_CARRIAGE_BY_ID = "SELECT * FROM carriage WHERE id = ?";
     String GET_CARRIAGE_BY_NUMBER = "SELECT * FROM carriage WHERE number = ?";
-    String UPDATE_CARRIAGE = "UPDATE carriage SET type = ?, number = ?, train_id = ? WHERE id = ?";
+    String UPDATE_CARRIAGE = "UPDATE carriage SET type = ?, number = ?, train_id = ?, num_seats = ? WHERE id = ?";
     String DELETE_CARRIAGE = "DELETE FROM carriage WHERE id = ?";
     String GET_CARRIAGES_BY_TRAIN_ID = "SELECT * FROM carriage WHERE train_id = ?";
     String GET_CARRIAGES_BY_TRAIN_ID_AND_TYPE = "SELECT * FROM carriage" +
@@ -21,11 +21,23 @@ public interface Constants {
             "FROM carriage as c LEFT OUTER JOIN train as t\n" +
             "ON train_id = t.id ORDER BY t.number, c.number";
 
+    String GET_CARRIAGE_BY_TYPE = "SELECT c.id as carriage_id,\n" +
+            "       type,\n" +
+            "       c.number as carriage_number,\n" +
+            "       train_id,\n" +
+            "       t.number as train_number,\n" +
+            "       num_seats\n"+
+            "FROM carriage as c\n" +
+            "LEFT OUTER JOIN train as t ON train_id = t.id\n" +
+            "WHERE type = ?\n" +
+            "ORDER BY t.number, c.number\n";
+
     String GET_ALL_CARRIAGE_WITH_FILTER_AND_PAGINATION = "SELECT c.id as carriage_id, " +
             "type, " +
             "c.number as carriage_number, " +
             "train_id, " +
-            "t.number as train_number " +
+            "t.number as train_number, " +
+            "num_seats " +
             "FROM carriage as c LEFT OUTER JOIN train as t\n" +
             "ON train_id = t.id " +
             "%s " +
@@ -38,6 +50,12 @@ public interface Constants {
             "%s " +
             "ORDER BY t.number, c.number";
 
+    String GET_SEAT_COUNT_BY_TRAIN_AND_CARRIAGE_TYPE = "SELECT SUM(num_seats) as count FROM railway.carriage WHERE train_id = ? AND type = ?";
+    String GET_BOOKED_SEATS_COUNT_BY_TRAIN_AND_ROUTE_AND_CARRIAGE_TYPE = "SELECT COUNT(*) as count FROM reservation r " +
+            "JOIN seat s ON r.seat_id = s.id " +
+            "JOIN carriage c ON s.carriage_id = c.id " +
+            "WHERE r.train_id = ? AND r.route_id = ? AND c.type = ?";
+
 
     /* SEAT */
     String ADD_SEAT = "INSERT INTO seat (seat_number, busy, carriage_id) VALUES (?,?,?)";
@@ -47,14 +65,27 @@ public interface Constants {
     String DELETE_SEATS_BY_CARRIAGE_ID = "DELETE FROM seat WHERE carriage_id = ?";
     String GET_SEATS_COUNT_IN_CARRIAGE = "SELECT COUNT(*) as count FROM seat WHERE carriage_id = ? AND busy = false";
     String GET_BUSY_SEATS_COUNT_IN_CARRIAGE = "SELECT COUNT(*) as count FROM seat WHERE carriage_id = ? AND busy = TRUE";
-    String GET_SEATS_IN_TRAIN_BY_TYPE = "SELECT COUNT(seat_number) as count FROM seat " +
+    String GET_SEATS_COUNT_IN_TRAIN_BY_TYPE = "SELECT COUNT(seat_number) as count FROM seat " +
             "JOIN carriage ON carriage.id = seat.carriage_id " +
             "JOIN train ON train.id = carriage.train_id " +
-            "WHERE train_id = ? AND carriage.type = ? AND busy = FALSE";
+            "WHERE train_id = ? AND carriage.type = ? ";
+
+    String GET_SEATS_IN_TRAIN_BY_TYPE = "SELECT seat.id as id, carriage_id, seat_number, busy\n" +
+            "FROM seat\n" +
+            "         JOIN carriage ON carriage.id = seat.carriage_id\n" +
+            "         JOIN train ON train.id = carriage.train_id\n" +
+            "WHERE train_id = ?\n" +
+            "  AND carriage.type = ?";
     String GET_LIST_SEATS_BY_CARRIAGE_ID = "SELECT * FROM seat WHERE carriage_id = ? AND busy = FALSE";
     String GET_SEATS_LIST_BY_ID_BATCH = "SELECT * FROM seat WHERE id IN (%s)";
     String TAKE_IN_SEAT = "UPDATE seat SET busy = true WHERE id = ?";
     String TAKE_OFF_SEAT = "UPDATE seat SET busy = 0 WHERE seat_number = ?";
+    String IS_RESERVATION_EXISTS = "SELECT COUNT(*) as count FROM reservation " +
+            "WHERE seat_id = ? AND station_id = ? AND route_id = ? AND train_id = ?";
+    String GET_SEATS_BY_CARRIAGE_AND_TRAIN = "SELECT s.id as seat_id, s.number as seat_number\n" +
+            "FROM seat as s\n" +
+            "LEFT JOIN reservation as r ON s.id = r.seat_id\n" +
+            "WHERE s.carriage_id = ? AND s.train_id = ? AND r.id IS NULL\n";
 
     /* STATION */
     String ADD_STATION = "INSERT INTO station (station) VALUES (?)";
@@ -156,6 +187,28 @@ public interface Constants {
             "JOIN station as s ON rm.station_id = s.id " +
             "WHERE route_id = ? ORDER BY station_order";
 
+    String GET_ROUTE_STATIONS = "SELECT\n" +
+            "    *\n" +
+            "FROM\n" +
+            "    station_has_route sr\n" +
+            "        JOIN station s ON sr.station_id = s.id\n" +
+            "WHERE\n" +
+            "        sr.route_id = ?\n" +
+            "  AND (\n" +
+            "            sr.station_order >= (\n" +
+            "            SELECT station_order\n" +
+            "            FROM station_has_route\n" +
+            "            WHERE route_id = ? AND station_id = ?\n" +
+            "        )\n" +
+            "        AND sr.station_order <= (\n" +
+            "        SELECT station_order\n" +
+            "        FROM station_has_route\n" +
+            "        WHERE route_id = ? AND station_id = ?\n" +
+            "    )\n" +
+            "    )\n" +
+            "ORDER BY\n" +
+            "    sr.station_order ASC\n";
+
     String GET_ROUTE_MAPPING_BY_ROUTE_ID_AND_PAGINATION = "SELECT * FROM station_has_route as rm " +
             "JOIN station as s ON rm.station_id = s.id " +
             "WHERE route_id = ? ORDER BY station_order LIMIT ? , ?";
@@ -179,9 +232,15 @@ public interface Constants {
     String GET_ALL_ORDER = "SELECT * FROM booking JOIN user ON user_id = user.id";
     String GET_ORDER_BY_USER_ID = "SELECT * FROM booking JOIN user ON user_id = user.id WHERE user_id = ?";
     String GET_THE_PRICE_OF_SUCCESSFUL_ORDERS = "SELECT SUM(price) as sum FROM booking WHERE user_id = ? AND status = 'ACCEPTED'";
+    String INSERT_RESERVATION = "INSERT INTO reservation (status, station_id, seat_id, train_id, route_id, sequence_number) " +
+            "VALUES (?, ?, ?, ?, ?, ?)";
+    String SAVE_BOOKING = "INSERT INTO booking(booking_date, dispatch_date, arrival_date, travel_time, price, " +
+            "status, user_id, route_id1, train_id, dispatch_station_id, arrival_station_id, carriage_id) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    String SAVE_BOOKED_SEAT = "INSERT INTO booking_has_seat(booking_id, seat_id) VALUES (?, ?)";
 
     // Constants
-
     String ID = "id";
     String TOTAL = "sum";
     String BUSY = "busy";
@@ -190,6 +249,7 @@ public interface Constants {
     String TRAIN_NUMBER_TABLE = "t.number";
     String TRAIN_ID = "train_id";
     String NUMBER = "number";
+    String NUMBER_SEATS = "num_seats";
     String CARRIAGE_TYPE = "carriage_type";
     String TYPE = "type";
     String PRICE = "price";

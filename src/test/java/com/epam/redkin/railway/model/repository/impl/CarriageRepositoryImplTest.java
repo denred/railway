@@ -64,7 +64,7 @@ class CarriageRepositoryImplTest {
         verify(mockConnection).prepareStatement(anyString(), anyInt());
 
         verify(mockStatement).setString(anyInt(), anyString());
-        verify(mockStatement).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(2)).setInt(anyInt(), anyInt());
         verify(mockStatement).executeUpdate();
         verify(mockStatement).close();
 
@@ -93,7 +93,7 @@ class CarriageRepositoryImplTest {
         verify(mockConnection).close();
         verify(mockConnection).prepareStatement(anyString(), anyInt());
         verify(mockStatement).setString(anyInt(), anyString());
-        verify(mockStatement).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(2)).setInt(anyInt(), anyInt());
         verify(mockStatement).executeUpdate();
         verify(mockStatement).close();
 
@@ -115,6 +115,7 @@ class CarriageRepositoryImplTest {
                         .type(CarriageType.FIRST_CLASS)
                         .number("08")
                         .trainId(2)
+                        .seatCount(2)
                         .build(),
                 carriageRepository.getById(1));
         verify(mockDataSource).getConnection();
@@ -122,7 +123,7 @@ class CarriageRepositoryImplTest {
         verify(mockStatement).setInt(anyInt(), anyInt());
         verify(mockStatement).executeQuery();
         verify(mockResultSet).next();
-        verify(mockResultSet, times(2)).getInt(anyString());
+        verify(mockResultSet, times(3)).getInt(anyString());
         verify(mockResultSet, times(2)).getString(anyString());
     }
 
@@ -170,7 +171,7 @@ class CarriageRepositoryImplTest {
         assertTrue(carriageRepository.update(Carriage.builder().type(CarriageType.FIRST_CLASS).build()));
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
-        verify(mockStatement, times(2)).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(3)).setInt(anyInt(), anyInt());
         verify(mockStatement, times(1)).setString(anyInt(), anyString());
         verify(mockStatement).executeUpdate();
     }
@@ -185,7 +186,7 @@ class CarriageRepositoryImplTest {
         assertFalse(carriageRepository.update(Carriage.builder().type(CarriageType.FIRST_CLASS).build()));
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
-        verify(mockStatement, times(2)).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(3)).setInt(anyInt(), anyInt());
         verify(mockStatement, times(1)).setString(anyInt(), anyString());
         verify(mockStatement).executeUpdate();
     }
@@ -200,7 +201,7 @@ class CarriageRepositoryImplTest {
         assertThrows(DataBaseException.class, () -> carriageRepository.update(Carriage.builder().type(CarriageType.FIRST_CLASS).build()));
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
-        verify(mockStatement, times(2)).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(3)).setInt(anyInt(), anyInt());
         verify(mockStatement, times(1)).setString(anyInt(), anyString());
         verify(mockStatement).executeUpdate();
     }
@@ -248,7 +249,7 @@ class CarriageRepositoryImplTest {
         verify(mockStatement).setInt(anyInt(), anyInt());
         verify(mockStatement).executeQuery();
         verify(mockResultSet, times(3)).next();
-        verify(mockResultSet, times(4)).getInt(anyString());
+        verify(mockResultSet, times(6)).getInt(anyString());
         verify(mockResultSet, times(4)).getString(anyString());
     }
 
@@ -304,7 +305,7 @@ class CarriageRepositoryImplTest {
         verify(mockStatement).setInt(anyInt(), anyInt());
         verify(mockStatement).executeQuery();
         verify(mockResultSet, times(3)).next();
-        verify(mockResultSet, times(4)).getInt(anyString());
+        verify(mockResultSet, times(6)).getInt(anyString());
         verify(mockResultSet, times(4)).getString(anyString());
     }
 
@@ -362,7 +363,7 @@ class CarriageRepositoryImplTest {
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement).executeQuery();
         verify(mockResultSet, times(3)).next();
-        verify(mockResultSet, times(4)).getInt(anyString());
+        verify(mockResultSet, times(6)).getInt(anyString());
         verify(mockResultSet, times(6)).getString(anyString());
     }
 

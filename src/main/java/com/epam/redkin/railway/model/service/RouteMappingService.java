@@ -17,7 +17,7 @@ public interface RouteMappingService {
     List<RoutePoint> getRouteMappingList();
 
 
-    List<MappingInfoDTO> getMappingInfoDtoListByRouteId(int routeId);
+    List<MappingInfoDTO> getRouteMappingInfoDTOs(int routeId);
 
 
     MappingInfoDTO getMappingInfo(int routeId, int stationId);
@@ -27,4 +27,6 @@ public interface RouteMappingService {
     List<MappingInfoDTO> getMappingInfoDtoListByRouteIdAndPagination(int routeId, int offset, int limit);
 
     int getRouteStationsCount(int routeId);
+
+    List<MappingInfoDTO> getRouteStations(int routeId, int departureStationId, int arrivalStationId);
 }

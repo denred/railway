@@ -68,7 +68,7 @@
                                                class="form-control form-control-lg" required
                                                pattern="\+[3]{1}[8]{1}[0]{1}[0-9]{9}">
                                         <div class="invalid-feedback">
-                                            <fmt:message bundle="excMsg" key="validation.user.phone"/>
+                                            <fmt:message bundle="${excMsg}" key="validation.user.phone"/>
                                         </div>
                                     </div>
                                 </div>

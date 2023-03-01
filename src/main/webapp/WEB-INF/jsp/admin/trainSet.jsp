@@ -19,7 +19,7 @@
         <form class="mx-auto w-25 was-validated" action="controller?action=set_train" method="POST">
             <input type="hidden" name="train_id" value="${current_train.id}">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col">
                     <label for="train-number"><fmt:message key="train.number"/></label>
                     <input id="train-number" name="train_number" class="form-control" value="${current_train.number}"
                            required minlength="1" pattern="^\d+\(?\w*[\u0400-\u052F\u2DE0-\u2DFF\uA640-\uA69F']*\)?$"

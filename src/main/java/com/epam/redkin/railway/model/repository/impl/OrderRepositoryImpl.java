@@ -1,5 +1,7 @@
 package com.epam.redkin.railway.model.repository.impl;
 
+import com.epam.redkin.railway.model.dto.BookingDTO;
+import com.epam.redkin.railway.model.dto.ReservationDTO;
 import com.epam.redkin.railway.model.entity.*;
 import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.repository.OrderRepository;
@@ -257,4 +259,95 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
         LOGGER.info("Total order price: " + price);
         return price;
     }
+
+    @Override
+    public void addReservation(Connection connection, ReservationDTO reservationDTO) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(INSERT_RESERVATION);
+            statement.setString(1, reservationDTO.getStatus());
+            statement.setInt(2, reservationDTO.getStationId());
+            statement.setInt(3, reservationDTO.getSeatId());
+            statement.setInt(4, reservationDTO.getTrainId());
+            statement.setInt(5, reservationDTO.getRouteId());
+            statement.setInt(6, reservationDTO.getSequenceNumber());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error("Failed to insert reservation: " + e.getMessage());
+            throw new DataBaseException("Failed to insert reservation.", e);
+        }
+    }
+
+    @Override
+    public int saveBooking(BookingDTO bookingDTO) {
+        LOGGER.info("Started saving booking");
+        int key = -1;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+            LOGGER.info("Transaction started");
+            statement = connection.prepareStatement(SAVE_BOOKING, Statement.RETURN_GENERATED_KEYS);
+            statement.setTimestamp(1, Timestamp.valueOf(bookingDTO.getBookingDate()));
+            statement.setTimestamp(2, Timestamp.valueOf(bookingDTO.getDispatchDate()));
+            statement.setTimestamp(3, Timestamp.valueOf(bookingDTO.getArrivalDate()));
+            statement.setString(4, bookingDTO.getTravelTime());
+            statement.setDouble(5, bookingDTO.getPrice());
+            statement.setString(6, bookingDTO.getBookingStatus().toString());
+            statement.setInt(7, bookingDTO.getUserId());
+            statement.setInt(8, bookingDTO.getRouteId());
+            statement.setInt(9, bookingDTO.getTrainId());
+            statement.setInt(10, bookingDTO.getDispatchStationId());
+            statement.setInt(11, bookingDTO.getArrivalStationId());
+            statement.setInt(12, bookingDTO.getCarriageId());
+            statement.executeUpdate();
+            connection.commit();
+            LOGGER.info("Transaction done");
+            resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                key = resultSet.getInt(1);
+            }
+            LOGGER.info("Generated id= " + key);
+        } catch (SQLException e) {
+            try {
+                assert connection != null;
+                connection.rollback();
+                LOGGER.info("Transaction rollback");
+            } catch (SQLException | NullPointerException ex) {
+                LOGGER.error("Connection rollback error: " + ex);
+                throw new DataBaseException("Connection rollback error: ", ex);
+            }
+            LOGGER.error("Cannot save booking: " + e);
+            throw new DataBaseException("Cannot save booking", e);
+        } finally {
+            try {
+                assert connection != null;
+                connection.setAutoCommit(true);
+                DbUtils.close(resultSet);
+                DbUtils.close(statement);
+                DbUtils.close(connection);
+                LOGGER.info("Connection closed");
+            } catch (SQLException | NullPointerException e) {
+                LOGGER.error("Connection closing error: " + e);
+            }
+        }
+        return key;
+    }
+
+    @Override
+    public void saveBookingSeat(int bookingId, String seatId) {
+        LOGGER.info("Started saving booked seat bookingId={}, seatId={}", bookingId, seatId);
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SAVE_BOOKED_SEAT)) {
+            statement.setInt(1, bookingId);
+            statement.setString(2, seatId);
+            int affectedRow = statement.executeUpdate();
+            LOGGER.info("Number of rows affected {}", affectedRow);
+        } catch (SQLException e) {
+            LOGGER.error("Saving booked seat error: " + e);
+            throw new DataBaseException("Saving booked seat error", e);
+        }
+    }
+
 }

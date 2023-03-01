@@ -146,29 +146,26 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User getUserByEmail(String email) {
-        LOGGER.info("Started --> public User getUserByEmail(String email) --> email= " + email);
-        User user = null;
-        ResultSet resultSet = null;
+        LOGGER.info("Retrieving user with email: {}", email);
+
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.GET_USER_BY_EMAIL)) {
             statement.setString(1, email);
-            resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                user = extractUser(resultSet);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    User user = extractUser(resultSet);
+                    LOGGER.info("User retrieved: {}", user);
+                    return user;
+                }
             }
-            LOGGER.info("User successfully received from database. User: " + user);
         } catch (SQLException | NullPointerException e) {
-            LOGGER.error(e.getClass() + " in method getUserByEmail: " + e);
+            LOGGER.error("Error retrieving user with email: {}", email, e);
             throw new DataBaseException("Cannot extract user with email = " + email, e);
-        } finally {
-            try {
-                DbUtils.close(resultSet);
-            } catch (SQLException e) {
-                LOGGER.error("Connection closing error: " + e);
-            }
         }
-        return user;
+        LOGGER.info("No user found with email: {}", email);
+        return null;
     }
+
 
 
     @Override

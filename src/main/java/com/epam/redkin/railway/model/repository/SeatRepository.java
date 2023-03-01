@@ -1,5 +1,6 @@
 package com.epam.redkin.railway.model.repository;
 
+import com.epam.redkin.railway.model.dto.SeatDTO;
 import com.epam.redkin.railway.model.entity.CarriageType;
 import com.epam.redkin.railway.model.entity.Seat;
 
@@ -14,4 +15,6 @@ public interface SeatRepository extends EntityDAO<Seat> {
     List<Seat> getListSeatsByIdBatch(List<String> seatsNumber);
     void reservedSeat(int seatId);
     void clearSeat(int seatId);
+    boolean isReservationExists(int seatId, int stationId, int routeId, int trainId);
+    List<Seat> getSeatsByTrainIdAndType(int trainId, CarriageType carriageType);
 }

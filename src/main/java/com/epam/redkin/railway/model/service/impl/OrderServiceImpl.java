@@ -1,5 +1,7 @@
 package com.epam.redkin.railway.model.service.impl;
 
+import com.epam.redkin.railway.model.dto.BookingDTO;
+import com.epam.redkin.railway.model.dto.ReservationDTO;
 import com.epam.redkin.railway.model.entity.CarriageType;
 import com.epam.redkin.railway.model.entity.Order;
 import com.epam.redkin.railway.model.entity.OrderStatus;
@@ -14,6 +16,8 @@ import com.epam.redkin.railway.model.service.SeatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,15 +29,17 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final SeatRepository seatRepository;
     private final SeatService seatService;
+    private final DataSource dataSource;
 
-    public OrderServiceImpl(OrderRepository orderRepository, SeatService seatService, SeatRepository seatRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, SeatService seatService, SeatRepository seatRepository, DataSource dataSource) {
         this.orderRepository = orderRepository;
         this.seatRepository = seatRepository;
         this.seatService = seatService;
+        this.dataSource = dataSource;
     }
 
     @Override
-    public void addOrder(Order order, int routsId, List<Seat> seats) {
+    public void saveBooking(Order order, int routsId, List<Seat> seats) {
         order.setPrice(order.getCarriageType().getPrice() * order.getCountOfSeats());
         seats.forEach(seat -> seatRepository.reservedSeat(seat.getId()));
         try {
@@ -134,6 +140,52 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public int getOrderListSizeByUserId(String userId) {
         return orderRepository.getOrderByUserId(Integer.parseInt(userId)).size();
+    }
+
+    @Override
+    public void addReservation(List<ReservationDTO> reservations) {
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+            connection.setAutoCommit(false);
+
+            for (ReservationDTO reservationDTO : reservations) {
+                orderRepository.addReservation(connection, reservationDTO);
+            }
+
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException ex) {
+                LOGGER.error("Failed to rollback transaction: " + ex.getMessage());
+                throw new DataBaseException("Failed to rollback transaction.", ex);
+            }
+
+            LOGGER.error("Failed to add reservations: " + e.getMessage());
+            throw new DataBaseException("Failed to add reservations.", e);
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.setAutoCommit(true);
+                    connection.close();
+                }
+            } catch (SQLException ex) {
+                LOGGER.error("Failed to close database connection: " + ex.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public int saveBooking(BookingDTO bookingDTO) {
+        return orderRepository.saveBooking(bookingDTO);
+    }
+
+    @Override
+    public void saveBookingSeat(int bookingId, String seatId) {
+        orderRepository.saveBookingSeat(bookingId, seatId);
     }
 
 

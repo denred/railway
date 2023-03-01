@@ -40,6 +40,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
             statement.setString(1, carriage.getType().toString());
             statement.setString(2, carriage.getNumber());
             statement.setInt(3, carriage.getTrainId());
+            statement.setInt(4, carriage.getSeatCount());
             statement.executeUpdate();
             connection.commit();
             LOGGER.info("Transaction done");
@@ -93,15 +94,17 @@ public class CarriageRepositoryImpl implements CarriageRepository {
 
     @Override
     public boolean update(Carriage carriage) {
-        LOGGER.info("Started public boolean update(Carriage carriage), carriage: " + carriage);
+        LOGGER.info("Started update({})", carriage);
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(Constants.UPDATE_CARRIAGE)) {
             statement.setString(1, carriage.getType().toString());
             statement.setString(2, carriage.getNumber());
             statement.setInt(3, carriage.getTrainId());
-            statement.setInt(4, carriage.getCarriageId());
-            boolean state = statement.executeUpdate() > 0;
-            LOGGER.info("Carriage updated: " + state);
+            statement.setInt(4, carriage.getSeatCount());
+            statement.setInt(5, carriage.getCarriageId());
+            int rowCount = statement.executeUpdate();
+            boolean state = rowCount > 0;
+            LOGGER.info("Carriage updated: {}", state);
             return state;
         } catch (SQLException e) {
             LOGGER.error("Cannot update carriage: " + e);
@@ -243,12 +246,71 @@ public class CarriageRepositoryImpl implements CarriageRepository {
         return carriage;
     }
 
+    @Override
+    public int getSeatCountByTrainAndCarriageType(int trainId, CarriageType carriageType) {
+        LOGGER.info("Started getSeatCountByTrainAndCarriageType({}, {})", trainId, carriageType);
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(Constants.GET_SEAT_COUNT_BY_TRAIN_AND_CARRIAGE_TYPE)) {
+            statement.setInt(1, trainId);
+            statement.setString(2, carriageType.toString());
+            ResultSet resultSet = statement.executeQuery();
+            int seatCount = 0;
+            if (resultSet.next()) {
+                seatCount = resultSet.getInt(COUNT);
+            }
+            LOGGER.info("Seat count retrieved: {}", seatCount);
+            return seatCount;
+        } catch (SQLException e) {
+            LOGGER.error("Cannot retrieve seat count: " + e);
+            throw new DataBaseException("Cannot retrieve seat count", e);
+        }
+    }
+
+    @Override
+    public int getBookedSeatsCount(int trainId, int routeId, CarriageType carriageType) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(Constants.GET_BOOKED_SEATS_COUNT_BY_TRAIN_AND_ROUTE_AND_CARRIAGE_TYPE)) {
+            statement.setInt(1, trainId);
+            statement.setInt(2, routeId);
+            statement.setString(3, carriageType.toString());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Failed to get booked seats count: {}", e.getMessage());
+            throw new DataBaseException("Failed to get booked seats count", e);
+        }
+        return 0;
+    }
+
+    @Override
+    public List<CarriageDTO> getCarriageDTOsByType(String type) {
+        LOGGER.info("Started getCarriageDTOsByType({})", type);
+        List<CarriageDTO> carriageDTOList = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(Constants.GET_CARRIAGE_BY_TYPE)) {
+            statement.setString(1, type);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                carriageDTOList.add(extractCarriageDTO(resultSet));
+            }
+            LOGGER.info("Retrieved CarriageDTOs: " + carriageDTOList);
+        } catch (SQLException e) {
+            LOGGER.error("Failed to retrieve CarriageDTOs: " + e);
+            throw new DataBaseException("Failed to retrieve CarriageDTOs", e);
+        }
+        return carriageDTOList;
+    }
+
     private Carriage getCarriage(ResultSet rs) throws SQLException {
         return Carriage.builder()
                 .carriageId(rs.getInt(Constants.ID))
                 .type(CarriageType.valueOf(rs.getString(Constants.TYPE)))
                 .number(rs.getString(Constants.NUMBER))
                 .trainId(rs.getInt(Constants.TRAIN_ID))
+                .seatCount(rs.getInt(Constants.NUMBER_SEATS))
                 .build();
     }
 
@@ -260,6 +322,7 @@ public class CarriageRepositoryImpl implements CarriageRepository {
                 .carNumber(rs.getString(Constants.CARRIAGE_NUMBER))
                 .trainId(rs.getInt(Constants.TRAIN_ID))
                 .trainNumber(rs.getString(Constants.TRAIN_NUMBER))
+                .seats(rs.getInt(Constants.NUMBER_SEATS))
                 .build();
     }
 

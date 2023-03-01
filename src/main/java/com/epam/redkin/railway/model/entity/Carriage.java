@@ -10,4 +10,5 @@ public class Carriage {
     private CarriageType type;
     private String number;
     private int trainId;
+    private int seatCount;
 }

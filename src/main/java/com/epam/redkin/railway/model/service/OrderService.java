@@ -1,5 +1,7 @@
 package com.epam.redkin.railway.model.service;
 
+import com.epam.redkin.railway.model.dto.BookingDTO;
+import com.epam.redkin.railway.model.dto.ReservationDTO;
 import com.epam.redkin.railway.model.entity.Order;
 import com.epam.redkin.railway.model.entity.OrderStatus;
 import com.epam.redkin.railway.model.entity.Seat;
@@ -22,7 +24,7 @@ public interface OrderService {
     List<Order> getOrderByUserId(int userId);
 
 
-    void addOrder(Order order, int routsId, List<Seat> seats);
+    void saveBooking(Order order, int routsId, List<Seat> seats);
 
 
     void cancelOrder(int orderId);
@@ -40,4 +42,10 @@ public interface OrderService {
 
 
     int getOrderListSizeByUserId(String userId);
+
+    void addReservation(List<ReservationDTO> reservations);
+
+    int saveBooking(BookingDTO bookingDTO);
+
+    void saveBookingSeat(int bookingId, String seatId);
 }

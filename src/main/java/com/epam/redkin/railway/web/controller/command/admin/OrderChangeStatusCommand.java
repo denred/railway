@@ -43,7 +43,7 @@ public class OrderChangeStatusCommand implements Command {
                 LOGGER.error("Incorrect data entered");
                 throw new IncorrectDataException("Incorrect data entered", e);
             }
-            orderValidator.isValidOrder(order);
+            //orderValidator.isValidOrder(order);
             orderService.updateOrderStatus(Integer.parseInt(orderId), status);
             router.setPagePath(Path.COMMAND_INFO_ORDERS);
             router.setRouteType(Router.RouteType.REDIRECT);

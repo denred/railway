@@ -10,7 +10,7 @@ public interface UserService {
 
     User isValidUser(String login, String password);
 
-    int registerUser(User user, String s);
+    int registerUser(User user, String url);
 
     void updateBlocked(int idUser, boolean blockStatus);
 

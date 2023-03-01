@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.epam.redkin.railway.util.constants.AppContextConstant.COOKIE_REMEMBER_USER_TOKEN_DIVIDER;
+
 public class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -45,59 +47,62 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User isValidUser(String email, String password) {
-        User user;
         try {
-            user = userRepository.getUserByEmail(email);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        if (user.getEmail() != null && !user.isBlocked()) {
-
-            if (BCrypt.checkpw(password, user.getPassword())) {
-                return user;
+            User user = userRepository.getUserByEmail(email);
+            if (user == null || user.getEmail() == null || user.isBlocked()) {
+                throw new UnauthorizedException("You are not registered or you are blocked");
             }
-        } else {
-            UnauthorizedException e = new UnauthorizedException("You are not registered or you are blocked");
-            LOGGER.error(e.getMessage());
-            throw e;
+            if (!BCrypt.checkpw(password, user.getPassword())) {
+                throw new UnauthorizedException("Incorrect password or you are blocked");
+            }
+            return user;
+        } catch (SQLException e) {
+            throw new DataBaseException("Error checking user credentials for email: " + email, e);
         }
-        UnauthorizedException e = new UnauthorizedException("Incorrect password or you are blocked");
-        LOGGER.error(e.getMessage());
-        throw e;
     }
+
 
     @Override
     public int registerUser(User user, String pageRootUrl) {
-        int id;
+        LOGGER.info("Started method registerUser(user={} pageRootUrl={})", user, pageRootUrl);
         if (user == null || StringUtils.isBlank(pageRootUrl)) {
-            LOGGER.error("service.commonError");
-            throw new ServiceException("service.commonError");
+            LOGGER.error("Invalid input");
+            throw new ServiceException("Invalid input");
         }
 
-        try {
-            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-            user.setBlocked(true);
-            boolean exist = userRepository.checkUserByEmail(user.getEmail());
-            if (!exist) {
-                id = userRepository.create(user);
-            } else {
-                LOGGER.error("User already exist.");
-                throw new UserAlreadyExistException();
-            }
-
-            user = userRepository.getUserByEmail(user.getEmail());
-            String token = getUpdatedRememberUserToken(user.getUserId());
-
-            String userLogInLink = constructLogInLink(pageRootUrl + Path.COMMAND_POST_REGISTRATION_ACCOUNT_APPROVAL, token);
-            String messageTitle = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.TITLE_USER_REGISTRATION_LINK);
-            String messageText = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.MESSAGE_USER_REGISTRATION_LINK, userLogInLink);
-            emailDistributorUtil.addEmailToSendingQueue(messageTitle, messageText, user.getEmail());
-        } catch (Exception e) {
-            LOGGER.warn(e.getMessage(), e);
-            throw new ServiceException("service.commonError", e.getMessage());
+        boolean userExists = userRepository.checkUserByEmail(user.getEmail());
+        if (userExists) {
+            LOGGER.error("User already exists");
+            throw new UserAlreadyExistException();
         }
-        return id;
+
+        int userId = createNewUser(user);
+        String token = generateToken(userId);
+
+        sendRegistrationEmail(pageRootUrl, token, user.getEmail());
+
+        return userId;
     }
+
+    private int createNewUser(User user) {
+        LOGGER.info("Create user {}", user);
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        user.setPassword(hashedPassword);
+        user.setBlocked(true);
+        return userRepository.create(user);
+    }
+
+    private String generateToken(int userId) {
+        return getUpdatedRememberUserToken(userId);
+    }
+
+    private void sendRegistrationEmail(String pageRootUrl, String token, String email) {
+        String userLogInLink = constructLogInLink(pageRootUrl + Path.COMMAND_POST_REGISTRATION_ACCOUNT_APPROVAL, token);
+        String messageTitle = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.TITLE_USER_REGISTRATION_LINK);
+        String messageText = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.MESSAGE_USER_REGISTRATION_LINK, userLogInLink);
+        emailDistributorUtil.addEmailToSendingQueue(messageTitle, messageText, email);
+    }
+
 
     @Override
     public void updateBlocked(int idUser, boolean blockStatus) {
@@ -154,34 +159,44 @@ public class UserServiceImpl implements UserService {
     public String getUpdatedRememberUserToken(int id) {
         String token = UUID.randomUUID().toString();
         userRepository.updateRememberUserToken(id, token);
-        return token + AppContextConstant.COOKIE_REMEMBER_USER_TOKEN_DIVIDER + id;
+        return token + COOKIE_REMEMBER_USER_TOKEN_DIVIDER + id;
     }
 
     @Override
     public User logInByToken(String token) {
-        LOGGER.info("logInByToken started");
-        if (token == null) {
-            LOGGER.warn("token is null");
-            throw new ServiceException("service.commonError");
+        LOGGER.info("Starting execution of logInByToken");
+
+        if (StringUtils.isBlank(token)) {
+            LOGGER.warn("Token is blank");
+            throw new ServiceException("Token is blank");
         }
+
         try {
-            String[] tokenComponents = token.split(AppContextConstant.COOKIE_REMEMBER_USER_TOKEN_DIVIDER);
+            String[] tokenComponents = token.split(COOKIE_REMEMBER_USER_TOKEN_DIVIDER);
+
             int userId = Integer.parseInt(tokenComponents[USER_ID_COOKIE_INDEX]);
             String tokenValue = tokenComponents[TOKEN_VALUE_COOKIE_INDEX];
+
             User user = userRepository.findUserByIdAndToken(userId, tokenValue);
-            if (user != null) {
-                if (user.isBlocked()) {
-                    throw new ServiceException("validation.user.login.isBanned");
-                }
-                LOGGER.info("done");
-                return user;
+
+            if (user == null) {
+                LOGGER.warn("Token is invalid or has already been used: {}", token);
+                throw new ServiceException("Token is invalid or has already been used");
             }
-            LOGGER.warn(String.format("Cant use token %s for log in", token));
-            throw new ServiceException("service.commonError");
-        } catch (ServiceException e) {
-            throw new ServiceException(e.getMessage());
+
+            if (user.isBlocked()) {
+                LOGGER.warn("User is blocked: {}", user.getEmail());
+                throw new ServiceException("User is blocked");
+            }
+
+            LOGGER.info("Successfully logged in user with id {}", user.getUserId());
+            return user;
+        } catch (NumberFormatException e) {
+            LOGGER.error("Invalid user id in token: {}", token, e);
+            throw new ServiceException("Invalid user id in token");
         }
     }
+
 
     @Override
     public void deleteRememberUserToken(int userId) {
@@ -194,18 +209,39 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void postRegistrationApprovalByToken(String token) {
+        LOGGER.info("Starting execution of postRegistrationApprovalByToken");
+
         if (StringUtils.isBlank(token)) {
-            LOGGER.info("invalid input token");
-            throw new ServiceException("service.commonError");
+            LOGGER.warn("Token is blank");
+            throw new ServiceException("Token is blank");
         }
-        String[] tokenComponents = token.split(AppContextConstant.COOKIE_REMEMBER_USER_TOKEN_DIVIDER);
-        int userId = Integer.parseInt(tokenComponents[USER_ID_COOKIE_INDEX]);
+
+        String[] tokenComponents = token.split(COOKIE_REMEMBER_USER_TOKEN_DIVIDER);
+
+        if (tokenComponents.length < 2) {
+            LOGGER.warn("Token is invalid: {}", token);
+            throw new ServiceException("Token is invalid");
+        }
+
+        int userId;
+
+        try {
+            userId = Integer.parseInt(tokenComponents[USER_ID_COOKIE_INDEX]);
+        } catch (NumberFormatException e) {
+            LOGGER.error("Invalid user id in token: {}", token, e);
+            throw new ServiceException("Invalid user id in token");
+        }
+
         try {
             userRepository.updateBlocked(userId, false);
         } catch (DataBaseException e) {
+            LOGGER.error("Unable to update user blocked status: {}", userId, e);
             throw new ServiceException(e.getMessage());
         }
+
+        LOGGER.info("Successfully approved registration for user with id {}", userId);
     }
+
 
     @Override
     public int getUserCount(Map<String, String> search) {
@@ -229,6 +265,8 @@ public class UserServiceImpl implements UserService {
     }
 
     private String constructLogInLink(String pageRootUrl, String token) {
-        return pageRootUrl + '&' + AppContextConstant.COOKIE_REMEMBER_USER_TOKEN + '=' + token;
+        String link = pageRootUrl + '&' + AppContextConstant.COOKIE_REMEMBER_USER_TOKEN + '=' + token;
+        String anchorText = "Approval";
+        return "<a href='" + link + "'>" + anchorText + "</a>";
     }
 }

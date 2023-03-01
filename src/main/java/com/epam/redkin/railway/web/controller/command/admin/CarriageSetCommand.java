@@ -32,9 +32,7 @@ public class CarriageSetCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
-        Router router = new Router();
-        router.setPagePath(Path.COMMAND_CARRIAGE_SET_PAGE);
-        router.setRouteType(Router.RouteType.REDIRECT);
+        Router router = Router.redirect(Path.COMMAND_CARRIAGE_SET_PAGE);
 
         TrainService trainService = AppContext.getInstance().getTrainService();
         CarriageService carriageService = AppContext.getInstance().getCarriageService();

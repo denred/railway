@@ -17,7 +17,7 @@
         <form action="controller?action=edit_route" method="POST">
             <input type="hidden" name="routs_id" value="${current_rout.routsId}">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-5">
                     <label for="routeName"><fmt:message key="rout.name"/></label>
                     <input id="routeName" class="form-control" name="rout_name"
                            value="${current_rout.routName}">
@@ -27,7 +27,7 @@
                     <input id="routeNumber" class="form-control" name="rout_number"
                            value="${current_rout.routNumber}">
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <label for="trainNumber"><fmt:message key="train.number"/></label>
                     <select id="trainNumber" class="btn btn-info dropdown-toggle" name="train_number">
                         <c:set var="train_id" value="${current_rout.trainId}"/>
@@ -46,7 +46,7 @@
             </div>
 
             <div class="row mt-4">
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <a href="controller?action=routes" class="btn bg-gradient-blue text-primary mb-0">
                         <i class="far fa-arrow-alt-circle-left" aria-hidden="true"></i>
                         <fmt:message key="back"/></a>

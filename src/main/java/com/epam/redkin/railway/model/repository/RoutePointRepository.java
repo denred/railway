@@ -23,4 +23,6 @@ public interface RoutePointRepository {
     List<MappingInfoDTO> getMappingInfoListByRouteIdAndPagination(int routeId, int offset, int limit);
 
     int getRouteStationCount(int routeId);
+
+    List<MappingInfoDTO> getRouteStations(int routeId, int departureStationId, int arrivalStationId);
 }

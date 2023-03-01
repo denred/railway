@@ -73,6 +73,7 @@ public class EmailDistributorUtil {
             letter.addRecipient(Message.RecipientType.TO, new InternetAddress(email.destinationEmail));
             letter.setSubject(email.subject, ENCODING_UTF_8);
             letter.setText(email.message, ENCODING_UTF_8);
+            letter.setContent(email.message, "text/html");
             transport.connect(host, from, password);
             transport.sendMessage(letter, letter.getAllRecipients());
         } catch (MessagingException e) {

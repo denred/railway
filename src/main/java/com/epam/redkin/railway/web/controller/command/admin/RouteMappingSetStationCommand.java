@@ -9,10 +9,10 @@ import com.epam.redkin.railway.model.service.StationService;
 import com.epam.redkin.railway.model.validator.RouteMappingValidator;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
-import com.epam.redkin.railway.appcontext.AppContext;
 import com.epam.redkin.railway.web.controller.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,16 +28,21 @@ import static com.epam.redkin.railway.util.constants.AppContextConstant.STATION_
 
 public class RouteMappingSetStationCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(RouteMappingSetStationCommand.class);
+    private final RouteMappingService routeMappingService;
+    private final StationService stationService;
+    private final RouteMappingValidator routeMappingValidator;
+
+    public RouteMappingSetStationCommand(RouteMappingService routeMappingService, StationService stationService, RouteMappingValidator routeMappingValidator) {
+        this.routeMappingService = routeMappingService;
+        this.stationService = stationService;
+        this.routeMappingValidator = routeMappingValidator;
+    }
 
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
-        Router router = new Router();
-        router.setRouteType(Router.RouteType.FORWARD);
-        router.setPagePath(Path.PAGE_ADMIN_SET_STATION_IN_ROUTE);
-        RouteMappingService routeMappingService = AppContext.getInstance().getRouteMappingService();
-        StationService stationService = AppContext.getInstance().getStationService();
-        RouteMappingValidator routeMappingValidator = new RouteMappingValidator();
+
+        HttpSession session = request.getSession();
 
         String routeId = request.getParameter(ROUTE_ID);
         String stationId = request.getParameter(STATION_ID);
@@ -56,7 +61,7 @@ public class RouteMappingSetStationCommand implements Command {
                     .build();
 
             List<MappingInfoDTO> mappingList = routeMappingService
-                    .getMappingInfoDtoListByRouteId(Integer.parseInt(routeId));
+                    .getRouteMappingInfoDTOs(Integer.parseInt(routeId));
             try {
                 routeToStationMapping.setArrival(LocalDateTime.parse(arrivalDate));
                 routeToStationMapping.setDispatch(LocalDateTime.parse(dispatchDate));
@@ -71,21 +76,20 @@ public class RouteMappingSetStationCommand implements Command {
                 routeMappingValidator.isValidUpdateRoutToStationMapping(routeToStationMapping);
                 routeMappingService.updateRoutToStationMapping(routeToStationMapping, Integer.parseInt(prevStationId));
             }
-            router.setRouteType(Router.RouteType.REDIRECT);
-            router.setPagePath(Path.COMMAND_ROUTE_MAPPING);
+            return Router.redirect(Path.COMMAND_ROUTE_MAPPING);
         } else if (StringUtils.isNoneBlank(stationId, routeId)) {
             List<Station> stationList = stationService.getStations();
             MappingInfoDTO mappingInfo = routeMappingService
                     .getMappingInfo(Integer.parseInt(routeId), Integer.parseInt(stationId));
 
-            request.setAttribute(ROUTE_ID, routeId);
+            session.setAttribute(ROUTE_ID, routeId);
             request.setAttribute(STATION_ID, stationId);
             request.setAttribute(CURRENT_ROUTE, mappingInfo);
             request.setAttribute(STATION_LIST, stationList);
         } else {
             List<Station> stationList = stationService.getStations();
             List<MappingInfoDTO> mappingList = routeMappingService
-                    .getMappingInfoDtoListByRouteId(Integer.parseInt(routeId));
+                    .getRouteMappingInfoDTOs(Integer.parseInt(routeId));
             if (!mappingList.isEmpty()) {
                 LocalDateTime dispatchDateTime = mappingList.get(mappingList.size() - 1).getStationDispatchData();
                 LocalDateTime arrivalDateTime = mappingList.get(mappingList.size() - 1).getStationArrivalDate();
@@ -95,23 +99,12 @@ public class RouteMappingSetStationCommand implements Command {
                 request.setAttribute(CURRENT_ROUTE, mappingList.get(mappingList.size() - 1));
                 request.setAttribute(STATION_ID, mappingList.get(mappingList.size() - 1).getStationId());
             }
-            request.setAttribute(ROUTE_ID, routeId);
+            session.setAttribute(ROUTE_ID, routeId);
             request.setAttribute(STATION_LIST, stationList);
         }
+
         request.setAttribute(OPERATION_STATUS, operationStatus);
         LOGGER.info("done");
-        return router;
-    }
-
-    public static boolean contains(final List<MappingInfoDTO> array, final int order) {
-        boolean result = false;
-
-        for (MappingInfoDTO mappingInfoDto : array) {
-            if (mappingInfoDto.getOrder() == order) {
-                result = true;
-                break;
-            }
-        }
-        return result;
+        return Router.forward(Path.PAGE_ADMIN_SET_STATION_IN_ROUTE);
     }
 }

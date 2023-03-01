@@ -1,9 +1,9 @@
 package com.epam.redkin.railway.web.controller.command.common;
 
+import com.epam.redkin.railway.model.dto.BookingDTO;
 import com.epam.redkin.railway.model.dto.MappingInfoDTO;
+import com.epam.redkin.railway.model.dto.ReservationDTO;
 import com.epam.redkin.railway.model.entity.*;
-import com.epam.redkin.railway.model.exception.IncorrectDataException;
-import com.epam.redkin.railway.model.validator.OrderValidator;
 import com.epam.redkin.railway.model.service.*;
 import com.epam.redkin.railway.util.constants.AppContextConstant;
 import com.epam.redkin.railway.web.controller.Path;
@@ -16,10 +16,12 @@ import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.epam.redkin.railway.util.constants.AppContextConstant.PRICE;
 
 public class ConfirmOrderCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfirmOrderCommand.class);
@@ -27,18 +29,11 @@ public class ConfirmOrderCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
-        Router router = new Router();
-        router.setRouteType(Router.RouteType.REDIRECT);
-        router.setPagePath(Path.COMMAND_ORDERS);
-        CarriageService carriageService = AppContext.getInstance().getCarriageService();
-        TrainService trainService = AppContext.getInstance().getTrainService();
+
         StationService stationService = AppContext.getInstance().getStationService();
         RouteMappingService routeMappingService = AppContext.getInstance().getRouteMappingService();
-        SeatService seatService = AppContext.getInstance().getSeatService();
         OrderService orderService = AppContext.getInstance().getOrderService();
 
-        OrderValidator orderValidator = new OrderValidator();
-        Order order = Order.builder().build();
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(AppContextConstant.SESSION_USER);
         String routeId = request.getParameter(AppContextConstant.ROUTE_ID);
@@ -46,51 +41,58 @@ public class ConfirmOrderCommand implements Command {
         String stationIdA = request.getParameter(AppContextConstant.ARRIVAL_STATION_ID);
         String stationIdD = request.getParameter(AppContextConstant.DEPARTURE_STATION_ID);
         String carriageId = request.getParameter(AppContextConstant.CARRIAGE_ID);
+        String[] seatIds = request.getParameterValues(AppContextConstant.SEATS_ID)[0].split(",");
 
-        Carriage carriage = carriageService.getCarriageById(Integer.parseInt(carriageId));
-        Train train = trainService.getTrainById(Integer.parseInt(trainId));
+        /*  add reservation */
+        List<ReservationDTO> reservations = new ArrayList<>();
+        ReservationDTO reservation = ReservationDTO.builder().build();
+
+        List<MappingInfoDTO> routeStations = routeMappingService.getRouteStations(Integer.parseInt(routeId), Integer.parseInt(stationIdA), Integer.parseInt(stationIdD));
+        for (MappingInfoDTO routeStation : routeStations) {
+            for (String seatId : seatIds) {
+                reservation.setStatus("reserved");
+                reservation.setStationId(Integer.parseInt(routeStation.getStationId()));
+                reservation.setSeatId(Integer.parseInt(seatId));
+                reservation.setTrainId(Integer.parseInt(trainId));
+                reservation.setRouteId(Integer.parseInt(routeId));
+                reservation.setSequenceNumber(routeStation.getOrder());
+            }
+            reservations.add(reservation);
+        }
+
+        orderService.addReservation(reservations);
+
+        /* create booking */
         Station dispatchStation = stationService.getStationById(Integer.parseInt(stationIdA));
         Station arrivalStation = stationService.getStationById(Integer.parseInt(stationIdD));
         MappingInfoDTO arrivalMapping = routeMappingService.getMappingInfo(Integer.parseInt(routeId), arrivalStation.getId());
         MappingInfoDTO dispatchMapping = routeMappingService.getMappingInfo(Integer.parseInt(routeId), dispatchStation.getId());
-        String seatsId = Arrays.toString(request.getParameterValues(AppContextConstant.SEATS_ID));
-        try {
-            order.setCarriageType(CarriageType.valueOf(request.getParameter(AppContextConstant.CARRIAGE_TYPE)));
-            order.setCountOfSeats(Integer.parseInt(request.getParameter(AppContextConstant.COUNT_SEATS)));
-            order.setTravelTime(request.getParameter(AppContextConstant.TRAVEL_TIME));
-            List<String> seatIdList = seatService.getSeatsId(seatsId);
-            List<Seat> seats = seatService.getSeatsByIdBatch(seatIdList);
-            StringBuilder sb = new StringBuilder();
-            String number = "";
-            for (int i = 0; i <= seats.size() - 1; i++) {
-                number = sb.append(seats.get(i).getSeatNumber()).append(" ").toString();
-            }
-            order.setRouteId(Integer.parseInt(routeId));
-            order.setArrivalDate(arrivalMapping.getStationDispatchData());
-            order.setDispatchDate(dispatchMapping.getStationArrivalDate());
-            order.setUser(user);
-            order.setTrainNumber(train.getNumber());
-            order.setCarriageNumber(carriage.getNumber());
-            order.setOrderDate(LocalDateTime.now());
-            order.setOrderStatus(OrderStatus.PROCESSING);
-            order.setArrivalStation(arrivalStation.getStation());
-            order.setDispatchStation(dispatchStation.getStation());
-            order.setSeatNumber(number);
+        String travelTime = request.getParameter(AppContextConstant.TRAVEL_TIME);
+        Double price = (Double) session.getAttribute(PRICE);
 
-            sb = new StringBuilder();
-            String id = "";
-            for (Seat seat : seats) {
-                id = sb.append(seat.getId()).append(" ").toString();
-            }
-            order.setSeatsId(id);
-            orderService.addOrder(order, Integer.parseInt(routeId), seats);
-        } catch (IllegalArgumentException | ArithmeticException | DateTimeException e) {
-            LOGGER.error(e.getMessage());
-            throw new IncorrectDataException("Incorrect data entered", e);
+        BookingDTO bookingDTO = BookingDTO.builder()
+                .withBookingDate(LocalDateTime.now())
+                .withDispatchDate(dispatchMapping.getStationDispatchData())
+                .withArrivalDate(arrivalMapping.getStationArrivalDate())
+                .withTravelTime(travelTime)
+                .withPrice(price)
+                .withBookingStatus(OrderStatus.PROCESSING)
+                .withUserId(user.getUserId())
+                .withRouteId(Integer.parseInt(routeId))
+                .withTrainId(Integer.parseInt(trainId))
+                .withDispatchStationId(Integer.parseInt(stationIdD))
+                .withArrivalStationId(Integer.parseInt(stationIdA))
+                .withCarriageId(Integer.parseInt(carriageId))
+                .build();
+
+        int bookingId = orderService.saveBooking(bookingDTO);
+        System.out.println(" ========= |||||| ======== " + Arrays.toString(seatIds));
+        for (String seatId : seatIds) {
+            orderService.saveBookingSeat(bookingId, seatId);
         }
-        orderValidator.isValidOrder(order);
+
         LOGGER.info("done");
 
-        return router;
+        return Router.redirect(Path.COMMAND_ORDERS);
     }
 }

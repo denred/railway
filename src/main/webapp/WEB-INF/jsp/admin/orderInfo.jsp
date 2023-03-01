@@ -13,14 +13,46 @@
 </head>
 
 <body>
-<mrt:navigation/>
+<tags:navigation/>
 <jsp:include page="/WEB-INF/templates/_role.jsp"/>
 
 <h3 style="text-align: center;">
     <fmt:message key="admin.order.list"/>
 </h3>
 <div class="container mt-4">
-    <div class="d-flex justify-content-center">
+    <table class="table">
+        <thead>
+        <tr>
+            <th><fmt:message key="order"/></th>
+            <th><fmt:message key="order.number"/></th>
+            <th><fmt:message key="order.user.information"/></th>
+            <th><fmt:message key="route.from.to"/></th>
+            <th><fmt:message key="date"/></th>
+            <th><fmt:message key="order.date"/></th>
+            <th><fmt:message key="order.status"/></th>
+            <th><fmt:message key="admin.details"/></th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="order" items="${order_list}" varStatus="i">
+            <tr>
+                <td>${i.index + recordsPerPage * (currentPage - 1) + 1}</td>
+                <td>${order.hashCode()}</td>
+                <td>${order.user.firstName} ${order.user.lastName}</td>
+                <td>${order.dispatchStation} - ${order.arrivalStation}</td>
+                <td>${order.dispatchDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))} -
+                        ${order.arrivalDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}
+                </td>
+                <td>${order.orderDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}</td>
+                <td><a href="controller?action=order_status&order_id=${order.id}">
+                    <fmt:message key="${order.orderStatus}"/></a></td>
+                <td><a href="controller?action=order_detail&order=${i.index}">
+                    <fmt:message key="admin.details"/></a></td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    <%--
         <table class="table table-bordered table-hover caption-top" style="width: 1400px;">
             <thead class="thead-light text-center">
             <tr>
@@ -60,18 +92,18 @@
                             <span class="text-start"><fmt:message key="departure"/>:</span>
                         </div>
                         <div class="row">
-                        <span class="text-start">
-                                ${order.dispatchDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}
-                        </span>
+                            <span class="text-start">
+                                    ${order.dispatchDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}
+                            </span>
                         </div>
 
                         <div class="row">
                             <span class="text-start"><fmt:message key="arrival"/>:</span>
                         </div>
                         <div class="row">
-                        <span class="text-start">
-                                ${order.arrivalDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}
-                        </span>
+                            <span class="text-start">
+                                    ${order.arrivalDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}
+                            </span>
                         </div>
                     </td>
                     <td><period:period dateFrom="${order.arrivalDate}" dateTo="${order.dispatchDate}"
@@ -86,41 +118,12 @@
                 </tr>
             </c:forEach>
             </tbody>
-        </table>
-    </div>
-    <div class="d-flex justify-content-center">
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                <li class="page-item">
-                    <c:if test="${currentPage != 1}">
-                        <a class="page-link" href="controller?action=admin_orders&page=${currentPage - 1}"
-                           aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-                    </c:if>
-                </li>
-
-                <c:forEach begin="1" end="${noOfPages}" var="i">
-                    <c:choose>
-                        <c:when test="${currentPage eq i}">
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#">${i}</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item"><a class="page-link"
-                                                     href="controller?action=admin_orders&page=${i}">${i}</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-
-                <c:if test="${currentPage lt noOfPages}">
-                    <li class="page-item">
-                        <a class="page-link" href="controller?action=admin_orders&page=${currentPage + 1}"
-                           aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span></a>
-                    </li>
-                </c:if>
-            </ul>
-        </nav>
-    </div>
+        </table>--%>
 </div>
+
+<tags:pagination currentPage="${currentPage}" lastPage="${last_page}" numPages="${noOfPages}"
+                 url="controller?action=admin_orders"/>
+
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
 </body>
 </html>

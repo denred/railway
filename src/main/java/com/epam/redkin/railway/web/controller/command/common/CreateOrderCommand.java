@@ -29,9 +29,7 @@ public class CreateOrderCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
-        Router router = new Router();
-        router.setRouteType(Router.RouteType.FORWARD);
-        router.setPagePath(PAGE_CONFIRM_ORDER);
+        Router router = Router.forward(PAGE_CONFIRM_ORDER);
 
         RouteService routeService = AppContext.getInstance().getRouteService();
         CarriageService carriageService = AppContext.getInstance().getCarriageService();

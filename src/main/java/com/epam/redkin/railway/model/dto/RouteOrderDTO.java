@@ -16,9 +16,7 @@ public class RouteOrderDTO {
     private int routNumber;
     private int firstClassFreeSeatsCount;
     private int secondClassFreeSeatsCount;
-    private int compartmentFreeSeatsCount;
-    private int berthFreeSeatsCount;
-    private int luxeFreeSeatsCount;
+
     private HashMap<CarriageType, Integer> availableSeats;
     private HashMap<CarriageType, Double> priceInfo;
 

@@ -58,7 +58,12 @@ public class RouteMappingServiceImpl implements RouteMappingService {
     }
 
     @Override
-    public List<MappingInfoDTO> getMappingInfoDtoListByRouteId(int routsId) {
+    public List<MappingInfoDTO> getRouteStations(int routeId, int departureStationId, int arrivalStationId) {
+        return routMappingRepository.getRouteStations(routeId, departureStationId, arrivalStationId);
+    }
+
+    @Override
+    public List<MappingInfoDTO> getRouteMappingInfoDTOs(int routsId) {
         return routMappingRepository.getMappingInfoListByRouteId(routsId);
     }
 

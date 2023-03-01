@@ -52,7 +52,7 @@
         <div class="col-md-2 border"><fmt:message key="order.dispatch.station.and.dispatch.time"/>:</div>
         <div class="col-md-3 border">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     ${departure_station}
                 </div>
                 <div class="col-md-6">
@@ -67,7 +67,7 @@
         <div class="col-md-2 border"><fmt:message key="order.arrival.station.and.dispatch.time"/>:</div>
         <div class="col-md-3 border">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     ${arrival_station}
                 </div>
                 <div class="col-md-6">

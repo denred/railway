@@ -1,8 +1,9 @@
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
-<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setLocale value="${applicationScope.locale}"/>
 <fmt:setBundle basename="lang"/>
+<fmt:setBundle basename="exceptionMessages" var="excMsg"/>
 
 <!doctype html>
 <html>
@@ -22,7 +23,8 @@
         <form class="d-flex mx-2" method="POST" action="controller?action=i18n">
             <select class="form-select" id="locale" name="lang" onchange="submit()" aria-label="Change language">
                 <option value="en" ${sessionScope.locale == 'en' ? 'selected' : ''}>eng</option>
-                <option value="ua" ${sessionScope.locale == 'ua' ? 'selected' : ''}><fmt:message key="lang.ua"/></option>
+                <option value="ua" ${sessionScope.locale == 'ua' ? 'selected' : ''}><fmt:message
+                        key="lang.ua"/></option>
             </select>
         </form>
     </div>
@@ -35,39 +37,79 @@
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
 
-            <form action="controller?action=login" method="POST">
+            <form id="login-form" class="was-validated" action="controller?action=login" method="POST">
                 <h1 class="h3 mb-3 font-weight-normal"><fmt:message key="user.signin"/></h1>
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                    <input name="login" type="email" id="form3Example3" class="form-control form-control-lg"
-                           placeholder="<fmt:message key="user.email"/>" required autofocus>
+                    <label for="email-field"></label>
+                    <input id="email-field" name="login" type="email" class="form-control form-control-lg"
+                           placeholder="<fmt:message key="user.email"/>" required
+                           pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$">
+                    <div class="invalid-feedback"><fmt:message bundle="${excMsg}" key="validation.user.email"/></div>
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-3">
-                    <input name="password" type="password" id="form3Example4" class="form-control form-control-lg"
+                    <input name="password" type="password" id="password" class="form-control form-control-lg"
                            placeholder="<fmt:message key="user.password"/>"
                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                           title="<fmt:message key="password.check.message"/>"
-                           required>
+                           title="<fmt:message key="password.check.message"/>" required>
+                    <div class="invalid-feedback"><fmt:message bundle="${excMsg}" key="validation.user.password"/></div>
                 </div>
-
-                <div class="d-flex justify-content-between align-items-center">
-                    <a href="controller?action=sendForgetPasswordData">
-                        <fmt:message key="user.forgotPassword"/>
-                    </a>
-                </div>
-
-                <div class="text-center text-lg-start mt-4 pt-2">
-                    <input type="submit" class="btn btn-primary btn-lg"
-                           style="padding-left: 2.5rem; padding-right: 2.5rem;"
-                           value="<fmt:message key="signIn"/>">
-                    <p class="small fw-bold mt-2 pt-1 mb-0"><fmt:message key="user.account_question"/> <a
-                            href="controller?action=register"
-                            class="link-danger"><fmt:message key="registration"/></a></p>
-                </div>
-
+                <div class="text-danger">${errorMessage}</div>
             </form>
+
+            <!-- Popup Form Button -->
+            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#emailModal">
+                <fmt:message key="user.forgotPassword"/>
+            </button>
+
+            <!-- Popup Form -->
+            <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="emailModalLabel">Enter Your Email</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="emailForm" action="controller?action=sendForgetPasswordData"
+                              class="modal-body was-validated" method="POST">
+
+                            <div class="form-group mx-3">
+                                <label for="email" class="col-form-label"><fmt:message key="user.email"/>:</label>
+                                <input type="email" class="form-control" id="email" name="email" required
+                                       pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$">
+
+                                <div class="invalid-feedback">
+                                    <fmt:message bundle="${excMsg}" key="validation.user.email"/>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message
+                                        key="decline"/></button>
+                                <button type="submit" class="btn btn-primary">
+                                    <fmt:message key="submit"/>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center text-lg-start mt-4 pt-2">
+                <input type="submit" class="btn btn-primary btn-lg"
+                       style="padding-left: 2.5rem; padding-right: 2.5rem;"
+                       value="<fmt:message key="signIn"/>" form="login-form">
+                <p class="small fw-bold mt-2 pt-1 mb-0"><fmt:message key="user.account_question"/>
+                    <a href="controller?action=register"
+                       class="link-danger"><fmt:message key="registration"/></a></p>
+            </div>
+
+
         </div>
     </div>
 </div>
@@ -78,5 +120,6 @@
     </div>
 </footer>
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/xxsProtectionScript.js"></script>
 </body>
 </html>

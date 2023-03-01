@@ -203,6 +203,29 @@ public class RoutePointRepositoryImpl implements RoutePointRepository, Constants
     }
 
     @Override
+    public List<MappingInfoDTO> getRouteStations(int routeId, int departureStationId, int arrivalStationId) {
+        LOGGER.info("Started getRouteStations(routeId={}, departureStationId={}, arrivalStationId={})", routeId, departureStationId, arrivalStationId);
+        List<MappingInfoDTO> mappingInfoDTOS = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_ROUTE_STATIONS)) {
+            statement.setInt(1, routeId);
+            statement.setInt(2, routeId);
+            statement.setInt(3, departureStationId);
+            statement.setInt(4, routeId);
+            statement.setInt(5, arrivalStationId);
+            ResultSet resultSets = statement.executeQuery();
+            while (resultSets.next()) {
+                mappingInfoDTOS.add(extractStationInfo(resultSets));
+            }
+            LOGGER.info("Extracted List<MappingInfoDTO>: " + mappingInfoDTOS);
+        } catch (SQLException e) {
+            LOGGER.error("Can`t get all route list to station mapping by id: " + e);
+            throw new DataBaseException("Can`t get all route list to station mapping by id. id= " + routeId, e);
+        }
+        return mappingInfoDTOS;
+    }
+
+    @Override
     public MappingInfoDTO getMappingInfo(int routeId, int stationId) {
         LOGGER.info("Started public MappingInfoDTO getMappingInfo(int routeId, int stationId), " +
                 "routeId= " + routeId + " stationId= " + stationId);
