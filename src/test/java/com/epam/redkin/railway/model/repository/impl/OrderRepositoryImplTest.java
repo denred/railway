@@ -199,7 +199,7 @@ class OrderRepositoryImplTest {
         when(mockResultSet.getInt(anyString())).thenReturn(1, 1, 2, 3);
         when(mockResultSet.getString(anyString())).thenReturn("777", CarriageType.FIRST_CLASS.name(),
                 "email@mail.com", "pass123", "John", "Smith", "+380671234567", "USER", "token",
-                OrderStatus.ACCEPTED.name(), "StationA", "StationB", "travel", "01", "23", "1 2 3");
+                OrderStatus.ACCEPTED.name(), "StationA", "StationB", "travel", "01", "23", "1 2 3", "Route");
         when(mockResultSet.getObject(anyString(), eq(LocalDateTime.class))).thenReturn(LocalDateTime.of(1, 2, 3, 4, 5));
         when(mockResultSet.getObject(anyString(), eq(LocalDate.class))).thenReturn(LocalDate.of(1, 2, 3));
         when(mockResultSet.getDouble(anyString())).thenReturn(10.0);
@@ -218,6 +218,7 @@ class OrderRepositoryImplTest {
                 .carriageNumber("01")
                 .seatNumber("23")
                 .seatsId("1 2 3")
+                .routeName("Route")
                 .price(10.0)
                 .dispatchDate(LocalDateTime.of(1, 2, 3, 4, 5))
                 .arrivalDate(LocalDateTime.of(1, 2, 3, 4, 5))
@@ -241,7 +242,7 @@ class OrderRepositoryImplTest {
         verify(mockStatement).executeQuery();
         verify(mockResultSet).next();
         verify(mockResultSet, times(4)).getInt(anyString());
-        verify(mockResultSet, times(16)).getString(anyString());
+        verify(mockResultSet, times(17)).getString(anyString());
         verify(mockResultSet, times(1)).getBoolean(anyString());
         verify(mockResultSet, times(1)).getDouble(anyString());
         verify(mockResultSet, times(3)).getObject(anyString(), eq(LocalDateTime.class));
@@ -311,7 +312,7 @@ class OrderRepositoryImplTest {
         verify(mockResultSet, times(2)).next();
         verify(mockResultSet).close();
         verify(mockResultSet, times(4)).getInt(anyString());
-        verify(mockResultSet, times(16)).getString(anyString());
+        verify(mockResultSet, times(17)).getString(anyString());
         verify(mockResultSet, times(1)).getBoolean(anyString());
         verify(mockResultSet, times(1)).getDouble(anyString());
         verify(mockResultSet, times(3)).getObject(anyString(), eq(LocalDateTime.class));
@@ -417,14 +418,14 @@ class OrderRepositoryImplTest {
         when(mockResultSet.getDouble(anyString())).thenReturn(10.0);
         when(mockResultSet.getBoolean(anyString())).thenReturn(true);
 
-        assertEquals(1, orderRepository.getOrderByUserId(1).size());
+        assertEquals(1, orderRepository.getOrderByUserId(1, 0, 3).size());
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
-        verify(mockStatement).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(3)).setInt(anyInt(), anyInt());
         verify(mockStatement).executeQuery();
         verify(mockResultSet, times(2)).next();
         verify(mockResultSet, times(4)).getInt(anyString());
-        verify(mockResultSet, times(16)).getString(anyString());
+        verify(mockResultSet, times(17)).getString(anyString());
         verify(mockResultSet, times(1)).getBoolean(anyString());
         verify(mockResultSet, times(1)).getDouble(anyString());
         verify(mockResultSet, times(3)).getObject(anyString(), eq(LocalDateTime.class));
@@ -438,10 +439,10 @@ class OrderRepositoryImplTest {
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenReturn(Boolean.FALSE);
 
-        assertEquals(0, orderRepository.getOrderByUserId(1).size());
+        assertEquals(0, orderRepository.getOrderByUserId(1, 0, 3).size());
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
-        verify(mockStatement).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(3)).setInt(anyInt(), anyInt());
         verify(mockStatement).executeQuery();
         verify(mockResultSet, times(1)).next();
         verify(mockResultSet, times(0)).getInt(anyString());
@@ -459,10 +460,10 @@ class OrderRepositoryImplTest {
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenThrow(SQLException.class);
 
-        assertThrows(DataBaseException.class, () -> orderRepository.getOrderByUserId(1));
+        assertThrows(DataBaseException.class, () -> orderRepository.getOrderByUserId(1, 0, 3));
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
-        verify(mockStatement).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(3)).setInt(anyInt(), anyInt());
         verify(mockStatement).executeQuery();
         verify(mockResultSet, times(1)).next();
         verify(mockResultSet, times(0)).getInt(anyString());
@@ -481,7 +482,7 @@ class OrderRepositoryImplTest {
         when(mockResultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
         when(mockResultSet.getDouble(anyString())).thenReturn(10.0);
 
-        assertEquals(10.0, orderRepository.getPriceOfSuccessfulOrders(1));
+        assertEquals(10.0, orderRepository.getSuccessfulOrdersPrice(1));
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement).setInt(anyInt(), anyInt());
@@ -497,7 +498,7 @@ class OrderRepositoryImplTest {
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenReturn(Boolean.FALSE);
 
-        assertEquals(0.0, orderRepository.getPriceOfSuccessfulOrders(1));
+        assertEquals(0.0, orderRepository.getSuccessfulOrdersPrice(1));
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement).setInt(anyInt(), anyInt());
@@ -513,7 +514,7 @@ class OrderRepositoryImplTest {
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenThrow(SQLException.class);
 
-        assertThrows(DataBaseException.class, () -> orderRepository.getPriceOfSuccessfulOrders(1));
+        assertThrows(DataBaseException.class, () -> orderRepository.getSuccessfulOrdersPrice(1));
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement).setInt(anyInt(), anyInt());

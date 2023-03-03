@@ -126,12 +126,13 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
                 .carriageNumber(resultSet.getString(CARRIAGE_NUMBER))
                 .seatNumber(resultSet.getString(SEAT_NUMBER))
                 .seatsId(resultSet.getString(SEATS_ID))
+                .routeName(resultSet.getString(ROUTE_NAME))
                 .build();
     }
 
     private User extractUser(ResultSet resultSet) throws SQLException {
         return User.builder()
-                .userId(resultSet.getInt(AppContextConstant.ID))
+                .userId(resultSet.getInt("user.id"))
                 .email(resultSet.getString(AppContextConstant.EMAIL))
                 .password(resultSet.getString(AppContextConstant.PASSWORD))
                 .firstName(resultSet.getString(AppContextConstant.FIRST_NAME))
@@ -158,28 +159,22 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
 
     @Override
     public List<Order> getOrders() throws DataBaseException {
-        LOGGER.info("Started public List<Order> getOrders()");
+        LOGGER.info("Started get list of orders");
         List<Order> orders = new ArrayList<>();
-        ResultSet resultSet = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(GET_ALL_ORDER)) {
-            resultSet = statement.executeQuery();
+             PreparedStatement statement = connection.prepareStatement(GET_ORDERS_PAGINATION);
+             ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 orders.add(extractOrder(resultSet));
             }
+            LOGGER.info("Extracted orders: " + orders);
+            return orders;
         } catch (SQLException | NullPointerException e) {
             LOGGER.error("Cannot extract List<Order>: " + e);
             throw new DataBaseException("Cannot extract List<Order>", e);
-        } finally {
-            try {
-                DbUtils.close(resultSet);
-            } catch (SQLException e) {
-                LOGGER.error("Cannot close ResultSet " + e);
-            }
         }
-        LOGGER.info("\nExtracted orders: " + orders);
-        return orders;
     }
+
 
     @Override
     public boolean updateOrderStatus(int orderId, OrderStatus status) throws DataBaseException {
@@ -223,12 +218,14 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
     }
 
     @Override
-    public List<Order> getOrderByUserId(int userId) throws DataBaseException {
+    public List<Order> getOrderByUserId(int userId, int currentPage, int recordsPerPage) throws DataBaseException {
         LOGGER.info("Started --> getOrderByUserId() --> userId= " + userId);
         List<Order> orders = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(GET_ORDER_BY_USER_ID)) {
+             PreparedStatement statement = connection.prepareStatement(GET_ORDER_BY_USER_ID_PAGINATION)) {
             statement.setInt(1, userId);
+            statement.setInt(2, currentPage);
+            statement.setInt(3, recordsPerPage);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 orders.add(extractOrder(resultSet));
@@ -242,8 +239,8 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
     }
 
     @Override
-    public Double getPriceOfSuccessfulOrders(int userId) throws DataBaseException {
-        LOGGER.info("Started --> getPriceOfSuccessfulOrders() --> userId= " + userId);
+    public Double getSuccessfulOrdersPrice(int userId) throws DataBaseException {
+        LOGGER.info("Started method get order price, userId={}", userId);
         double price = 0.0;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_THE_PRICE_OF_SUCCESSFUL_ORDERS)) {
@@ -278,17 +275,11 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
     }
 
     @Override
-    public int saveBooking(BookingDTO bookingDTO) {
+    public int saveBooking(Connection connection, BookingDTO bookingDTO) {
         LOGGER.info("Started saving booking");
         int key = -1;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = dataSource.getConnection();
-            connection.setAutoCommit(false);
-            LOGGER.info("Transaction started");
-            statement = connection.prepareStatement(SAVE_BOOKING, Statement.RETURN_GENERATED_KEYS);
+
+        try (PreparedStatement statement = connection.prepareStatement(SAVE_BOOKING, Statement.RETURN_GENERATED_KEYS)) {
             statement.setTimestamp(1, Timestamp.valueOf(bookingDTO.getBookingDate()));
             statement.setTimestamp(2, Timestamp.valueOf(bookingDTO.getDispatchDate()));
             statement.setTimestamp(3, Timestamp.valueOf(bookingDTO.getArrivalDate()));
@@ -301,45 +292,29 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
             statement.setInt(10, bookingDTO.getDispatchStationId());
             statement.setInt(11, bookingDTO.getArrivalStationId());
             statement.setInt(12, bookingDTO.getCarriageId());
+
             statement.executeUpdate();
-            connection.commit();
-            LOGGER.info("Transaction done");
-            resultSet = statement.getGeneratedKeys();
-            if (resultSet.next()) {
-                key = resultSet.getInt(1);
+            LOGGER.info("Booking saved successfully");
+
+            try (ResultSet resultSet = statement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    key = resultSet.getInt(1);
+                }
+
+                LOGGER.info("Generated id= " + key);
             }
-            LOGGER.info("Generated id= " + key);
         } catch (SQLException e) {
-            try {
-                assert connection != null;
-                connection.rollback();
-                LOGGER.info("Transaction rollback");
-            } catch (SQLException | NullPointerException ex) {
-                LOGGER.error("Connection rollback error: " + ex);
-                throw new DataBaseException("Connection rollback error: ", ex);
-            }
             LOGGER.error("Cannot save booking: " + e);
             throw new DataBaseException("Cannot save booking", e);
-        } finally {
-            try {
-                assert connection != null;
-                connection.setAutoCommit(true);
-                DbUtils.close(resultSet);
-                DbUtils.close(statement);
-                DbUtils.close(connection);
-                LOGGER.info("Connection closed");
-            } catch (SQLException | NullPointerException e) {
-                LOGGER.error("Connection closing error: " + e);
-            }
         }
         return key;
     }
 
+
     @Override
-    public void saveBookingSeat(int bookingId, String seatId) {
+    public void saveBookingSeat(Connection connection, int bookingId, String seatId) {
         LOGGER.info("Started saving booked seat bookingId={}, seatId={}", bookingId, seatId);
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SAVE_BOOKED_SEAT)) {
+        try (PreparedStatement statement = connection.prepareStatement(SAVE_BOOKED_SEAT)) {
             statement.setInt(1, bookingId);
             statement.setString(2, seatId);
             int affectedRow = statement.executeUpdate();
@@ -348,6 +323,25 @@ public class OrderRepositoryImpl implements OrderRepository, Constants {
             LOGGER.error("Saving booked seat error: " + e);
             throw new DataBaseException("Saving booked seat error", e);
         }
+    }
+
+    @Override
+    public int getCountUserOrders(int userId) {
+        LOGGER.info("Started get number of user orders userId={}", userId);
+        int count = 0;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_COUNT_USER_ORDERS)) {
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(COUNT);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Cannot get number of user orders: ", e);
+            throw new DataBaseException("Cannot get number of user orders with userId=" + userId, e);
+        }
+        LOGGER.info("Number of user orders: {}", count);
+        return count;
     }
 
 }

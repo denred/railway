@@ -78,10 +78,17 @@
     </div>
 
     <div class="row">
+
         <div class="col-md-4"></div>
         <div class="col-md-2 border"><fmt:message key="order.travel.time"/>:</div>
-        <div class="col-md-3 border"><period:period dateFrom="${dispatchDateTime}" dateTo="${arrivalDateTime}"
-                                                    locale="${sessionScope.locale}"/></div>
+
+        <div class="col-md-3 border">
+            <c:set var="travel_time">
+                <period:period dateFrom="${dispatchDateTime}" dateTo="${arrivalDateTime}"
+                               locale="${sessionScope.locale}"/>
+            </c:set>
+        </div>
+
     </div>
 
     <div class="row">

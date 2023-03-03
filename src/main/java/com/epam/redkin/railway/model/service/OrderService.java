@@ -1,10 +1,9 @@
 package com.epam.redkin.railway.model.service;
 
-import com.epam.redkin.railway.model.dto.BookingDTO;
-import com.epam.redkin.railway.model.dto.ReservationDTO;
 import com.epam.redkin.railway.model.entity.Order;
 import com.epam.redkin.railway.model.entity.OrderStatus;
 import com.epam.redkin.railway.model.entity.Seat;
+import com.epam.redkin.railway.model.entity.User;
 
 
 import java.util.List;
@@ -21,9 +20,6 @@ public interface OrderService {
     boolean updateOrderStatus(int orderId, OrderStatus status);
 
 
-    List<Order> getOrderByUserId(int userId);
-
-
     void saveBooking(Order order, int routsId, List<Seat> seats);
 
 
@@ -32,20 +28,16 @@ public interface OrderService {
 
     Double getPrice(String carType, int countOfSeats);
 
-    Double getPriceOfSuccessfulOrders(int userId);
+    Double getSuccessfulOrdersPrice(String userId);
 
     List<Order> getOrderListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage);
 
     int getOrderListSize();
 
-    List<Order> getOrderListByUserIdAndByCurrentRecordAndRecordsPerPage(String userId, int currentPage, int recordsPerPage);
+    List<Order> getUserOrders(String userId, int currentPage, int recordsPerPage);
 
 
-    int getOrderListSizeByUserId(String userId);
+    int getCountUserOrders(String userId);
 
-    void addReservation(List<ReservationDTO> reservations);
-
-    int saveBooking(BookingDTO bookingDTO);
-
-    void saveBookingSeat(int bookingId, String seatId);
+    void addReservation(String routeId, String stationIdD, String stationIdA, String trainId, String[] seatIds, String travelTime, Double price, String carriageId, User user);
 }

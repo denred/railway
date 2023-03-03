@@ -229,8 +229,70 @@ public interface Constants {
     String READ_ORDER_BY_ORDER_ID = "SELECT * FROM booking JOIN user on user_id = user.id WHERE booking.id = ?";
 
     String UPDATE_ORDER_STATUS = "UPDATE booking SET status = ? WHERE id = ?";
-    String GET_ALL_ORDER = "SELECT * FROM booking JOIN user ON user_id = user.id";
-    String GET_ORDER_BY_USER_ID = "SELECT * FROM booking JOIN user ON user_id = user.id WHERE user_id = ?";
+    String GET_ORDERS_PAGINATION = "SELECT\n" +
+            "    b.id as id,\n" +
+            "    t.number as train_number,\n" +
+            "    c.type as carriage_type,\n" +
+            "    price,\n" +
+            "    dispatch_date,\n" +
+            "    arrival_date,\n" +
+            "    booking_date,\n" +
+            "    user.*,\n" +
+            "    status,\n" +
+            "    s.station as arrival_station,\n" +
+            "    s2.station as dispatch_station,\n" +
+            "    travel_time,\n" +
+            "    route_id1 as route_id,\n" +
+            "    c.number as carriage_number,\n" +
+            "    (SELECT COUNT(*) FROM booking_has_seat WHERE booking_id = b.id) AS seat_count,\n" +
+            "    GROUP_CONCAT(DISTINCT s1.seat_number ORDER BY s1.seat_number ASC SEPARATOR ', ') AS seat_number,\n" +
+            "    GROUP_CONCAT(DISTINCT s1.id ORDER BY s1.id ASC SEPARATOR ', ') AS seats_id,\n" +
+            "     r.name as route_name\n" +
+            "FROM booking as b\n" +
+            "         JOIN user ON user_id = user.id\n" +
+            "         JOIN train t ON b.train_id = t.id\n" +
+            "         JOIN carriage c on c.id = b.carriage_id\n" +
+            "         JOIN station s on b.arrival_station_id = s.id\n" +
+            "         JOIN station s2 on s2.id = b.dispatch_station_id\n" +
+            "         JOIN booking_has_seat bhs on b.id = bhs.booking_id\n" +
+            "         JOIN seat s1 on bhs.seat_id = s1.id,\n" +
+            "         JOIN route r on b.route_id1 = r.id\n" +
+            "GROUP BY b.id\n" +
+            "LIMIT ?, ?";
+    String GET_ORDER_BY_USER_ID_PAGINATION = "SELECT b.id as id,\n" +
+            "       t.number as train_number,\n" +
+            "       c.type as carriage_type,\n" +
+            "       price,\n" +
+            "       dispatch_date,\n" +
+            "       arrival_date,\n" +
+            "       booking_date,\n" +
+            "       user.*,\n" +
+            "       status,\n" +
+            "       s.station as arrival_station,\n" +
+            "       s2.station as dispatch_station,\n" +
+            "       travel_time,\n" +
+            "       route_id1 as route_id,\n" +
+            "       c.number as carriage_number,\n" +
+            "       (SELECT COUNT(*) FROM booking_has_seat WHERE booking_id = b.id)                  AS seat_count,\n" +
+            "       GROUP_CONCAT(DISTINCT s1.seat_number ORDER BY s1.seat_number ASC SEPARATOR ', ') AS seat_number,\n" +
+            "       GROUP_CONCAT(DISTINCT s1.id ORDER BY s1.id ASC SEPARATOR ', ')                   AS seats_id,\n" +
+            "       r.name as route_name\n" +
+            "FROM booking as b\n" +
+            "         JOIN user ON user_id = user.id\n" +
+            "         JOIN train t ON b.train_id = t.id\n" +
+            "         JOIN carriage c on c.id = b.carriage_id\n" +
+            "         JOIN station s on b.arrival_station_id = s.id\n" +
+            "         JOIN station s2 on s2.id = b.dispatch_station_id\n" +
+            "         JOIN booking_has_seat bhs on b.id = bhs.booking_id\n" +
+            "         JOIN seat s1 on bhs.seat_id = s1.id\n" +
+            "         JOIN route r on b.route_id1 = r.id\n" +
+            "WHERE user.id = ?\n" +
+            "GROUP BY b.id\n" +
+            "LIMIT ?, ?";
+    String GET_COUNT_USER_ORDERS = "SELECT count(*) as count\n" +
+            "FROM booking as b\n" +
+            "         JOIN user ON user_id = user.id\n" +
+            "WHERE user.id = ?";
     String GET_THE_PRICE_OF_SUCCESSFUL_ORDERS = "SELECT SUM(price) as sum FROM booking WHERE user_id = ? AND status = 'ACCEPTED'";
     String INSERT_RESERVATION = "INSERT INTO reservation (status, station_id, seat_id, train_id, route_id, sequence_number) " +
             "VALUES (?, ?, ?, ?, ?, ?)";

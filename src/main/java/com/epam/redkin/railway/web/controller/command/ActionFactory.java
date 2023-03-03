@@ -85,7 +85,7 @@ public class ActionFactory {
         commands.put("select_carriage_and_seats", new SelectCarriageAndSeatsPage());
         commands.put("select_seats", new SelectSeatsCommand());
         commands.put("select_seats_page", new SelectSeatsPage());
-        commands.put("confirm_order", new ConfirmOrderCommand());
+        commands.put("confirm_order", new ConfirmOrderCommand(AppContext.getInstance().getOrderService()));
         commands.put("create_order", new CreateOrderCommand());
         commands.put("cancel_order", new CancelOrderCommand());
         commands.put("sendForgetPasswordData", new ForgetPasswordEmailSendingCommand(AppContext.getInstance().getUserService()));

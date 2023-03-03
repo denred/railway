@@ -1,18 +1,18 @@
 package com.epam.redkin.railway.model.service.impl;
 
 import com.epam.redkin.railway.model.dto.BookingDTO;
+import com.epam.redkin.railway.model.dto.MappingInfoDTO;
 import com.epam.redkin.railway.model.dto.ReservationDTO;
-import com.epam.redkin.railway.model.entity.CarriageType;
-import com.epam.redkin.railway.model.entity.Order;
-import com.epam.redkin.railway.model.entity.OrderStatus;
-import com.epam.redkin.railway.model.entity.Seat;
+import com.epam.redkin.railway.model.entity.*;
 import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.exception.IncorrectDataException;
 import com.epam.redkin.railway.model.exception.ServiceException;
 import com.epam.redkin.railway.model.repository.OrderRepository;
 import com.epam.redkin.railway.model.repository.SeatRepository;
 import com.epam.redkin.railway.model.service.OrderService;
+import com.epam.redkin.railway.model.service.RouteMappingService;
 import com.epam.redkin.railway.model.service.SeatService;
+import com.epam.redkin.railway.model.service.StationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +20,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,12 +30,16 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final SeatRepository seatRepository;
     private final SeatService seatService;
+    private final RouteMappingService routeMappingService;
+    private final StationService stationService;
     private final DataSource dataSource;
 
-    public OrderServiceImpl(OrderRepository orderRepository, SeatService seatService, SeatRepository seatRepository, DataSource dataSource) {
+    public OrderServiceImpl(OrderRepository orderRepository, SeatService seatService, SeatRepository seatRepository, RouteMappingService routeMappingService, StationService stationService, DataSource dataSource) {
         this.orderRepository = orderRepository;
         this.seatRepository = seatRepository;
         this.seatService = seatService;
+        this.routeMappingService = routeMappingService;
+        this.stationService = stationService;
         this.dataSource = dataSource;
     }
 
@@ -74,12 +79,6 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-
-    @Override
-    public List<Order> getOrderByUserId(int userId) {
-        return orderRepository.getOrderByUserId(userId);
-    }
-
     @Override
     public boolean updateOrderStatus(int orderId, OrderStatus status) {
         if (status == OrderStatus.DECLINED || status == OrderStatus.CANCELED) {
@@ -116,8 +115,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Double getPriceOfSuccessfulOrders(int userId) {
-        return orderRepository.getPriceOfSuccessfulOrders(userId);
+    public Double getSuccessfulOrdersPrice(String userId) {
+        return orderRepository.getSuccessfulOrdersPrice(Integer.parseInt(userId));
     }
 
     @Override
@@ -132,18 +131,24 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getOrderListByUserIdAndByCurrentRecordAndRecordsPerPage(String userId, int currentPage, int recordsPerPage) {
-        List<Order> allRecords = orderRepository.getOrderByUserId(Integer.parseInt(userId));
-        return allRecords.subList(currentPage, Math.min(recordsPerPage, allRecords.size()));
+    public List<Order> getUserOrders(String userId, int currentPage, int recordsPerPage) {
+        return orderRepository.getOrderByUserId(Integer.parseInt(userId), currentPage, recordsPerPage);
     }
 
     @Override
-    public int getOrderListSizeByUserId(String userId) {
-        return orderRepository.getOrderByUserId(Integer.parseInt(userId)).size();
+    public int getCountUserOrders(String userId) {
+        return orderRepository.getCountUserOrders(Integer.parseInt(userId));
     }
 
     @Override
-    public void addReservation(List<ReservationDTO> reservations) {
+    public void addReservation(String routeId, String stationIdD, String stationIdA, String trainId, String[] seatIds, String travelTime, Double price, String carriageId, User user) {
+        LOGGER.info("Started add reservation routeId={}, stationIdD={}, stationIdA={}, trainId={}, seatIds={}",
+                routeId, stationIdD, stationIdA, trainId, seatIds);
+        seatIds = seatIds[0].replaceAll("[\\[\\]\\s]", "").split(",");
+        List<ReservationDTO> reservations = createReservationDTO(routeId, stationIdD, stationIdA, trainId, seatIds);
+
+        BookingDTO bookingDTO = createBookingDTO(routeId, stationIdD, stationIdA, trainId, travelTime, price, carriageId, user);
+
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
@@ -151,9 +156,19 @@ public class OrderServiceImpl implements OrderService {
 
             for (ReservationDTO reservationDTO : reservations) {
                 orderRepository.addReservation(connection, reservationDTO);
+                LOGGER.info("Reservation added: " + reservationDTO.toString());
+            }
+
+            int bookingId = orderRepository.saveBooking(connection, bookingDTO);
+            LOGGER.info("Booking saved: " + bookingDTO.toString());
+
+            for (String seatId : seatIds) {
+                orderRepository.saveBookingSeat(connection, bookingId, seatId);
+                LOGGER.info("Seat bookingId={}, seatId={} booked", bookingId, seatId);
             }
 
             connection.commit();
+            LOGGER.info("All reservations added successfully.");
         } catch (SQLException e) {
             try {
                 if (connection != null) {
@@ -171,6 +186,7 @@ public class OrderServiceImpl implements OrderService {
                 if (connection != null) {
                     connection.setAutoCommit(true);
                     connection.close();
+                    LOGGER.info("Database connection closed.");
                 }
             } catch (SQLException ex) {
                 LOGGER.error("Failed to close database connection: " + ex.getMessage());
@@ -178,15 +194,44 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    @Override
-    public int saveBooking(BookingDTO bookingDTO) {
-        return orderRepository.saveBooking(bookingDTO);
+    private BookingDTO createBookingDTO(String routeId, String stationIdD, String stationIdA, String trainId, String travelTime, Double price, String carriageId, User user) {
+        Station dispatchStation = stationService.getStationById(Integer.parseInt(stationIdD));
+        Station arrivalStation = stationService.getStationById(Integer.parseInt(stationIdA));
+        MappingInfoDTO arrivalMapping = routeMappingService.getMappingInfo(Integer.parseInt(routeId), arrivalStation.getId());
+        MappingInfoDTO dispatchMapping = routeMappingService.getMappingInfo(Integer.parseInt(routeId), dispatchStation.getId());
+
+        return BookingDTO.builder()
+                .withBookingDate(LocalDateTime.now())
+                .withDispatchDate(dispatchMapping.getStationDispatchData())
+                .withArrivalDate(arrivalMapping.getStationArrivalDate())
+                .withTravelTime(travelTime)
+                .withPrice(price)
+                .withBookingStatus(OrderStatus.PROCESSING)
+                .withUserId(user.getUserId())
+                .withRouteId(Integer.parseInt(routeId))
+                .withTrainId(Integer.parseInt(trainId))
+                .withDispatchStationId(Integer.parseInt(stationIdD))
+                .withArrivalStationId(Integer.parseInt(stationIdA))
+                .withCarriageId(Integer.parseInt(carriageId))
+                .build();
     }
 
-    @Override
-    public void saveBookingSeat(int bookingId, String seatId) {
-        orderRepository.saveBookingSeat(bookingId, seatId);
+    private List<ReservationDTO> createReservationDTO(String routeId, String stationIdD, String stationIdA, String trainId, String[] seatIds) {
+        List<ReservationDTO> reservations = new ArrayList<>();
+        List<MappingInfoDTO> routeStations = routeMappingService.getRouteStations(Integer.parseInt(routeId), Integer.parseInt(stationIdD), Integer.parseInt(stationIdA));
+        for (MappingInfoDTO routeStation : routeStations) {
+            for (String seatId : seatIds) {
+                ReservationDTO reservation = ReservationDTO.builder()
+                        .status("reserved")
+                        .stationId(Integer.parseInt(routeStation.getStationId()))
+                        .seatId(Integer.parseInt(seatId))
+                        .trainId(Integer.parseInt(trainId))
+                        .routeId(Integer.parseInt(routeStation.getRoutsId()))
+                        .sequenceNumber(routeStation.getOrder())
+                        .build();
+                reservations.add(reservation);
+            }
+        }
+        return reservations;
     }
-
-
 }

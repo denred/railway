@@ -12,12 +12,14 @@ import java.util.List;
 public interface OrderRepository extends EntityDAO<Order> {
     List<Order> getOrders();
     boolean updateOrderStatus(int orderId, OrderStatus status) throws SQLException;
-    List<Order> getOrderByUserId(int userId);
-    Double getPriceOfSuccessfulOrders(int orderId);
+    List<Order> getOrderByUserId(int userId, int currentPage, int recordsPerPage);
+    Double getSuccessfulOrdersPrice(int orderId);
 
     void addReservation(Connection connection, ReservationDTO reservationDTO);
 
-    int saveBooking(BookingDTO bookingDTO);
+    int saveBooking(Connection connection, BookingDTO bookingDTO);
 
-    void saveBookingSeat(int bookingId, String seatId);
+    void saveBookingSeat(Connection connection, int bookingId, String seatId);
+
+    int getCountUserOrders(int userId);
 }

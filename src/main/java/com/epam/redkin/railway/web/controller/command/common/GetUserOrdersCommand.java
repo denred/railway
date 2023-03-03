@@ -3,8 +3,7 @@ package com.epam.redkin.railway.web.controller.command.common;
 import com.epam.redkin.railway.model.entity.Order;
 import com.epam.redkin.railway.model.entity.User;
 import com.epam.redkin.railway.model.service.OrderService;
-import com.epam.redkin.railway.model.service.RouteService;
-import com.epam.redkin.railway.web.controller.Path;
+import com.epam.redkin.railway.model.service.PaginationService;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
 import com.epam.redkin.railway.web.controller.command.Router;
@@ -22,41 +21,28 @@ import static com.epam.redkin.railway.web.controller.Path.*;
 public class GetUserOrdersCommand implements Command {
     private static final Logger LOGGER = LoggerFactory.getLogger(GetUserOrdersCommand.class);
     private static final int RECORDS_PER_PAGE = 5;
+    private static final int FIRST_VISIBLE_PAGE_LINK = 5;
 
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
-        Router router = new Router();
-        router.setRouteType(Router.RouteType.FORWARD);
-        router.setPagePath(PAGE_ORDERS);
-        RouteService routeService = AppContext.getInstance().getRouteService();
+
         OrderService orderService = AppContext.getInstance().getOrderService();
+        PaginationService paginationService = AppContext.getInstance().getPaginationService();
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(SESSION_USER);
         String userId = String.valueOf(user.getUserId());
-        LOGGER.info(userId + "");
-        int noOfRecords = orderService.getOrderListSizeByUserId(userId);
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
-        int page = 1;
-        if (request.getParameter(PAGE) != null) {
-            page = Integer.parseInt(request.getParameter(PAGE));
-        }
-        List<Order> orderList = orderService.getOrderListByUserIdAndByCurrentRecordAndRecordsPerPage(
-                userId,
-                (page - 1) * RECORDS_PER_PAGE,
-                RECORDS_PER_PAGE * page);
-        for (Order order : orderList) {
-            order.setRouteName(routeService.getRouteInfoById(order.getRouteId()).getRoutName());
-        }
-        Double priceOfSuccessfulOrders = orderService.getPriceOfSuccessfulOrders(Integer.parseInt(userId));
-        request.setAttribute(PAGE_RECORDS, RECORDS_PER_PAGE);
-        request.setAttribute(PAGE_COUNT, noOfPages);
-        request.setAttribute(CURRENT_PAGE, page);
-        request.setAttribute(USER_ID, userId);
+
+        int page = paginationService.getPage(request);
+        int records = orderService.getCountUserOrders(userId);
+        List<Order> orderList = orderService.getUserOrders(userId, (page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
+        paginationService.setPaginationParameter(request, page, records, RECORDS_PER_PAGE, FIRST_VISIBLE_PAGE_LINK);
+        Double successfulOrdersPrice = orderService.getSuccessfulOrdersPrice(userId);
+
         request.setAttribute(ORDER_LIST, orderList);
-        request.setAttribute(SUM, priceOfSuccessfulOrders);
-        request.setAttribute(LANGUAGE, session.getAttribute(LOCALE));
+        request.setAttribute(SUM, successfulOrdersPrice);
+
         LOGGER.info("done");
-        return router;
+        return Router.forward(PAGE_ORDERS);
     }
 }

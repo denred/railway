@@ -23,10 +23,10 @@ public class AppContext {
     private final CarriageService carriageService = new CarriageServiceImpl(carRepository, seatRepository);
     private final UserService userService = new UserServiceImpl(userRepository);
     private final RouteService routeService = new RouteServiceImpl(routsRepository, seatService, carriageService);
-    private final OrderService orderService = new OrderServiceImpl(orderRepository, seatService, seatRepository, ConnectionPools.getProcessing());
     private final StationService stationService = new StationServiceImpl(stationRepository);
     private final TrainService trainService = new TrainServiceImpl(trainRepository);
     private final RouteMappingService routeMappingService = new RouteMappingServiceImpl(routePointRepository);
+    private final OrderService orderService = new OrderServiceImpl(orderRepository, seatService, seatRepository, routeMappingService, stationService, ConnectionPools.getProcessing());
     private final LogoutService logoutService = new LogoutServiceImpl();
     private final SearchService searchService = new SearchServiceImpl();
     private final PaginationService paginationService = new PaginationServiceImpl();
