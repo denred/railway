@@ -64,9 +64,9 @@ public class LoginCommand implements Command {
 
         Router router;
         if (user.getRole() == Role.USER) {
-            router = Router.redirect(Path.COMMAND_PROFILE);
-        } else {
             router = Router.redirect(Path.COMMAND_HOME);
+        } else {
+            router = Router.redirect(Path.COMMAND_PROFILE);
         }
         LOGGER.info("Finished LoginCommand execution");
         return router;

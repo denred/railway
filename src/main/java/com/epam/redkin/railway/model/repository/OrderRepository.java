@@ -9,17 +9,23 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface OrderRepository extends EntityDAO<Order> {
-    List<Order> getOrders();
-    boolean updateOrderStatus(int orderId, OrderStatus status) throws SQLException;
+public interface OrderRepository{
+    void create(Order order);
+    Order getOrderByUUID(String uuid);
+    List<Order> getOrders(int currentPage, int recordsPerPage);
+    boolean updateOrderStatus(String orderUuid, OrderStatus status) throws SQLException;
     List<Order> getOrderByUserId(int userId, int currentPage, int recordsPerPage);
     Double getSuccessfulOrdersPrice(int orderId);
 
     void addReservation(Connection connection, ReservationDTO reservationDTO);
 
-    int saveBooking(Connection connection, BookingDTO bookingDTO);
+    String saveBooking(Connection connection, BookingDTO bookingDTO);
 
-    void saveBookingSeat(Connection connection, int bookingId, String seatId);
+    void saveBookingSeat(Connection connection, String bookingId, String seatId);
 
     int getCountUserOrders(int userId);
+
+    int getCountOrders();
+
+    void changeUserBalance(Connection connection, int userId, double newBalance);
 }

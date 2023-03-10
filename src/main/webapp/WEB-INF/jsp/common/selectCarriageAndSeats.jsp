@@ -75,6 +75,6 @@
     </form>
 </div>
 <jsp:include page="/WEB-INF/templates/_scripts.jsp"/>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/chooseSeat.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/choose-seat.js"></script>
 </body>
 </html>

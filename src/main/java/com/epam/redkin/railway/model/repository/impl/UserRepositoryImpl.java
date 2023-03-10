@@ -329,6 +329,7 @@ public class UserRepositoryImpl implements UserRepository {
                 .role(Role.valueOf(rs.getString(AppContextConstant.ROLE).toUpperCase()))
                 .blocked(rs.getBoolean(AppContextConstant.BLOCKED))
                 .token(rs.getString(AppContextConstant.LOGIN_TOKEN))
+                .balance(rs.getDouble("balance"))
                 .build();
     }
 

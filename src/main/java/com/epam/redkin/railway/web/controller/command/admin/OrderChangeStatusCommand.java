@@ -44,13 +44,13 @@ public class OrderChangeStatusCommand implements Command {
                 throw new IncorrectDataException("Incorrect data entered", e);
             }
             //orderValidator.isValidOrder(order);
-            orderService.updateOrderStatus(Integer.parseInt(orderId), status);
+            orderService.updateOrderStatus(orderId, status);
             router.setPagePath(Path.COMMAND_INFO_ORDERS);
             router.setRouteType(Router.RouteType.REDIRECT);
         } else {
             OrderService orderService = AppContext.getInstance().getOrderService();
             List<OrderStatus> orderStatusList = new ArrayList<>(EnumSet.allOf(OrderStatus.class));
-            Order order = orderService.getOrderById(Integer.parseInt(orderId));
+            Order order = orderService.getOrderById(orderId);
             request.setAttribute(CURRENT_ORDER, order);
             request.setAttribute(STATUS_LIST, orderStatusList);
         }

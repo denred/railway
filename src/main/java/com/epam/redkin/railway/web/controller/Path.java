@@ -5,12 +5,10 @@ public class Path {
     public static final String PAGE_HOME = "WEB-INF/jsp/common/homePage.jsp";
     public static final String PAGE_LOGIN = "/login.jsp";
     public static final String PAGE_SEARCH_ROUTES = "WEB-INF/jsp/common/searchRoutesForOrder.jsp";
-    public static final String PAGE_ORDERS = "WEB-INF/jsp/user/userAccount.jsp";
+    public static final String PAGE_ORDERS = "WEB-INF/jsp/user/order_history.jsp";
     public static final String PAGE_ROUTE_DETAIL = "WEB-INF/jsp/common/detailRoute.jsp";
-    public static final String PAGE_SELECT_STATION_AND_CARRIAGE_TYPE = "WEB-INF/jsp/common/selectStationAndCarriageType.jsp";
     public static final String PAGE_SELECT_CARRIAGE_AND_COUNT_SEATS = "WEB-INF/jsp/common/selectCarriageAndSeats.jsp";
-    public static final String PAGE_SELECT_SEATS_NUMBER = "WEB-INF/jsp/common/selectSeats.jsp";
-    public static final String PAGE_CONFIRM_ORDER = "WEB-INF/jsp/common/confirmOrder.jsp";
+    public static final String PAGE_CONFIRM_ORDER = "WEB-INF/jsp/common/confirm_order.jsp";
     public static final String PAGE_INFO_ROUTE = "WEB-INF/jsp/admin/routeInfo.jsp";
     public static final String PAGE_ADD_ROUTE = "WEB-INF/jsp/admin/routeAdd.jsp";
     public static final String PAGE_EDIT_ROUTE = "WEB-INF/jsp/admin/routeEdit.jsp";
@@ -21,16 +19,15 @@ public class Path {
     public static final String PAGE_ADMIN_INFO_USER = "WEB-INF/jsp/admin/userInfo.jsp";
     public static final String PAGE_ADMIN_INFO_CARRIAGE = "WEB-INF/jsp/admin/carriageInfo.jsp";
     public static final String PAGE_ADMIN_INFO_TRAIN = "WEB-INF/jsp/admin/trainInfo.jsp";
-    public static final String PAGE_ADMIN_INFO_ORDER = "WEB-INF/jsp/admin/orderInfo.jsp";
+    public static final String PAGE_ADMIN_INFO_ORDER = "WEB-INF/jsp/admin/order_info.jsp";
     public static final String PAGE_ADMIN_SET_ORDER_STATUS = "WEB-INF/jsp/admin/orderStatus.jsp";
     public static final String PAGE_ADMIN_SET_CARRIAGE = "WEB-INF/jsp/admin/carriageSet.jsp";
     public static final String PAGE_ADMIN_SET_TRAIN = "WEB-INF/jsp/admin/trainSet.jsp";
-    public static final String PAGE_FORGET_PASSWORD = "WEB-INF/jsp/user/forgetPassword.jsp";
     public static final String PAGE_REGISTRATION = "registration.jsp";
     public static final String PAGE_ERROR_PAGE = "errorPage.jsp";
     public static final String PAGE_PROFILE = "WEB-INF/jsp/user/profile.jsp";
-    public static final String PAGE_VIEW_TICKET = "WEB-INF/jsp/user/viewTicket.jsp";
-    public static final String PAGE_ORDER_DETAIL = "WEB-INF/jsp/admin/orderDetail.jsp";
+    public static final String PAGE_VIEW_TICKET = "WEB-INF/jsp/user/ticket_view.jsp";
+    public static final String PAGE_ORDER_DETAIL = "WEB-INF/jsp/admin/order_detail.jsp";
 
 
 
@@ -51,14 +48,11 @@ public class Path {
     public static final String COMMAND_INFO_CARRIAGES_PAGE = "controller?action=carriages_page";
     public static final String COMMAND_INFO_TRAINS = "controller?action=trains";
     public static final String COMMAND_INFO_TRAINS_PAGE = "controller?action=trains_page";
-    public static final String COMMAND_SELECT_STATION_AND_CARRIAGE_TYPE = "controller?action=select_station_and_carriage_type";
-    public static final String COMMAND_SELECT_CARRIAGE_AND_COUNT_SEATS = "controller?action=select_carriage_and_count_seats";
-    public static final String COMMAND_SELECT_CARRIAGE_AND_SEATS_PAGE = "controller?action=select_carriage_and_seats";
     public static final String COMMAND_SELECT_SEATS_NUMBER = "controller?action=select_seats";
     public static final String COMMAND_SELECT_SEATS_PAGE = "controller?action=select_seats_page";
     public static final String COMMAND_CREATE_ORDER = "controller?action=create_order";
-    public static final String COMMAND_ORDERS = "controller?action=orders";
     public static final String COMMAND_LOGIN_BY_TOKEN_LINK = "controller?action=login_by_token_link";
     public static final String COMMAND_POST_REGISTRATION_ACCOUNT_APPROVAL = "?action=postRegistrationAccountApproval";
     public static final String COMMAND_CARRIAGE_SET_PAGE = "controller?action=set_carriage_page";
+    public static final String COMMAND_VIEW_TICKETS = "controller?action=view_tickets";
 }

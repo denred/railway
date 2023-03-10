@@ -102,6 +102,7 @@ public class SeatServiceImpl implements SeatService {
                 newSeatList.add(seat);
             }
         });
+        LOGGER.info("List of available seats following a check for availability " + newSeatList);
         return newSeatList;
     }
 

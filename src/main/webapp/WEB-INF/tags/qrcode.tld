@@ -1,0 +1,29 @@
+<taglib>
+    <tlib-version>1.2</tlib-version>
+    <jsp-version>2.0</jsp-version>
+    <short-name>qrcode</short-name>
+    <tag>
+        <name>generateQRCode</name>
+        <tag-class>com.epam.redkin.railway.web.tag.QRCodeGeneratorTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>data</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>width</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Integer</type>
+        </attribute>
+        <attribute>
+            <name>height</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.Integer</type>
+        </attribute>
+    </tag>
+
+</taglib>

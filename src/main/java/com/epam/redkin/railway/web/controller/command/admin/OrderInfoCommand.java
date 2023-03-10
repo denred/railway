@@ -3,7 +3,6 @@ package com.epam.redkin.railway.web.controller.command.admin;
 import com.epam.redkin.railway.model.entity.Order;
 import com.epam.redkin.railway.model.service.OrderService;
 import com.epam.redkin.railway.model.service.PaginationService;
-import com.epam.redkin.railway.model.service.RouteService;
 import com.epam.redkin.railway.web.controller.Path;
 import com.epam.redkin.railway.web.controller.command.Command;
 import com.epam.redkin.railway.appcontext.AppContext;
@@ -32,22 +31,12 @@ public class OrderInfoCommand implements Command {
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.info("started");
         OrderService orderService = appContext.getOrderService();
-        RouteService routeService = appContext.getRouteService();
         PaginationService paginationService = appContext.getPaginationService();
         HttpSession session = request.getSession();
+
         int page = paginationService.getPage(request);
-
-        int records = orderService.getOrderListSize();
-
-        List<Order> orderList = orderService.getOrderListByCurrentRecordAndRecordsPerPage(
-                (page - 1) * RECORDS_PER_PAGE,
-                RECORDS_PER_PAGE * page);
-
-        for (Order order : orderList) {
-            order.setRouteName(routeService
-                    .getRouteInfoById(order.getRouteId())
-                    .getRoutName());
-        }
+        int records = orderService.getOrdersCount();
+        List<Order> orderList = orderService.getOrders((page - 1) * RECORDS_PER_PAGE,RECORDS_PER_PAGE * page);
 
         paginationService.setPaginationParameter(request, page, records, RECORDS_PER_PAGE, FIRST_VISIBLE_PAGE_LINK);
 

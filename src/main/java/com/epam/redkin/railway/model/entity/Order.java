@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class Order {
-    private int id;
+    private String uuid;
     private LocalDateTime orderDate;
     private int routeId;
     private String routeName;

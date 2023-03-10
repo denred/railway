@@ -11,33 +11,30 @@ import java.util.List;
 public interface OrderService {
 
 
-    List<Order> getAllOrderList();
+    Order getOrderById(String orderId);
 
 
-    Order getOrderById(int orderId);
-
-
-    boolean updateOrderStatus(int orderId, OrderStatus status);
+    boolean updateOrderStatus(String orderUuid, OrderStatus status);
 
 
     void saveBooking(Order order, int routsId, List<Seat> seats);
 
 
-    void cancelOrder(int orderId);
+    void cancelOrder(String orderId);
 
 
     Double getPrice(String carType, int countOfSeats);
 
     Double getSuccessfulOrdersPrice(String userId);
 
-    List<Order> getOrderListByCurrentRecordAndRecordsPerPage(int currentPage, int recordsPerPage);
+    List<Order> getOrders(int currentPage, int recordsPerPage);
 
-    int getOrderListSize();
+    int getOrdersCount();
 
     List<Order> getUserOrders(String userId, int currentPage, int recordsPerPage);
 
 
     int getCountUserOrders(String userId);
 
-    void addReservation(String routeId, String stationIdD, String stationIdA, String trainId, String[] seatIds, String travelTime, Double price, String carriageId, User user);
+    String addReservation(String routeId, String stationIdD, String stationIdA, String trainId, String seatIds, String travelTime, Double price, String carriageId, User user, String balancePayment);
 }

@@ -20,4 +20,5 @@ public class User {
     private int roleId;
     private boolean blocked;
     private String token;
+    private Double balance;
 }

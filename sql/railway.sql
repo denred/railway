@@ -115,6 +115,7 @@ DROP TABLE IF EXISTS `railway`.`booking` ;
 
 CREATE TABLE IF NOT EXISTS `railway`.`booking` (
                                                    `id` INT NOT NULL AUTO_INCREMENT,
+                                                   `uuid` CHAR(36) NOT NULL,
                                                    `booking_date` TIMESTAMP NOT NULL,
                                                    `dispatch_date` TIMESTAMP NOT NULL,
                                                    `arrival_date` TIMESTAMP NOT NULL,
@@ -162,9 +163,9 @@ CREATE TABLE IF NOT EXISTS `railway`.`booking` (
                                                        FOREIGN KEY (`carriage_id`)
                                                            REFERENCES `railway`.`carriage` (`id`)
                                                            ON DELETE NO ACTION
-                                                           ON UPDATE NO ACTION)
+                                                           ON UPDATE NO ACTION
+)
     ENGINE = InnoDB
-    AUTO_INCREMENT = 10
     DEFAULT CHARACTER SET = utf8mb3;
 
 

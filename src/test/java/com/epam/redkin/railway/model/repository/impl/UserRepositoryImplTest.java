@@ -1,11 +1,9 @@
 package com.epam.redkin.railway.model.repository.impl;
 
 import com.epam.redkin.railway.model.entity.Role;
-import com.epam.redkin.railway.model.entity.Route;
 import com.epam.redkin.railway.model.entity.User;
 import com.epam.redkin.railway.model.exception.DataBaseException;
 import com.epam.redkin.railway.model.repository.UserRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -155,15 +153,15 @@ class UserRepositoryImplTest {
         doNothing().when(mockConnection).close();
         when(mockDataSource.getConnection()).thenReturn(mockConnection);
         //verify and assert
-        assertThrows(DataBaseException.class, () -> (new OrderRepositoryImpl(mockDataSource)).getById(1));
+        assertThrows(DataBaseException.class, () -> (new OrderRepositoryImpl(mockDataSource)).getOrderByUUID("1"));
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
         verify(mockConnection).close();
         verify(mockStatement).executeQuery();
-        verify(mockStatement).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(0)).setInt(anyInt(), anyInt());
         verify(mockStatement).close();
         verify(mockResultSet).next();
-        verify(mockResultSet).getString(anyString());
+        verify(mockResultSet, times(1)).getString(anyString());
     }
 
     @Test
@@ -176,6 +174,7 @@ class UserRepositoryImplTest {
         when(mockResultSet.getString(anyString())).thenReturn("test@mail.com", "123", "John", "Smith", "+44", "USER", "qwerty");
         when(mockResultSet.getObject(anyString(), eq(LocalDate.class))).thenReturn(LocalDate.of(1, 2, 3));
         when(mockResultSet.getBoolean(anyString())).thenReturn(true);
+        when(mockResultSet.getDouble(anyString())).thenReturn(0.0);
 
         assertEquals(createTestUser(), userRepository.getById(1));
         verify(mockDataSource).getConnection();
@@ -187,6 +186,7 @@ class UserRepositoryImplTest {
         verify(mockResultSet, times(7)).getString(anyString());
         verify(mockResultSet, times(1)).getObject(anyString(), eq(LocalDate.class));
         verify(mockResultSet, times(1)).getBoolean(anyString());
+        verify(mockResultSet, times(1)).getDouble(anyString());
     }
 
     @Test
@@ -332,6 +332,7 @@ class UserRepositoryImplTest {
         when(mockResultSet.getString(anyString())).thenReturn("test@mail.com", "123", "John", "Smith", "+44", "USER", "qwerty");
         when(mockResultSet.getObject(anyString(), eq(LocalDate.class))).thenReturn(LocalDate.of(1, 2, 3));
         when(mockResultSet.getBoolean(anyString())).thenReturn(true);
+        when(mockResultSet.getDouble(anyString())).thenReturn(0.0);
 
         assertEquals(createTestUser(), userRepository.getUserByEmail("email"));
         verify(mockDataSource).getConnection();
@@ -343,6 +344,7 @@ class UserRepositoryImplTest {
         verify(mockResultSet, times(7)).getString(anyString());
         verify(mockResultSet, times(1)).getObject(anyString(), eq(LocalDate.class));
         verify(mockResultSet, times(1)).getBoolean(anyString());
+        verify(mockResultSet, times(1)).getDouble(anyString());
     }
 
     @Test
@@ -555,6 +557,7 @@ class UserRepositoryImplTest {
                 .blocked(true)
                 .role(Role.USER)
                 .token("qwerty")
+                .balance(0.0)
                 .build();
     }
 }

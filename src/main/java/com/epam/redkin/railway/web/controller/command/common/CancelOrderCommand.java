@@ -23,7 +23,7 @@ public class CancelOrderCommand implements Command {
         router.setPagePath(PAGE_HOME);
         OrderService orderService = AppContext.getInstance().getOrderService();
         String orderId = request.getParameter(ORDER_ID);
-        orderService.cancelOrder(Integer.parseInt(orderId));
+        orderService.cancelOrder(orderId);
         LOGGER.info("done");
         return router;
     }

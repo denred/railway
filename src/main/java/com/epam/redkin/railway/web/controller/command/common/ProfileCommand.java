@@ -66,6 +66,7 @@ public class ProfileCommand implements Command {
         }
         user = userService.read(user.getUserId());
 
+        session.setAttribute("balance", user.getBalance());
         session.setAttribute(FIRST_NAME, user.getFirstName());
         session.setAttribute(LAST_NAME, user.getLastName());
         session.setAttribute(PHONE_NUMBER, user.getPhone());

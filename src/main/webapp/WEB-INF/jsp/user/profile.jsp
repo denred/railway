@@ -22,7 +22,8 @@
                 <div class="author-card-profile">
                     <div class="author-card-details">
                         <h5 class="author-card-name text-lg">${first_name} ${last_name}</h5>
-                        <span class="">${email}</span>
+                        <span class="">${email}</span><br>
+                        <span><fmt:message key="user.balance"/>: ${balance}</span>
                     </div>
                 </div>
             </div>

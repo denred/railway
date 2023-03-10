@@ -43,22 +43,19 @@ class OrderRepositoryImplTest {
     void testCreatePositive() throws DataBaseException, SQLException {
         doNothing().when(mockConnection).setAutoCommit(false);
         doNothing().when(mockConnection).setAutoCommit(true);
-        when(mockConnection.prepareStatement(anyString(), anyInt())).thenReturn(mockStatement);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
         doNothing().when(mockStatement).setObject(anyInt(), any());
         doNothing().when(mockStatement).setString(anyInt(), anyString());
         doNothing().when(mockStatement).setInt(anyInt(), anyInt());
         doNothing().when(mockStatement).setDouble(anyInt(), anyDouble());
         when(mockStatement.executeUpdate()).thenReturn(1);
         doNothing().when(mockConnection).commit();
-        when(mockStatement.getGeneratedKeys()).thenReturn(mockResultSet);
-        when(mockResultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
-        when(mockResultSet.getInt(Statement.RETURN_GENERATED_KEYS)).thenReturn(1);
-        doNothing().when(mockResultSet).close();
         doNothing().when(mockStatement).close();
         doNothing().when(mockConnection).close();
 
-        assertEquals(1, orderRepository.create(
+        orderRepository.create(
                 Order.builder()
+                        .uuid("aA")
                         .orderDate(LocalDateTime.of(1, 1, 1, 1, 1))
                         .dispatchStation("StationA")
                         .arrivalStation("StationB")
@@ -72,44 +69,37 @@ class OrderRepositoryImplTest {
                         .seatsId("1 2 3")
                         .user(User.builder().build())
                         .orderStatus(OrderStatus.ACCEPTED)
-                        .build()));
+                        .build());
         verify(mockDataSource).getConnection();
         verify(mockConnection).setAutoCommit(false);
         verify(mockConnection).setAutoCommit(true);
         verify(mockConnection).commit();
         verify(mockConnection).close();
-        verify(mockConnection).prepareStatement(anyString(), anyInt());
 
         verify(mockStatement, times(8)).setString(anyInt(), anyString());
         verify(mockStatement, times(3)).setInt(anyInt(), anyInt());
-        verify(mockStatement, times(3)).setObject(anyInt(), any());
+        verify(mockStatement, times(4)).setObject(anyInt(), any());
         verify(mockStatement).setDouble(anyInt(), anyDouble());
         verify(mockStatement).executeUpdate();
         verify(mockStatement).close();
-
-        verify(mockResultSet).next();
-        verify(mockResultSet).getInt(Statement.RETURN_GENERATED_KEYS);
-        verify(mockResultSet).close();
     }
 
     @Test
     void testCreateNegative() throws DataBaseException, SQLException {
         doNothing().when(mockConnection).setAutoCommit(false);
         doNothing().when(mockConnection).setAutoCommit(true);
-        when(mockConnection.prepareStatement(anyString(), anyInt())).thenReturn(mockStatement);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
         doNothing().when(mockStatement).setObject(anyInt(), any());
         doNothing().when(mockStatement).setString(anyInt(), anyString());
         doNothing().when(mockStatement).setInt(anyInt(), anyInt());
         doNothing().when(mockStatement).setDouble(anyInt(), anyDouble());
         when(mockStatement.executeUpdate()).thenReturn(1);
         doNothing().when(mockConnection).commit();
-        when(mockStatement.getGeneratedKeys()).thenReturn(mockResultSet);
-        when(mockResultSet.next()).thenReturn(Boolean.FALSE);
-        doNothing().when(mockStatement).close();
         doNothing().when(mockConnection).close();
 
-        assertEquals(-1, orderRepository.create(
+        orderRepository.create(
                 Order.builder()
+                        .uuid("aA")
                         .orderDate(LocalDateTime.of(1, 1, 1, 1, 1))
                         .dispatchStation("StationA")
                         .arrivalStation("StationB")
@@ -123,29 +113,27 @@ class OrderRepositoryImplTest {
                         .seatsId("1 2 3")
                         .user(User.builder().build())
                         .orderStatus(OrderStatus.ACCEPTED)
-                        .build()));
+                        .build());
         verify(mockDataSource).getConnection();
         verify(mockConnection).setAutoCommit(false);
         verify(mockConnection).setAutoCommit(true);
         verify(mockConnection).commit();
         verify(mockConnection).close();
-        verify(mockConnection).prepareStatement(anyString(), anyInt());
+        verify(mockConnection).prepareStatement(anyString());
 
         verify(mockStatement, times(8)).setString(anyInt(), anyString());
         verify(mockStatement, times(3)).setInt(anyInt(), anyInt());
-        verify(mockStatement, times(3)).setObject(anyInt(), any());
+        verify(mockStatement, times(4)).setObject(anyInt(), any());
         verify(mockStatement).setDouble(anyInt(), anyDouble());
         verify(mockStatement).executeUpdate();
         verify(mockStatement).close();
-
-        verify(mockResultSet).next();
     }
 
     @Test
     void testCreateThrowException() throws DataBaseException, SQLException {
         doNothing().when(mockConnection).setAutoCommit(false);
         doNothing().when(mockConnection).setAutoCommit(true);
-        when(mockConnection.prepareStatement(anyString(), anyInt())).thenReturn(mockStatement);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
         doNothing().when(mockStatement).setObject(anyInt(), any());
         doNothing().when(mockStatement).setString(anyInt(), anyString());
         doNothing().when(mockStatement).setInt(anyInt(), anyInt());
@@ -156,6 +144,7 @@ class OrderRepositoryImplTest {
 
         assertThrows(DataBaseException.class, () -> orderRepository.create(
                 Order.builder()
+                        .uuid("aA")
                         .orderDate(LocalDateTime.of(1, 1, 1, 1, 1))
                         .dispatchStation("StationA")
                         .arrivalStation("StationB")
@@ -176,11 +165,10 @@ class OrderRepositoryImplTest {
         verify(mockConnection).rollback();
         verify(mockConnection, times(0)).commit();
         verify(mockConnection).close();
-        verify(mockConnection).prepareStatement(anyString(), anyInt());
 
         verify(mockStatement, times(8)).setString(anyInt(), anyString());
         verify(mockStatement, times(3)).setInt(anyInt(), anyInt());
-        verify(mockStatement, times(3)).setObject(anyInt(), any());
+        verify(mockStatement, times(4)).setObject(anyInt(), any());
         verify(mockStatement).setDouble(anyInt(), anyDouble());
         verify(mockStatement).executeUpdate();
         verify(mockStatement).close();
@@ -193,11 +181,11 @@ class OrderRepositoryImplTest {
     @Test
     void testGetByIdPositive() throws SQLException {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
-        doNothing().when(mockStatement).setInt(anyInt(), anyInt());
+        doNothing().when(mockStatement).setString(anyInt(), anyString());
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
-        when(mockResultSet.getInt(anyString())).thenReturn(1, 1, 2, 3);
-        when(mockResultSet.getString(anyString())).thenReturn("777", CarriageType.FIRST_CLASS.name(),
+        when(mockResultSet.getInt(anyString())).thenReturn(1, 1, 1, 2);
+        when(mockResultSet.getString(anyString())).thenReturn("aA","777", CarriageType.FIRST_CLASS.name(),
                 "email@mail.com", "pass123", "John", "Smith", "+380671234567", "USER", "token",
                 OrderStatus.ACCEPTED.name(), "StationA", "StationB", "travel", "01", "23", "1 2 3", "Route");
         when(mockResultSet.getObject(anyString(), eq(LocalDateTime.class))).thenReturn(LocalDateTime.of(1, 2, 3, 4, 5));
@@ -206,9 +194,9 @@ class OrderRepositoryImplTest {
         when(mockResultSet.getBoolean(anyString())).thenReturn(true);
 
         assertEquals(Order.builder()
-                .id(1)
-                .countOfSeats(2)
-                .routeId(3)
+                .uuid("aA")
+                .countOfSeats(1)
+                .routeId(1)
                 .trainNumber("777")
                 .carriageType(CarriageType.FIRST_CLASS)
                 .orderStatus(OrderStatus.ACCEPTED)
@@ -235,14 +223,13 @@ class OrderRepositoryImplTest {
                         .blocked(true)
                         .token("token")
                         .build())
-                .build(), orderRepository.getById(1));
+                .build(), orderRepository.getOrderByUUID("aA"));
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
-        verify(mockStatement).setInt(anyInt(), anyInt());
         verify(mockStatement).executeQuery();
         verify(mockResultSet).next();
-        verify(mockResultSet, times(4)).getInt(anyString());
-        verify(mockResultSet, times(17)).getString(anyString());
+        verify(mockResultSet, times(3)).getInt(anyString());
+        verify(mockResultSet, times(18)).getString(anyString());
         verify(mockResultSet, times(1)).getBoolean(anyString());
         verify(mockResultSet, times(1)).getDouble(anyString());
         verify(mockResultSet, times(3)).getObject(anyString(), eq(LocalDateTime.class));
@@ -252,14 +239,13 @@ class OrderRepositoryImplTest {
     @Test
     void testGetByIdNegative() throws SQLException {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
-        doNothing().when(mockStatement).setInt(anyInt(), anyInt());
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenReturn(Boolean.FALSE);
 
-        assertNull(orderRepository.getById(1));
+        assertNull(orderRepository.getOrderByUUID("aA"));
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
-        verify(mockStatement).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(0)).setInt(anyInt(), anyInt());
         verify(mockStatement).executeQuery();
         verify(mockResultSet).next();
         verify(mockResultSet, times(0)).getInt(anyString());
@@ -273,14 +259,14 @@ class OrderRepositoryImplTest {
     @Test
     void testGetByIdThrowException() throws SQLException {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
-        doNothing().when(mockStatement).setInt(anyInt(), anyInt());
+        doNothing().when(mockStatement).setString(anyInt(), anyString());
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenThrow(SQLException.class);
 
-        assertThrows(DataBaseException.class, () -> orderRepository.getById(1));
+        assertThrows(DataBaseException.class, () -> orderRepository.getOrderByUUID("aA"));
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
-        verify(mockStatement).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(0)).setInt(anyInt(), anyInt());
         verify(mockStatement).executeQuery();
         verify(mockResultSet).next();
         verify(mockResultSet, times(0)).getInt(anyString());
@@ -297,7 +283,7 @@ class OrderRepositoryImplTest {
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
         when(mockResultSet.getInt(anyString())).thenReturn(1, 1, 2, 3);
-        when(mockResultSet.getString(anyString())).thenReturn("777", CarriageType.FIRST_CLASS.name(),
+        when(mockResultSet.getString(anyString())).thenReturn("aA","777", CarriageType.FIRST_CLASS.name(),
                 "email@mail.com", "pass123", "John", "Smith", "+380671234567", "USER", "token",
                 OrderStatus.ACCEPTED.name(), "StationA", "StationB", "travel", "01", "23", "1 2 3");
         when(mockResultSet.getObject(anyString(), eq(LocalDateTime.class))).thenReturn(LocalDateTime.of(1, 2, 3, 4, 5));
@@ -305,14 +291,13 @@ class OrderRepositoryImplTest {
         when(mockResultSet.getDouble(anyString())).thenReturn(10.0);
         when(mockResultSet.getBoolean(anyString())).thenReturn(true);
 
-        assertEquals(1, orderRepository.getOrders().size());
+        assertEquals(1, orderRepository.getOrders(0, 1).size());
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement).executeQuery();
         verify(mockResultSet, times(2)).next();
-        verify(mockResultSet).close();
-        verify(mockResultSet, times(4)).getInt(anyString());
-        verify(mockResultSet, times(17)).getString(anyString());
+        verify(mockResultSet, times(3)).getInt(anyString());
+        verify(mockResultSet, times(18)).getString(anyString());
         verify(mockResultSet, times(1)).getBoolean(anyString());
         verify(mockResultSet, times(1)).getDouble(anyString());
         verify(mockResultSet, times(3)).getObject(anyString(), eq(LocalDateTime.class));
@@ -325,12 +310,11 @@ class OrderRepositoryImplTest {
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenReturn(Boolean.FALSE);
 
-        assertEquals(0, orderRepository.getOrders().size());
+        assertEquals(0, orderRepository.getOrders(0, 1).size());
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement).executeQuery();
         verify(mockResultSet).next();
-        verify(mockResultSet).close();
         verify(mockResultSet, times(0)).getInt(anyString());
         verify(mockResultSet, times(0)).getString(anyString());
         verify(mockResultSet, times(0)).getBoolean(anyString());
@@ -345,12 +329,11 @@ class OrderRepositoryImplTest {
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenThrow(SQLException.class);
 
-        assertThrows(DataBaseException.class, () -> orderRepository.getOrders());
+        assertThrows(DataBaseException.class, () -> orderRepository.getOrders(0, 1));
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement).executeQuery();
         verify(mockResultSet).next();
-        verify(mockResultSet).close();
         verify(mockResultSet, times(0)).getInt(anyString());
         verify(mockResultSet, times(0)).getString(anyString());
         verify(mockResultSet, times(0)).getBoolean(anyString());
@@ -363,17 +346,15 @@ class OrderRepositoryImplTest {
     void testUpdateOrderStatusPositive() throws SQLException {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
         doNothing().when(mockConnection).setAutoCommit(false);
-        doNothing().when(mockConnection).setAutoCommit(true);
-        doNothing().when(mockStatement).setInt(anyInt(), anyInt());
         doNothing().when(mockStatement).setString(anyInt(), anyString());
         when(mockStatement.executeUpdate()).thenReturn(1);
 
-        assertTrue(orderRepository.updateOrderStatus(1, OrderStatus.ACCEPTED));
+        assertTrue(orderRepository.updateOrderStatus("aA", OrderStatus.ACCEPTED));
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
         verify(mockStatement).executeUpdate();
-        verify(mockStatement).setInt(anyInt(), anyInt());
-        verify(mockStatement).setString(anyInt(), anyString());
+        verify(mockStatement, times(0)).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(2)).setString(anyInt(), anyString());
         verify(mockConnection).close();
         verify(mockConnection).commit();
         verify(mockConnection).setAutoCommit(false);
@@ -386,11 +367,10 @@ class OrderRepositoryImplTest {
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
         doNothing().when(mockConnection).setAutoCommit(false);
         doNothing().when(mockConnection).setAutoCommit(true);
-        doNothing().when(mockStatement).setInt(anyInt(), anyInt());
         doNothing().when(mockStatement).setString(anyInt(), anyString());
         when(mockStatement.executeUpdate()).thenThrow(SQLException.class);
 
-        assertThrows(DataBaseException.class, () -> orderRepository.updateOrderStatus(1, OrderStatus.ACCEPTED));
+        assertThrows(DataBaseException.class, () -> orderRepository.updateOrderStatus("aA", OrderStatus.ACCEPTED));
         verify(mockDataSource).getConnection();
         verify(mockConnection).prepareStatement(anyString());
         verify(mockConnection).setAutoCommit(false);
@@ -398,8 +378,8 @@ class OrderRepositoryImplTest {
         verify(mockConnection).rollback();
         verify(mockConnection).close();
         verify(mockStatement).executeUpdate();
-        verify(mockStatement).setInt(anyInt(), anyInt());
-        verify(mockStatement).setString(anyInt(), anyString());
+        verify(mockStatement, times(0)).setInt(anyInt(), anyInt());
+        verify(mockStatement, times(2)).setString(anyInt(), anyString());
         verify(mockStatement).close();
     }
 
@@ -410,7 +390,7 @@ class OrderRepositoryImplTest {
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
         when(mockResultSet.next()).thenReturn(Boolean.TRUE, Boolean.FALSE);
         when(mockResultSet.getInt(anyString())).thenReturn(1, 1, 2, 3);
-        when(mockResultSet.getString(anyString())).thenReturn("777", CarriageType.FIRST_CLASS.name(),
+        when(mockResultSet.getString(anyString())).thenReturn("aA","777", CarriageType.FIRST_CLASS.name(),
                 "email@mail.com", "pass123", "John", "Smith", "+380671234567", "USER", "token",
                 OrderStatus.ACCEPTED.name(), "StationA", "StationB", "travel", "01", "23", "1 2 3");
         when(mockResultSet.getObject(anyString(), eq(LocalDateTime.class))).thenReturn(LocalDateTime.of(1, 2, 3, 4, 5));
@@ -424,8 +404,8 @@ class OrderRepositoryImplTest {
         verify(mockStatement, times(3)).setInt(anyInt(), anyInt());
         verify(mockStatement).executeQuery();
         verify(mockResultSet, times(2)).next();
-        verify(mockResultSet, times(4)).getInt(anyString());
-        verify(mockResultSet, times(17)).getString(anyString());
+        verify(mockResultSet, times(3)).getInt(anyString());
+        verify(mockResultSet, times(18)).getString(anyString());
         verify(mockResultSet, times(1)).getBoolean(anyString());
         verify(mockResultSet, times(1)).getDouble(anyString());
         verify(mockResultSet, times(3)).getObject(anyString(), eq(LocalDateTime.class));

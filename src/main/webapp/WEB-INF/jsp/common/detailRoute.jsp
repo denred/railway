@@ -54,71 +54,7 @@
             </tbody>
         </table>
     </div>
-    <%-- Pagination --%>
-    <div class="d-flex justify-content-center">
-        <nav aria-label="Page navigation">
-            <ul class="pagination ">
-                <li class="page-item">
-                    <c:if test="${currentPage != 1}">
-                        <a class="page-link" href="controller?action=route&page=${currentPage - 1}"
-                           aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-                    </c:if>
-                </li>
-
-                <c:forEach begin="1" end="${noOfPages}" var="i">
-                    <c:choose>
-                        <c:when test="${currentPage eq i}">
-                            <li class="page-item active" aria-current="page">
-                                <a class="page-link" href="#">${i}</a>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item"><a class="page-link"
-                                                     href="controller?action=route&page=${i}">${i}</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-
-
-                <c:if test="${last_page gt noOfPages}">
-                    <li class="page-item disabled"><a class="page-link circle circle-md"
-                                                      href="#"><span>...</span></a></li>
-                    <c:choose>
-                        <c:when test="${currentPage eq last_page}">
-                            <li class="page-item active">
-                                <a class="page-link"
-                                   href="controller?action=route&page=${last_page}">${last_page}</a>
-                            </li>
-                        </c:when>
-
-                        <c:otherwise>
-                            <c:if test="${currentPage gt noOfPages}">
-                                <li class="page-item active">
-                                    <a class="page-link"
-                                       href="controller?action=route&page=${currentPage}">${currentPage}</a>
-                                </li>
-                                <li class="page-item disabled">
-                                    <a class="page-link circle circle-md"
-                                       href="#"><span>...</span></a></li>
-                            </c:if>
-                            <li class="page-item">
-                                <a class="page-link"
-                                   href="controller?action=route&page=${last_page}">${last_page}</a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
-                </c:if>
-
-                <c:if test="${currentPage lt last_page}">
-                    <li class="page-item">
-                        <a class="page-link" href="controller?action=route&page=${currentPage + 1}"
-                           aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span></a>
-                    </li>
-                </c:if>
-            </ul>
-        </nav>
-    </div>
+    <tags:pagination currentPage="${currentPage}" lastPage="${last_page}" numPages="${noOfPages}" url="controller?action=route"/>
     <a href="controller?action=search_routes" class="btn bg-gradient-blue text-primary mb-0">
         <i class="fas fa-arrow-alt-circle-left" aria-hidden="true"></i>
         <fmt:message key="back"/></a>

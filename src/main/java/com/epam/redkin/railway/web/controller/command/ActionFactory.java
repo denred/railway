@@ -44,7 +44,7 @@ public class ActionFactory {
         commands.put("profile", new ProfileCommand());
         commands.put("profilePage", new ProfilePageCommand());
         commands.put("redirect", null);
-        commands.put("view_ticket", new ViewTicketPageCommand());
+        commands.put("view_tickets", new ViewTicketPageCommand());
 
         // admin commands
         commands.put("routes", new RouteInfoCommand());
@@ -85,7 +85,7 @@ public class ActionFactory {
         commands.put("select_carriage_and_seats", new SelectCarriageAndSeatsPage());
         commands.put("select_seats", new SelectSeatsCommand());
         commands.put("select_seats_page", new SelectSeatsPage());
-        commands.put("confirm_order", new ConfirmOrderCommand(AppContext.getInstance().getOrderService()));
+        commands.put("confirm_order", new ConfirmOrderCommand(AppContext.getInstance().getOrderService(), AppContext.getInstance().getUserService()));
         commands.put("create_order", new CreateOrderCommand());
         commands.put("cancel_order", new CancelOrderCommand());
         commands.put("sendForgetPasswordData", new ForgetPasswordEmailSendingCommand(AppContext.getInstance().getUserService()));
