@@ -13,11 +13,7 @@ public class CarriageInfoPageCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.info("started");
-        Router router = new Router();
-        router.setRouteType(Router.RouteType.FORWARD);
-        router.setPagePath(Path.PAGE_ADMIN_INFO_CARRIAGE);
-        LOGGER.info("done");
-        return router;
+        LOGGER.info("Page: " + Path.PAGE_ADMIN_INFO_CARRIAGE);
+        return Router.forward(Path.PAGE_ADMIN_INFO_CARRIAGE);
     }
 }
