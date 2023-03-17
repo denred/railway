@@ -14,7 +14,7 @@ USE `railway` ;
 -- -----------------------------------------------------
 -- Table `railway`.`user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `railway`.`user` ;
+DROP TABLE IF EXISTS `railway`.`user`;
 
 CREATE TABLE IF NOT EXISTS `railway`.`user` (
                                                 `id` INT NOT NULL AUTO_INCREMENT,
@@ -27,12 +27,12 @@ CREATE TABLE IF NOT EXISTS `railway`.`user` (
                                                 `role` VARCHAR(45) NOT NULL,
                                                 `blocked` TINYINT(1) NOT NULL DEFAULT '0',
                                                 `log_in_token` VARCHAR(256) NULL DEFAULT NULL,
+                                                `balance` DECIMAL(10,2) NOT NULL DEFAULT '0.00',
                                                 PRIMARY KEY (`id`),
-                                                UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
-    ENGINE = InnoDB
-    AUTO_INCREMENT = 3
-    DEFAULT CHARACTER SET = utf8mb3;
-
+                                                UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 3
+  DEFAULT CHARACTER SET = utf8mb3;
 
 -- -----------------------------------------------------
 -- Table `railway`.`train`
@@ -114,8 +114,7 @@ CREATE TABLE IF NOT EXISTS `railway`.`carriage` (
 DROP TABLE IF EXISTS `railway`.`booking` ;
 
 CREATE TABLE IF NOT EXISTS `railway`.`booking` (
-                                                   `id` INT NOT NULL AUTO_INCREMENT,
-                                                   `uuid` CHAR(36) NOT NULL,
+                                                   `uuid` VARCHAR(36) NOT NULL,
                                                    `booking_date` TIMESTAMP NOT NULL,
                                                    `dispatch_date` TIMESTAMP NOT NULL,
                                                    `arrival_date` TIMESTAMP NOT NULL,
@@ -128,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `railway`.`booking` (
                                                    `dispatch_station_id` INT NOT NULL,
                                                    `arrival_station_id` INT NOT NULL,
                                                    `carriage_id` INT NOT NULL,
-                                                   PRIMARY KEY (`id`),
+                                                   PRIMARY KEY (`uuid`),
                                                    INDEX `fk_booking_user_idx` (`user_id` ASC) VISIBLE,
                                                    INDEX `fk_booking_route1_idx` (`route_id1` ASC) VISIBLE,
                                                    INDEX `fk_booking_train1_idx` (`train_id` ASC) VISIBLE,
@@ -223,14 +222,14 @@ CREATE TABLE IF NOT EXISTS `railway`.`station_has_route` (
 DROP TABLE IF EXISTS `railway`.`booking_has_seat` ;
 
 CREATE TABLE IF NOT EXISTS `railway`.`booking_has_seat` (
-                                                            `booking_id` INT NOT NULL,
+                                                            `booking_id` VARCHAR(36) NOT NULL,
                                                             `seat_id` INT NOT NULL,
                                                             PRIMARY KEY (`booking_id`, `seat_id`),
                                                             INDEX `fk_booking_has_seat_seat1_idx` (`seat_id` ASC) VISIBLE,
                                                             INDEX `fk_booking_has_seat_booking1_idx` (`booking_id` ASC) VISIBLE,
                                                             CONSTRAINT `fk_booking_has_seat_booking1`
                                                                 FOREIGN KEY (`booking_id`)
-                                                                    REFERENCES `railway`.`booking` (`id`)
+                                                                    REFERENCES `railway`.`booking` (`uuid`)
                                                                     ON DELETE CASCADE
                                                                     ON UPDATE NO ACTION,
                                                             CONSTRAINT `fk_booking_has_seat_seat1`
@@ -248,14 +247,14 @@ CREATE TABLE IF NOT EXISTS `railway`.`booking_has_seat` (
 DROP TABLE IF EXISTS `railway`.`reservation` ;
 
 CREATE TABLE IF NOT EXISTS `railway`.`reservation` (
-                                                       `id` INT NOT NULL AUTO_INCREMENT,
+                                                       `uuid` VARCHAR(36) NOT NULL,
                                                        `status` VARCHAR(255) NOT NULL,
                                                        `station_id` INT NOT NULL,
                                                        `seat_id` INT NOT NULL,
                                                        `train_id` INT NOT NULL,
                                                        `route_id` INT NOT NULL,
                                                        `sequence_number` INT NOT NULL,
-                                                       PRIMARY KEY (`id`),
+                                                       PRIMARY KEY (`uuid`),
                                                        UNIQUE KEY `uniq_seat_train_route` (`seat_id`, `train_id`, `route_id`, `sequence_number`),
                                                        INDEX `fk_reservation_station_idx` (`station_id` ASC) VISIBLE,
                                                        INDEX `fk_reservation_seat_idx` (`seat_id` ASC) VISIBLE,

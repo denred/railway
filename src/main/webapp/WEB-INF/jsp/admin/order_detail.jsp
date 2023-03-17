@@ -49,26 +49,26 @@
         </tr>
         <tr>
             <th><fmt:message key="filter.departure.station"/>:</th>
-            <td>${order.dispatchStation} ${order.dispatchDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}</td>
+            <td>${order.dispatchStation} ${order.dispatchDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}</td>
         </tr>
         <tr>
             <th><fmt:message key="filter.arrival.station"/>:</th>
-            <td>${order.arrivalStation} ${order.arrivalDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}</td>
+            <td>${order.arrivalStation} ${order.arrivalDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}</td>
         </tr>
         <tr>
             <th><fmt:message key="order.travel.time"/>:</th>
-            <td><period:period dateFrom="${order.arrivalDate}" dateTo="${order.dispatchDate}"
+            <td><period:period dateFrom="${order.dispatchDate}" dateTo="${order.arrivalDate}"
                                locale="${sessionScope.locale}"/></td>
         </tr>
         <tr>
             <th><fmt:message key="order.date"/>:</th>
-            <td>${order.orderDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}</td>
+            <td>${order.orderDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"))}</td>
         </tr>
         <tr>
             <th><fmt:message key="order.status"/>:</th>
             <td>
                 <form action="controller?action=order_status" method="POST">
-                    <input type="hidden" name="order_id" value="${order.id}">
+                    <input type="hidden" name="order_id" value="${order.uuid}">
                     <label for="change-status"></label>
                     <select id="change-status" class="btn form-control dropdown-toggle w-25" name="order_status">
                         <c:set var="current_order_status" value="${order.orderStatus}"/>

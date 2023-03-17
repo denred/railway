@@ -24,30 +24,26 @@
         <thead>
         <tr>
             <th><fmt:message key="order"/></th>
-            <th><fmt:message key="order.number"/></th>
+            <th><fmt:message key="order.id"/></th>
             <th><fmt:message key="order.user.information"/></th>
             <th><fmt:message key="route.from.to"/></th>
             <th><fmt:message key="date"/></th>
             <th><fmt:message key="order.date"/></th>
             <th><fmt:message key="order.status"/></th>
-            <th><fmt:message key="admin.details"/></th>
         </tr>
         </thead>
         <tbody>
         <c:forEach var="order" items="${order_list}" varStatus="i">
             <tr>
                 <td>${i.index + recordsPerPage * (currentPage - 1) + 1}</td>
-                <td>${order.hashCode()}</td>
+                <td><a href="controller?action=order_detail&order=${i.index}"> ${order.uuid}</a></td>
                 <td>${order.user.firstName} ${order.user.lastName}</td>
                 <td>${order.dispatchStation} - ${order.arrivalStation}</td>
                 <td>${order.dispatchDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))} -
                         ${order.arrivalDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}
                 </td>
                 <td>${order.orderDate.format( DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm"))}</td>
-                <td><a href="controller?action=order_status&order_id=${order.uuid}">
-                    <fmt:message key="${order.orderStatus}"/></a></td>
-                <td><a href="controller?action=order_detail&order=${i.index}">
-                    <fmt:message key="admin.details"/></a></td>
+                <td><fmt:message key="${order.orderStatus}"/></td>
             </tr>
         </c:forEach>
         </tbody>

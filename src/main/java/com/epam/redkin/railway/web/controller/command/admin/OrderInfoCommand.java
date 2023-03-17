@@ -36,7 +36,7 @@ public class OrderInfoCommand implements Command {
 
         int page = paginationService.getPage(request);
         int records = orderService.getOrdersCount();
-        List<Order> orderList = orderService.getOrders((page - 1) * RECORDS_PER_PAGE,RECORDS_PER_PAGE * page);
+        List<Order> orderList = orderService.getOrders((page - 1) * RECORDS_PER_PAGE,RECORDS_PER_PAGE);
 
         paginationService.setPaginationParameter(request, page, records, RECORDS_PER_PAGE, FIRST_VISIBLE_PAGE_LINK);
 
