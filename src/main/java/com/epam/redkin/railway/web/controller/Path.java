@@ -24,7 +24,6 @@ public class Path {
     public static final String PAGE_ADMIN_SET_CARRIAGE = "WEB-INF/jsp/admin/carriageSet.jsp";
     public static final String PAGE_ADMIN_SET_TRAIN = "WEB-INF/jsp/admin/trainSet.jsp";
     public static final String PAGE_REGISTRATION = "registration.jsp";
-    public static final String PAGE_ERROR_PAGE = "errorPage.jsp";
     public static final String PAGE_PROFILE = "WEB-INF/jsp/user/profile.jsp";
     public static final String PAGE_VIEW_TICKET = "WEB-INF/jsp/user/ticket_view.jsp";
     public static final String PAGE_ORDER_DETAIL = "WEB-INF/jsp/admin/order_detail.jsp";
